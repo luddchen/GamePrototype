@@ -32,6 +32,7 @@ namespace Battlestation_Antaris
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.controller.Initialize(this.Content);
         }
 
         protected override void UnloadContent()

@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using Battlestation_Antaris.Control;
 using Microsoft.Xna.Framework;
+using Battlestation_Antaris.Model;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.View
 {
 
     class CockpitView : View
     {
-        int i = 0;
-        Color backgroundColor = Color.Black;
-
         Camera camera;
+        Vector3 camPos = new Vector3(0, -30, 0);    // for testing
 
         public CockpitView(Controller controller)
             : base(controller)
@@ -21,10 +21,34 @@ namespace Battlestation_Antaris.View
 
         public override void Draw()
         {
-            i++;
-            if (i > 60) i = 0;
-            if (i < 30) backgroundColor = Color.Yellow; else backgroundColor = Color.Black;
-            this.controller.game.GraphicsDevice.Clear(this.backgroundColor);
+            this.controller.game.GraphicsDevice.Clear(Color.Black);
+
+            foreach (SpatialObject spatialObject in this.controller.world.allObjects)
+            {
+                spatialObject.model3d.Root.Transform = Matrix.CreateTranslation(spatialObject.globalPosition);
+
+                spatialObject.model3d.CopyAbsoluteBoneTransformsTo(spatialObject.boneTransforms);
+
+                foreach (ModelMesh mesh in spatialObject.model3d.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        effect.EnableDefaultLighting();
+
+                        effect.World = spatialObject.boneTransforms[mesh.ParentBone.Index];
+                        effect.View = this.camera.view;
+                        effect.Projection = this.camera.projection;
+                    }
+
+                    mesh.Draw();
+                }
+            }
+
+            // for testing
+            this.camera.Update(camPos, new Vector3(0.2f, 1.0f, 0.1f), Vector3.UnitZ);
+            camPos.Y += 0.5f;
+            if (camPos.Y > 30) camPos.Y = -30;
+
         }
 
     }

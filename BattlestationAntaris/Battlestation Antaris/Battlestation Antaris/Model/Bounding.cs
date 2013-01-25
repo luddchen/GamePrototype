@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Battlestation_Antaris.Model
 {
-    class Bounding
+    public class Bounding
     {
     }
 }

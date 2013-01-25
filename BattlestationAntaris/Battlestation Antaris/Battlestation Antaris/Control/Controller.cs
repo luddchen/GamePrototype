@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Battlestation_Antaris.Control
 {
@@ -14,7 +15,10 @@ namespace Battlestation_Antaris.Control
 
         public Game1 game;
 
-        List<Model.Model> allModels;
+        public Model.WorldModel world;
+        public Model.SpaceShipModel spaceShip;
+        public Model.SpaceStationModel spaceStation;
+
         List<View.View> allViews;
         List<SituationController> allSituations;
 
@@ -25,19 +29,23 @@ namespace Battlestation_Antaris.Control
         {
             this.game = game;
 
-            this.allModels = new List<Model.Model>();
             this.allViews = new List<View.View>();
             this.allSituations = new List<SituationController>();
 
-            this.allModels.Add(new Model.WorldModel());
-            this.allModels.Add(new Model.SpaceShipModel());
-            this.allModels.Add(new Model.SpaceStationModel());
+            this.world = new Model.WorldModel();
+            this.spaceShip = new Model.SpaceShipModel();
+            this.spaceStation = new Model.SpaceStationModel();
 
             addSituation( new View.CockpitView(this), new CockpitController(this));
             addSituation( new View.CommandView(this), new CommandController(this));
             addSituation( new View.MenuView(this), new MenuController(this));
 
             switchTo(Situation.menu);
+        }
+
+        public void Initialize(ContentManager content)
+        {
+            this.world.Initialize(content);
         }
 
         private void addSituation(View.View view, SituationController situation)

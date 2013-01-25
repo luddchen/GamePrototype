@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Content;
 
 namespace Battlestation_Antaris.Model
 {
 
-    class SpaceShipModel : Model
+    public class SpaceShipModel : Model
     {
 
-        public override void Init()
+        public override void Initialize(ContentManager content)
         {
         }
 
