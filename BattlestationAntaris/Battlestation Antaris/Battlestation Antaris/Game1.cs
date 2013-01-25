@@ -12,7 +12,8 @@ namespace Battlestation_Antaris
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
 
-        Controller controller;
+        public Controller controller;
+        public InputProvider inputProvider;
 
         public Game1()
         {
@@ -23,6 +24,7 @@ namespace Battlestation_Antaris
         protected override void Initialize()
         {
             this.controller = new Controller(this);
+            this.inputProvider = new InputProvider();
 
             base.Initialize();
         }
@@ -38,6 +40,7 @@ namespace Battlestation_Antaris
 
         protected override void Update(GameTime gameTime)
         {
+            this.inputProvider.Update();
             this.controller.Update(gameTime);
             base.Update(gameTime);
         }

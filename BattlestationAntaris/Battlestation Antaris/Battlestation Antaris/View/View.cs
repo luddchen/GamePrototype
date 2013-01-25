@@ -8,7 +8,7 @@ namespace Battlestation_Antaris.View
     abstract class View
     {
 
-        protected Controller controller;
+        public Controller controller;
 
         public View(Controller controller)
         {

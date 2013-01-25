@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using Battlestation_Antaris.Control;
 using Microsoft.Xna.Framework;
+
 namespace Battlestation_Antaris.View
 {
 
-    class CommandView : View
+    class MenuView : View
     {
-
         int i = 0;
         Color backgroundColor = Color.Black;
 
-        public CommandView(Controller controller)
+        public MenuView(Controller controller)
             : base(controller)
         {
         }
@@ -20,10 +20,9 @@ namespace Battlestation_Antaris.View
         {
             i++;
             if (i > 60) i = 0;
-            if (i < 30) backgroundColor = Color.Green; else backgroundColor = Color.Black;
+            if (i < 30) backgroundColor = Color.Blue; else backgroundColor = Color.Black;
             this.controller.game.GraphicsDevice.Clear(this.backgroundColor);
         }
-
     }
 
 }

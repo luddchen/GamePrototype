@@ -11,15 +11,19 @@ namespace Battlestation_Antaris.View
         int i = 0;
         Color backgroundColor = Color.Black;
 
+        Camera camera;
+
         public CockpitView(Controller controller)
             : base(controller)
         {
+            this.camera = new Camera(this.controller.game.GraphicsDevice);
         }
 
         public override void Draw()
         {
-            if (i < 200) i++; else i = 0;
-            if (i < 100) backgroundColor = Color.Yellow; else backgroundColor = Color.Black;
+            i++;
+            if (i > 60) i = 0;
+            if (i < 30) backgroundColor = Color.Yellow; else backgroundColor = Color.Black;
             this.controller.game.GraphicsDevice.Clear(this.backgroundColor);
         }
 
