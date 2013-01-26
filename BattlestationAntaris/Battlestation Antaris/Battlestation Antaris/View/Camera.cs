@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antaris.View
 {
@@ -12,8 +13,8 @@ namespace Battlestation_Antaris.View
 
         public Matrix projection;
         public Matrix view;
-        public int nearClipping = 10;
-        public int farClipping = 10000;
+        public int nearClipping = 1;
+        public int farClipping = 500;
 
         public Camera(GraphicsDevice device)
         {
@@ -25,6 +26,12 @@ namespace Battlestation_Antaris.View
         {
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4 / 2, this.device.Viewport.AspectRatio, this.nearClipping, this.farClipping);
             view = Matrix.CreateLookAt(position, Vector3.Add(position, direction), up);
+        }
+
+        public void ClampTo(SpatialObject obj)
+        {
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4 / 2, this.device.Viewport.AspectRatio, this.nearClipping, this.farClipping);
+            view = Matrix.CreateLookAt(obj.globalPosition, Vector3.Add(obj.globalPosition, obj.rotation.Forward), obj.rotation.Up);
         }
 
     }

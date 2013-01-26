@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Battlestation_Antaris.Control;
 
 namespace Battlestation_Antaris.Model
 {
@@ -13,24 +14,29 @@ namespace Battlestation_Antaris.Model
 
         public List<SpatialObject> allObjects;
 
-        public WorldModel()
+        public WorldModel(Controller controller) : base(controller)
         {
             this.allObjects = new List<SpatialObject>();
         }
 
         public override void Initialize(ContentManager content)
         {
-            for (int x = -2; x < 3; x++)
+            Random random = new Random();
+
+            for (int i = 0; i < 500; i++ )
             {
-                    for (int z = -2; z < 3; z++)
-                    {
-                        this.allObjects.Add( new SpatialObject(new Vector3(x * 3, 30, z * 3), "Models/compass", content));
-                    }
+                this.allObjects.Add(new SpatialObject(new Vector3(random.Next(600) - 300, random.Next(600) - 300, random.Next(600) - 300), "Models/compass", content));
             }
+
+            this.allObjects.Add(new SpatialObject(new Vector3(0, 0, 0), "Models/battlestation", content));
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            foreach (SpatialObject obj in this.allObjects)
+            {
+                obj.Update(gameTime);
+            }
         }
 
     }

@@ -11,7 +11,7 @@ namespace Battlestation_Antaris.Control
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (this.controller.game.inputProvider.isKeyOnState(ControlKey.DOWN, ControlState.PRESSED))
+            if (this.controller.game.inputProvider.isKeyOnState(ControlKey.SPACE, ControlState.PRESSED))
             {
                 Console.Out.WriteLine("switch from command to cockpit");
                 this.controller.switchTo(Situation.cockpit);

@@ -7,12 +7,12 @@ namespace Battlestation_Antaris.Control
 
     public enum ControlKey
     {
-        UP = Keys.Up, DOWN = Keys.Down, LEFT = Keys.Left, RIGHT = Keys.Right
+        UP = Keys.Up, DOWN = Keys.Down, LEFT = Keys.Left, RIGHT = Keys.Right, SPEEDUP = Keys.W, SPEEDDOWN = Keys.S, ESC = Keys.Escape, SPACE = Keys.Space
     }
 
     public enum ControlState
     {
-        PRESSED, RELEASED
+        PRESSED, RELEASED, DOWN, UP
     }
 
     public class InputProvider
@@ -37,6 +37,8 @@ namespace Battlestation_Antaris.Control
 
             if (state == ControlState.PRESSED && !oldState && newState) return true;
             if (state == ControlState.RELEASED && oldState && !newState) return true;
+            if (state == ControlState.DOWN && newState) return true;
+            if (state == ControlState.UP && !newState) return true;
             return false;
         }
 

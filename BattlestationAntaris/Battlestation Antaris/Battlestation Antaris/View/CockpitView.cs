@@ -11,7 +11,6 @@ namespace Battlestation_Antaris.View
     class CockpitView : View
     {
         Camera camera;
-        Vector3 camPos = new Vector3(0, -30, 0);    // for testing
 
         public CockpitView(Controller controller)
             : base(controller)
@@ -23,31 +22,33 @@ namespace Battlestation_Antaris.View
         {
             this.controller.game.GraphicsDevice.Clear(Color.Black);
 
-            foreach (SpatialObject spatialObject in this.controller.world.allObjects)
+            this.camera.ClampTo(this.controller.spaceShip.ship);
+
+            foreach (SpatialObject obj in this.controller.world.allObjects)
             {
-                spatialObject.model3d.Root.Transform = Matrix.CreateTranslation(spatialObject.globalPosition);
-
-                spatialObject.model3d.CopyAbsoluteBoneTransformsTo(spatialObject.boneTransforms);
-
-                foreach (ModelMesh mesh in spatialObject.model3d.Meshes)
+                if (obj.draw)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
 
-                        effect.World = spatialObject.boneTransforms[mesh.ParentBone.Index];
-                        effect.View = this.camera.view;
-                        effect.Projection = this.camera.projection;
+                    obj.model3d.Root.Transform = Matrix.CreateTranslation(obj.globalPosition);
+
+                    obj.model3d.CopyAbsoluteBoneTransformsTo(obj.boneTransforms);
+
+                    foreach (ModelMesh mesh in obj.model3d.Meshes)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            effect.EnableDefaultLighting();
+
+                            effect.World = obj.boneTransforms[mesh.ParentBone.Index];
+                            effect.View = this.camera.view;
+                            effect.Projection = this.camera.projection;
+                        }
+
+                        mesh.Draw();
                     }
 
-                    mesh.Draw();
                 }
             }
-
-            // for testing
-            this.camera.Update(camPos, new Vector3(0.2f, 1.0f, 0.1f), Vector3.UnitZ);
-            camPos.Y += 0.5f;
-            if (camPos.Y > 30) camPos.Y = -30;
 
         }
 
