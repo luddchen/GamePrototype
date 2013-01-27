@@ -20,6 +20,10 @@ namespace Battlestation_Antaris.View
 
         public override void Draw()
         {
+            base.Draw();
+
+            this.controller.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+
             this.controller.game.GraphicsDevice.Clear(Color.Black);
 
             this.camera.ClampTo(this.controller.spaceShip.ship);

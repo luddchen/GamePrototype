@@ -10,12 +10,21 @@ namespace Battlestation_Antaris.View
 
         public Controller controller;
 
+        public List<HUDElement> allHUDs;
+
         public View(Controller controller)
         {
             this.controller = controller;
+            this.allHUDs = new List<HUDElement>();
         }
 
-        public abstract void Draw();
+        public virtual void Draw()
+        {
+            foreach (HUDElement element in allHUDs)
+            {
+                element.Draw();
+            }
+        }
 
     }
 

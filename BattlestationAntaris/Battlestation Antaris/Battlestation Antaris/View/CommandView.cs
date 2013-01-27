@@ -18,6 +18,7 @@ namespace Battlestation_Antaris.View
 
         public override void Draw()
         {
+            base.Draw();
             i++;
             if (i > 60) i = 0;
             if (i < 30) backgroundColor = Color.Green; else backgroundColor = Color.Black;
