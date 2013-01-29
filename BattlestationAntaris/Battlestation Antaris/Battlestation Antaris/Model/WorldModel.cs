@@ -25,7 +25,14 @@ namespace Battlestation_Antaris.Model
 
             for (int i = 0; i < 500; i++ )
             {
-                this.allObjects.Add(new SpatialObject(new Vector3(random.Next(600) - 300, random.Next(600) - 300, random.Next(600) - 300), "Models/compass", content));
+                if (random.Next(2) == 0)
+                {
+                    this.allObjects.Add(new SpatialObject(new Vector3(random.Next(600) - 300, random.Next(600) - 300, random.Next(600) - 300), "Models/compass", content));
+                }
+                else
+                {
+                    this.allObjects.Add(new SpatialObject(new Vector3(random.Next(600) - 300, random.Next(600) - 300, random.Next(600) - 300), "Models/spaceship_d1", content));
+                }
             }
 
             this.allObjects.Add(new SpatialObject(new Vector3(0, 0, 0), "Models/battlestation", content));

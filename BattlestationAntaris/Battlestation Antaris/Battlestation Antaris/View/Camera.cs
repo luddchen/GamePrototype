@@ -14,7 +14,7 @@ namespace Battlestation_Antaris.View
         public Matrix projection;
         public Matrix view;
         public int nearClipping = 1;
-        public int farClipping = 500;
+        public int farClipping = 5000;
 
         public Camera(GraphicsDevice device)
         {

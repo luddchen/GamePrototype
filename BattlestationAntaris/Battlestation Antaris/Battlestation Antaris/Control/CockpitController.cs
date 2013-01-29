@@ -30,13 +30,13 @@ namespace Battlestation_Antaris.Control
             if (this.controller.game.inputProvider.isKeyOnState(ControlKey.LEFT, ControlState.DOWN))
             {
                 this.controller.spaceShip.ship.rotateZ((float)(Math.PI / 360));
-                this.controller.spaceShip.ship.rotateY(-(float)(Math.PI / 360));
+                //this.controller.spaceShip.ship.rotateY(-(float)(Math.PI / 360));
             }
 
             if (this.controller.game.inputProvider.isKeyOnState(ControlKey.RIGHT, ControlState.DOWN))
             {
                 this.controller.spaceShip.ship.rotateZ(-(float)(Math.PI / 360));
-                this.controller.spaceShip.ship.rotateY((float)(Math.PI / 360));
+                //this.controller.spaceShip.ship.rotateY((float)(Math.PI / 360));
             }
 
             if (this.controller.game.inputProvider.isKeyOnState(ControlKey.SPEEDUP, ControlState.DOWN))
