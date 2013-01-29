@@ -29,14 +29,14 @@ namespace Battlestation_Antaris.View
 
             this.controller.game.GraphicsDevice.Clear(Color.Khaki);
 
-            this.camera.ClampTo(this.controller.spaceShip.ship);
+            this.camera.ClampTo(this.controller.world.spaceShip);
 
             foreach (SpatialObject obj in this.controller.world.allObjects)
             {
                 if (obj.draw)
                 {
 
-                    obj.model3d.Root.Transform = Matrix.CreateTranslation(obj.globalPosition);
+                    obj.model3d.Root.Transform = obj.rotation * Matrix.CreateTranslation(obj.globalPosition);
 
                     obj.model3d.CopyAbsoluteBoneTransformsTo(obj.boneTransforms);
 

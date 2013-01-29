@@ -19,34 +19,34 @@ namespace Battlestation_Antaris.Control
 
             if (this.controller.game.inputProvider.isKeyOnState(ControlKey.UP, ControlState.DOWN))
             {
-                this.controller.spaceShip.ship.rotateX((float)(Math.PI / 360));
+                this.controller.world.spaceShip.rotateX((float)(Math.PI / 360));
             }
 
             if (this.controller.game.inputProvider.isKeyOnState(ControlKey.DOWN, ControlState.DOWN))
             {
-                this.controller.spaceShip.ship.rotateX(-(float)(Math.PI / 360));
+                this.controller.world.spaceShip.rotateX(-(float)(Math.PI / 360));
             }
 
             if (this.controller.game.inputProvider.isKeyOnState(ControlKey.LEFT, ControlState.DOWN))
             {
-                this.controller.spaceShip.ship.rotateZ((float)(Math.PI / 360));
+                this.controller.world.spaceShip.rotateZ((float)(Math.PI / 360));
                 //this.controller.spaceShip.ship.rotateY(-(float)(Math.PI / 360));
             }
 
             if (this.controller.game.inputProvider.isKeyOnState(ControlKey.RIGHT, ControlState.DOWN))
             {
-                this.controller.spaceShip.ship.rotateZ(-(float)(Math.PI / 360));
+                this.controller.world.spaceShip.rotateZ(-(float)(Math.PI / 360));
                 //this.controller.spaceShip.ship.rotateY((float)(Math.PI / 360));
             }
 
             if (this.controller.game.inputProvider.isKeyOnState(ControlKey.SPEEDUP, ControlState.DOWN))
             {
-                this.controller.spaceShip.ship.speed += 0.01f;
+                this.controller.world.spaceShip.speed += 0.01f;
             }
 
             if (this.controller.game.inputProvider.isKeyOnState(ControlKey.SPEEDDOWN, ControlState.DOWN))
             {
-                this.controller.spaceShip.ship.speed -= 0.01f;
+                this.controller.world.spaceShip.speed -= 0.01f;
             }
 
         }

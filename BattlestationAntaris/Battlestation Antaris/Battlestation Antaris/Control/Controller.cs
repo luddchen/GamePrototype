@@ -16,8 +16,6 @@ namespace Battlestation_Antaris.Control
         public Game1 game;
 
         public Model.WorldModel world;
-        public Model.SpaceShipModel spaceShip;
-        public Model.SpaceStationModel spaceStation;
 
         List<View.View> allViews;
         List<SituationController> allSituations;
@@ -33,8 +31,6 @@ namespace Battlestation_Antaris.Control
             this.allSituations = new List<SituationController>();
 
             this.world = new Model.WorldModel(this);
-            this.spaceShip = new Model.SpaceShipModel(this);
-            this.spaceStation = new Model.SpaceStationModel(this);
 
             addSituation( new View.CockpitView(this), new CockpitController(this));
             addSituation( new View.CommandView(this), new CommandController(this));
@@ -46,8 +42,6 @@ namespace Battlestation_Antaris.Control
         public void Initialize(ContentManager content)
         {
             this.world.Initialize(content);
-            this.spaceShip.Initialize(content);
-            this.spaceStation.Initialize(content);
         }
 
         private void addSituation(View.View view, SituationController situation)
@@ -65,8 +59,7 @@ namespace Battlestation_Antaris.Control
         public void Update(GameTime gameTime)
         {
             this.world.Update(gameTime);
-            this.spaceShip.Update(gameTime);
-            this.spaceStation.Update(gameTime);
+
             this.activeSituation.Update(gameTime);
         }
 

@@ -9,17 +9,26 @@ using Battlestation_Antaris.Control;
 namespace Battlestation_Antaris.Model
 {
 
-    public class WorldModel : Model
+    public class WorldModel
     {
+        public Controller controller;
+
+        public SpaceShip spaceShip;
+        public SpaceStation spaceStation;
+        public List<Radar> allRadars;
+        public List<Turret> allTurrets;
 
         public List<SpatialObject> allObjects;
 
-        public WorldModel(Controller controller) : base(controller)
+        public WorldModel(Controller controller)
         {
+            this.controller = controller;
             this.allObjects = new List<SpatialObject>();
+            this.allRadars = new List<Radar>();
+            this.allTurrets = new List<Turret>();
         }
 
-        public override void Initialize(ContentManager content)
+        public void Initialize(ContentManager content)
         {
             Random random = new Random();
 
@@ -35,10 +44,15 @@ namespace Battlestation_Antaris.Model
                 }
             }
 
-            this.allObjects.Add(new SpatialObject(new Vector3(0, 0, 0), "Models/battlestation", content));
+            this.spaceShip = new SpaceShip(new Vector3(0, 5, 50), "Models/compass", content);
+            this.allObjects.Add(this.spaceShip);
+
+            this.spaceStation = new SpaceStation(Vector3.Zero, "Models/battlestation", content);
+            this.allObjects.Add(this.spaceStation);
+            this.spaceStation.rotateY((float)(Math.PI / 8));
         }
 
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             foreach (SpatialObject obj in this.allObjects)
             {

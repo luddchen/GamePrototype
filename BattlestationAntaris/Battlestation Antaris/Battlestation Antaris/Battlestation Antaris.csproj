@@ -80,10 +80,11 @@
     <Compile Include="Control\SituationController.cs" />
     <Compile Include="Model\Bounding.cs" />
     <Compile Include="Model\Collision.cs" />
-    <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\SpaceShipModel.cs" />
-    <Compile Include="Model\SpaceStationModel.cs" />
+    <Compile Include="Model\Radar.cs" />
+    <Compile Include="Model\SpaceShip.cs" />
+    <Compile Include="Model\SpaceStation.cs" />
     <Compile Include="Model\SpatialObject.cs" />
+    <Compile Include="Model\Turret.cs" />
     <Compile Include="Model\WorldModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

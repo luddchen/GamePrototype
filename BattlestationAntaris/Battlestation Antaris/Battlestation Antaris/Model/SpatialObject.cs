@@ -31,7 +31,7 @@ namespace Battlestation_Antaris.Model
             this.boneTransforms = new Matrix[model3d.Bones.Count];
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             this.globalPosition += Vector3.Multiply(rotation.Forward, speed);
         }
