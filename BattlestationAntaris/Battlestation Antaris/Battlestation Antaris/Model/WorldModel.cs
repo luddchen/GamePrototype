@@ -40,7 +40,7 @@ namespace Battlestation_Antaris.Model
                 }
                 else
                 {
-                    this.allObjects.Add(new SpatialObject(new Vector3(random.Next(600) - 300, random.Next(600) - 300, random.Next(600) - 300), "Models/spaceship_d1", content));
+                    this.allObjects.Add(new SpatialObject(new Vector3(random.Next(600) - 300, random.Next(600) - 300, random.Next(600) - 300), "Models/spaceship_d3", content));
                 }
             }
 

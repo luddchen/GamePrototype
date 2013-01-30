@@ -24,7 +24,7 @@ namespace Battlestation_Antaris.View.HUD
 
         public Compass3d(ContentManager content, GraphicsDevice device)
         {
-            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>("Models/compass");
+            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>("Models/compass2");
             this.boneTransforms = new Matrix[model3d.Bones.Count];
 
             this.device = device;
