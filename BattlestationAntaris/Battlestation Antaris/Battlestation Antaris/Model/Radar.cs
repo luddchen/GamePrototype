@@ -12,10 +12,9 @@ namespace Battlestation_Antaris.Model
     public class Radar : SpatialObject
     {
 
-        public Radar(Vector3 position, String modelName, ContentManager content)
-            : base(position, modelName, content)
-        {
-        }
+        public Radar(Vector3 position, String modelName, ContentManager content) : base(position, modelName, content){}
+
+        public Radar(Vector3 position, String modelName, ContentManager content, WorldModel world) : base(position, modelName, content, world) { }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {

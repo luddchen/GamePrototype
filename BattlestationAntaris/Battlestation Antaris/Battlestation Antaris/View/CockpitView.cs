@@ -4,6 +4,7 @@ using Battlestation_Antaris.Control;
 using Microsoft.Xna.Framework;
 using Battlestation_Antaris.Model;
 using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antaris.View
 {
@@ -12,6 +13,8 @@ namespace Battlestation_Antaris.View
     {
         Camera camera;
 
+        Compass3d compass;
+
         Vector3 ambientColor;
 
         public CockpitView(Controller controller)
@@ -19,15 +22,18 @@ namespace Battlestation_Antaris.View
         {
             this.camera = new Camera(this.controller.game.GraphicsDevice);
             this.ambientColor = new Vector3(0.5f, 0.5f, 0.5f);
+            this.compass = new Compass3d(this.controller.game.Content, this.controller.game.GraphicsDevice);
+            this.allHUDs.Add(this.compass);
+            this.is3D = true;
+
+            this.backgroundColor = Color.Purple;
         }
 
         public override void Draw()
         {
             base.Draw();
 
-            this.controller.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
-
-            this.controller.game.GraphicsDevice.Clear(Color.Khaki);
+            //this.controller.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
 
             this.camera.ClampTo(this.controller.world.spaceShip);
 
@@ -71,6 +77,11 @@ namespace Battlestation_Antaris.View
 
         }
 
+
+        public override void Initialize()
+        {
+            this.compass.Initialize(this.controller.world.spaceShip, this.controller.world.spaceStation);
+        }
     }
 
 }

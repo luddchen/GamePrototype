@@ -42,6 +42,10 @@ namespace Battlestation_Antaris.Control
         public void Initialize(ContentManager content)
         {
             this.world.Initialize(content);
+            foreach (View.View view in this.allViews)
+            {
+                view.Initialize();
+            }
         }
 
         private void addSituation(View.View view, SituationController situation)
@@ -58,9 +62,22 @@ namespace Battlestation_Antaris.Control
 
         public void Update(GameTime gameTime)
         {
-            this.world.Update(gameTime);
+            switch (this.activeSituation.worldUpdate)
+            {
+                case WorldUpdate.PRE : 
+                    this.world.Update(gameTime);
+                    this.activeSituation.Update(gameTime);
+                    break;
 
-            this.activeSituation.Update(gameTime);
+                case WorldUpdate.NO_UPDATE:
+                    this.activeSituation.Update(gameTime);
+                    break;
+
+                case WorldUpdate.POST:
+                    this.activeSituation.Update(gameTime);
+                    this.world.Update(gameTime);
+                    break;
+            }
         }
 
         public void Draw()

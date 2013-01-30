@@ -12,9 +12,9 @@ namespace Battlestation_Antaris.Model
     public class SpaceShip : SpatialObject
     {
 
-        public SpaceShip(Vector3 position, String modelName, ContentManager content) : base(position, modelName, content)
-        {
-        }
+        public SpaceShip(Vector3 position, String modelName, ContentManager content) : base(position, modelName, content) { }
+
+        public SpaceShip(Vector3 position, String modelName, ContentManager content, WorldModel world) : base(position, modelName, content, world) { }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {

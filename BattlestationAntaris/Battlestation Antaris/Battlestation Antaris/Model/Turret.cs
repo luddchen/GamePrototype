@@ -12,10 +12,9 @@ namespace Battlestation_Antaris.Model
     public class Turret : SpatialObject
     {
 
-        public Turret(Vector3 position, String modelName, ContentManager content)
-            : base(position, modelName, content)
-        {
-        }
+        public Turret(Vector3 position, String modelName, ContentManager content) : base(position, modelName, content) {}
+
+        public Turret(Vector3 position, String modelName, ContentManager content, WorldModel world) : base(position, modelName, content, world) { }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {

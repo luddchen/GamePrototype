@@ -9,7 +9,6 @@ namespace Battlestation_Antaris.View
     class MenuView : View
     {
         int i = 0;
-        Color backgroundColor = Color.Black;
 
         public MenuView(Controller controller)
             : base(controller)
@@ -19,10 +18,14 @@ namespace Battlestation_Antaris.View
         public override void Draw()
         {
             base.Draw();
+
             i++;
             if (i > 60) i = 0;
-            if (i < 30) backgroundColor = Color.Blue; else backgroundColor = Color.Black;
-            this.controller.game.GraphicsDevice.Clear(this.backgroundColor);
+            if (i < 30) this.backgroundColor = Color.Blue; else this.backgroundColor = Color.Black;
+        }
+
+        public override void Initialize()
+        {
         }
     }
 

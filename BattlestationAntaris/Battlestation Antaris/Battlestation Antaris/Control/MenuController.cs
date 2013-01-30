@@ -7,7 +7,10 @@ namespace Battlestation_Antaris.Control
     class MenuController : SituationController
     {
 
-        public MenuController(Controller controller) : base(controller) { }
+        public MenuController(Controller controller) : base(controller) 
+        {
+            this.worldUpdate = WorldUpdate.NO_UPDATE;
+        }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {

@@ -29,6 +29,12 @@ namespace Battlestation_Antaris.Model
             this.rotation = Matrix.Identity;
             this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
             this.boneTransforms = new Matrix[model3d.Bones.Count];
+            this.speed = 0.0f;
+        }
+
+        public SpatialObject(Vector3 position, String modelName, ContentManager content, WorldModel world) : this(position, modelName, content)
+        {
+            world.allObjects.Add(this);
         }
 
         public virtual void Update(GameTime gameTime)

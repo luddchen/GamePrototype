@@ -44,12 +44,11 @@ namespace Battlestation_Antaris.Model
                 }
             }
 
-            this.spaceShip = new SpaceShip(new Vector3(0, 5, 50), "Models/compass", content);
+            this.spaceShip = new SpaceShip(- 2.7f * Vector3.Up, "Models/compass", content);
             this.allObjects.Add(this.spaceShip);
 
             this.spaceStation = new SpaceStation(Vector3.Zero, "Models/battlestation", content);
             this.allObjects.Add(this.spaceStation);
-            this.spaceStation.rotateY((float)(Math.PI / 8));
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)

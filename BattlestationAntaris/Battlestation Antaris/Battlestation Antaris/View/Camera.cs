@@ -13,13 +13,13 @@ namespace Battlestation_Antaris.View
 
         public Matrix projection;
         public Matrix view;
-        public int nearClipping = 1;
-        public int farClipping = 5000;
+        public float nearClipping = 1;
+        public float farClipping = 5000;
 
         public Camera(GraphicsDevice device)
         {
             this.device = device;
-            Update(Vector3.Zero, Vector3.UnitY, Vector3.UnitZ);
+            Update(Vector3.Zero, Vector3.Forward, Vector3.Up);
         }
 
         public void Update(Vector3 position, Vector3 direction, Vector3 up)

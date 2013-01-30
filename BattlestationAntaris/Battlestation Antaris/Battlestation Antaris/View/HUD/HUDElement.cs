@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Battlestation_Antaris.View
 {
 
-    abstract class HUDElement
+    public abstract class HUDElement
     {
 
         abstract public void Draw();
