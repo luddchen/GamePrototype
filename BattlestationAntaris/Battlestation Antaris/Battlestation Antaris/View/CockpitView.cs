@@ -29,6 +29,11 @@ namespace Battlestation_Antaris.View
             this.backgroundColor = Color.Purple;
         }
 
+        public override void Initialize()
+        {
+            this.compass.Initialize(this.controller.world.spaceShip);
+        }
+
         public override void Draw()
         {
             base.Draw();
@@ -77,11 +82,6 @@ namespace Battlestation_Antaris.View
 
         }
 
-
-        public override void Initialize()
-        {
-            this.compass.Initialize(this.controller.world.spaceShip, this.controller.world.spaceStation);
-        }
     }
 
 }
