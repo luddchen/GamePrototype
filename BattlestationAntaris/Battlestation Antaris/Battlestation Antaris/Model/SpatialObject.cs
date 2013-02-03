@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.Model
 {
@@ -20,7 +21,7 @@ namespace Battlestation_Antaris.Model
 
         public bool draw;
 
-        public Bounding bounding;
+        public BoundingSphere bounding;
 
         public SpatialObject(Vector3 position, String modelName, ContentManager content)
         {
@@ -30,6 +31,15 @@ namespace Battlestation_Antaris.Model
             this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
             this.boneTransforms = new Matrix[model3d.Bones.Count];
             this.speed = 0.0f;
+
+            // experimental bounding stuff --------------------------
+            this.bounding = new BoundingSphere();
+            this.model3d.CopyAbsoluteBoneTransformsTo(this.boneTransforms);
+            foreach (ModelMesh mesh in model3d.Meshes)
+            {
+                this.bounding = BoundingSphere.CreateMerged( mesh.BoundingSphere.Transform(this.boneTransforms[mesh.ParentBone.Index]), this.bounding);
+            }
+            // -------------------------------------------
         }
 
         public SpatialObject(Vector3 position, String modelName, ContentManager content, WorldModel world) : this(position, modelName, content)

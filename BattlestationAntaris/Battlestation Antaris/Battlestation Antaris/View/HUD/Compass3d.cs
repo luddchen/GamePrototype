@@ -41,7 +41,6 @@ namespace Battlestation_Antaris.View.HUD
 
             if (this.source != null)
             {
-
                 Vector3 pointer = Vector3.Subtract(this.target, this.source.globalPosition);
 
                 double forward = Vector3.Dot(pointer, this.source.rotation.Forward);

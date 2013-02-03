@@ -14,13 +14,13 @@ namespace Battlestation_Antaris.View
 
         public Color backgroundColor;
 
-        public Controller controller;
+        public Game1 game;
 
         public List<HUDElement> allHUDs;
 
-        public View(Controller controller)
+        public View(Game1 game)
         {
-            this.controller = controller;
+            this.game = game;
             this.allHUDs = new List<HUDElement>();
             this.is3D = false;
             this.backgroundColor = Color.Black;
@@ -30,11 +30,11 @@ namespace Battlestation_Antaris.View
 
         public virtual void Draw()
         {
-            this.controller.game.GraphicsDevice.Clear(this.backgroundColor);
+            this.game.GraphicsDevice.Clear(this.backgroundColor);
 
             if (this.is3D)
             {
-                this.controller.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+                this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
             }
 
             foreach (HUDElement element in allHUDs)

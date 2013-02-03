@@ -27,6 +27,8 @@ namespace Battlestation_Antaris.Model
 
         private void init()
         {
+            Console.Out.WriteLine("Station Bounding Sphere : " + this.bounding + " (" + this.model3d.Meshes.Count + " meshes)");
+
             StationAxis = model3d.Bones["StationAxis"];
             StationAxisTransform = StationAxis.Transform;
 

@@ -11,7 +11,7 @@ namespace Battlestation_Antaris.Model
 
     public class WorldModel
     {
-        public Controller controller;
+        public Game1 game;
 
         public SpaceShip spaceShip;
         public SpaceStation spaceStation;
@@ -20,9 +20,9 @@ namespace Battlestation_Antaris.Model
 
         public List<SpatialObject> allObjects;
 
-        public WorldModel(Controller controller)
+        public WorldModel(Game1 game)
         {
-            this.controller = controller;
+            this.game = game;
             this.allObjects = new List<SpatialObject>();
             this.allRadars = new List<Radar>();
             this.allTurrets = new List<Turret>();

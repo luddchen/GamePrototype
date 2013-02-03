@@ -74,11 +74,12 @@
   <ItemGroup>
     <Compile Include="Control\CockpitController.cs" />
     <Compile Include="Control\CommandController.cs" />
-    <Compile Include="Control\Controller.cs" />
+    <Compile Include="Control\Control.cs" />
     <Compile Include="Control\InputProvider.cs" />
     <Compile Include="Control\MenuController.cs" />
+    <Compile Include="Control\Situation.cs" />
     <Compile Include="Control\SituationController.cs" />
-    <Compile Include="Model\Bounding.cs" />
+    <Compile Include="Control\WorldUpdate.cs" />
     <Compile Include="Model\Collision.cs" />
     <Compile Include="Model\Radar.cs" />
     <Compile Include="Model\SpaceShip.cs" />

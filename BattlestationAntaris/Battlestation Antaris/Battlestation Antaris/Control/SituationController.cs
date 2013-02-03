@@ -5,22 +5,19 @@ using Microsoft.Xna.Framework;
 namespace Battlestation_Antaris.Control
 {
 
-    // update of the worldmodel pre/post situation update, or dont update world
-    public enum WorldUpdate
-    {
-        PRE, POST, NO_UPDATE
-    }
-
     abstract class SituationController
     {
 
-        public Controller controller;
+        public Game1 game;
+
+        public View.View view;
 
         public WorldUpdate worldUpdate;
 
-        public SituationController(Controller controller)
+        public SituationController(Game1 game, View.View view)
         {
-            this.controller = controller;
+            this.game = game;
+            this.view = view;
             this.worldUpdate = WorldUpdate.PRE;
         }
 

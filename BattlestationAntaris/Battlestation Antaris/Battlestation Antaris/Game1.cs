@@ -12,8 +12,12 @@ namespace Battlestation_Antaris
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
 
-        public Controller controller;
         public InputProvider inputProvider;
+
+        SituationController activeSituation;
+        List<SituationController> allSituations;
+
+        public Model.WorldModel world;
 
         public Game1()
         {
@@ -23,8 +27,23 @@ namespace Battlestation_Antaris
 
         protected override void Initialize()
         {
-            this.controller = new Controller(this);
             this.inputProvider = new InputProvider();
+
+            this.allSituations = new List<SituationController>();
+            this.allSituations.Add(new CockpitController(this, new View.CockpitView(this)));
+            this.allSituations.Add(new CommandController(this, new View.CommandView(this)));
+            this.allSituations.Add(new MenuController(this, new View.MenuView(this)));
+
+            switchTo(Situation.MENU);
+
+            this.world = new Model.WorldModel(this);
+
+            this.world.Initialize(Content);
+
+            foreach (SituationController situation in this.allSituations)
+            {
+                situation.view.Initialize();
+            }
 
             base.Initialize();
         }
@@ -32,23 +51,44 @@ namespace Battlestation_Antaris
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            this.controller.Initialize(this.Content);
         }
 
         protected override void UnloadContent()
         {
         }
 
+        public void switchTo(Situation situation)
+        {
+            this.activeSituation = this.allSituations[(int)situation];
+        }
+
         protected override void Update(GameTime gameTime)
         {
             this.inputProvider.Update();
-            this.controller.Update(gameTime);
+
+            switch (this.activeSituation.worldUpdate)
+            {
+                case WorldUpdate.PRE:
+                    this.world.Update(gameTime);
+                    this.activeSituation.Update(gameTime);
+                    break;
+
+                case WorldUpdate.NO_UPDATE:
+                    this.activeSituation.Update(gameTime);
+                    break;
+
+                case WorldUpdate.POST:
+                    this.activeSituation.Update(gameTime);
+                    this.world.Update(gameTime);
+                    break;
+            }
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            this.controller.Draw();
+            this.activeSituation.view.Draw();
             base.Draw(gameTime);
         }
     }

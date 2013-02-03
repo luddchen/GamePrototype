@@ -17,12 +17,12 @@ namespace Battlestation_Antaris.View
 
         Vector3 ambientColor;
 
-        public CockpitView(Controller controller)
-            : base(controller)
+        public CockpitView(Game1 game)
+            : base(game)
         {
-            this.camera = new Camera(this.controller.game.GraphicsDevice);
+            this.camera = new Camera(this.game.GraphicsDevice);
             this.ambientColor = new Vector3(0.5f, 0.5f, 0.5f);
-            this.compass = new Compass3d(this.controller.game.Content, this.controller.game.GraphicsDevice);
+            this.compass = new Compass3d(this.game.Content, this.game.GraphicsDevice);
             this.allHUDs.Add(this.compass);
             this.is3D = true;
 
@@ -31,18 +31,16 @@ namespace Battlestation_Antaris.View
 
         public override void Initialize()
         {
-            this.compass.Initialize(this.controller.world.spaceShip);
+            this.compass.Initialize(this.game.world.spaceShip);
         }
 
         public override void Draw()
         {
             base.Draw();
 
-            //this.controller.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+            this.camera.ClampTo(this.game.world.spaceShip);
 
-            this.camera.ClampTo(this.controller.world.spaceShip);
-
-            foreach (SpatialObject obj in this.controller.world.allObjects)
+            foreach (SpatialObject obj in this.game.world.allObjects)
             {
                 if (obj.draw)
                 {

@@ -7,14 +7,14 @@ namespace Battlestation_Antaris.Control
     class CommandController : SituationController
     {
 
-        public CommandController(Controller controller) : base(controller) { }
+        public CommandController(Game1 game, View.View view) : base(game, view) { }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (this.controller.game.inputProvider.isKeyOnState(ControlKey.SPACE, ControlState.PRESSED))
+            if (this.game.inputProvider.isKeyOnState(ControlKey.SPACE, ControlState.PRESSED))
             {
                 Console.Out.WriteLine("switch from command to cockpit");
-                this.controller.switchTo(Situation.cockpit);
+                this.game.switchTo(Situation.COCKPIT);
             }
         }
 

@@ -10,8 +10,8 @@ namespace Battlestation_Antaris.View
 
         int i = 0;
 
-        public CommandView(Controller controller)
-            : base(controller)
+        public CommandView(Game1 game)
+            : base(game)
         {
         }
 
