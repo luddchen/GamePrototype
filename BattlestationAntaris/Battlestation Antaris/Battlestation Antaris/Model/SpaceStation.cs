@@ -32,7 +32,7 @@ namespace Battlestation_Antaris.Model
             StationAxis = model3d.Bones["StationAxis"];
             StationAxisTransform = StationAxis.Transform;
 
-            rotateX((float)(-Math.PI/2));
+            Pitch((float)(-Math.PI/2));
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)

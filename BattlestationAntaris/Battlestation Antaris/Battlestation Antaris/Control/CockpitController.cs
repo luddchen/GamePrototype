@@ -17,35 +17,7 @@ namespace Battlestation_Antaris.Control
                 this.game.switchTo(Situation.MENU);
             }
 
-            if (this.game.inputProvider.isKeyOnState(ControlKey.UP, ControlState.DOWN))
-            {
-                this.game.world.spaceShip.rotateX((float)(Math.PI / 360));
-            }
-
-            if (this.game.inputProvider.isKeyOnState(ControlKey.DOWN, ControlState.DOWN))
-            {
-                this.game.world.spaceShip.rotateX(-(float)(Math.PI / 360));
-            }
-
-            if (this.game.inputProvider.isKeyOnState(ControlKey.LEFT, ControlState.DOWN))
-            {
-                this.game.world.spaceShip.rotateZ((float)(Math.PI / 360));
-            }
-
-            if (this.game.inputProvider.isKeyOnState(ControlKey.RIGHT, ControlState.DOWN))
-            {
-                this.game.world.spaceShip.rotateZ(-(float)(Math.PI / 360));
-            }
-
-            if (this.game.inputProvider.isKeyOnState(ControlKey.SPEEDUP, ControlState.DOWN))
-            {
-                this.game.world.spaceShip.speed += 0.01f;
-            }
-
-            if (this.game.inputProvider.isKeyOnState(ControlKey.SPEEDDOWN, ControlState.DOWN))
-            {
-                this.game.world.spaceShip.speed -= 0.01f;
-            }
+            this.game.world.spaceShip.InjectControl( this.game.inputProvider.getInput() );
 
         }
 

@@ -52,19 +52,70 @@ namespace Battlestation_Antaris.Model
             this.globalPosition += Vector3.Multiply(rotation.Forward, speed);
         }
 
-        public void rotateX(float angle)
+        public virtual void InjectControl(List<Control.Control> controlSequence) 
+        {
+            foreach (Control.Control control in controlSequence)
+            {
+                InjectControl(control);
+            }
+        }
+
+        public virtual void InjectControl(Control.Control control)
+        {
+            // experimental control stuff
+            switch (control)
+            {
+                case Control.Control.PITCH_UP :
+                    Pitch((float)(Math.PI / 360));
+                    break;
+
+                case Control.Control.PITCH_DOWN:
+                    Pitch(-(float)(Math.PI / 360));
+                    break;
+
+                case Control.Control.YAW_LEFT:
+                    Yaw((float)(Math.PI / 360));
+                    break;
+
+                case Control.Control.YAW_RIGHT:
+                    Yaw(-(float)(Math.PI / 360));
+                    break;
+
+                case Control.Control.ROLL_CLOCKWISE:
+                    Roll((float)(Math.PI / 360));
+                    break;
+
+                case Control.Control.ROLL_ANTICLOCKWISE:
+                    Roll(-(float)(Math.PI / 360));
+                    break;
+
+                case Control.Control.INCREASE_THROTTLE:
+                    this.speed += 0.01f;
+                    break;
+
+                case Control.Control.DECREASE_THROTTLE:
+                    this.speed -= 0.01f;
+                    break;
+
+                case Control.Control.ZERO_THROTTLE:
+                    this.speed = 0f;
+                    break;
+            }
+        }
+
+        protected void Pitch(float angle)
         {
             Matrix axisRotation = Matrix.CreateFromAxisAngle(rotation.Right, angle);
             rotation = rotation * axisRotation;
         }
 
-        public void rotateY(float angle)
+        protected void Roll(float angle)
         {
             Matrix axisRotation = Matrix.CreateFromAxisAngle(rotation.Forward, angle);
             rotation = rotation * axisRotation;
         }
 
-        public void rotateZ(float angle)
+        protected void Yaw(float angle)
         {
             Matrix axisRotation = Matrix.CreateFromAxisAngle(rotation.Up, angle);
             rotation = rotation * axisRotation;
