@@ -82,6 +82,8 @@
     <Compile Include="Control\SituationController.cs" />
     <Compile Include="Control\WorldUpdate.cs" />
     <Compile Include="Model\Collision.cs" />
+    <Compile Include="Model\CollisionObject.cs" />
+    <Compile Include="Model\CollisionOctree.cs" />
     <Compile Include="Model\Radar.cs" />
     <Compile Include="Model\SpaceShip.cs" />
     <Compile Include="Model\SpaceStation.cs" />

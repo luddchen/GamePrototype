@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Battlestation_Antaris.Control;
 using System.Collections.Generic;
+using System;
 
 namespace Battlestation_Antaris
 {
@@ -39,6 +40,12 @@ namespace Battlestation_Antaris
             this.world = new Model.WorldModel(this);
 
             this.world.Initialize(Content);
+
+            // CollisionTree testing
+            Battlestation_Antaris.Model.CollisionOctree tree = new Model.CollisionOctree(2, 1, new BoundingBox(new Vector3(-400, -400, -400), new Vector3(400, 400, 400)));
+            tree.insertFromWorld(this.world);
+
+            Console.Out.WriteLine(tree);
 
             foreach (SituationController situation in this.allSituations)
             {
