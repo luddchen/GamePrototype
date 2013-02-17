@@ -108,6 +108,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SpatialObjectAttributesLibrary\SpatialObjectAttributesLibrary.csproj">
+      <Project>{77241907-8BBD-407C-8196-C1867B450C4E}</Project>
+      <Name>SpatialObjectAttributesLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battlestation AntarisContent\Battlestation AntarisContent.contentproj">
       <Name>Battlestation_AntarisContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

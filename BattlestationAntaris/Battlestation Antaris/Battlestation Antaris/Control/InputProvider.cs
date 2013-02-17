@@ -26,7 +26,9 @@ namespace Battlestation_Antaris.Control
         {
             keyAssignments = new List<KeyAssignment>();
             keyAssignments.Add(new KeyAssignment(Control.PITCH_UP, Keys.Up));
-            keyAssignments.Add(new KeyAssignment(Control.PITCH_DOWN, Keys.Down));
+            keyAssignments.Add(new KeyAssignment(Control.PITCH_DOWN, Keys.Down)); 
+            keyAssignments.Add(new KeyAssignment(Control.ROLL_ANTICLOCKWISE, Keys.A));
+            keyAssignments.Add(new KeyAssignment(Control.ROLL_CLOCKWISE, Keys.D));
             keyAssignments.Add(new KeyAssignment(Control.YAW_LEFT, Keys.Left));
             keyAssignments.Add(new KeyAssignment(Control.YAW_RIGHT, Keys.Right));
             keyAssignments.Add(new KeyAssignment(Control.INCREASE_THROTTLE, Keys.W));

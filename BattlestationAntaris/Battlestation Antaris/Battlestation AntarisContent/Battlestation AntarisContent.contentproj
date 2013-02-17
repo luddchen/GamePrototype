@@ -105,6 +105,12 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SpatialObjectAttributesContentPipelineExtension\SpatialObjectAttributesContentPipelineExtension.csproj">
+      <Project>{25EEDF73-0480-428E-8F99-451C247FD482}</Project>
+      <Name>SpatialObjectAttributesContentPipelineExtension</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

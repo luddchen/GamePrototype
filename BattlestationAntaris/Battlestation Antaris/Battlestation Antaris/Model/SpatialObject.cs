@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using SpatialObjectAttributesLibrary;
 
 namespace Battlestation_Antaris.Model
 {
@@ -13,7 +14,9 @@ namespace Battlestation_Antaris.Model
 
         public Matrix[] boneTransforms;
 
-        public float speed;
+        //public float speed;
+
+        public SpatialObjectAttributes attributes;
 
         public Matrix rotation;
 
@@ -23,6 +26,10 @@ namespace Battlestation_Antaris.Model
 
         public BoundingSphere bounding;
 
+        bool resetPitch = true;
+        bool resetYaw = true;
+        bool resetRoll = true;
+
         public SpatialObject(Vector3 position, String modelName, ContentManager content)
         {
             this.draw = true;
@@ -30,7 +37,8 @@ namespace Battlestation_Antaris.Model
             this.rotation = Matrix.Identity;
             this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
             this.boneTransforms = new Matrix[model3d.Bones.Count];
-            this.speed = 0.0f;
+            //this.speed = 0.0f;
+            this.attributes = new SpatialObjectAttributes();
 
             // experimental bounding stuff --------------------------
             this.bounding = new BoundingSphere();
@@ -49,7 +57,62 @@ namespace Battlestation_Antaris.Model
 
         public virtual void Update(GameTime gameTime)
         {
-            this.globalPosition += Vector3.Multiply(rotation.Forward, speed);
+            this.globalPosition += Vector3.Multiply(rotation.Forward, this.attributes.Engine.CurrentVelocity);
+            Pitch(this.attributes.EnginePitch.CurrentVelocity);
+            Yaw(this.attributes.EngineYaw.CurrentVelocity);
+            Roll(this.attributes.EngineRoll.CurrentVelocity);
+
+            if (resetPitch)
+            {
+                if (this.attributes.EnginePitch.CurrentVelocity >= this.attributes.EnginePitch.Acceleration)
+                {
+                    this.attributes.EnginePitch.CurrentVelocity -= this.attributes.EnginePitch.Acceleration;
+                }
+                else if (this.attributes.EnginePitch.CurrentVelocity <= -this.attributes.EnginePitch.Acceleration)
+                {
+                    this.attributes.EnginePitch.CurrentVelocity += this.attributes.EnginePitch.Acceleration;
+                }
+                else
+                {
+                    this.attributes.EnginePitch.CurrentVelocity = 0;
+                }
+            }
+
+            if (resetYaw)
+            {
+                if (this.attributes.EngineYaw.CurrentVelocity >= this.attributes.EngineYaw.Acceleration)
+                {
+                    this.attributes.EngineYaw.CurrentVelocity -= this.attributes.EngineYaw.Acceleration;
+                }
+                else if (this.attributes.EngineYaw.CurrentVelocity <= -this.attributes.EngineYaw.Acceleration)
+                {
+                    this.attributes.EngineYaw.CurrentVelocity += this.attributes.EngineYaw.Acceleration;
+                }
+                else
+                {
+                    this.attributes.EngineYaw.CurrentVelocity = 0;
+                }
+            }
+
+            if (resetRoll)
+            {
+                if (this.attributes.EngineRoll.CurrentVelocity >= this.attributes.EngineRoll.Acceleration)
+                {
+                    this.attributes.EngineRoll.CurrentVelocity -= this.attributes.EngineRoll.Acceleration;
+                }
+                else if (this.attributes.EngineRoll.CurrentVelocity <= -this.attributes.EngineRoll.Acceleration)
+                {
+                    this.attributes.EngineRoll.CurrentVelocity += this.attributes.EngineRoll.Acceleration;
+                }
+                else
+                {
+                    this.attributes.EngineRoll.CurrentVelocity = 0;
+                }
+            }
+
+            resetPitch = true;
+            resetYaw = true;
+            resetRoll = true;
         }
 
         public virtual void InjectControl(List<Control.Control> controlSequence) 
@@ -63,44 +126,84 @@ namespace Battlestation_Antaris.Model
         public virtual void InjectControl(Control.Control control)
         {
             // experimental control stuff
+
             switch (control)
             {
-                case Control.Control.PITCH_UP :
-                    Pitch((float)(Math.PI / 360));
+                case Control.Control.PITCH_UP:
+                    this.attributes.EnginePitch.CurrentVelocity += this.attributes.EnginePitch.Acceleration;
+                    if (this.attributes.EnginePitch.CurrentVelocity > this.attributes.EnginePitch.MaxVelocity)
+                    {
+                        this.attributes.EnginePitch.CurrentVelocity = this.attributes.EnginePitch.MaxVelocity;
+                    }
+                    resetPitch = false;
                     break;
 
                 case Control.Control.PITCH_DOWN:
-                    Pitch(-(float)(Math.PI / 360));
+                    this.attributes.EnginePitch.CurrentVelocity -= this.attributes.EnginePitch.Acceleration;
+                    if (this.attributes.EnginePitch.CurrentVelocity < -this.attributes.EnginePitch.MaxVelocity)
+                    {
+                        this.attributes.EnginePitch.CurrentVelocity = -this.attributes.EnginePitch.MaxVelocity;
+                    }
+                    resetPitch = false;
                     break;
 
                 case Control.Control.YAW_LEFT:
-                    Yaw((float)(Math.PI / 360));
+                    this.attributes.EngineYaw.CurrentVelocity += this.attributes.EngineYaw.Acceleration;
+                    if (this.attributes.EngineYaw.CurrentVelocity > this.attributes.EngineYaw.MaxVelocity)
+                    {
+                        this.attributes.EngineYaw.CurrentVelocity = this.attributes.EngineYaw.MaxVelocity;
+                    }
+                    resetYaw = false;
                     break;
 
                 case Control.Control.YAW_RIGHT:
-                    Yaw(-(float)(Math.PI / 360));
+                    this.attributes.EngineYaw.CurrentVelocity -= this.attributes.EngineYaw.Acceleration;
+                    if (this.attributes.EngineYaw.CurrentVelocity < -this.attributes.EngineYaw.MaxVelocity)
+                    {
+                        this.attributes.EngineYaw.CurrentVelocity = -this.attributes.EngineYaw.MaxVelocity;
+                    }
+                    resetYaw = false;
                     break;
 
                 case Control.Control.ROLL_CLOCKWISE:
-                    Roll((float)(Math.PI / 360));
+                    this.attributes.EngineRoll.CurrentVelocity += this.attributes.EngineRoll.Acceleration;
+                    if (this.attributes.EngineRoll.CurrentVelocity > this.attributes.EngineRoll.MaxVelocity)
+                    {
+                        this.attributes.EngineRoll.CurrentVelocity = this.attributes.EngineRoll.MaxVelocity;
+                    }
+                    resetRoll = false;
                     break;
 
                 case Control.Control.ROLL_ANTICLOCKWISE:
-                    Roll(-(float)(Math.PI / 360));
+                    this.attributes.EngineRoll.CurrentVelocity -= this.attributes.EngineRoll.Acceleration;
+                    if (this.attributes.EngineRoll.CurrentVelocity < -this.attributes.EngineRoll.MaxVelocity)
+                    {
+                        this.attributes.EngineRoll.CurrentVelocity = -this.attributes.EngineRoll.MaxVelocity;
+                    }
+                    resetRoll = false;
                     break;
 
                 case Control.Control.INCREASE_THROTTLE:
-                    this.speed += 0.01f;
+                    this.attributes.Engine.CurrentVelocity += this.attributes.Engine.Acceleration;
+                    if (this.attributes.Engine.CurrentVelocity > this.attributes.Engine.MaxVelocity)
+                    {
+                        this.attributes.Engine.CurrentVelocity = this.attributes.Engine.MaxVelocity;
+                    }
                     break;
 
                 case Control.Control.DECREASE_THROTTLE:
-                    this.speed -= 0.01f;
+                    this.attributes.Engine.CurrentVelocity -= this.attributes.Engine.Acceleration;
+                    if (this.attributes.Engine.CurrentVelocity < -this.attributes.Engine.MaxVelocity)
+                    {
+                        this.attributes.Engine.CurrentVelocity = -this.attributes.Engine.MaxVelocity;
+                    }
                     break;
 
                 case Control.Control.ZERO_THROTTLE:
-                    this.speed = 0f;
+                    this.attributes.Engine.CurrentVelocity = 0f;
                     break;
             }
+
         }
 
         protected void Pitch(float angle)

@@ -18,7 +18,7 @@ namespace Battlestation_Antaris.Model
             this.movingSphere = 
                 BoundingSphere.CreateMerged(
                     obj.bounding.Transform(Matrix.CreateTranslation(obj.globalPosition)),
-                    obj.bounding.Transform(Matrix.CreateTranslation(Vector3.Add( obj.globalPosition, Vector3.Multiply(obj.rotation.Forward, obj.speed) )))
+                    obj.bounding.Transform(Matrix.CreateTranslation(Vector3.Add( obj.globalPosition, Vector3.Multiply(obj.rotation.Forward, obj.attributes.Engine.CurrentVelocity) )))
                 );
         }
 
