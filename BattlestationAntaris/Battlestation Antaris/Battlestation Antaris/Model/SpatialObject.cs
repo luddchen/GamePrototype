@@ -58,9 +58,10 @@ namespace Battlestation_Antaris.Model
         public virtual void Update(GameTime gameTime)
         {
             this.globalPosition += Vector3.Multiply(rotation.Forward, this.attributes.Engine.CurrentVelocity);
-            Pitch(this.attributes.EnginePitch.CurrentVelocity);
-            Yaw(this.attributes.EngineYaw.CurrentVelocity);
-            Roll(this.attributes.EngineRoll.CurrentVelocity);
+            this.rotation = Tools.Tools.YawPitchRoll(this.rotation, 
+                                                    this.attributes.EngineYaw.CurrentVelocity, 
+                                                    this.attributes.EnginePitch.CurrentVelocity, 
+                                                    this.attributes.EngineRoll.CurrentVelocity);
 
             if (resetPitch)
             {
@@ -206,23 +207,6 @@ namespace Battlestation_Antaris.Model
 
         }
 
-        protected void Pitch(float angle)
-        {
-            Matrix axisRotation = Matrix.CreateFromAxisAngle(rotation.Right, angle);
-            rotation = rotation * axisRotation;
-        }
-
-        protected void Roll(float angle)
-        {
-            Matrix axisRotation = Matrix.CreateFromAxisAngle(rotation.Forward, angle);
-            rotation = rotation * axisRotation;
-        }
-
-        protected void Yaw(float angle)
-        {
-            Matrix axisRotation = Matrix.CreateFromAxisAngle(rotation.Up, angle);
-            rotation = rotation * axisRotation;
-        }
     }
 }
 

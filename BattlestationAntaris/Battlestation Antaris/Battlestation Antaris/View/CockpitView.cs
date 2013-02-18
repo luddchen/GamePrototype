@@ -17,6 +17,8 @@ namespace Battlestation_Antaris.View
 
         Vector3 ambientColor;
 
+        List<BackgroundImage> backgroundImages;
+
         public CockpitView(Game1 game)
             : base(game)
         {
@@ -27,6 +29,7 @@ namespace Battlestation_Antaris.View
             this.is3D = true;
 
             this.backgroundColor = Color.Purple;
+            this.backgroundImages = new List<BackgroundImage>();
         }
 
         public override void Initialize()
@@ -39,11 +42,28 @@ namespace Battlestation_Antaris.View
             this.allHUD_2D.Add(testString);
 
             this.allHUD_2D.Add(new ShipAttributesVisualizer(this.game.world.spaceShip, this.game));
+
+            this.backgroundImages.Add(new BackgroundImage(this.game.Content.Load<Texture2D>("Sprites//Galaxy"), 
+                                                            500, 500, Matrix.Identity, new Color(255,255,255, 160), this.game));
+
+            this.backgroundImages.Add(new BackgroundImage(this.game.Content.Load<Texture2D>("Sprites//Erde2"), 
+                                                            360, 360, Tools.Tools.Yaw( Matrix.Identity, (float)(Math.PI/8)), Color.White, this.game));
         }
 
         public override void Draw()
         {
             base.Draw();
+
+
+            this.game.spriteBatch.Begin();
+
+            foreach (BackgroundImage bg in this.backgroundImages)
+            {
+                bg.Draw(this.game.spriteBatch, this.game.world.spaceShip, this.camera);
+            }
+
+            this.game.spriteBatch.End();
+
 
             this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
 
