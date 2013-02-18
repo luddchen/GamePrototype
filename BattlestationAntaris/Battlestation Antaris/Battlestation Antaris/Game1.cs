@@ -47,17 +47,17 @@ namespace Battlestation_Antaris
 
             Console.Out.WriteLine(tree);
 
-            foreach (SituationController situation in this.allSituations)
-            {
-                situation.view.Initialize();
-            }
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            foreach (SituationController situation in this.allSituations)
+            {
+                situation.view.Initialize();
+            }
         }
 
         protected override void UnloadContent()

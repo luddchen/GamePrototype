@@ -18,6 +18,7 @@ namespace Battlestation_Antaris.View
         public override void Draw()
         {
             base.Draw();
+            DrawHUD2D();
 
             i++;
             if (i > 60) i = 0;
@@ -26,6 +27,10 @@ namespace Battlestation_Antaris.View
 
         public override void Initialize()
         {
+            HUDString testString = new HUDString("Antaris Menu", game.Content);
+            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
+
+            this.allHUD_2D.Add(testString);
         }
     }
 

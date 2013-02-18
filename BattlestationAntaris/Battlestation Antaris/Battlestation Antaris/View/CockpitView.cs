@@ -23,7 +23,7 @@ namespace Battlestation_Antaris.View
             this.camera = new Camera(this.game.GraphicsDevice);
             this.ambientColor = new Vector3(0.5f, 0.5f, 0.5f);
             this.compass = new Compass3d(this.game.Content, this.game.GraphicsDevice);
-            this.allHUDs.Add(this.compass);
+            this.allHUD_3D.Add(this.compass);
             this.is3D = true;
 
             this.backgroundColor = Color.Purple;
@@ -32,11 +32,20 @@ namespace Battlestation_Antaris.View
         public override void Initialize()
         {
             this.compass.Initialize(this.game.world.spaceShip);
+
+            HUDString testString = new HUDString("Antaris Cockpit : W/S - Engine , A/D - Roll", null, null, null, new Color(100,100,100,100), 0.5f, 0.0f, game.Content);
+            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, 30);
+
+            this.allHUD_2D.Add(testString);
+
+            this.allHUD_2D.Add(new ShipAttributesVisualizer(this.game.world.spaceShip, this.game));
         }
 
         public override void Draw()
         {
             base.Draw();
+
+            this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
 
             this.camera.ClampTo(this.game.world.spaceShip);
 
@@ -77,6 +86,11 @@ namespace Battlestation_Antaris.View
 
                 }
             }
+
+
+            DrawHUD3D();
+
+            DrawHUD2D();
 
         }
 

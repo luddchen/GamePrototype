@@ -16,12 +16,15 @@ namespace Battlestation_Antaris.View
 
         public Game1 game;
 
-        public List<HUDElement> allHUDs;
+        public List<HUDElement2D> allHUD_2D;
+
+        public List<HUDElement3D> allHUD_3D;
 
         public View(Game1 game)
         {
             this.game = game;
-            this.allHUDs = new List<HUDElement>();
+            this.allHUD_2D = new List<HUDElement2D>();
+            this.allHUD_3D = new List<HUDElement3D>();
             this.is3D = false;
             this.backgroundColor = Color.Black;
         }
@@ -32,14 +35,39 @@ namespace Battlestation_Antaris.View
         {
             this.game.GraphicsDevice.Clear(this.backgroundColor);
 
+
+            // 2D HUD
+            //DrawHUD2D();
+
+            // 3D HUD
+            //DrawHUD3D();
+
+        }
+
+        protected void DrawHUD2D()
+        {
+            this.game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+
+            foreach (HUDElement2D element in this.allHUD_2D)
+            {
+                element.Draw(this.game.spriteBatch);
+            }
+
+            this.game.spriteBatch.End();
+        }
+
+        protected void DrawHUD3D()
+        {
             if (this.is3D)
             {
                 this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
-            }
 
-            foreach (HUDElement element in allHUDs)
-            {
-                element.Draw();
+                //this.game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
+                foreach (HUDElement3D element in this.allHUD_3D)
+                {
+                    element.Draw();
+                }
             }
         }
 
