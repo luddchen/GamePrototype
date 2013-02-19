@@ -75,19 +75,19 @@ namespace Battlestation_Antaris.Tools
 
 
         /// <summary>
-        /// computes the rotation of a global target vector in relation to a local rotation matrix
+        /// computes the rotation of a target vector in relation to an other rotation matrix
         /// </summary>
-        /// <param name="targetVector">the global target vector</param>
-        /// <param name="localRotation">the local rotation matrix</param>
+        /// <param name="targetVector">the target vector</param>
+        /// <param name="globalRotation">the global rotation matrix</param>
         /// <returns>the rotation on up-axis (Vector3.Z) and on right-axis (Vector3.X)</returns>
-        public static Vector3 GetRotation(Vector3 targetVector, Matrix localRotation)
+        public static Vector3 GetRotation(Vector3 targetVector, Matrix globalRotation)
         {
             Vector3 rotation = new Vector3();
 
-            // project global target vector to local target vector
-            double forward = Vector3.Dot(targetVector, localRotation.Forward);
-            double right = Vector3.Dot(targetVector, localRotation.Right);
-            double up = Vector3.Dot(targetVector, localRotation.Up);
+            // project local target vector into global target vector
+            double forward = Vector3.Dot(targetVector, globalRotation.Forward);
+            double right = Vector3.Dot(targetVector, globalRotation.Right);
+            double up = Vector3.Dot(targetVector, globalRotation.Up);
 
             // compute rotation on up-axis
             rotation.Z = (float)Math.Atan2(forward, right);
@@ -97,6 +97,45 @@ namespace Battlestation_Antaris.Tools
 
             // compute rotation on right-axis
             rotation.X  = (float)Math.Atan2(planeDist, up);
+
+            return rotation;
+        }
+
+
+        /// <summary>
+        /// computes the rotation of a target rotation matrix in relation to an other rotation matrix
+        /// </summary>
+        /// <param name="targetRotation"></param>
+        /// <param name="globalRotation"></param>
+        /// <returns></returns>
+        public static Vector3 GetRotation(Matrix targetRotation, Matrix globalRotation)
+        {
+            Vector3 rotation = new Vector3();
+
+            // project local target vector into global target vector
+            double forward = Vector3.Dot(targetRotation.Forward, globalRotation.Forward);
+            double right = Vector3.Dot(targetRotation.Forward, globalRotation.Right);
+            double up = Vector3.Dot(targetRotation.Forward, globalRotation.Up);
+
+            // compute rotation on up-axis
+            rotation.Z = (float)Math.Atan2(forward, right);
+
+            // compute length of local target vector after projection on forward-right-plane 
+            double planeDist = Math.Sqrt(forward * forward + right * right);
+
+            // compute rotation on right-axis
+            rotation.X = (float)Math.Atan2(planeDist, up);
+
+
+            // experimental roll computation
+            Matrix targetCorrected = targetRotation * Matrix.CreateRotationZ(-rotation.Z) * Matrix.CreateRotationX(-rotation.X);
+
+            double forward2 = Vector3.Dot(targetCorrected.Up, globalRotation.Forward);
+            double right2 = Vector3.Dot(targetCorrected.Up, globalRotation.Right);
+            double up2 = Vector3.Dot(targetCorrected.Up, globalRotation.Up);
+
+            rotation.Y = (float)Math.Atan2(up2, right2);
+
 
             return rotation;
         }

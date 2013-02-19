@@ -105,9 +105,9 @@ namespace Battlestation_Antaris.View
         public void Draw(SpriteBatch spriteBatch, SpatialObject obj, Camera camera)
         {
 
-            Vector3 rot = Tools.Tools.GetRotation(this.rotation.Forward, obj.rotation);
+            Vector3 rot = Tools.Tools.GetRotation(this.rotation, obj.rotation);
 
-            // todo : insert roll + use camera projection to determine position multiplicator + draw only if on viewport
+            // todo : use camera projection to determine position multiplicator + draw only if on viewport
             Rectangle dest = new Rectangle(
                     (int)(this.game.GraphicsDevice.Viewport.Width / 2 - (rot.Z - Math.PI/2) * this.game.GraphicsDevice.Viewport.Width * 1.54f),
                     (int)(this.game.GraphicsDevice.Viewport.Height / 2 + (rot.X - Math.PI/2) * this.game.GraphicsDevice.Viewport.Height * 2.4f),
@@ -118,7 +118,7 @@ namespace Battlestation_Antaris.View
                             dest,
                             null,
                             this.color,
-                            0,
+                            -rot.Y,
                             this.Origin,
                             SpriteEffects.None,
                             0.0f);
