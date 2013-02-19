@@ -10,6 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Battlestation_Antaris.View.HUD
 {
 
+    /// <summary>
+    /// a test class for debuging spatial object movement
+    /// </summary>
     class ShipAttributesVisualizer : HUDElement2D
     {
 
@@ -21,6 +24,7 @@ namespace Battlestation_Antaris.View.HUD
         HUDString distance;
 
         SpatialObject ship;
+
 
         public ShipAttributesVisualizer(SpatialObject ship, Game1 game)
         {
@@ -42,6 +46,11 @@ namespace Battlestation_Antaris.View.HUD
             this.distance.Position = new Vector2(game.GraphicsDevice.Viewport.Width * 0.1f, game.GraphicsDevice.Viewport.Height * 0.95f);
         }
 
+
+        /// <summary>
+        /// draw the spatial object attributes
+        /// </summary>
+        /// <param name="spritBatch"></param>
         public override void Draw(SpriteBatch spritBatch)
         {
             this.velocity.String = String.Format("Speed : {0:F2}", this.ship.attributes.Engine.CurrentVelocity);

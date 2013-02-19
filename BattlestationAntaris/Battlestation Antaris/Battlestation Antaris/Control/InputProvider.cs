@@ -1,30 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
 namespace Battlestation_Antaris.Control
 {
 
+    /// <summary>
+    /// depricated enumeration for control and key assignment, actually used to switch the different situations
+    /// </summary>
     public enum ControlKey
     {
         UP = Keys.Up, DOWN = Keys.Down, LEFT = Keys.Left, RIGHT = Keys.Right, SPEEDUP = Keys.W, SPEEDDOWN = Keys.S, ESC = Keys.Escape, SPACE = Keys.Space
     }
 
+
+    /// <summary>
+    /// depricated enumeration for key states, actually used to switch the different situations
+    /// </summary>
     public enum ControlState
     {
         PRESSED, RELEASED, DOWN, UP
     }
 
+
+    /// <summary>
+    /// a class that collects and provides user/player input
+    /// </summary>
     public class InputProvider
     {
-        KeyboardState oldKeyboardState;
-        KeyboardState newKeyboardState;
 
-        List<KeyAssignment> keyAssignments; 
+        /// <summary>
+        /// the old keyboard state
+        /// </summary>
+        private KeyboardState oldKeyboardState;
 
+
+        /// <summary>
+        /// the new keyboard state
+        /// </summary>
+        private KeyboardState newKeyboardState;
+
+
+        /// <summary>
+        /// a list of all key assignments
+        /// </summary>
+        private List<KeyAssignment> keyAssignments; 
+
+
+        /// <summary>
+        /// create a new input provider
+        /// </summary>
         public InputProvider()
         {
             keyAssignments = new List<KeyAssignment>();
+
+            // create some key assignments
             keyAssignments.Add(new KeyAssignment(Control.PITCH_UP, Keys.Up));
             keyAssignments.Add(new KeyAssignment(Control.PITCH_DOWN, Keys.Down)); 
             keyAssignments.Add(new KeyAssignment(Control.ROLL_ANTICLOCKWISE, Keys.A));
@@ -35,6 +64,10 @@ namespace Battlestation_Antaris.Control
             keyAssignments.Add(new KeyAssignment(Control.DECREASE_THROTTLE, Keys.S));
         }
 
+
+        /// <summary>
+        /// update the input provider
+        /// </summary>
         public void Update()
         {
             this.oldKeyboardState = this.newKeyboardState;
@@ -42,7 +75,7 @@ namespace Battlestation_Antaris.Control
         }
 
 
-        // old input version for testing
+        // depricated input version , actually used to switch sitations 
         public bool isKeyOnState(ControlKey key, ControlState state) 
         {
             bool oldState = this.oldKeyboardState.IsKeyDown((Keys)key);
@@ -55,6 +88,11 @@ namespace Battlestation_Antaris.Control
             return false;
         }
 
+
+        /// <summary>
+        /// get a list of control requests, depending on the configured key assignments
+        /// </summary>
+        /// <returns>a list of control requests</returns>
         public List<Control> getInput()
         {
             List<Control> controlSequence = new List<Control>();

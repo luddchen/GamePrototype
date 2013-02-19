@@ -9,58 +9,95 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.View.HUD
 {
+
+    /// <summary>
+    /// represents an 3D compass as HUD element
+    /// </summary>
     public class Compass3d : HUDElement3D
     {
 
-        public Microsoft.Xna.Framework.Graphics.Model model3d;
-
-        public Matrix[] boneTransforms;
-
-        private SpatialObject source;
-
-        public Vector3 target;
-
+        /// <summary>
+        /// the Graphics device, necessary for viewport aspect ratio
+        /// </summary>
         private GraphicsDevice device;
 
+
+        /// <summary>
+        /// the compass 3d model
+        /// </summary>
+        private Microsoft.Xna.Framework.Graphics.Model model3d;
+
+
+        /// <summary>
+        /// the transformation matrices of the 3d model parts
+        /// </summary>
+        private Matrix[] boneTransforms;
+
+
+        /// <summary>
+        /// the spatial object (e.g. spaceship) that contains the compass
+        /// </summary>
+        private SpatialObject source;
+
+
+        /// <summary>
+        /// the targeted 3d point
+        /// </summary>
+        public Vector3 target;
+
+
+        /// <summary>
+        /// creates a new compass instance
+        /// </summary>
+        /// <param name="content">game content manager</param>
+        /// <param name="device">game graphics device</param>
         public Compass3d(ContentManager content, GraphicsDevice device)
         {
+            // init 3d model and its transformation matrices
             this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>("Models/compass2");
             this.boneTransforms = new Matrix[model3d.Bones.Count];
 
             this.device = device;
-            this.target = new Vector3();
+            this.target = new Vector3();    // target vector = zero
         }
 
+
+        /// <summary>
+        /// initialize the compass on the specified spatial object that contains this compass
+        /// </summary>
+        /// <param name="source"></param>
         public void Initialize(SpatialObject source)
         {
             this.source = source;
         }
 
+
+        /// <summary>
+        /// draw the compass 3d model
+        /// </summary>
         public override void Draw()
         {
 
+            // if source is set
             if (this.source != null)
             {
+                // get distance vector
                 Vector3 pointer = Vector3.Subtract(this.target, this.source.globalPosition);
 
-                double forward = Vector3.Dot(pointer, this.source.rotation.Forward);
-                double right = Vector3.Dot(pointer, this.source.rotation.Right);
-                double up = Vector3.Dot(pointer, this.source.rotation.Up);
+                // get local rotation
+                Vector3 rot = Tools.Tools.GetRotation(pointer, this.source.rotation);
 
-                double rotZ = Math.Atan2(forward, right);
-
-                double planeDist = Math.Sqrt(forward * forward + right * right);
-
-                double rotX = Math.Atan2(planeDist, up);
-
+                // rotate, scale and translate the 3d model
                 model3d.Root.Transform = Matrix.CreateScale(0.1f)
-                                        * Matrix.CreateFromAxisAngle(Vector3.Forward, (float)rotX)
-                                        * Matrix.CreateFromAxisAngle(Vector3.Up, (float)rotZ)
+                                        * Matrix.CreateFromAxisAngle(Vector3.Forward, rot.X)
+                                        * Matrix.CreateFromAxisAngle(Vector3.Up, rot.Z)
                                         * Matrix.CreateTranslation(Vector3.Add( Vector3.Multiply(Vector3.Forward, 1.75f) ,
                                                                                 Vector3.Multiply(Vector3.Down, 0.2f)));
 
+                // and create transformation matrices for all 3d parts
                 model3d.CopyAbsoluteBoneTransformsTo(boneTransforms);
 
+                // draw
                 foreach (ModelMesh mesh in model3d.Meshes)
                 {
                     foreach (BasicEffect effect in mesh.Effects)

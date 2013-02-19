@@ -11,34 +11,60 @@ namespace Battlestation_Antaris.View
     /// </summary>
     class HUDString : HUDElement2D
     {
-        protected SpriteFont font;
-
-        private Vector2 measureString;
-        private Color BackgroundColor;
-        private Texture2D BackgroundTexture;
-        private Vector2 BackgroundTextureOrigin;
 
         /// <summary>
-        /// name of this element
+        /// the Font
         /// </summary>
-        public String Name { get; set; }
+        protected SpriteFont font;
 
+
+        /// <summary>
+        /// the width and height of the displayed string
+        /// </summary>
+        private Vector2 measureString;
+
+
+        /// <summary>
+        /// the multiply color of the background image, if existent
+        /// </summary>
+        private Color BackgroundColor;
+
+
+        /// <summary>
+        /// the background image texture
+        /// </summary>
+        private Texture2D BackgroundTexture;
+
+
+        /// <summary>
+        /// the origin of the background image texture, if existent
+        /// </summary>
+        private Vector2 BackgroundTextureOrigin;
+
+
+        /// <summary>
+        /// the displayed string
+        /// </summary>
         public String String { get; set; }
+
 
         /// <summary>
         /// local position of this element
         /// </summary>
         public Vector2 Position { get; set; }
 
+
         /// <summary>
         /// color of this element
         /// </summary>
         public Color Color { get; set; }
 
+
         /// <summary>
         /// scale of this element
         /// </summary>
         public float Scale { get; set; }
+
 
         /// <summary>
         /// get width of this element
@@ -49,6 +75,7 @@ namespace Battlestation_Antaris.View
             set { }
         }
 
+
         /// <summary>
         /// get height of this element
         /// </summary>
@@ -58,15 +85,18 @@ namespace Battlestation_Antaris.View
             set { }
         }
 
+
         /// <summary>
         /// rotation of this element
         /// </summary>
         public float Rotation { get; set; }
 
+
         /// <summary>
         /// if this element visible or not
         /// </summary>
         public bool isVisible { get; set; }
+
 
         /// <summary>
         /// size of unscaled String
@@ -80,6 +110,11 @@ namespace Battlestation_Antaris.View
             }
         }
 
+
+        /// <summary>
+        /// creates a new HUD string
+        /// </summary>
+        /// <param name="content">game content manager</param>
         public HUDString(ContentManager content)
         {
             this.font = content.Load<SpriteFont>("Fonts\\Linds");
@@ -90,6 +125,12 @@ namespace Battlestation_Antaris.View
             this.isVisible = true;
         }
 
+
+        /// <summary>
+        /// creates a new HUD string
+        /// </summary>
+        /// <param name="text">text to display</param>
+        /// <param name="content">game content manager</param>
         public HUDString(String text, ContentManager content)
         {
             this.font = content.Load<SpriteFont>("Fonts\\Linds");
@@ -100,6 +141,18 @@ namespace Battlestation_Antaris.View
             this.isVisible = true;
         }
 
+
+        /// <summary>
+        /// creates a new HUD string
+        /// </summary>
+        /// <param name="text">text to display</param>
+        /// <param name="font">font</param>
+        /// <param name="position">position</param>
+        /// <param name="color">color</param>
+        /// <param name="backgroundColor">background multiply color, can be null (disables the background)</param>
+        /// <param name="scale">scale</param>
+        /// <param name="rotation">rotation</param>
+        /// <param name="content">game content manager</param>
         public HUDString(String text, SpriteFont font, Vector2? position, Color? color, Color? backgroundColor, float? scale, float? rotation, ContentManager content)
         {
             if (text == null) { this.String = " "; }
@@ -139,6 +192,7 @@ namespace Battlestation_Antaris.View
                 spriteBatch.DrawString(this.font, this.String, this.Position, this.Color, -this.Rotation, this.MeasureString / 2, this.Scale, SpriteEffects.None, 0.01f);
             }
         }
+
 
         /// <summary>
         /// testing intersection with point

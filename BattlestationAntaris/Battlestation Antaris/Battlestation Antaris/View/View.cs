@@ -7,19 +7,46 @@ using Microsoft.Xna.Framework;
 namespace Battlestation_Antaris.View
 {
 
+    /// <summary>
+    /// abstract basis class for views
+    /// </summary>
     abstract class View
     {
 
+        /// <summary>
+        /// if the view contains 3D elements
+        /// </summary>
         public bool is3D;
 
+
+        /// <summary>
+        /// background color of this view
+        /// </summary>
         public Color backgroundColor;
 
+
+        /// <summary>
+        /// the game
+        /// </summary>
         public Game1 game;
 
+
+        /// <summary>
+        /// a list of 2D HUD elements
+        /// </summary>
         public List<HUDElement2D> allHUD_2D;
 
+
+        /// <summary>
+        /// a list of 3D HUD elements
+        /// </summary>
         public List<HUDElement3D> allHUD_3D;
 
+
+        /// <summary>
+        /// create a new view, 3D disabled
+        /// </summary>
+        /// <param name="game">the game</param>
         public View(Game1 game)
         {
             this.game = game;
@@ -29,23 +56,38 @@ namespace Battlestation_Antaris.View
             this.backgroundColor = Color.Black;
         }
 
+
+        /// <summary>
+        /// initialize content
+        /// </summary>
         public abstract void Initialize();
 
-        public virtual void Draw()
+
+        /// <summary>
+        /// draw content
+        /// HUD 
+        /// </summary>
+        public void Draw()
         {
             this.game.GraphicsDevice.Clear(this.backgroundColor);
 
+            // draw content
+            DrawContent();
 
-            // 2D HUD
-            //DrawHUD2D();
 
-            // 3D HUD
-            //DrawHUD3D();
+            // draw 3D HUD elements if 3D is enabled
+            if (this.is3D)
+            {
+                this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
 
-        }
+                foreach (HUDElement3D element in this.allHUD_3D)
+                {
+                    element.Draw();
+                }
+            }
 
-        protected void DrawHUD2D()
-        {
+
+            // draw 2D HUD elements
             this.game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
             foreach (HUDElement2D element in this.allHUD_2D)
@@ -54,22 +96,14 @@ namespace Battlestation_Antaris.View
             }
 
             this.game.spriteBatch.End();
+
         }
 
-        protected void DrawHUD3D()
-        {
-            if (this.is3D)
-            {
-                this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
 
-                //this.game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-
-                foreach (HUDElement3D element in this.allHUD_3D)
-                {
-                    element.Draw();
-                }
-            }
-        }
+        /// <summary>
+        /// draw the view content
+        /// </summary>
+        abstract protected void DrawContent();
 
     }
 
