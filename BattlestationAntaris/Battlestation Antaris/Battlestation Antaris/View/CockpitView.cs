@@ -51,7 +51,7 @@ namespace Battlestation_Antaris.View
             this.allHUD_3D.Add(this.compass);
             this.is3D = true;
 
-            this.backgroundColor = Color.Purple;
+            this.backgroundColor = Color.Black;
             this.backgroundImages = new List<BackgroundImage>();
         }
 
@@ -73,13 +73,45 @@ namespace Battlestation_Antaris.View
 
             this.allHUD_2D.Add(new ShipAttributesVisualizer(this.game.world.spaceShip, this.game));
 
+            Random random = new Random();
 
             // background
-            this.backgroundImages.Add(new BackgroundImage(this.game.Content.Load<Texture2D>("Sprites//Galaxy"), 
-                                                            500, 500, Matrix.Identity, new Color(255,255,255, 160), this.game));
+            Texture2D galaxy = this.game.Content.Load<Texture2D>("Sprites//Galaxy");
+            Texture2D erde = this.game.Content.Load<Texture2D>("Sprites//Erde2");
+            for (int i = 0; i < 80; i++)
+            {
+                float width = 200 + random.Next(600);
+                float height = 200 + random.Next(600);
+                float yaw = (float)(random.NextDouble() * Math.PI * 2);
+                float pitch = (float)(random.NextDouble() * Math.PI);
+                float roll = (float)(random.NextDouble() * Math.PI * 2);
+                int red = 128 + random.Next(127);
+                int green = 128 + random.Next(127);
+                int blue = 128 + random.Next(127);
+                int alpha = 32 + random.Next(32);
+                Matrix bgRot = Tools.Tools.YawPitchRoll(Matrix.Identity, yaw, pitch, roll);
+                Color bgColor = new Color(red, green, blue, alpha);
 
-            this.backgroundImages.Add(new BackgroundImage(this.game.Content.Load<Texture2D>("Sprites//Erde2"), 
-                                                            360, 360, Tools.Tools.Yaw( Matrix.Identity, (float)(Math.PI/8)), Color.White, this.game));
+                this.backgroundImages.Add( new BackgroundImage(galaxy, width, height, bgRot, bgColor, game));
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                float width = 400;
+                float height = 400;
+                float yaw = (float)(random.NextDouble() * Math.PI * 2);
+                float pitch = (float)(random.NextDouble() * Math.PI);
+                float roll = (float)(random.NextDouble() * Math.PI * 2);
+                int red = 128 + random.Next(127);
+                int green = 128 + random.Next(127);
+                int blue = 128 + random.Next(127);
+                int alpha = 32 + random.Next(32);
+                Matrix bgRot = Tools.Tools.YawPitchRoll(Matrix.Identity, yaw, pitch, roll);
+                Color bgColor = new Color(red, green, blue);
+
+                this.backgroundImages.Add(new BackgroundImage(erde, width, height, bgRot, bgColor, game));
+            }
+
         }
 
 

@@ -96,7 +96,7 @@ namespace Battlestation_Antaris.Tools
             double planeDist = Math.Sqrt(forward * forward + right * right);
 
             // compute rotation on right-axis
-            rotation.X  = (float)Math.Atan2(planeDist, up);
+            rotation.X = (float)Math.Atan2(planeDist, up);
 
             return rotation;
         }
@@ -108,7 +108,7 @@ namespace Battlestation_Antaris.Tools
         /// <param name="targetRotation"></param>
         /// <param name="globalRotation"></param>
         /// <returns></returns>
-        public static Vector3 GetRotation(Matrix targetRotation, Matrix globalRotation)
+        public static Vector3 GetYawPitchRoll(Matrix targetRotation, Matrix globalRotation)
         {
             Vector3 rotation = new Vector3();
 
@@ -128,13 +128,9 @@ namespace Battlestation_Antaris.Tools
 
 
             // experimental roll computation
-            Matrix targetCorrected = targetRotation * Matrix.CreateRotationZ(-rotation.Z) * Matrix.CreateRotationX(-rotation.X);
+            Matrix targetCorrected = targetRotation * Matrix.Invert(globalRotation);
 
-            double forward2 = Vector3.Dot(targetCorrected.Up, globalRotation.Forward);
-            double right2 = Vector3.Dot(targetCorrected.Up, globalRotation.Right);
-            double up2 = Vector3.Dot(targetCorrected.Up, globalRotation.Up);
-
-            rotation.Y = (float)Math.Atan2(up2, right2);
+            rotation.Y = (float)Math.Atan2(targetCorrected.Up.Y, targetCorrected.Up.X);
 
 
             return rotation;
