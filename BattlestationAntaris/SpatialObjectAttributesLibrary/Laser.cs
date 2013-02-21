@@ -35,6 +35,45 @@ namespace SpatialObjectAttributesLibrary
             this.HeatRegeneration = heatRegeneration;
         }
 
+
+        public void set(float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration)
+        {
+            base.set(damage, range, projectileVelocity);
+
+            this.HeatProduction = heatProduction;
+            this.HeatUntilCooldown = heatUntilCooldown;
+            this.CurrentHeat = 0;
+            this.HeatRegeneration = heatRegeneration;
+        }
+
+        public override void setValues(float[] values, ref int index)
+        {
+            base.setValues(values, ref index);
+
+            this.HeatProduction = values[index++];
+            this.HeatUntilCooldown = values[index++];
+            this.CurrentHeat = 0;
+            this.HeatRegeneration = values[index++];
+        }
+
+        public override float[] getValues()
+        {
+            float[] values1 = base.getValues();
+            float[] values2 = new float[6];
+            Array.Copy(values1, 0, values2, 0, 3);
+
+            values2[3] = this.HeatProduction;
+            values2[4] = this.HeatUntilCooldown;
+            values2[5] = this.HeatRegeneration;
+
+            return values2;
+        }
+
+        public override int getNumberOfValues()
+        {
+            return base.getNumberOfValues() + 3;
+        }
+
     }
 }
 

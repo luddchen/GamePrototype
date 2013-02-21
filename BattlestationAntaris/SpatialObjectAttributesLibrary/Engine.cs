@@ -6,7 +6,7 @@ using System.Text;
 namespace SpatialObjectAttributesLibrary
 {
 
-    public class Engine
+    public class Engine : AttributeItem
     {
         public float MaxVelocity;
 
@@ -30,6 +30,38 @@ namespace SpatialObjectAttributesLibrary
             this.CurrentVelocity = 0;
             this.Acceleration = acceleration;
             this.ResetForce = resetForce;
+        }
+
+
+        public void set(float maxVelocity, float acceleration, float resetForce)
+        {
+            this.MaxVelocity = maxVelocity;
+            this.CurrentVelocity = 0;
+            this.Acceleration = acceleration;
+            this.ResetForce = resetForce;
+        }
+
+        public override void setValues(float[] values, ref int index)
+        {
+            this.MaxVelocity = values[index++];
+            this.CurrentVelocity = 0;
+            this.Acceleration = values[index++];
+            this.ResetForce = values[index++];
+        }
+
+        public override float[] getValues()
+        {
+            float[] values = new float[3];
+            values[0] = this.MaxVelocity;
+            values[1] = this.Acceleration;
+            values[2] = this.ResetForce;
+
+            return values;
+        }
+
+        public override int getNumberOfValues()
+        {
+            return 3;
         }
 
     }

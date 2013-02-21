@@ -92,11 +92,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeItem.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Health.cs" />
     <Compile Include="Laser.cs" />
     <Compile Include="Missile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Radar.cs" />
+    <Compile Include="SOAReader.cs" />
     <Compile Include="SpatialObjectAttributes.cs" />
     <Compile Include="Weapon.cs" />
   </ItemGroup>

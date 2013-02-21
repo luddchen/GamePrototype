@@ -18,17 +18,17 @@ namespace SpatialObjectAttributesLibrary
 
 
         // Radar
-        public float RadarRange;
+        public Radar Radar;
 
 
         // Engine
         public Engine Engine;
 
-        public Engine EngineRoll;
-
         public Engine EngineYaw;
 
         public Engine EnginePitch;
+
+        public Engine EngineRoll;
         
 
         // Laser
@@ -44,13 +44,32 @@ namespace SpatialObjectAttributesLibrary
             this.Shield = new Health();
             this.Hull = new Health();
 
+            this.Radar = new Radar();
+
             this.Engine = new Engine();
+
+            this.EngineYaw = new Engine();
             this.EnginePitch = new Engine();
             this.EngineRoll = new Engine();
-            this.EngineYaw = new Engine();
 
             this.Laser = new Laser();
             this.Missile = new Missile();
+        }
+
+        public List<AttributeItem> getItems()
+        {
+            List<AttributeItem> items = new List<AttributeItem>();
+            items.Add(this.Shield);
+            items.Add(this.Hull);
+            items.Add(this.Radar);
+            items.Add(this.Engine);
+            items.Add(this.EngineYaw);
+            items.Add(this.EnginePitch);
+            items.Add(this.EngineRoll);
+            items.Add(this.Laser);
+            items.Add(this.Missile);
+
+            return items;
         }
 
     }
