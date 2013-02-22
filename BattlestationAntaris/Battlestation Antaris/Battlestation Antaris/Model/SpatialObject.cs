@@ -94,7 +94,6 @@ namespace Battlestation_Antaris.Model
             this.rotation = Matrix.Identity;
             this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
             this.boneTransforms = new Matrix[model3d.Bones.Count];
-            
             this.attributes = new SpatialObjectAttributes();
 
             // compute the bounding sphere of the whole 3D model

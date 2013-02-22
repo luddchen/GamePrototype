@@ -46,6 +46,16 @@ namespace SpatialObjectAttributesLibrary
             this.HeatRegeneration = heatRegeneration;
         }
 
+        public void set(Laser laser)
+        {
+            base.set(laser);
+
+            this.HeatProduction = laser.HeatProduction;
+            this.HeatUntilCooldown = laser.HeatUntilCooldown;
+            this.CurrentHeat = laser.CurrentHeat;
+            this.HeatRegeneration = laser.HeatRegeneration;
+        }
+
         public override void setValues(float[] values, ref int index)
         {
             base.setValues(values, ref index);

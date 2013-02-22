@@ -47,6 +47,16 @@ namespace SpatialObjectAttributesLibrary
             this.CurrentReloadTime = 0;
         }
 
+        public void set(Missile missile)
+        {
+            base.set(missile);
+
+            this.MaxAmount = missile.MaxAmount;
+            this.CurrentAmount = missile.CurrentAmount;
+            this.ReloadTime = missile.ReloadTime;
+            this.CurrentReloadTime = missile.CurrentReloadTime;
+        }
+
         public override void setValues(float[] values, ref int index)
         {
             base.setValues(values, ref index);

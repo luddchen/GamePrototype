@@ -37,6 +37,13 @@ namespace SpatialObjectAttributesLibrary
             this.ProjectileVelocity = projectileVelocity;
         }
 
+        public void set(Weapon weapon)
+        {
+            this.Damage = weapon.Damage;
+            this.Range = weapon.Range;
+            this.ProjectileVelocity = weapon.ProjectileVelocity;
+        }
+
         public override void setValues(float[] values, ref int index)
         {
             this.Damage = values[index++];

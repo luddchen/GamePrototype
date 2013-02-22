@@ -83,16 +83,26 @@ namespace Battlestation_Antaris.Model
             // create 500 random objects to fill the space for testing
             Random random = new Random();
 
-            for (int i = 0; i < 500; i++ )
+            for (int i = 0; i < 200; i++ )
             {
                 if (random.Next(2) == 0)
                 {
-                    this.allObjects.Add(new SpatialObject(new Vector3(random.Next(600) - 300, random.Next(600) - 300, random.Next(600) - 300), "Models/compass", content));
+                    new SpatialObject(new Vector3(random.Next(2400) - 1200, random.Next(2400) - 1200, random.Next(2400) - 1200), "Models/compass", content, this);
                 }
                 else
                 {
-                    this.allObjects.Add(new SpatialObject(new Vector3(random.Next(600) - 300, random.Next(600) - 300, random.Next(600) - 300), "Models/spaceship_d3", content));
+                    new SpatialObject(new Vector3(random.Next(2400) - 1200, random.Next(2400) - 1200, random.Next(2400) - 1200), "Models/spaceship_d3", content, this);
                 }
+            }
+
+            for (int i = 0; i < 12; i++)
+            {
+                this.allTurrets.Add(
+                    new Turret(
+                        new Vector3(random.Next(2400) - 1200, 1, random.Next(2400) - 1200), 
+                        i, 
+                        content, 
+                        this));
             }
 
 

@@ -24,6 +24,11 @@ namespace SpatialObjectAttributesLibrary
             this.Range = range;
         }
 
+        public void set(Radar radar)
+        {
+            this.Range = radar.Range;
+        }
+
         public override void setValues(float[] values, ref int index)
         {
             this.Range = values[index++];

@@ -56,6 +56,19 @@ namespace SpatialObjectAttributesLibrary
             this.Missile = new Missile();
         }
 
+        public void set(SpatialObjectAttributes soa)
+        {
+            this.Shield.set(soa.Shield);
+            this.Hull.set(soa.Hull);
+            this.Radar.set(soa.Radar);
+            this.Engine.set(soa.Engine);
+            this.EngineYaw.set(soa.EngineYaw);
+            this.EnginePitch.set(soa.EnginePitch);
+            this.EngineRoll.set(soa.EngineRoll);
+            this.Laser.set(soa.Laser);
+            this.Missile.set(soa.Missile);
+        }
+
         public List<AttributeItem> getItems()
         {
             List<AttributeItem> items = new List<AttributeItem>();

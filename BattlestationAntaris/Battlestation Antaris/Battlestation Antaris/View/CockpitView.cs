@@ -143,37 +143,21 @@ namespace Battlestation_Antaris.View
             {
                 if (obj.isVisible)
                 {
-
                     obj.model3d.Root.Transform = obj.rotation * Matrix.CreateTranslation(obj.globalPosition);
-
                     obj.model3d.CopyAbsoluteBoneTransformsTo(obj.boneTransforms);
 
                     foreach (ModelMesh mesh in obj.model3d.Meshes)
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
-                            //effect.EnableDefaultLighting();
-
-                            effect.LightingEnabled = true;
-                            effect.DirectionalLight0.DiffuseColor = new Vector3(1.0f, 1.0f, 0.5f);
-                            effect.DirectionalLight0.Direction = new Vector3(1, 1, -1);
-                            effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 1);
-                            effect.AmbientLightColor = this.ambientColor;
-                            //effect.EmissiveColor = new Vector3(0, 0, 0.1f);
-
-                            //effect.FogEnabled = true;
-                            //effect.FogColor = Color.Red.ToVector3();
-                            //effect.FogStart = 200.0f;
-                            //effect.FogEnd = 210.0f;
+                            setLightning(effect);
 
                             effect.World = obj.boneTransforms[mesh.ParentBone.Index];
                             effect.View = this.camera.view;
                             effect.Projection = this.camera.projection;
                         }
-
                         mesh.Draw();
                     }
-
                 }
             }
 
@@ -183,41 +167,43 @@ namespace Battlestation_Antaris.View
             {
                 if (obj.isVisible)
                 {
-
                     obj.model3d.Root.Transform = obj.rotation * Matrix.CreateTranslation(obj.globalPosition);
-
                     obj.model3d.CopyAbsoluteBoneTransformsTo(obj.boneTransforms);
 
                     foreach (ModelMesh mesh in obj.model3d.Meshes)
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
-                            //effect.EnableDefaultLighting();
-
-                            effect.LightingEnabled = true;
-                            effect.DirectionalLight0.DiffuseColor = new Vector3(1.0f, 1.0f, 0.5f);
-                            effect.DirectionalLight0.Direction = new Vector3(1, 1, -1);
-                            effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 1);
-                            effect.AmbientLightColor = this.ambientColor;
-                            //effect.EmissiveColor = new Vector3(0, 0, 0.1f);
-                            effect.Alpha = 0.66f;
-
-                            //effect.FogEnabled = true;
-                            //effect.FogColor = Color.Red.ToVector3();
-                            //effect.FogStart = 200.0f;
-                            //effect.FogEnd = 210.0f;
+                            setLightning(effect);
 
                             effect.World = obj.boneTransforms[mesh.ParentBone.Index];
                             effect.View = this.camera.view;
                             effect.Projection = this.camera.projection;
                         }
-
                         mesh.Draw();
                     }
-
                 }
             }
 
+        }
+
+
+        private void setLightning(BasicEffect effect)
+        {
+            //effect.EnableDefaultLighting();
+
+            effect.LightingEnabled = true;
+            effect.DirectionalLight0.DiffuseColor = new Vector3(1.0f, 1.0f, 0.5f);
+            effect.DirectionalLight0.Direction = new Vector3(1, 1, -1);
+            effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 1);
+            effect.AmbientLightColor = this.ambientColor;
+            //effect.EmissiveColor = new Vector3(0, 0, 0.1f);
+            //effect.Alpha = 0.66f;
+
+            //effect.FogEnabled = true;
+            //effect.FogColor = Color.Red.ToVector3();
+            //effect.FogStart = 200.0f;
+            //effect.FogEnd = 210.0f;
         }
 
     }

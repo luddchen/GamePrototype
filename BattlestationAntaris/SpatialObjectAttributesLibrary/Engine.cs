@@ -61,6 +61,14 @@ namespace SpatialObjectAttributesLibrary
             this.ResetForce = resetForce;
         }
 
+        public void set(Engine engine)
+        {
+            this.MaxVelocity = engine.MaxVelocity;
+            this.CurrentVelocity = engine.CurrentVelocity;
+            this.Acceleration = engine.Acceleration;
+            this.ResetForce = engine.ResetForce;
+        }
+
         public override void setValues(float[] values, ref int index)
         {
             this.MaxVelocity = values[index++];

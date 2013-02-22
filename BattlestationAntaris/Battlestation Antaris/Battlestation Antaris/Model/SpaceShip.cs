@@ -81,7 +81,7 @@ namespace Battlestation_Antaris.Model
         /// </summary>
         private void init(ContentManager content)
         {
-            this.attributes = content.Load<SpatialObjectAttributesLibrary.SpatialObjectAttributes>("Attributes//SpaceShip");
+            this.attributes.set( content.Load<SpatialObjectAttributesLibrary.SpatialObjectAttributes>("Attributes//SpaceShip") );
         }
 
     }

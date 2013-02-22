@@ -40,6 +40,17 @@ namespace SpatialObjectAttributesLibrary
             this.RepairCost = repairCost;
         }
 
+        public void set(Health health)
+        {
+            this.MaxHealthPoints = health.MaxHealthPoints;
+
+            this.CurrentHealthPoints = health.CurrentHealthPoints;
+
+            this.RegenerationRate = health.RegenerationRate;
+
+            this.RepairCost = health.RepairCost;
+        }
+
         public void set(float maxHealthPoints, float regenarationRate, float repairCost)
         {
             this.MaxHealthPoints = maxHealthPoints;
