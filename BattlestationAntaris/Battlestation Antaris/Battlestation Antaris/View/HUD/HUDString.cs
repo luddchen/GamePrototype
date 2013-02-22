@@ -9,7 +9,7 @@ namespace Battlestation_Antaris.View
     /// <summary>
     /// a Head Up Display String
     /// </summary>
-    class HUDString : HUDElement2D
+    public class HUDString : HUDElement2D
     {
 
         /// <summary>
@@ -21,25 +21,25 @@ namespace Battlestation_Antaris.View
         /// <summary>
         /// the width and height of the displayed string
         /// </summary>
-        private Vector2 measureString;
+        protected Vector2 measureString;
 
 
         /// <summary>
         /// the multiply color of the background image, if existent
         /// </summary>
-        private Color BackgroundColor;
+        protected Color BackgroundColor;
 
 
         /// <summary>
         /// the background image texture
         /// </summary>
-        private Texture2D BackgroundTexture;
+        protected Texture2D BackgroundTexture;
 
 
         /// <summary>
         /// the origin of the background image texture, if existent
         /// </summary>
-        private Vector2 BackgroundTextureOrigin;
+        protected Vector2 BackgroundTextureOrigin;
 
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Battlestation_Antaris.View
             this.font = content.Load<SpriteFont>("Fonts\\Linds");
             this.Position = Vector2.Zero;
             this.String = text;
-            this.Color = Color.Beige;
+            this.Color = Color.White;
             this.Scale = 1.0f;
             this.isVisible = true;
         }

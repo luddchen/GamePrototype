@@ -91,8 +91,8 @@ namespace Battlestation_Antaris.View.HUD
                 model3d.Root.Transform = Matrix.CreateScale(0.1f)
                                         * Matrix.CreateFromAxisAngle(Vector3.Forward, rot.X)
                                         * Matrix.CreateFromAxisAngle(Vector3.Up, rot.Z)
-                                        * Matrix.CreateTranslation(Vector3.Add( Vector3.Multiply(Vector3.Forward, 1.75f) ,
-                                                                                Vector3.Multiply(Vector3.Down, 0.2f)));
+                                        * Matrix.CreateTranslation(Vector3.Add( Vector3.Multiply(Vector3.Forward, 1.8f) ,
+                                                                                Vector3.Multiply(Vector3.Down, 0.3f)));
 
                 // and create transformation matrices for all 3d parts
                 model3d.CopyAbsoluteBoneTransformsTo(boneTransforms);

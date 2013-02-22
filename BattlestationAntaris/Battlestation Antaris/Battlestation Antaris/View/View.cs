@@ -75,6 +75,17 @@ namespace Battlestation_Antaris.View
             DrawContent();
 
 
+            // draw 2D HUD elements
+            this.game.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
+            foreach (HUDElement2D element in this.allHUD_2D)
+            {
+                element.Draw(this.game.spriteBatch);
+            }
+
+            this.game.spriteBatch.End();
+
+
             // draw 3D HUD elements if 3D is enabled
             if (this.is3D)
             {
@@ -85,17 +96,6 @@ namespace Battlestation_Antaris.View
                     element.Draw();
                 }
             }
-
-
-            // draw 2D HUD elements
-            this.game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-
-            foreach (HUDElement2D element in this.allHUD_2D)
-            {
-                element.Draw(this.game.spriteBatch);
-            }
-
-            this.game.spriteBatch.End();
 
         }
 

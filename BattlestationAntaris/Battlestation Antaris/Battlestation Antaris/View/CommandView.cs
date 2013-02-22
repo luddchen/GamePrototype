@@ -11,9 +11,6 @@ namespace Battlestation_Antaris.View
     class CommandView : View
     {
 
-        int i = 0;
-
-
         /// <summary>
         /// creates a new command view
         /// </summary>
@@ -29,10 +26,6 @@ namespace Battlestation_Antaris.View
         /// </summary>
         protected override void DrawContent()
         {
-            // test code
-            i++;
-            if (i > 60) i = 0;
-            if (i < 30) this.backgroundColor = Color.Green; else this.backgroundColor = Color.Black;
         }
 
 
@@ -43,7 +36,7 @@ namespace Battlestation_Antaris.View
         {
             // test content
             HUDString testString = new HUDString("Antaris Command", game.Content);
-            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
+            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height * 0.1f);
 
             this.allHUD_2D.Add(testString);
         }

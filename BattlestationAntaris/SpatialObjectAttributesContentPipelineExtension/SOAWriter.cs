@@ -15,7 +15,7 @@ using TWrite = SpatialObjectAttributesLibrary.SpatialObjectAttributes;
 namespace SpatialObjectAttributesContentPipelineExtension
 {
     [ContentTypeWriter]
-    public class LevelWriter : ContentTypeWriter<TWrite>
+    public class SOAWriter : ContentTypeWriter<TWrite>
     {
         protected override void Write(ContentWriter output, TWrite value)
         {

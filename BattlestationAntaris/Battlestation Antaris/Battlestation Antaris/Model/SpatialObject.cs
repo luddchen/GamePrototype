@@ -76,6 +76,12 @@ namespace Battlestation_Antaris.Model
 
 
         /// <summary>
+        /// apply reset force if no active rolling
+        /// </summary>
+        private bool resetEngine = true;
+
+
+        /// <summary>
         /// create a new spatial object outside of the world model
         /// </summary>
         /// <param name="position">position</param>
@@ -89,7 +95,6 @@ namespace Battlestation_Antaris.Model
             this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
             this.boneTransforms = new Matrix[model3d.Bones.Count];
             
-            // set attributes - need adjustment if attribute content loader is finished
             this.attributes = new SpatialObjectAttributes();
 
             // compute the bounding sphere of the whole 3D model
@@ -134,44 +139,28 @@ namespace Battlestation_Antaris.Model
             // apply reset forces if no active control
             if (resetPitch)
             {
-                ApplyResetForce(this.attributes.EnginePitch);
+                this.attributes.EnginePitch.ApplyResetForce();
             }
 
             if (resetYaw)
             {
-                ApplyResetForce(this.attributes.EngineYaw);
+                this.attributes.EngineYaw.ApplyResetForce();
             }
 
             if (resetRoll)
             {
-                ApplyResetForce(this.attributes.EngineRoll);
+                this.attributes.EngineRoll.ApplyResetForce();
+            }
+
+            if (resetEngine)
+            {
+                this.attributes.Engine.ApplyResetForce();
             }
 
             resetPitch = true;
             resetYaw = true;
             resetRoll = true;
-        }
-
-
-        /// <summary>
-        /// apply the reset force to a engine
-        /// need adjustment -> actual no use of the reset force attribute
-        /// </summary>
-        /// <param name="engine">the engine</param>
-        protected void ApplyResetForce(Engine engine)
-        {
-            if (engine.CurrentVelocity >= engine.Acceleration)
-            {
-                engine.CurrentVelocity -= engine.Acceleration;
-            }
-            else if (engine.CurrentVelocity <= -engine.Acceleration)
-            {
-                engine.CurrentVelocity += engine.Acceleration;
-            }
-            else
-            {
-                engine.CurrentVelocity = 0;
-            }
+            resetEngine = true;
         }
 
 
@@ -258,6 +247,7 @@ namespace Battlestation_Antaris.Model
                     {
                         this.attributes.Engine.CurrentVelocity = this.attributes.Engine.MaxVelocity;
                     }
+                    resetEngine = false;
                     break;
 
                 case Control.Control.DECREASE_THROTTLE:
@@ -266,10 +256,12 @@ namespace Battlestation_Antaris.Model
                     {
                         this.attributes.Engine.CurrentVelocity = -this.attributes.Engine.MaxVelocity;
                     }
+                    resetEngine = false;
                     break;
 
                 case Control.Control.ZERO_THROTTLE:
                     this.attributes.Engine.CurrentVelocity = 0f;
+                    resetEngine = false;
                     break;
             }
 

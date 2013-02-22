@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Battlestation_Antaris.Control;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.View
 {
@@ -11,8 +12,6 @@ namespace Battlestation_Antaris.View
     /// </summary>
     class MenuView : View
     {
-        int i = 0;
-
 
         /// <summary>
         /// creates a new menu view
@@ -29,10 +28,6 @@ namespace Battlestation_Antaris.View
         /// </summary>
         protected override void DrawContent()
         {
-            // test code
-            i++;
-            if (i > 60) i = 0;
-            if (i < 30) this.backgroundColor = Color.Blue; else this.backgroundColor = Color.Black;
         }
 
 
@@ -43,7 +38,7 @@ namespace Battlestation_Antaris.View
         {
             // test content
             HUDString testString = new HUDString("Antaris Menu", game.Content);
-            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
+            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height * 0.1f);
 
             this.allHUD_2D.Add(testString);
         }

@@ -33,6 +33,26 @@ namespace SpatialObjectAttributesLibrary
         }
 
 
+        /// <summary>
+        /// apply the reset force
+        /// </summary>
+        public void ApplyResetForce()
+        {
+            if (this.CurrentVelocity >= this.ResetForce)
+            {
+                this.CurrentVelocity -= this.ResetForce;
+            }
+            else if (this.CurrentVelocity <= -this.ResetForce)
+            {
+                this.CurrentVelocity += this.ResetForce;
+            }
+            else
+            {
+                this.CurrentVelocity = 0;
+            }
+        }
+
+
         public void set(float maxVelocity, float acceleration, float resetForce)
         {
             this.MaxVelocity = maxVelocity;

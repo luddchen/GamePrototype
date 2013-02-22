@@ -84,7 +84,7 @@ namespace Battlestation_Antaris
             //Battlestation_Antaris.Model.CollisionOctree tree = new Model.CollisionOctree(2, 1, new BoundingBox(new Vector3(-400, -400, -400), new Vector3(400, 400, 400)));
             //tree.insertFromWorld(this.world);
             //Console.Out.WriteLine(tree);
-
+            
             base.Initialize();
         }
 
@@ -118,6 +118,7 @@ namespace Battlestation_Antaris
         public void switchTo(Situation situation)
         {
             this.activeSituation = this.allSituations[(int)situation];
+            this.IsMouseVisible = true;
         }
 
 

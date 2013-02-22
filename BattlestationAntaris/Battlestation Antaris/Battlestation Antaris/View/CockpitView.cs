@@ -66,8 +66,8 @@ namespace Battlestation_Antaris.View
 
 
             // 2D HUD
-            HUDString testString = new HUDString("Antaris Cockpit : W/S - Engine , A/D - Roll", null, null, null, new Color(100,100,100,100), 0.5f, 0.0f, game.Content);
-            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, 30);
+            HUDString testString = new HUDString("Antaris Cockpit : W/S - Engine , A/D - Roll", null, null, null, new Color(32,32,32,64), 0.45f, 0.0f, game.Content);
+            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, 15);
 
             this.allHUD_2D.Add(testString);
 

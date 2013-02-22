@@ -1,4 +1,8 @@
 ﻿using System;
+using Battlestation_Antaris.View;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antaris.Control
 {
@@ -9,6 +13,12 @@ namespace Battlestation_Antaris.Control
     class MenuController : SituationController
     {
 
+        private HUDTexture testTex;
+
+        private HUDButton toCommandButton;
+
+        private HUDButton toCockpitButton;
+
         /// <summary>
         /// create a new menu controller
         /// </summary>
@@ -17,6 +27,37 @@ namespace Battlestation_Antaris.Control
         public MenuController(Game1 game, View.View view) : base(game, view) 
         {
             this.worldUpdate = WorldUpdate.NO_UPDATE;
+
+            // test content
+            testTex = new HUDTexture(game.Content);
+            testTex.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height * 0.4f);
+            testTex.Width = game.GraphicsDevice.Viewport.Width / 3;
+            testTex.Height = testTex.Width;
+            testTex.Texture = game.Content.Load<Texture2D>("Sprites//Erde2");
+
+            this.view.allHUD_2D.Add(testTex);
+
+            toCommandButton = 
+                new HUDButton(
+                    "Command", 
+                    new Vector2(
+                        game.GraphicsDevice.Viewport.Width * 0.3f, 
+                        game.GraphicsDevice.Viewport.Height * 0.8f),
+                    0.7f,
+                    game.Content);
+
+            this.view.allHUD_2D.Add(toCommandButton);
+
+            toCockpitButton =
+                new HUDButton(
+                    "Cockpit",
+                    new Vector2(
+                        game.GraphicsDevice.Viewport.Width * 0.7f,
+                        game.GraphicsDevice.Viewport.Height * 0.8f),
+                    0.7f,
+                    game.Content);
+
+            this.view.allHUD_2D.Add(toCockpitButton);
         }
 
 
@@ -26,11 +67,24 @@ namespace Battlestation_Antaris.Control
         /// <param name="gameTime">the game time</param>
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            // experimental -- switch to command situation if space is pressed
-            if (this.game.inputProvider.isKeyOnState(ControlKey.SPACE, ControlState.PRESSED))
+            if (this.toCommandButton.isUpdatedClicked(this.game.inputProvider))
             {
-                Console.Out.WriteLine("switch from menu to command");
                 this.game.switchTo(Situation.COMMAND);
+            }
+
+            if (this.toCockpitButton.isUpdatedClicked(this.game.inputProvider))
+            {
+                this.game.switchTo(Situation.COCKPIT);
+            }
+
+            if (this.game.inputProvider.isMouseButtonPressed())
+            {
+                Vector2 mousePos = this.game.inputProvider.getMousePos();
+
+                if (this.testTex.Intersects(mousePos))
+                {
+                    testTex.Rotation = testTex.Rotation + 0.2f;
+                }
             }
         }
 
