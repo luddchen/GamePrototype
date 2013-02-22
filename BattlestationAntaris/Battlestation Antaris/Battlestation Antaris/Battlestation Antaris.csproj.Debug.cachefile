@@ -23,4 +23,6 @@ Content\Models\SpaceStation\StationSphere_0.xnb
 Content\Models\SpaceStation\StationBox_0.xnb
 Content\Models\SpaceStation\StationCatwalk_0.xnb
 Content\Sprites\cockpit3.xnb
+Content\Models\Weapon\laser.xnb
+Content\Models\Weapon\missile.xnb
 Content\Attributes\SpaceShip.soa

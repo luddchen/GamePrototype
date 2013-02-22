@@ -49,6 +49,15 @@ namespace Battlestation_Antaris.Model
 
 
         /// <summary>
+        /// a list of all Laser beams that will be rendered with alpha
+        /// </summary>
+        public List<Laser> allLaserBeams;
+
+
+        private List<SpatialObject> removeList;
+
+
+        /// <summary>
         /// creates the world
         /// </summary>
         /// <param name="game">the game</param>
@@ -58,6 +67,9 @@ namespace Battlestation_Antaris.Model
             this.allObjects = new List<SpatialObject>();
             this.allRadars = new List<Radar>();
             this.allTurrets = new List<Turret>();
+
+            this.allLaserBeams = new List<Laser>();
+            this.removeList = new List<SpatialObject>();
         }
 
 
@@ -85,13 +97,11 @@ namespace Battlestation_Antaris.Model
 
 
             // create the player space ship
-            this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models/compass", content);
-            this.allObjects.Add(this.spaceShip);
+            this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models/compass", content, this);
 
 
             // create the player space station
-            this.spaceStation = new SpaceStation(Vector3.Zero, "Models/SpaceStation/spacestation", content);
-            this.allObjects.Add(this.spaceStation);
+            this.spaceStation = new SpaceStation(Vector3.Zero, "Models/SpaceStation/spacestation", content, this);
         }
 
 
@@ -106,6 +116,35 @@ namespace Battlestation_Antaris.Model
             {
                 obj.Update(gameTime);
             }
+
+            // update all laser beams
+            foreach (Laser obj in this.allLaserBeams)
+            {
+                obj.Update(gameTime);
+            }
+
+            foreach (SpatialObject obj in this.removeList)
+            {
+                if (obj is Laser)
+                {
+                    this.allLaserBeams.Remove((Laser)obj);
+                }
+                else
+                {
+                    this.allObjects.Remove(obj);
+                }
+            }
+            this.removeList.Clear();
+        }
+
+
+        /// <summary>
+        /// trigger laser beam remove
+        /// </summary>
+        /// <param name="laser">laser to remove</param>
+        public void removeObject(SpatialObject obj)
+        {
+            this.removeList.Add(obj);
         }
 
     }

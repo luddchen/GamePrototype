@@ -11,13 +11,16 @@ namespace Battlestation_Antaris.Model
     public class SpaceShip : SpatialObject
     {
 
+        public WorldModel world;
+
         /// <summary>
         /// create a new space ship outside the world
         /// </summary>
         /// <param name="position">position</param>
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
-        public SpaceShip(Vector3 position, String modelName, ContentManager content) : base(position, modelName, content) 
+        public SpaceShip(Vector3 position, String modelName, ContentManager content)
+            : base(position, modelName, content)
         {
             init(content);
         }
@@ -30,8 +33,10 @@ namespace Battlestation_Antaris.Model
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public SpaceShip(Vector3 position, String modelName, ContentManager content, WorldModel world) : base(position, modelName, content, world) 
+        public SpaceShip(Vector3 position, String modelName, ContentManager content, WorldModel world)
+            : base(position, modelName, content, world)
         {
+            this.world = world;
             init(content);
         }
 
@@ -43,6 +48,31 @@ namespace Battlestation_Antaris.Model
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (this.attributes.Missile.CurrentReloadTime > 0)
+            {
+                this.attributes.Missile.CurrentReloadTime--;
+            }
+        }
+
+
+        public override void InjectControl(Control.Control control)
+        {
+            base.InjectControl(control);
+
+            if (control == Control.Control.FIRE_LASER)
+            {
+                Laser laser = new Laser(this, -2.0f, this.world.game.Content, this.world);
+            }
+
+            if (control == Control.Control.FIRE_MISSILE)
+            {
+                if (this.attributes.Missile.CurrentReloadTime <= 0)
+                {
+                    Missile missile = new Missile(this, -2.0f, this.world.game.Content, this.world);
+                    this.attributes.Missile.CurrentReloadTime = this.attributes.Missile.ReloadTime;
+                }
+            }
         }
 
 

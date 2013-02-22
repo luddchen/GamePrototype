@@ -75,6 +75,9 @@ namespace Battlestation_Antaris.Control
             keyAssignments.Add(new KeyAssignment(Control.YAW_RIGHT, Keys.Right));
             keyAssignments.Add(new KeyAssignment(Control.INCREASE_THROTTLE, Keys.W));
             keyAssignments.Add(new KeyAssignment(Control.DECREASE_THROTTLE, Keys.S));
+
+            keyAssignments.Add(new KeyAssignment(Control.FIRE_LASER, Keys.Space));
+            keyAssignments.Add(new KeyAssignment(Control.FIRE_MISSILE, Keys.LeftControl));
         }
 
 
