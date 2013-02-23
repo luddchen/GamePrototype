@@ -138,6 +138,8 @@ namespace Battlestation_Antaris.View
             // init camera
             this.camera.ClampTo(this.game.world.spaceShip);
 
+            SpatialObject shield = this.game.world.Shield;
+
             // draw world objects
             foreach (SpatialObject obj in this.game.world.allObjects)
             {
@@ -153,6 +155,28 @@ namespace Battlestation_Antaris.View
                             setLightning(effect);
 
                             effect.World = obj.boneTransforms[mesh.ParentBone.Index];
+                            effect.View = this.camera.view;
+                            effect.Projection = this.camera.projection;
+                        }
+                        mesh.Draw();
+                    }
+                }
+
+                
+                // draw shield -> testing
+                if (obj is SpaceStation || obj is Turret || obj is Radar)
+                {
+                    shield.model3d.Root.Transform = obj.rotation * Matrix.CreateScale(obj.bounding.Radius) 
+                                                    * Matrix.CreateTranslation(obj.globalPosition + obj.bounding.Center);
+                    shield.model3d.CopyAbsoluteBoneTransformsTo(shield.boneTransforms);
+
+                    foreach (ModelMesh mesh in shield.model3d.Meshes)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            setLightning(effect);
+
+                            effect.World = shield.boneTransforms[mesh.ParentBone.Index];
                             effect.View = this.camera.view;
                             effect.Projection = this.camera.projection;
                         }

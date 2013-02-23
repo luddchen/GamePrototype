@@ -54,6 +54,12 @@ namespace Battlestation_Antaris.Model
         public List<SpatialObject> allWeapons;
 
 
+        /// <summary>
+        /// loader for shield model
+        /// </summary>
+        public SpatialObject Shield;
+
+
         private List<SpatialObject> removeList;
 
 
@@ -120,6 +126,9 @@ namespace Battlestation_Antaris.Model
 
             // create the player space station
             this.spaceStation = new SpaceStation(Vector3.Zero, "Models/SpaceStation/spacestation", content, this);
+
+            this.Shield = new SpatialObject(Vector3.Zero, "Models//shield", content, this);
+            this.Shield.isVisible = false;
         }
 
 
