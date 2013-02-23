@@ -15,6 +15,11 @@ namespace Battlestation_Antaris.Model
     {
 
         /// <summary>
+        /// the number of rotations until the rotation matrix should be repaired
+        /// </summary>
+        public static int MAX_ROTATION_UNTIL_REPAIR = 14400;
+
+        /// <summary>
         /// the 3D model
         /// </summary>
         public Microsoft.Xna.Framework.Graphics.Model model3d;
@@ -58,6 +63,18 @@ namespace Battlestation_Antaris.Model
 
 
         /// <summary>
+        /// the containing world model
+        /// </summary>
+        protected WorldModel world;
+
+
+        /// <summary>
+        /// a counter to determine the need of rotation matrix repair
+        /// </summary>
+        private int rotationRepairCountdown;
+
+
+        /// <summary>
         /// apply reset force if no active pitching
         /// </summary>
         private bool resetPitch = true;
@@ -82,41 +99,32 @@ namespace Battlestation_Antaris.Model
 
 
         /// <summary>
-        /// create a new spatial object outside of the world model
-        /// </summary>
-        /// <param name="position">position</param>
-        /// <param name="modelName">3D model name</param>
-        /// <param name="content">game content manager</param>
-        public SpatialObject(Vector3 position, String modelName, ContentManager content)
-        {
-            this.isVisible = true;
-            this.globalPosition = position;
-            this.rotation = Matrix.Identity;
-            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
-            this.boneTransforms = new Matrix[model3d.Bones.Count];
-            this.attributes = new SpatialObjectAttributes();
-
-            // compute the bounding sphere of the whole 3D model
-            this.bounding = new BoundingSphere();
-            this.model3d.CopyAbsoluteBoneTransformsTo(this.boneTransforms);
-            foreach (ModelMesh mesh in model3d.Meshes)
-            {
-                this.bounding = BoundingSphere.CreateMerged( mesh.BoundingSphere.Transform(this.boneTransforms[mesh.ParentBone.Index]), this.bounding);
-            }
-        }
-
-
-        /// <summary>
         /// create a new spatial object within the world model
         /// </summary>
         /// <param name="position">world position</param>
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public SpatialObject(Vector3 position, String modelName, ContentManager content, WorldModel world) : this(position, modelName, content)
+        public SpatialObject(Vector3 position, String modelName, ContentManager content, WorldModel world)
         {
-            // add to the world model
-            world.allObjects.Add(this);
+            this.world = world;
+            this.isVisible = true;
+            this.globalPosition = position;
+            this.rotation = Matrix.Identity;
+            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
+            this.boneTransforms = new Matrix[model3d.Bones.Count];
+            this.attributes = new SpatialObjectAttributes();
+            this.rotationRepairCountdown = SpatialObject.MAX_ROTATION_UNTIL_REPAIR;
+
+            // compute the bounding sphere of the whole 3D model
+            this.bounding = new BoundingSphere();
+            this.model3d.CopyAbsoluteBoneTransformsTo(this.boneTransforms);
+            foreach (ModelMesh mesh in model3d.Meshes)
+            {
+                this.bounding = BoundingSphere.CreateMerged(mesh.BoundingSphere.Transform(this.boneTransforms[mesh.ParentBone.Index]), this.bounding);
+            }
+
+            this.world.addObject(this);
         }
 
 
@@ -126,14 +134,73 @@ namespace Battlestation_Antaris.Model
         /// <param name="gameTime">the game time</param>
         public virtual void Update(GameTime gameTime)
         {
-            // apply movement
+            ApplyMovement(gameTime);
+            ApplyRotation(gameTime);
+        }
+
+
+        /// <summary>
+        /// apply object movement
+        /// </summary>
+        /// <param name="gameTime">the game time</param>
+        protected void ApplyMovement(GameTime gameTime)
+        {
             this.globalPosition += Vector3.Multiply(rotation.Forward, this.attributes.Engine.CurrentVelocity);
 
-            // apply rotation
-            this.rotation = Tools.Tools.YawPitchRoll(this.rotation, 
-                                                    this.attributes.EngineYaw.CurrentVelocity, 
-                                                    this.attributes.EnginePitch.CurrentVelocity, 
-                                                    this.attributes.EngineRoll.CurrentVelocity);
+            if (resetEngine)
+            {
+                this.attributes.Engine.ApplyResetForce();
+            }
+
+            resetEngine = true;
+        }
+
+
+        /// <summary>
+        /// apply engines rotation
+        /// </summary>
+        /// <param name="gameTime">the game time</param>
+        protected void ApplyRotation(GameTime gameTime) 
+        {
+
+            // rotate
+            if (this.attributes.EngineYaw.CurrentVelocity != 0)
+            {
+                this.rotation = Tools.Tools.Yaw(this.rotation, this.attributes.EngineYaw.CurrentVelocity);
+                this.rotationRepairCountdown--;
+            }
+
+            if (this.attributes.EnginePitch.CurrentVelocity != 0)
+            {
+                this.rotation = Tools.Tools.Pitch(this.rotation, this.attributes.EnginePitch.CurrentVelocity);
+                this.rotationRepairCountdown--;
+            }
+
+            if (this.attributes.EngineRoll.CurrentVelocity != 0)
+            {
+                this.rotation = Tools.Tools.Roll(this.rotation, this.attributes.EngineRoll.CurrentVelocity);
+                this.rotationRepairCountdown--;
+            }
+
+
+            // repair rotation matrix if necessary
+            if (this.rotationRepairCountdown < 0)
+            {
+                Vector3 fwd = this.rotation.Forward;
+                Vector3 up = this.rotation.Up;
+                Vector3 right = this.rotation.Right;
+                fwd.Normalize();
+                up.Normalize();
+                right.Normalize();
+
+                this.rotation = Matrix.Identity;
+                this.rotation.Forward = fwd;
+                this.rotation.Up = up;
+                this.rotation.Right = right;
+                this.rotationRepairCountdown = SpatialObject.MAX_ROTATION_UNTIL_REPAIR;
+                Console.Out.WriteLine("repair rotation matrix");
+            }
+
 
             // apply reset forces if no active control
             if (resetPitch)
@@ -151,15 +218,9 @@ namespace Battlestation_Antaris.Model
                 this.attributes.EngineRoll.ApplyResetForce();
             }
 
-            if (resetEngine)
-            {
-                this.attributes.Engine.ApplyResetForce();
-            }
-
             resetPitch = true;
             resetYaw = true;
             resetRoll = true;
-            resetEngine = true;
         }
 
 

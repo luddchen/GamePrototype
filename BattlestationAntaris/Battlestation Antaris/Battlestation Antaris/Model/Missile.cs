@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
 namespace Battlestation_Antaris.Model
@@ -10,17 +6,11 @@ namespace Battlestation_Antaris.Model
 
     public class Missile : SpatialObject
     {
-
-        private WorldModel wold;
-
         private int timeout;
 
         public Missile(SpatialObject parent, float offset, ContentManager content, WorldModel world)
-            : base(parent.globalPosition, "Models//Weapon//missile", content)
+            : base(parent.globalPosition, "Models//Weapon//missile", content, world)
         {
-            this.wold = world;
-            this.wold.allObjects.Add(this);
-
             this.rotation = parent.rotation;
             this.attributes.Engine.CurrentVelocity = 10.0f;
 
@@ -37,7 +27,7 @@ namespace Battlestation_Antaris.Model
 
             if (this.timeout == 0)
             {
-                this.wold.removeObject(this);
+                this.world.removeObject(this);
             }
         }
 

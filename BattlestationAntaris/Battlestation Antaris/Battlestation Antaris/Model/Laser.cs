@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
 namespace Battlestation_Antaris.Model
@@ -11,16 +7,11 @@ namespace Battlestation_Antaris.Model
     public class Laser : SpatialObject
     {
 
-        private WorldModel wold;
-
         private int timeout;
 
         public Laser(SpatialObject parent, float offset, ContentManager content, WorldModel world)
-            : base(parent.globalPosition, "Models//Weapon//laser", content)
+            : base(parent.globalPosition, "Models//Weapon//laser", content, world)
         {
-            this.wold = world;
-            this.wold.allLaserBeams.Add(this);
-
             this.rotation = parent.rotation;
             this.attributes.Engine.CurrentVelocity = 15.0f;
 
@@ -37,7 +28,7 @@ namespace Battlestation_Antaris.Model
 
             if (this.timeout == 0)
             {
-                this.wold.removeObject(this);
+                this.world.removeObject(this);
             }
         }
 

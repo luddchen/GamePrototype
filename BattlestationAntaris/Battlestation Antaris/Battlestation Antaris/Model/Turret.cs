@@ -10,15 +10,12 @@ namespace Battlestation_Antaris.Model
     /// </summary>
     public class Turret : SpatialObject
     {
-        private WorldModel world;
 
         private Random random;
 
         private int timeout;
 
         private int beams;
-
-        private int nr;
 
         /// <summary>
         /// create a new turret and insert into the world
@@ -27,11 +24,9 @@ namespace Battlestation_Antaris.Model
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public Turret(Vector3 position, int randomSeed, ContentManager content, WorldModel world) : base(position, "Models/Turret//turret", content, world) 
+        public Turret(Vector3 position, ContentManager content, WorldModel world) : base(position, "Models//Turret//turret", content, world) 
         {
-            this.world = world;
-            this.random = new Random(randomSeed);
-            this.nr = randomSeed;
+            this.random = new Random((int)position.X);
             this.timeout = this.random.Next(120) + 60;
             this.beams = 0;
 
@@ -45,7 +40,7 @@ namespace Battlestation_Antaris.Model
         /// <param name="gameTime"></param>
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            base.Update(gameTime);
+            ApplyRotation(gameTime);
 
             this.timeout--;
 
@@ -62,8 +57,7 @@ namespace Battlestation_Antaris.Model
             }
 
 
-            int i = this.random.Next(6);
-            switch (i)
+            switch (this.random.Next(6))
             {
                 case 0:
                     InjectControl(Control.Control.PITCH_DOWN);

@@ -11,21 +11,6 @@ namespace Battlestation_Antaris.Model
     public class SpaceShip : SpatialObject
     {
 
-        public WorldModel world;
-
-        /// <summary>
-        /// create a new space ship outside the world
-        /// </summary>
-        /// <param name="position">position</param>
-        /// <param name="modelName">3D model name</param>
-        /// <param name="content">game content manager</param>
-        public SpaceShip(Vector3 position, String modelName, ContentManager content)
-            : base(position, modelName, content)
-        {
-            init(content);
-        }
-
-
         /// <summary>
         /// create a new space ship within the world
         /// </summary>
@@ -36,7 +21,6 @@ namespace Battlestation_Antaris.Model
         public SpaceShip(Vector3 position, String modelName, ContentManager content, WorldModel world)
             : base(position, modelName, content, world)
         {
-            this.world = world;
             init(content);
         }
 

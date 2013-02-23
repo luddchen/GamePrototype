@@ -162,8 +162,8 @@ namespace Battlestation_Antaris.View
             }
 
 
-            // draw world laser beams
-            foreach (Laser obj in this.game.world.allLaserBeams)
+            // draw world weapons
+            foreach (SpatialObject obj in this.game.world.allWeapons)
             {
                 if (obj.isVisible)
                 {

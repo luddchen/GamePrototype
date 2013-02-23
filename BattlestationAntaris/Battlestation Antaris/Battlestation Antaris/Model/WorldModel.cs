@@ -49,9 +49,9 @@ namespace Battlestation_Antaris.Model
 
 
         /// <summary>
-        /// a list of all Laser beams that will be rendered with alpha
+        /// a list of all Laser beams
         /// </summary>
-        public List<Laser> allLaserBeams;
+        public List<SpatialObject> allWeapons;
 
 
         private List<SpatialObject> removeList;
@@ -68,7 +68,7 @@ namespace Battlestation_Antaris.Model
             this.allRadars = new List<Radar>();
             this.allTurrets = new List<Turret>();
 
-            this.allLaserBeams = new List<Laser>();
+            this.allWeapons = new List<SpatialObject>();
             this.removeList = new List<SpatialObject>();
         }
 
@@ -100,7 +100,6 @@ namespace Battlestation_Antaris.Model
                 this.allTurrets.Add(
                     new Turret(
                         new Vector3(random.Next(2400) - 1200, 1, random.Next(2400) - 1200), 
-                        i, 
                         content, 
                         this));
             }
@@ -128,16 +127,16 @@ namespace Battlestation_Antaris.Model
             }
 
             // update all laser beams
-            foreach (Laser obj in this.allLaserBeams)
+            foreach (SpatialObject obj in this.allWeapons)
             {
                 obj.Update(gameTime);
             }
 
             foreach (SpatialObject obj in this.removeList)
             {
-                if (obj is Laser)
+                if ((obj is Laser) || (obj is Missile))
                 {
-                    this.allLaserBeams.Remove((Laser)obj);
+                    this.allWeapons.Remove(obj);
                 }
                 else
                 {
@@ -149,7 +148,24 @@ namespace Battlestation_Antaris.Model
 
 
         /// <summary>
-        /// trigger laser beam remove
+        /// add a spatial object to this world
+        /// </summary>
+        /// <param name="obj">a spatial object</param>
+        public void addObject(SpatialObject obj)
+        {
+            if ((obj is Laser) || (obj is Missile))
+            {
+                this.allWeapons.Add(obj);
+            }
+            else
+            {
+                this.allObjects.Add(obj);
+            }
+        }
+
+
+        /// <summary>
+        /// trigger object remove
         /// </summary>
         /// <param name="laser">laser to remove</param>
         public void removeObject(SpatialObject obj)

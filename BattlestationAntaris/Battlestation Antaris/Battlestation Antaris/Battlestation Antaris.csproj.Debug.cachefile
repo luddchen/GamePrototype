@@ -27,5 +27,11 @@ Content\Models\SpaceStation\StationSphere_0.xnb
 Content\Models\SpaceStation\StationBox_0.xnb
 Content\Models\SpaceStation\StationCatwalk_0.xnb
 Content\Models\Turret\turret.xnb
+Content\Models\Turret\MetalBare0152_2_M.xnb
+Content\Models\Turret\MetalGalvanized0026_2_M.xnb
+Content\Models\Turret\MetalGalvanizedDark.xnb
+Content\Models\Turret\MetalGalvanizedDark_0.xnb
+Content\Models\Turret\MetalGalvanized0026_2_M_0.xnb
+Content\Models\Turret\MetalBare0152_2_M_0.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa
