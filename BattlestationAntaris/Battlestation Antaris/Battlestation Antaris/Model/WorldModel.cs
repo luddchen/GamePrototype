@@ -104,6 +104,15 @@ namespace Battlestation_Antaris.Model
                         this));
             }
 
+            for (int i = 0; i < 12; i++)
+            {
+                this.allRadars.Add(
+                    new Radar(
+                        new Vector3(random.Next(2400) - 1200, 1, random.Next(2400) - 1200),
+                        content,
+                        this));
+            }
+
 
             // create the player space ship
             this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models/compass", content, this);

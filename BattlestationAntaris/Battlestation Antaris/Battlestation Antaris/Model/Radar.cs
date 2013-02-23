@@ -18,7 +18,22 @@ namespace Battlestation_Antaris.Model
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public Radar(Vector3 position, String modelName, ContentManager content, WorldModel world) : base(position, modelName, content, world) { }
+        public Radar(Vector3 position, ContentManager content, WorldModel world) : base(position, "Models//Radar//radar", content, world) 
+        {
+            Random random = new Random((int)position.X);
+
+            int pitch = random.Next(2);
+            this.attributes.EnginePitch.MaxVelocity = (pitch == 0) ? -0.02f : 0.02f;
+            this.attributes.EnginePitch.CurrentVelocity = (pitch == 0) ? -0.02f : 0.02f; ;
+
+            int yaw = random.Next(2);
+            this.attributes.EngineYaw.MaxVelocity = (yaw == 0) ? -0.02f : 0.02f;
+            this.attributes.EngineYaw.CurrentVelocity = (yaw == 0) ? -0.02f : 0.02f;
+
+            int roll = random.Next(2);
+            this.attributes.EngineYaw.MaxVelocity = (roll == 0) ? -0.02f : 0.02f;
+            this.attributes.EngineYaw.CurrentVelocity = (roll == 0) ? -0.02f : 0.02f;
+        }
 
 
         /// <summary>

@@ -198,7 +198,6 @@ namespace Battlestation_Antaris.Model
                 this.rotation.Up = up;
                 this.rotation.Right = right;
                 this.rotationRepairCountdown = SpatialObject.MAX_ROTATION_UNTIL_REPAIR;
-                Console.Out.WriteLine("repair rotation matrix");
             }
 
 
