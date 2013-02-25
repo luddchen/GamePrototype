@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Battlestation_Antaris.Control;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 namespace Battlestation_Antaris.View
 {
 
@@ -39,6 +40,11 @@ namespace Battlestation_Antaris.View
             testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height * 0.1f);
 
             this.allHUD_2D.Add(testString);
+        }
+
+
+        public override void Window_ClientSizeChanged(Viewport viewport)
+        {
         }
     }
 

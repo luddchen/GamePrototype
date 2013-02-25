@@ -6,6 +6,9 @@ using System.Text;
 namespace SpatialObjectAttributesLibrary
 {
 
+    /// <summary>
+    /// Spatial Object Attributes : Missile
+    /// </summary>
     public class Missile : Weapon
     {
 
@@ -25,6 +28,15 @@ namespace SpatialObjectAttributesLibrary
             this.CurrentAmount = 0;
             this.ReloadTime = 0;
             this.CurrentReloadTime = 0;
+        }
+
+        public Missile(Missile missile)
+            : base(missile)
+        {
+            this.MaxAmount = missile.MaxAmount;
+            this.CurrentAmount = missile.CurrentAmount;
+            this.ReloadTime = missile.ReloadTime;
+            this.CurrentReloadTime = missile.CurrentReloadTime;
         }
 
         public Missile(float damage, float range, float projectileVelocity, float maxAmount, float reloadTime)
@@ -47,15 +59,6 @@ namespace SpatialObjectAttributesLibrary
             this.CurrentReloadTime = 0;
         }
 
-        public void set(Missile missile)
-        {
-            base.set(missile);
-
-            this.MaxAmount = missile.MaxAmount;
-            this.CurrentAmount = missile.CurrentAmount;
-            this.ReloadTime = missile.ReloadTime;
-            this.CurrentReloadTime = missile.CurrentReloadTime;
-        }
 
         public override void setValues(float[] values, ref int index)
         {

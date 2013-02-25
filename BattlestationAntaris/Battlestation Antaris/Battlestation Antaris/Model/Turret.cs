@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
+using SpatialObjectAttributesLibrary;
+
 namespace Battlestation_Antaris.Model
 {
 
@@ -30,7 +32,7 @@ namespace Battlestation_Antaris.Model
             this.timeout = this.random.Next(120) + 60;
             this.beams = 0;
 
-            this.attributes.set( content.Load<SpatialObjectAttributesLibrary.SpatialObjectAttributes>("Attributes//Turret") );
+            this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>("Attributes//Turret") );
         }
 
 

@@ -46,6 +46,7 @@ namespace Battlestation_Antaris.Control
         /// <param name="gameTime">the game time</param>
         public abstract void Update(GameTime gameTime);
 
+
     }
 
 }

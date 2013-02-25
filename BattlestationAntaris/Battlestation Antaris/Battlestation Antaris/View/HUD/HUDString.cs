@@ -49,12 +49,6 @@ namespace Battlestation_Antaris.View
 
 
         /// <summary>
-        /// local position of this element
-        /// </summary>
-        public Vector2 Position { get; set; }
-
-
-        /// <summary>
         /// color of this element
         /// </summary>
         public Color Color { get; set; }
@@ -211,6 +205,10 @@ namespace Battlestation_Antaris.View
                 return false;
             }
             return true;
+        }
+
+
+        public override void Window_ClientSizeChanged(Viewport viewport) {
         }
     }
 }

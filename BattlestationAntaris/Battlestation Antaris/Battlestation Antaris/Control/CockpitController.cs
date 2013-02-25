@@ -12,13 +12,13 @@ namespace Battlestation_Antaris.Control
     /// </summary>
     class CockpitController : SituationController
     {
+
         private int mouseTimeOut = 120;
         private int mouseVisibleCounter;
 
         private HUDButton toCommandButton;
         private HUDButton toMenuButton;
-
-        private HUDTexture cokpitTexture;
+        private FpsDisplay fpsDisplay;
         
         /// <summary>
         /// create a new cockpit controller
@@ -29,35 +29,30 @@ namespace Battlestation_Antaris.Control
         {
             mouseVisibleCounter = mouseTimeOut;
 
-            cokpitTexture = new HUDTexture(game.Content);
-            cokpitTexture.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
-            cokpitTexture.Width = game.GraphicsDevice.Viewport.Width;
-            cokpitTexture.Height = game.GraphicsDevice.Viewport.Height;
-            cokpitTexture.Texture = game.Content.Load<Texture2D>("Sprites//cockpit3");
-
-            this.view.allHUD_2D.Add(cokpitTexture);
+            HUDRelativeContainer buttons = new HUDRelativeContainer(0.8f, 0.95f, game.GraphicsDevice.Viewport);
 
             toCommandButton =
                 new HUDButton(
                     "Command",
-                    new Vector2(
-                        game.GraphicsDevice.Viewport.Width * 0.94f,
-                        game.GraphicsDevice.Viewport.Height * 0.95f),
+                    new Vector2(0,0),
                     0.5f,
                     game.Content);
 
-            this.view.allHUD_2D.Add(toCommandButton);
+            buttons.Add(toCommandButton);
 
             toMenuButton =
                 new HUDButton(
                     "Menu",
-                    new Vector2(
-                        game.GraphicsDevice.Viewport.Width * 0.83f,
-                        game.GraphicsDevice.Viewport.Height * 0.95f),
+                    new Vector2(toCommandButton.Width + 10,0),
                     0.5f,
                     game.Content);
 
-            this.view.allHUD_2D.Add(toMenuButton);
+            buttons.Add(toMenuButton);
+
+            this.view.allHUD_2D.Add(buttons);
+
+            fpsDisplay = new FpsDisplay(new Vector2(50, 20), game.Content);
+            this.view.allHUD_2D.Add(fpsDisplay);
         }
 
 
@@ -67,6 +62,8 @@ namespace Battlestation_Antaris.Control
         /// <param name="gameTime">the game time</param>
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            fpsDisplay.Update(gameTime);
+
             if (this.game.inputProvider.isMouseMoved())
             {
                 mouseVisibleCounter = mouseTimeOut;

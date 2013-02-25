@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
+using SpatialObjectAttributesLibrary;
+
 namespace Battlestation_Antaris.Model
 {
 
@@ -65,7 +67,7 @@ namespace Battlestation_Antaris.Model
         /// </summary>
         private void init(ContentManager content)
         {
-            this.attributes.set( content.Load<SpatialObjectAttributesLibrary.SpatialObjectAttributes>("Attributes//SpaceShip") );
+            this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>("Attributes//SpaceShip") );
         }
 
     }

@@ -68,10 +68,14 @@ namespace Battlestation_Antaris.View
             // 2D HUD
             HUDString testString = new HUDString("Antaris Cockpit : W/S - Engine , A/D - Roll", null, null, null, new Color(32,32,32,64), 0.45f, 0.0f, game.Content);
             testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, 15);
-
             this.allHUD_2D.Add(testString);
 
-            this.allHUD_2D.Add(new ShipAttributesVisualizer(this.game.world.spaceShip, this.game));
+            HUDTexture cokpitTexture = new HUDRelativeTexture(1.0f, 1.0f, 0.5f, 0.5f, game.GraphicsDevice.Viewport, game.Content);
+            cokpitTexture.Texture = game.Content.Load<Texture2D>("Sprites//cockpit3");
+            cokpitTexture.layerDepth = 1.0f;
+            this.allHUD_2D.Add(cokpitTexture);
+
+            this.allHUD_2D.Add(new ShipAttributesVisualizer(0.1f, 0.7f, this.game.GraphicsDevice.Viewport, this.game.world.spaceShip, this.game));
 
             Random random = new Random();
 
@@ -228,6 +232,15 @@ namespace Battlestation_Antaris.View
             //effect.FogColor = Color.Red.ToVector3();
             //effect.FogStart = 200.0f;
             //effect.FogEnd = 210.0f;
+        }
+
+
+        public override void Window_ClientSizeChanged(Viewport viewport)
+        {
+            foreach (HUDElement2D element in this.allHUD_2D)
+            {
+                element.Window_ClientSizeChanged(viewport);
+            }
         }
 
     }

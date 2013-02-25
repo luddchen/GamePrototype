@@ -6,6 +6,9 @@ using System.Text;
 namespace SpatialObjectAttributesLibrary
 {
 
+    /// <summary>
+    /// Spatial Object Attributes
+    /// </summary>
     public class SpatialObjectAttributes
     {
 
@@ -56,17 +59,21 @@ namespace SpatialObjectAttributesLibrary
             this.Missile = new Missile();
         }
 
-        public void set(SpatialObjectAttributes soa)
+        public SpatialObjectAttributes(SpatialObjectAttributes soa)
         {
-            this.Shield.set(soa.Shield);
-            this.Hull.set(soa.Hull);
-            this.Radar.set(soa.Radar);
-            this.Engine.set(soa.Engine);
-            this.EngineYaw.set(soa.EngineYaw);
-            this.EnginePitch.set(soa.EnginePitch);
-            this.EngineRoll.set(soa.EngineRoll);
-            this.Laser.set(soa.Laser);
-            this.Missile.set(soa.Missile);
+            this.Shield = new Health(soa.Shield);
+            this.Hull = new Health(soa.Hull);
+
+            this.Radar = new Radar(soa.Radar);
+
+            this.Engine = new Engine(soa.Engine);
+
+            this.EngineYaw = new Engine(soa.EngineYaw);
+            this.EnginePitch = new Engine(soa.EnginePitch);
+            this.EngineRoll = new Engine(soa.EngineRoll);
+
+            this.Laser = new Laser(soa.Laser);
+            this.Missile = new Missile(soa.Missile);
         }
 
         public List<AttributeItem> getItems()

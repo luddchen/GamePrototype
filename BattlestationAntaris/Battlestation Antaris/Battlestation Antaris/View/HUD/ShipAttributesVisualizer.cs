@@ -13,7 +13,7 @@ namespace Battlestation_Antaris.View.HUD
     /// <summary>
     /// a test class for debuging spatial object movement
     /// </summary>
-    class ShipAttributesVisualizer : HUDElement2D
+    class ShipAttributesVisualizer : HUDRelativeContainer
     {
 
         HUDString velocity;
@@ -28,30 +28,42 @@ namespace Battlestation_Antaris.View.HUD
         SpatialObject ship;
 
 
-        public ShipAttributesVisualizer(SpatialObject ship, Game1 game)
+        public ShipAttributesVisualizer(float relativeX, float relativeY, Viewport viewport, SpatialObject ship, Game1 game)
+            : base(relativeX, relativeY, viewport)
         {
             this.ship = ship;
 
             this.velocity = new HUDString("Speed : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.velocity.Position = new Vector2(game.GraphicsDevice.Viewport.Width * 0.1f, game.GraphicsDevice.Viewport.Height * 0.75f);
+            this.velocity.Position = new Vector2(0,-50);
+            this.velocity.layerDepth = 0.4f;
+            Add(this.velocity);
 
             this.yawVelocity = new HUDString("Yaw : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.yawVelocity.Position = new Vector2(game.GraphicsDevice.Viewport.Width * 0.1f, game.GraphicsDevice.Viewport.Height * 0.8f);
+            this.yawVelocity.Position = new Vector2(0,-25);
+            this.yawVelocity.layerDepth = 0.4f;
+            Add(this.yawVelocity);
 
             this.pitchVelocity = new HUDString("Pitch : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.pitchVelocity.Position = new Vector2(game.GraphicsDevice.Viewport.Width * 0.1f, game.GraphicsDevice.Viewport.Height * 0.85f);
+            this.pitchVelocity.Position = new Vector2(0,0);
+            this.pitchVelocity.layerDepth = 0.4f;
+            Add(this.pitchVelocity);
 
             this.rollVelocity = new HUDString("Roll : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.rollVelocity.Position = new Vector2(game.GraphicsDevice.Viewport.Width * 0.1f, game.GraphicsDevice.Viewport.Height * 0.9f);
+            this.rollVelocity.Position = new Vector2(0,25);
+            this.rollVelocity.layerDepth = 0.4f;
+            Add(this.rollVelocity);
 
-            this.distance = new HUDString("Roll : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.distance.Position = new Vector2(game.GraphicsDevice.Viewport.Width * 0.1f, game.GraphicsDevice.Viewport.Height * 0.95f);
+            this.distance = new HUDString("Distance : ", null, null, null, null, 0.35f, 0.0f, game.Content);
+            this.distance.Position = new Vector2(0,50);
+            this.distance.layerDepth = 0.4f;
+            Add(this.distance);
 
             this.bgTexture = new HUDTexture(game.Content);
-            this.bgTexture.Position = new Vector2(game.GraphicsDevice.Viewport.Width * 0.1f, game.GraphicsDevice.Viewport.Height * 0.85f);
+            this.bgTexture.Position = new Vector2(0,0);
             this.bgTexture.Width = 150;
             this.bgTexture.Height = 150;
             this.bgTexture.Color = new Color(10, 10, 10, 160);
+            Add(this.bgTexture);
         }
 
 
@@ -67,13 +79,13 @@ namespace Battlestation_Antaris.View.HUD
             this.rollVelocity.String = String.Format("Roll : {0:F2}", this.ship.attributes.EngineRoll.CurrentVelocity * 100);
             this.distance.String = String.Format("Distance : {0:F0}", this.ship.globalPosition.Length());
 
-            this.bgTexture.Draw(spritBatch);
-            this.velocity.Draw(spritBatch);
-            this.yawVelocity.Draw(spritBatch);
-            this.pitchVelocity.Draw(spritBatch);
-            this.rollVelocity.Draw(spritBatch);
-            this.distance.Draw(spritBatch);
+            base.Draw(spritBatch);
         }
+
+
+        //public override void Window_ClientSizeChanged(Viewport viewport)
+        //{
+        //}
 
     }
 

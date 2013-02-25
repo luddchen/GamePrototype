@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Battlestation_Antaris.Model
 {
@@ -10,6 +11,9 @@ namespace Battlestation_Antaris.Model
     /// </summary>
     public class Radar : SpatialObject
     {
+
+        public List<SpatialObject> objectsInRange;
+
 
         /// <summary>
         /// create a new radar inside the world
@@ -33,6 +37,10 @@ namespace Battlestation_Antaris.Model
             int roll = random.Next(2);
             this.attributes.EngineYaw.MaxVelocity = (roll == 0) ? -0.02f : 0.02f;
             this.attributes.EngineYaw.CurrentVelocity = (roll == 0) ? -0.02f : 0.02f;
+
+            this.attributes.Radar.Range = 500.0f;
+
+            this.objectsInRange = new List<SpatialObject>();
         }
 
 
@@ -43,6 +51,34 @@ namespace Battlestation_Antaris.Model
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Update(gameTime);
+
+            this.objectsInRange.Clear();
+
+            float distance;
+
+            // objects
+            foreach (SpatialObject obj in this.world.allObjects)
+            {
+                distance = Vector3.Distance(this.globalPosition, obj.globalPosition);
+
+                if (distance <= this.attributes.Radar.Range)
+                {
+                    this.objectsInRange.Add(obj);
+                }
+            }
+
+            // weapons
+            foreach (SpatialObject obj in this.world.allWeapons)
+            {
+                distance = Vector3.Distance(this.globalPosition, obj.globalPosition);
+
+                if (distance <= this.attributes.Radar.Range)
+                {
+                    this.objectsInRange.Add(obj);
+                }
+            }
+
+            //Console.Out.WriteLine("Objects in Range : " + this.objectsInRange.Count);
         }
 
     }

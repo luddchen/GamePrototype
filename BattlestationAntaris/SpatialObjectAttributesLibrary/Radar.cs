@@ -3,10 +3,13 @@
 namespace SpatialObjectAttributesLibrary
 {
 
+    /// <summary>
+    /// Spatial Object Attributes : Radar
+    /// </summary>
     public class Radar : AttributeItem
     {
 
-        float Range;
+        public float Range;
 
         public Radar()
         {
@@ -18,15 +21,14 @@ namespace SpatialObjectAttributesLibrary
             this.Range = range;
         }
 
+        public Radar(Radar radar)
+        {
+            this.Range = radar.Range;
+        }
 
         public void set(float range)
         {
             this.Range = range;
-        }
-
-        public void set(Radar radar)
-        {
-            this.Range = radar.Range;
         }
 
         public override void setValues(float[] values, ref int index)

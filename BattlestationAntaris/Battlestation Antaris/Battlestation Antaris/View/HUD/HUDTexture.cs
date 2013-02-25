@@ -40,11 +40,6 @@ namespace Battlestation_Antaris.View
         public Vector2 Origin { get; set; }
 
         /// <summary>
-        /// local position of this element 
-        /// </summary>
-        public Vector2 Position { get; set; }
-
-        /// <summary>
         /// width of this element
         /// </summary>
         public float Width { get; set; }
@@ -126,7 +121,7 @@ namespace Battlestation_Antaris.View
                                 -this.Rotation,
                                 this.Origin,
                                 this.Effect,
-                                0.0f);
+                                this.layerDepth);
             }
         }
 
@@ -147,6 +142,10 @@ namespace Battlestation_Antaris.View
                 return false;
             }
             return true;
+        }
+
+        public override void Window_ClientSizeChanged(Viewport viewport)
+        {
         }
     }
 }

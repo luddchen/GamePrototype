@@ -42,6 +42,11 @@ namespace Battlestation_Antaris.View
 
             this.allHUD_2D.Add(testString);
         }
+
+
+        public override void Window_ClientSizeChanged(Viewport viewport)
+        {
+        }
     }
 
 }

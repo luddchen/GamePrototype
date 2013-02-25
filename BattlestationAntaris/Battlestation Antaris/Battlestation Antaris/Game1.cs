@@ -49,6 +49,7 @@ namespace Battlestation_Antaris
         /// </summary>
         List<SituationController> allSituations;
 
+        Battlestation_Antaris.Model.CollisionOctree tree;
 
         /// <summary>
         /// creates a new Antaris game
@@ -57,6 +58,21 @@ namespace Battlestation_Antaris
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.IsFixedTimeStep = false;
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+        }
+
+
+        /// <summary>
+        /// called if client size change
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
+        void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            this.activeSituation.view.Window_ClientSizeChanged(this.GraphicsDevice.Viewport);
+            Console.Out.WriteLine("window size changed");
         }
 
 
@@ -81,7 +97,7 @@ namespace Battlestation_Antaris
             this.world.Initialize(Content);
 
             // CollisionTree testing
-            //Battlestation_Antaris.Model.CollisionOctree tree = new Model.CollisionOctree(2, 1, new BoundingBox(new Vector3(-400, -400, -400), new Vector3(400, 400, 400)));
+            tree = new Model.CollisionOctree(2, 1, new BoundingBox(new Vector3(-4000, -4000, -4000), new Vector3(4000, 4000, 4000)));
             //tree.insertFromWorld(this.world);
             //Console.Out.WriteLine(tree);
             
@@ -151,6 +167,9 @@ namespace Battlestation_Antaris
                     this.world.Update(gameTime);
                     break;
             }
+
+            tree.clear();
+            tree.insertFromWorld(this.world);
 
             base.Update(gameTime);
         }

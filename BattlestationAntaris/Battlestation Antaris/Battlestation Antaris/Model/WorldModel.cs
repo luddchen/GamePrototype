@@ -89,7 +89,7 @@ namespace Battlestation_Antaris.Model
             // create 500 random objects to fill the space for testing
             Random random = new Random();
 
-            for (int i = 0; i < 200; i++ )
+            for (int i = 0; i < 20; i++ )
             {
                 if (random.Next(2) == 0)
                 {
@@ -110,7 +110,7 @@ namespace Battlestation_Antaris.Model
                         this));
             }
 
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 32; i++)
             {
                 this.allRadars.Add(
                     new Radar(

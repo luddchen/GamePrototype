@@ -6,6 +6,9 @@ using System.Text;
 namespace SpatialObjectAttributesLibrary
 {
 
+    /// <summary>
+    /// Spatial Object Attributes : Engine
+    /// </summary>
     public class Engine : AttributeItem
     {
         public float MaxVelocity;
@@ -22,6 +25,14 @@ namespace SpatialObjectAttributesLibrary
             this.CurrentVelocity = 0;
             this.Acceleration = 0;
             this.ResetForce = 0;
+        }
+
+        public Engine(Engine engine)
+        {
+            this.MaxVelocity = engine.MaxVelocity;
+            this.CurrentVelocity = engine.CurrentVelocity;
+            this.Acceleration = engine.Acceleration;
+            this.ResetForce = engine.ResetForce;
         }
 
         public Engine(float maxVelocity, float acceleration, float resetForce)
@@ -52,6 +63,18 @@ namespace SpatialObjectAttributesLibrary
             }
         }
 
+        public void Accelerate()
+        {
+            this.CurrentVelocity += this.Acceleration;
+            this.CurrentVelocity = Math.Min(this.CurrentVelocity, this.MaxVelocity);
+        }
+
+        public void Decelerate()
+        {
+            this.CurrentVelocity -= this.Acceleration;
+            this.CurrentVelocity = Math.Max(this.CurrentVelocity, -this.MaxVelocity);
+        }
+
 
         public void set(float maxVelocity, float acceleration, float resetForce)
         {
@@ -59,14 +82,6 @@ namespace SpatialObjectAttributesLibrary
             this.CurrentVelocity = 0;
             this.Acceleration = acceleration;
             this.ResetForce = resetForce;
-        }
-
-        public void set(Engine engine)
-        {
-            this.MaxVelocity = engine.MaxVelocity;
-            this.CurrentVelocity = engine.CurrentVelocity;
-            this.Acceleration = engine.Acceleration;
-            this.ResetForce = engine.ResetForce;
         }
 
         public override void setValues(float[] values, ref int index)

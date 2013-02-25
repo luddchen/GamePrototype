@@ -186,17 +186,7 @@ namespace Battlestation_Antaris.Model
             // repair rotation matrix if necessary
             if (this.rotationRepairCountdown < 0)
             {
-                Vector3 fwd = this.rotation.Forward;
-                Vector3 up = this.rotation.Up;
-                Vector3 right = this.rotation.Right;
-                fwd.Normalize();
-                up.Normalize();
-                right.Normalize();
-
-                this.rotation = Matrix.Identity;
-                this.rotation.Forward = fwd;
-                this.rotation.Up = up;
-                this.rotation.Right = right;
+                Tools.Tools.Repair(ref this.rotation);
                 this.rotationRepairCountdown = SpatialObject.MAX_ROTATION_UNTIL_REPAIR;
             }
 
@@ -247,74 +237,42 @@ namespace Battlestation_Antaris.Model
             switch (control)
             {
                 case Control.Control.PITCH_UP:
-                    this.attributes.EnginePitch.CurrentVelocity += this.attributes.EnginePitch.Acceleration;
-                    if (this.attributes.EnginePitch.CurrentVelocity > this.attributes.EnginePitch.MaxVelocity)
-                    {
-                        this.attributes.EnginePitch.CurrentVelocity = this.attributes.EnginePitch.MaxVelocity;
-                    }
+                    this.attributes.EnginePitch.Accelerate();
                     resetPitch = false;
                     break;
 
                 case Control.Control.PITCH_DOWN:
-                    this.attributes.EnginePitch.CurrentVelocity -= this.attributes.EnginePitch.Acceleration;
-                    if (this.attributes.EnginePitch.CurrentVelocity < -this.attributes.EnginePitch.MaxVelocity)
-                    {
-                        this.attributes.EnginePitch.CurrentVelocity = -this.attributes.EnginePitch.MaxVelocity;
-                    }
+                    this.attributes.EnginePitch.Decelerate();
                     resetPitch = false;
                     break;
 
                 case Control.Control.YAW_LEFT:
-                    this.attributes.EngineYaw.CurrentVelocity += this.attributes.EngineYaw.Acceleration;
-                    if (this.attributes.EngineYaw.CurrentVelocity > this.attributes.EngineYaw.MaxVelocity)
-                    {
-                        this.attributes.EngineYaw.CurrentVelocity = this.attributes.EngineYaw.MaxVelocity;
-                    }
+                    this.attributes.EngineYaw.Accelerate();
                     resetYaw = false;
                     break;
 
                 case Control.Control.YAW_RIGHT:
-                    this.attributes.EngineYaw.CurrentVelocity -= this.attributes.EngineYaw.Acceleration;
-                    if (this.attributes.EngineYaw.CurrentVelocity < -this.attributes.EngineYaw.MaxVelocity)
-                    {
-                        this.attributes.EngineYaw.CurrentVelocity = -this.attributes.EngineYaw.MaxVelocity;
-                    }
+                    this.attributes.EngineYaw.Decelerate();
                     resetYaw = false;
                     break;
 
                 case Control.Control.ROLL_CLOCKWISE:
-                    this.attributes.EngineRoll.CurrentVelocity += this.attributes.EngineRoll.Acceleration;
-                    if (this.attributes.EngineRoll.CurrentVelocity > this.attributes.EngineRoll.MaxVelocity)
-                    {
-                        this.attributes.EngineRoll.CurrentVelocity = this.attributes.EngineRoll.MaxVelocity;
-                    }
+                    this.attributes.EngineRoll.Accelerate();
                     resetRoll = false;
                     break;
 
                 case Control.Control.ROLL_ANTICLOCKWISE:
-                    this.attributes.EngineRoll.CurrentVelocity -= this.attributes.EngineRoll.Acceleration;
-                    if (this.attributes.EngineRoll.CurrentVelocity < -this.attributes.EngineRoll.MaxVelocity)
-                    {
-                        this.attributes.EngineRoll.CurrentVelocity = -this.attributes.EngineRoll.MaxVelocity;
-                    }
+                    this.attributes.EngineRoll.Decelerate();
                     resetRoll = false;
                     break;
 
                 case Control.Control.INCREASE_THROTTLE:
-                    this.attributes.Engine.CurrentVelocity += this.attributes.Engine.Acceleration;
-                    if (this.attributes.Engine.CurrentVelocity > this.attributes.Engine.MaxVelocity)
-                    {
-                        this.attributes.Engine.CurrentVelocity = this.attributes.Engine.MaxVelocity;
-                    }
+                    this.attributes.Engine.Accelerate();
                     resetEngine = false;
                     break;
 
                 case Control.Control.DECREASE_THROTTLE:
-                    this.attributes.Engine.CurrentVelocity -= this.attributes.Engine.Acceleration;
-                    if (this.attributes.Engine.CurrentVelocity < -this.attributes.Engine.MaxVelocity)
-                    {
-                        this.attributes.Engine.CurrentVelocity = -this.attributes.Engine.MaxVelocity;
-                    }
+                    this.attributes.Engine.Decelerate();
                     resetEngine = false;
                     break;
 

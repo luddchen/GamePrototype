@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antaris.View
 {
@@ -11,12 +12,18 @@ namespace Battlestation_Antaris.View
     public abstract class HUDElement2D
     {
 
+        public Vector2 Position;
+
+        public float layerDepth = 0.5f;
 
         /// <summary>
         /// draw this element
         /// </summary>
         /// <param name="spritBatch">the spritebatch</param>
-        abstract public void Draw(SpriteBatch spritBatch);
+        public abstract void Draw(SpriteBatch spritBatch);
+
+
+        public abstract void Window_ClientSizeChanged(Viewport viewport);
 
     }
 

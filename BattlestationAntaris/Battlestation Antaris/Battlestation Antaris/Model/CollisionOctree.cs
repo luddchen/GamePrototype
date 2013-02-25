@@ -56,9 +56,19 @@ namespace Battlestation_Antaris.Model
 
         public void insertFromWorld(WorldModel world)
         {
+            int unsuccessful = 0;
+
             foreach (SpatialObject obj in world.allObjects)
             {
-                insert( new CollisionObject(obj) );
+                if (!insert(new CollisionObject(obj)))
+                {
+                    unsuccessful++;
+                }
+            }
+
+            if (unsuccessful > 0)
+            {
+                //Console.Out.WriteLine("unsuccessful inserts : " + unsuccessful);
             }
         }
 
@@ -96,6 +106,20 @@ namespace Battlestation_Antaris.Model
             }
 
             return successful;
+        }
+
+
+        public void clear()
+        {
+            this.objects.Clear();
+
+            if (!this.isLeaf)
+            {
+                foreach (CollisionOctree t in this.subTrees)
+                {
+                    t.clear();
+                }
+            }
         }
 
 

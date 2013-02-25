@@ -6,6 +6,9 @@ using System.Text;
 namespace SpatialObjectAttributesLibrary
 {
 
+    /// <summary>
+    /// Spatial Object Attributes : Laser
+    /// </summary>
     public class Laser : Weapon
     {
 
@@ -26,6 +29,15 @@ namespace SpatialObjectAttributesLibrary
             this.HeatRegeneration = 0;
         }
 
+        public Laser(Laser laser)
+            : base(laser)
+        {
+            this.HeatProduction = laser.HeatProduction;
+            this.HeatUntilCooldown = laser.HeatUntilCooldown;
+            this.CurrentHeat = laser.CurrentHeat;
+            this.HeatRegeneration = laser.HeatRegeneration;
+        }
+
         public Laser(float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration)
             : base(damage, range, projectileVelocity)
         {
@@ -44,16 +56,6 @@ namespace SpatialObjectAttributesLibrary
             this.HeatUntilCooldown = heatUntilCooldown;
             this.CurrentHeat = 0;
             this.HeatRegeneration = heatRegeneration;
-        }
-
-        public void set(Laser laser)
-        {
-            base.set(laser);
-
-            this.HeatProduction = laser.HeatProduction;
-            this.HeatUntilCooldown = laser.HeatUntilCooldown;
-            this.CurrentHeat = laser.CurrentHeat;
-            this.HeatRegeneration = laser.HeatRegeneration;
         }
 
         public override void setValues(float[] values, ref int index)

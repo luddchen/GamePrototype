@@ -136,6 +136,22 @@ namespace Battlestation_Antaris.Tools
             return rotation;
         }
 
+
+        public static void Repair(ref Matrix matrix)
+        {
+            Vector3 fwd = matrix.Forward;
+            Vector3 up = matrix.Up;
+            Vector3 right = matrix.Right;
+            fwd.Normalize();
+            up.Normalize();
+            right.Normalize();
+
+            matrix = Matrix.Identity;
+            matrix.Forward = fwd;
+            matrix.Up = up;
+            matrix.Right = right;
+        }
+
     }
 
 }
