@@ -13,11 +13,11 @@ namespace Battlestation_Antaris.Control
     class MenuController : SituationController
     {
 
-        private HUDTexture testTex;
+        private HUD2DTexture testTex;
 
-        private HUDButton toCommandButton;
+        private HUD2DButton toCommandButton;
 
-        private HUDButton toCockpitButton;
+        private HUD2DButton toCockpitButton;
 
         /// <summary>
         /// create a new menu controller
@@ -29,33 +29,22 @@ namespace Battlestation_Antaris.Control
             this.worldUpdate = WorldUpdate.NO_UPDATE;
 
             // test content
-            testTex = new HUDTexture(game.Content);
-            testTex.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height * 0.4f);
-            testTex.Width = game.GraphicsDevice.Viewport.Width / 3;
-            testTex.Height = testTex.Width;
+            testTex = new HUD2DTexture(this.game);
+            testTex.abstractPosition = new Vector2(0.5f, 0.4f);
+            testTex.positionType = HUDType.RELATIV;
+            testTex.abstractSize = new Vector2(0.5f, 0.5f);
+            testTex.sizeType = HUDType.RELATIV;
             testTex.Texture = game.Content.Load<Texture2D>("Sprites//Erde2");
 
             this.view.allHUD_2D.Add(testTex);
 
-            toCommandButton = 
-                new HUDButton(
-                    "Command", 
-                    new Vector2(
-                        game.GraphicsDevice.Viewport.Width * 0.3f, 
-                        game.GraphicsDevice.Viewport.Height * 0.8f),
-                    0.7f,
-                    game.Content);
+            toCommandButton = new HUD2DButton("Command", new Vector2(0.3f, 0.8f), 0.7f, this.game);
+            toCommandButton.positionType = HUDType.RELATIV;
 
             this.view.allHUD_2D.Add(toCommandButton);
 
-            toCockpitButton =
-                new HUDButton(
-                    "Cockpit",
-                    new Vector2(
-                        game.GraphicsDevice.Viewport.Width * 0.7f,
-                        game.GraphicsDevice.Viewport.Height * 0.8f),
-                    0.7f,
-                    game.Content);
+            toCockpitButton = new HUD2DButton("Cockpit", new Vector2(0.7f, 0.8f), 0.7f, this.game);
+            toCockpitButton.positionType = HUDType.RELATIV;
 
             this.view.allHUD_2D.Add(toCockpitButton);
         }
@@ -83,7 +72,7 @@ namespace Battlestation_Antaris.Control
 
                 if (this.testTex.Intersects(mousePos))
                 {
-                    testTex.Rotation = testTex.Rotation + 0.2f;
+                    testTex.rotation = testTex.rotation + 0.2f;
                 }
             }
         }

@@ -66,16 +66,21 @@ namespace Battlestation_Antaris.View
 
 
             // 2D HUD
-            HUDString testString = new HUDString("Antaris Cockpit : W/S - Engine , A/D - Roll", null, null, null, new Color(32,32,32,64), 0.45f, 0.0f, game.Content);
-            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, 15);
+            HUD2DString testString = new HUD2DString("Antaris Cockpit : W/S - Engine , A/D - Roll", null, null, null, new Color(32, 32, 32, 64), 0.45f, 0.0f, this.game);
+            testString.abstractPosition = new Vector2(0.5f, 0.05f);
+            testString.positionType = HUDType.RELATIV;
             this.allHUD_2D.Add(testString);
 
-            HUDTexture cokpitTexture = new HUDRelativeTexture(1.0f, 1.0f, 0.5f, 0.5f, game.GraphicsDevice.Viewport, game.Content);
+            HUD2DTexture cokpitTexture = new HUD2DTexture(this.game);
+            cokpitTexture.abstractPosition = new Vector2(0.5f, 0.5f);
+            cokpitTexture.positionType = HUDType.RELATIV;
+            cokpitTexture.abstractSize = new Vector2(1, 1);
+            cokpitTexture.sizeType = HUDType.RELATIV;
             cokpitTexture.Texture = game.Content.Load<Texture2D>("Sprites//cockpit3");
             cokpitTexture.layerDepth = 1.0f;
             this.allHUD_2D.Add(cokpitTexture);
 
-            this.allHUD_2D.Add(new ShipAttributesVisualizer(0.1f, 0.7f, this.game.GraphicsDevice.Viewport, this.game.world.spaceShip, this.game));
+            this.allHUD_2D.Add(new ShipAttributesVisualizer(0.1f, 0.7f, this.game.world.spaceShip, this.game));
 
             Random random = new Random();
 
@@ -115,7 +120,6 @@ namespace Battlestation_Antaris.View
 
                 this.backgroundImages.Add(new BackgroundImage(erde, width, height, bgRot, bgColor, game));
             }
-
         }
 
 
@@ -232,15 +236,6 @@ namespace Battlestation_Antaris.View
             //effect.FogColor = Color.Red.ToVector3();
             //effect.FogStart = 200.0f;
             //effect.FogEnd = 210.0f;
-        }
-
-
-        public override void Window_ClientSizeChanged(Viewport viewport)
-        {
-            foreach (HUDElement2D element in this.allHUD_2D)
-            {
-                element.Window_ClientSizeChanged(viewport);
-            }
         }
 
     }

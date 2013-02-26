@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Battlestation_Antaris.Control;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antaris.View
 {
@@ -34,13 +33,13 @@ namespace Battlestation_Antaris.View
         /// <summary>
         /// a list of 2D HUD elements
         /// </summary>
-        public List<HUDElement2D> allHUD_2D;
+        public List<HUD2D> allHUD_2D;
 
 
         /// <summary>
         /// a list of 3D HUD elements
         /// </summary>
-        public List<HUDElement3D> allHUD_3D;
+        public List<HUD3D> allHUD_3D;
 
 
         /// <summary>
@@ -50,8 +49,8 @@ namespace Battlestation_Antaris.View
         public View(Game1 game)
         {
             this.game = game;
-            this.allHUD_2D = new List<HUDElement2D>();
-            this.allHUD_3D = new List<HUDElement3D>();
+            this.allHUD_2D = new List<HUD2D>();
+            this.allHUD_3D = new List<HUD3D>();
             this.is3D = false;
             this.backgroundColor = Color.Black;
         }
@@ -78,7 +77,7 @@ namespace Battlestation_Antaris.View
             // draw 2D HUD elements
             this.game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-            foreach (HUDElement2D element in this.allHUD_2D)
+            foreach (HUD2D element in this.allHUD_2D)
             {
                 element.Draw(this.game.spriteBatch);
             }
@@ -91,7 +90,7 @@ namespace Battlestation_Antaris.View
             {
                 this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
 
-                foreach (HUDElement3D element in this.allHUD_3D)
+                foreach (HUD3D element in this.allHUD_3D)
                 {
                     element.Draw();
                 }
@@ -106,7 +105,13 @@ namespace Battlestation_Antaris.View
         abstract protected void DrawContent();
 
 
-        public abstract void Window_ClientSizeChanged(Viewport viewport);
+        public virtual void Window_ClientSizeChanged()
+        {
+            foreach (HUD2D element in this.allHUD_2D)
+            {
+                element.ClientSizeChanged(Vector2.Zero);
+            }
+        }
 
     }
 

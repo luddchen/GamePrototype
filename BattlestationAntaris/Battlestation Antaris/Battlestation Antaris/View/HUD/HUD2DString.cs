@@ -3,13 +3,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Battlestation_Antaris.View
+namespace Battlestation_Antaris.View.HUD
 {
 
     /// <summary>
     /// a Head Up Display String
     /// </summary>
-    public class HUDString : HUDElement2D
+    public class HUD2DString :HUD2DConcreteElement
     {
 
         /// <summary>
@@ -49,50 +49,6 @@ namespace Battlestation_Antaris.View
 
 
         /// <summary>
-        /// color of this element
-        /// </summary>
-        public Color Color { get; set; }
-
-
-        /// <summary>
-        /// scale of this element
-        /// </summary>
-        public float Scale { get; set; }
-
-
-        /// <summary>
-        /// get width of this element
-        /// </summary>
-        public float Width
-        {
-            get { return this.MeasureString.X * this.Scale; }
-            set { }
-        }
-
-
-        /// <summary>
-        /// get height of this element
-        /// </summary>
-        public float Height
-        {
-            get { return this.MeasureString.Y * this.Scale; }
-            set { }
-        }
-
-
-        /// <summary>
-        /// rotation of this element
-        /// </summary>
-        public float Rotation { get; set; }
-
-
-        /// <summary>
-        /// if this element visible or not
-        /// </summary>
-        public bool isVisible { get; set; }
-
-
-        /// <summary>
         /// size of unscaled String
         /// </summary>
         protected Vector2 MeasureString
@@ -106,17 +62,22 @@ namespace Battlestation_Antaris.View
 
 
         /// <summary>
+        /// size of scaled string
+        /// </summary>
+        public new Vector2 size
+        {
+            get { return this.MeasureString * this.scale; }
+        }
+
+
+        /// <summary>
         /// creates a new HUD string
         /// </summary>
         /// <param name="content">game content manager</param>
-        public HUDString(ContentManager content)
+        public HUD2DString(Game1 game) : base(game)
         {
-            this.font = content.Load<SpriteFont>("Fonts\\Linds");
-            this.Position = Vector2.Zero;
-            this.String = "Antaris";
-            this.Color = Color.Beige;
-            this.Scale = 1.0f;
-            this.isVisible = true;
+            this.font = this.game.Content.Load<SpriteFont>("Fonts\\Linds");
+            this.String = "HUD2DString";
         }
 
 
@@ -125,14 +86,10 @@ namespace Battlestation_Antaris.View
         /// </summary>
         /// <param name="text">text to display</param>
         /// <param name="content">game content manager</param>
-        public HUDString(String text, ContentManager content)
+        public HUD2DString(String text, Game1 game) : base(game)
         {
-            this.font = content.Load<SpriteFont>("Fonts\\Linds");
-            this.Position = Vector2.Zero;
+            this.font = this.game.Content.Load<SpriteFont>("Fonts\\Linds");
             this.String = text;
-            this.Color = Color.White;
-            this.Scale = 1.0f;
-            this.isVisible = true;
         }
 
 
@@ -147,24 +104,24 @@ namespace Battlestation_Antaris.View
         /// <param name="scale">scale</param>
         /// <param name="rotation">rotation</param>
         /// <param name="content">game content manager</param>
-        public HUDString(String text, SpriteFont font, Vector2? position, Color? color, Color? backgroundColor, float? scale, float? rotation, ContentManager content)
+        public HUD2DString(String text, SpriteFont font, Vector2? position, Color? color, Color? backgroundColor, float? scale, float? rotation, Game1 game)
+            : base(game)
         {
             if (text == null) { this.String = " "; }
             if (text != null) { this.String = text; }
 
-            if (font == null) { this.font = content.Load<SpriteFont>("Fonts\\Linds"); }
+            if (font == null) { this.font = this.game.Content.Load<SpriteFont>("Fonts\\Linds"); }
             if (font != null) { this.font = font; }
 
-            this.Position = position ?? Vector2.Zero;
-            this.Color = color ?? Color.Beige;
-            this.Scale = scale ?? 1.0f;
-            this.Rotation = rotation ?? 0.0f;
-            this.isVisible = true;
+            this.abstractPosition = position ?? Vector2.Zero;
+            this.color = color ?? Color.Beige;
+            this.scale = scale ?? 1.0f;
+            this.rotation = rotation ?? 0.0f;
 
             if (backgroundColor != null)
             {
                 this.BackgroundColor = (Color)backgroundColor;
-                this.BackgroundTexture = content.Load<Texture2D>("Sprites\\SquareRound");
+                this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\SquareRound");
                 this.BackgroundTextureOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
             }
         }
@@ -180,10 +137,18 @@ namespace Battlestation_Antaris.View
             {
                 if (this.BackgroundTexture != null)
                 {
-                    Rectangle dest = new Rectangle((int)this.Position.X, (int)this.Position.Y, (int)(this.Width * 1.2f), (int)this.Height);
-                    spriteBatch.Draw(this.BackgroundTexture, dest, null, this.BackgroundColor, -this.Rotation, this.BackgroundTextureOrigin, SpriteEffects.None, 0.02f);
+                    Rectangle dest = 
+                        new Rectangle(  (int)this.position.X, (int)this.position.Y, 
+                                        (int)(this.size.X * 1.2f), (int)this.size.Y);
+
+                    spriteBatch.Draw(   this.BackgroundTexture, dest, null, 
+                                        this.BackgroundColor, -this.rotation, 
+                                        this.BackgroundTextureOrigin, this.effect, this.layerDepth);
                 }
-                spriteBatch.DrawString(this.font, this.String, this.Position, this.Color, -this.Rotation, this.MeasureString / 2, this.Scale, SpriteEffects.None, 0.01f);
+
+                spriteBatch.DrawString( this.font, this.String, this.position, 
+                                        this.color, -this.rotation,  this.MeasureString / 2, 
+                                        this.scale, this.effect, this.layerDepth - 0.01f);
             }
         }
 
@@ -193,14 +158,14 @@ namespace Battlestation_Antaris.View
         /// </summary>
         /// <param name="point">the test point</param>
         /// <returns>true if there is an intersetion</returns>
-        public bool Intersects(Vector2 point)
+        public override bool Intersects(Vector2 point)
         {
-            if (Rotation != 0)
+            if (rotation != 0)
             {
                 return false;
             }
-            if (point.X < Position.X - Width / 2 || point.X > Position.X + Width / 2 ||
-                point.Y < Position.Y - Height / 2 || point.Y > Position.Y + Height / 2)
+            if (point.X < position.X - size.X / 2 || point.X > position.X + size.X / 2 ||
+                point.Y < position.Y - size.Y / 2 || point.Y > position.Y + size.Y / 2)
             {
                 return false;
             }
@@ -208,7 +173,5 @@ namespace Battlestation_Antaris.View
         }
 
 
-        public override void Window_ClientSizeChanged(Viewport viewport) {
-        }
     }
 }

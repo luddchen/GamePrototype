@@ -13,56 +13,54 @@ namespace Battlestation_Antaris.View.HUD
     /// <summary>
     /// a test class for debuging spatial object movement
     /// </summary>
-    class ShipAttributesVisualizer : HUDRelativeContainer
+    class ShipAttributesVisualizer : HUD2DContainer
     {
 
-        HUDString velocity;
-        HUDString yawVelocity;
-        HUDString pitchVelocity;
-        HUDString rollVelocity;
+        HUD2DString velocity;
+        HUD2DString yawVelocity;
+        HUD2DString pitchVelocity;
+        HUD2DString rollVelocity;
 
-        HUDString distance;
+        HUD2DString distance;
 
-        HUDTexture bgTexture;
+        HUD2DTexture bgTexture;
 
         SpatialObject ship;
 
 
-        public ShipAttributesVisualizer(float relativeX, float relativeY, Viewport viewport, SpatialObject ship, Game1 game)
-            : base(relativeX, relativeY, viewport)
+        public ShipAttributesVisualizer(float relativeX, float relativeY, SpatialObject ship, Game1 game)
+            : base(new Vector2(relativeX, relativeY), HUDType.RELATIV, game)
         {
             this.ship = ship;
 
-            this.velocity = new HUDString("Speed : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.velocity.Position = new Vector2(0,-50);
+            this.velocity = new HUD2DString("Speed : ", null, null, null, null, 0.35f, 0.0f, this.game);
+            this.velocity.abstractPosition = new Vector2(0,-50);
             this.velocity.layerDepth = 0.4f;
             Add(this.velocity);
 
-            this.yawVelocity = new HUDString("Yaw : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.yawVelocity.Position = new Vector2(0,-25);
+            this.yawVelocity = new HUD2DString("Yaw : ", null, null, null, null, 0.35f, 0.0f, this.game);
+            this.yawVelocity.abstractPosition = new Vector2(0, -25);
             this.yawVelocity.layerDepth = 0.4f;
             Add(this.yawVelocity);
 
-            this.pitchVelocity = new HUDString("Pitch : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.pitchVelocity.Position = new Vector2(0,0);
+            this.pitchVelocity = new HUD2DString("Pitch : ", null, null, null, null, 0.35f, 0.0f, this.game);
+            this.pitchVelocity.abstractPosition = new Vector2(0,0);
             this.pitchVelocity.layerDepth = 0.4f;
             Add(this.pitchVelocity);
 
-            this.rollVelocity = new HUDString("Roll : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.rollVelocity.Position = new Vector2(0,25);
+            this.rollVelocity = new HUD2DString("Roll : ", null, null, null, null, 0.35f, 0.0f, this.game);
+            this.rollVelocity.abstractPosition = new Vector2(0, 25);
             this.rollVelocity.layerDepth = 0.4f;
             Add(this.rollVelocity);
 
-            this.distance = new HUDString("Distance : ", null, null, null, null, 0.35f, 0.0f, game.Content);
-            this.distance.Position = new Vector2(0,50);
+            this.distance = new HUD2DString("Distance : ", null, null, null, null, 0.35f, 0.0f, this.game);
+            this.distance.abstractPosition = new Vector2(0, 50);
             this.distance.layerDepth = 0.4f;
             Add(this.distance);
 
-            this.bgTexture = new HUDTexture(game.Content);
-            this.bgTexture.Position = new Vector2(0,0);
-            this.bgTexture.Width = 150;
-            this.bgTexture.Height = 150;
-            this.bgTexture.Color = new Color(10, 10, 10, 160);
+            this.bgTexture = new HUD2DTexture(this.game);
+            this.bgTexture.abstractSize = new Vector2(150, 150);
+            this.bgTexture.color = new Color(10, 10, 10, 160);
             Add(this.bgTexture);
         }
 
@@ -82,10 +80,6 @@ namespace Battlestation_Antaris.View.HUD
             base.Draw(spritBatch);
         }
 
-
-        //public override void Window_ClientSizeChanged(Viewport viewport)
-        //{
-        //}
 
     }
 

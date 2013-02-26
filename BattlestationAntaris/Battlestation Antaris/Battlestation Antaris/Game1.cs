@@ -71,8 +71,7 @@ namespace Battlestation_Antaris
         /// <param name="e">event</param>
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            this.activeSituation.view.Window_ClientSizeChanged(this.GraphicsDevice.Viewport);
-            Console.Out.WriteLine("window size changed");
+            this.activeSituation.view.Window_ClientSizeChanged();
         }
 
 
@@ -88,8 +87,6 @@ namespace Battlestation_Antaris
             this.allSituations.Add(new CockpitController(this, new View.CockpitView(this)));
             this.allSituations.Add(new CommandController(this, new View.CommandView(this)));
             this.allSituations.Add(new MenuController(this, new View.MenuView(this)));
-
-            switchTo(Situation.MENU);
 
             // create and initialize world model
             this.world = new Model.WorldModel(this);
@@ -116,6 +113,8 @@ namespace Battlestation_Antaris
             {
                 situation.view.Initialize();
             }
+
+            switchTo(Situation.MENU);
         }
 
 
@@ -135,6 +134,7 @@ namespace Battlestation_Antaris
         {
             this.activeSituation = this.allSituations[(int)situation];
             this.IsMouseVisible = true;
+            this.activeSituation.view.Window_ClientSizeChanged();
         }
 
 

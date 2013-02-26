@@ -7,7 +7,7 @@ namespace Battlestation_Antaris.View
     /// <summary>
     /// abstract basis class for 3D HUD elements
     /// </summary>
-    public abstract class HUDElement3D
+    public abstract class HUD3D
     {
 
         /// <summary>

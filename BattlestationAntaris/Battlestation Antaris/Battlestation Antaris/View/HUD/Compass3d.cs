@@ -13,7 +13,7 @@ namespace Battlestation_Antaris.View.HUD
     /// <summary>
     /// represents an 3D compass as HUD element
     /// </summary>
-    public class Compass3d : HUDElement3D
+    public class Compass3d : HUD3D
     {
 
         /// <summary>

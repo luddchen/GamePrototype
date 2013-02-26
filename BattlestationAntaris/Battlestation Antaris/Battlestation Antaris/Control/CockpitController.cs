@@ -16,8 +16,8 @@ namespace Battlestation_Antaris.Control
         private int mouseTimeOut = 120;
         private int mouseVisibleCounter;
 
-        private HUDButton toCommandButton;
-        private HUDButton toMenuButton;
+        private HUD2DButton toCommandButton;
+        private HUD2DButton toMenuButton;
         private FpsDisplay fpsDisplay;
         
         /// <summary>
@@ -29,29 +29,29 @@ namespace Battlestation_Antaris.Control
         {
             mouseVisibleCounter = mouseTimeOut;
 
-            HUDRelativeContainer buttons = new HUDRelativeContainer(0.8f, 0.95f, game.GraphicsDevice.Viewport);
+            HUD2DContainer buttons = new HUD2DContainer(new Vector2(0.8f, 0.95f), HUDType.RELATIV, this.game);
 
             toCommandButton =
-                new HUDButton(
+                new HUD2DButton(
                     "Command",
                     new Vector2(0,0),
                     0.5f,
-                    game.Content);
+                    this.game);
 
             buttons.Add(toCommandButton);
 
             toMenuButton =
-                new HUDButton(
+                new HUD2DButton(
                     "Menu",
-                    new Vector2(toCommandButton.Width + 10,0),
+                    new Vector2(toCommandButton.size.X + 10, 0),
                     0.5f,
-                    game.Content);
+                    this.game);
 
             buttons.Add(toMenuButton);
 
             this.view.allHUD_2D.Add(buttons);
 
-            fpsDisplay = new FpsDisplay(new Vector2(50, 20), game.Content);
+            fpsDisplay = new FpsDisplay(new Vector2(50, 20), this.game);
             this.view.allHUD_2D.Add(fpsDisplay);
         }
 

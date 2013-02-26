@@ -7,7 +7,7 @@ using Battlestation_Antaris.Control;
 namespace Battlestation_Antaris.View.HUD
 {
 
-    public class HUDButton : HUDString
+    public class HUD2DButton : HUD2DString
     {
 
         private static Color backgroundColorNormal = new Color(50, 50, 100, 128);
@@ -30,15 +30,15 @@ namespace Battlestation_Antaris.View.HUD
 
         private float overallScale;
 
-        public HUDButton(String text, Vector2 position, float scale, ContentManager content) : base(text, content)
+        public HUD2DButton(String text, Vector2 position, float scale, Game1 game) : base(text, game)
         {
-            this.Position = position;
+            this.abstractPosition = position;
             this.overallScale = scale;
-            this.Scale = scale;
+            this.scale = scale;
 
-            this.Color = HUDButton.foregroundColorNormal;
-            this.BackgroundColor = HUDButton.backgroundColorNormal;
-            this.BackgroundTexture = content.Load<Texture2D>("Sprites\\SquareRound");
+            this.color = HUD2DButton.foregroundColorNormal;
+            this.BackgroundColor = HUD2DButton.backgroundColorNormal;
+            this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\SquareRound");
             this.BackgroundTextureOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
         }
 
@@ -50,23 +50,23 @@ namespace Battlestation_Antaris.View.HUD
             {
                 if (input.isMouseButtonPressed())
                 {
-                    this.Color = HUDButton.foregroundColorPressed;
-                    this.BackgroundColor = HUDButton.backgroundColorPressed;
-                    this.Scale = HUDButton.scalePressed * this.overallScale;
+                    this.color = HUD2DButton.foregroundColorPressed;
+                    this.BackgroundColor = HUD2DButton.backgroundColorPressed;
+                    this.scale = HUD2DButton.scalePressed * this.overallScale;
                     clicked = true;
                 }
                 else
                 {
-                    this.Color = HUDButton.foregroundColorHover;
-                    this.BackgroundColor = HUDButton.backgroundColorHover;
-                    this.Scale = HUDButton.scaleHover * this.overallScale;
+                    this.color = HUD2DButton.foregroundColorHover;
+                    this.BackgroundColor = HUD2DButton.backgroundColorHover;
+                    this.scale = HUD2DButton.scaleHover * this.overallScale;
                 }
             }
             else
             {
-                this.Color = HUDButton.foregroundColorNormal;
-                this.BackgroundColor = HUDButton.backgroundColorNormal;
-                this.Scale = HUDButton.scaleNormal * this.overallScale;
+                this.color = HUD2DButton.foregroundColorNormal;
+                this.BackgroundColor = HUD2DButton.backgroundColorNormal;
+                this.scale = HUD2DButton.scaleNormal * this.overallScale;
             }
 
             return clicked;

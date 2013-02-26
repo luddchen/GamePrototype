@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Battlestation_Antaris.Control;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antaris.View
 {
@@ -37,16 +34,13 @@ namespace Battlestation_Antaris.View
         public override void Initialize()
         {
             // test content
-            HUDString testString = new HUDString("Antaris Menu", game.Content);
-            testString.Position = new Vector2(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height * 0.1f);
+            HUD2DString testString = new HUD2DString("Antaris Menu", this.game);
+            testString.abstractPosition = new Vector2(0.5f, 0.1f);
+            testString.positionType = HUDType.RELATIV;
 
             this.allHUD_2D.Add(testString);
         }
 
-
-        public override void Window_ClientSizeChanged(Viewport viewport)
-        {
-        }
     }
 
 }
