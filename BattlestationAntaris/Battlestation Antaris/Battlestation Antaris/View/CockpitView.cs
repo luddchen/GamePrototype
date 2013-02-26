@@ -35,7 +35,15 @@ namespace Battlestation_Antaris.View
         /// <summary>
         /// a list of background images
         /// </summary>
-        List<BackgroundImage> backgroundImages;
+        List<BackgroundObject> backgroundObjects;
+
+
+        // test ----------------------
+        Microsoft.Xna.Framework.Graphics.Model bgModel;
+
+        Matrix[] boneTransforms;
+
+        Matrix rotation;
 
 
         /// <summary>
@@ -52,7 +60,7 @@ namespace Battlestation_Antaris.View
             this.is3D = true;
 
             this.backgroundColor = Color.Black;
-            this.backgroundImages = new List<BackgroundImage>();
+            this.backgroundObjects = new List<BackgroundObject>();
         }
 
 
@@ -85,41 +93,34 @@ namespace Battlestation_Antaris.View
             Random random = new Random();
 
             // background
-            Texture2D galaxy = this.game.Content.Load<Texture2D>("Sprites//Galaxy");
-            Texture2D erde = this.game.Content.Load<Texture2D>("Sprites//Erde2");
             for (int i = 0; i < 80; i++)
             {
-                float width = 200 + random.Next(600);
-                float height = 200 + random.Next(600);
                 float yaw = (float)(random.NextDouble() * Math.PI * 2);
                 float pitch = (float)(random.NextDouble() * Math.PI);
                 float roll = (float)(random.NextDouble() * Math.PI * 2);
+                Matrix bgRot = Tools.Tools.YawPitchRoll(Matrix.Identity, yaw, pitch, roll);
                 int red = 128 + random.Next(127);
                 int green = 128 + random.Next(127);
                 int blue = 128 + random.Next(127);
-                int alpha = 32 + random.Next(32);
-                Matrix bgRot = Tools.Tools.YawPitchRoll(Matrix.Identity, yaw, pitch, roll);
-                Color bgColor = new Color(red, green, blue, alpha);
+                Color bgColor = new Color(red, green, blue);
 
-                this.backgroundImages.Add( new BackgroundImage(galaxy, width, height, bgRot, bgColor, game));
+                this.backgroundObjects.Add(new BackgroundObject("Models//BGTest//test2", bgRot, bgColor, game));
             }
 
             for (int i = 0; i < 5; i++)
             {
-                float width = 400;
-                float height = 400;
                 float yaw = (float)(random.NextDouble() * Math.PI * 2);
                 float pitch = (float)(random.NextDouble() * Math.PI);
                 float roll = (float)(random.NextDouble() * Math.PI * 2);
+                Matrix bgRot = Tools.Tools.YawPitchRoll(Matrix.Identity, yaw, pitch, roll);
                 int red = 128 + random.Next(127);
                 int green = 128 + random.Next(127);
                 int blue = 128 + random.Next(127);
-                int alpha = 32 + random.Next(32);
-                Matrix bgRot = Tools.Tools.YawPitchRoll(Matrix.Identity, yaw, pitch, roll);
                 Color bgColor = new Color(red, green, blue);
 
-                this.backgroundImages.Add(new BackgroundImage(erde, width, height, bgRot, bgColor, game));
+                this.backgroundObjects.Add(new BackgroundObject("Models//BGTest//test", bgRot, bgColor, game));
             }
+
         }
 
 
@@ -128,23 +129,19 @@ namespace Battlestation_Antaris.View
         /// </summary>
         protected override void DrawContent()
         {
-
-            // draw background
-            this.game.spriteBatch.Begin();
-
-                foreach (BackgroundImage bg in this.backgroundImages)
-                {
-                    bg.Draw(this.game.spriteBatch, this.game.world.spaceShip, this.camera);
-                }
-
-            this.game.spriteBatch.End();
-
-
             // init depth buffer
-            this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
+            this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true, DepthBufferWriteEnable = true };
+            this.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             // init camera
             this.camera.ClampTo(this.game.world.spaceShip);
+
+            // draw background
+            int nr = 1;
+            foreach (BackgroundObject bg in this.backgroundObjects)
+            {
+                bg.Draw(this.camera, nr++);
+            }
 
             SpatialObject shield = this.game.world.Shield;
 

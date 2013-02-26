@@ -96,7 +96,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Tools\Tools.cs" />
-    <Compile Include="View\BackgroundImage.cs" />
+    <Compile Include="View\BackgroundObject.cs" />
     <Compile Include="View\Camera.cs" />
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />
