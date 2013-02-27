@@ -89,15 +89,15 @@ namespace Battlestation_Antaris.Model
             // create 500 random objects to fill the space for testing
             Random random = new Random();
 
-            for (int i = 0; i < 20; i++ )
+            for (int i = 0; i < 40; i++ )
             {
-                if (random.Next(2) == 0)
+                if (random.Next(3) == 0)
                 {
                     new SpatialObject(new Vector3(random.Next(2400) - 1200, random.Next(2400) - 1200, random.Next(2400) - 1200), "Models/compass", content, this);
                 }
                 else
                 {
-                    new SpatialObject(new Vector3(random.Next(2400) - 1200, random.Next(2400) - 1200, random.Next(2400) - 1200), "Models/spaceship_d3", content, this);
+                    new SpatialObject(new Vector3(random.Next(2400) - 1200, random.Next(2400) - 1200, random.Next(2400) - 1200), "Models/SpaceShip//spaceship_v2_2", content, this);
                 }
             }
 

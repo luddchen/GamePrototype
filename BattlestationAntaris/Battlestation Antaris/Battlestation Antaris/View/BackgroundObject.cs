@@ -20,6 +20,7 @@ namespace Battlestation_Antaris.View
 
         Vector3 color;
 
+        float scale;
 
         private Game1 game;
 
@@ -28,9 +29,10 @@ namespace Battlestation_Antaris.View
         /// creates a new background image
         /// </summary>
         /// <param name="game"></param>
-        public BackgroundObject(String name, Matrix rotation, Color color, Game1 game)
+        public BackgroundObject(String name, Matrix rotation, float scale, Color color, Game1 game)
         {
             this.game = game;
+            this.scale = scale;
             this.bgModel = this.game.Content.Load<Microsoft.Xna.Framework.Graphics.Model>(name);
             this.rotation = rotation;
             boneTransforms = new Matrix[bgModel.Bones.Count];
@@ -44,7 +46,7 @@ namespace Battlestation_Antaris.View
         /// <param name="spriteBatch">the spritebatch</param>
         public void Draw( Camera camera, int nr)
         {
-            bgModel.Root.Transform = Matrix.CreateScale(camera.farClipping / 10)
+            bgModel.Root.Transform = Matrix.CreateScale(camera.farClipping * scale / 10)
                         * Matrix.CreateTranslation(Vector3.Forward * (camera.farClipping * 0.99f - nr))
                         * rotation
                         * Matrix.CreateTranslation(this.game.world.spaceShip.globalPosition);
@@ -59,7 +61,7 @@ namespace Battlestation_Antaris.View
                     effect.LightingEnabled = true;
                     effect.DirectionalLight0.DiffuseColor = this.color;
                     effect.DirectionalLight0.Direction = this.rotation.Forward;
-                    effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 1);
+                    //effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 1);
 
                     effect.World = boneTransforms[mesh.ParentBone.Index];
                     effect.View = camera.view;

@@ -93,7 +93,7 @@ namespace Battlestation_Antaris.View
             Random random = new Random();
 
             // background
-            for (int i = 0; i < 80; i++)
+            for (int i = 0; i < 120; i++)
             {
                 float yaw = (float)(random.NextDouble() * Math.PI * 2);
                 float pitch = (float)(random.NextDouble() * Math.PI);
@@ -103,11 +103,12 @@ namespace Battlestation_Antaris.View
                 int green = 128 + random.Next(127);
                 int blue = 128 + random.Next(127);
                 Color bgColor = new Color(red, green, blue);
+                float scale = 0.25f + (float)random.NextDouble() * 1.25f;
 
-                this.backgroundObjects.Add(new BackgroundObject("Models//BGTest//test2", bgRot, bgColor, game));
+                this.backgroundObjects.Add(new BackgroundObject("Models//BGTest//test2", bgRot, scale, bgColor, game));
             }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 40; i++)
             {
                 float yaw = (float)(random.NextDouble() * Math.PI * 2);
                 float pitch = (float)(random.NextDouble() * Math.PI);
@@ -117,8 +118,9 @@ namespace Battlestation_Antaris.View
                 int green = 128 + random.Next(127);
                 int blue = 128 + random.Next(127);
                 Color bgColor = new Color(red, green, blue);
+                float scale = 0.25f + (float)random.NextDouble() * 1.25f;
 
-                this.backgroundObjects.Add(new BackgroundObject("Models//BGTest//test", bgRot, bgColor, game));
+                this.backgroundObjects.Add(new BackgroundObject("Models//BGTest//test", bgRot, scale, bgColor, game));
             }
 
         }
