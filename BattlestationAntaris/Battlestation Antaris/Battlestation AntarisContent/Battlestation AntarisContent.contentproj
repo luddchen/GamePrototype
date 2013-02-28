@@ -30,51 +30,6 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\spaceship_d0.fbx">
-      <Name>spaceship_d0</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\spaceship_d1.fbx">
-      <Name>spaceship_d1</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\spaceship_d2.fbx">
-      <Name>spaceship_d2</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\spaceship1.png">
-      <Name>spaceship1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\compass.fbx">
-      <Name>compass</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\spaceship.fbx">
-      <Name>spaceship</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\spaceship_d3.fbx">
-      <Name>spaceship_d3</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Models\compass2.fbx">
       <Name>compass2</Name>
       <Importer>FbxImporter</Importer>
@@ -258,27 +213,49 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\SpaceShip\spaceship_v2.fbx">
-      <Name>spaceship_v2</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\SpaceShip\spaceshipv2.png">
-      <Name>spaceshipv2</Name>
+    <Compile Include="Models\TargetShip\targetship.png">
+      <Name>targetship</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\SpaceShip\spaceship_v2_1.fbx">
-      <Name>spaceship_v2_1</Name>
+    <Compile Include="Models\TargetShip\targetship_0.fbx">
+      <Name>targetship_0</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-    <Compile Include="Models\SpaceShip\spaceship_v2_2.fbx">
-      <Name>spaceship_v2_2</Name>
+    <Compile Include="Models\TargetShip\targetship_1.fbx">
+      <Name>targetship_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\TargetShip\targetship_2.fbx">
+      <Name>targetship_2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\SpaceShip\spaceship.png">
+      <Name>spaceship</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\SpaceShip\spaceship_0.fbx">
+      <Name>spaceship_0</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\SpaceShip\spaceship_1.fbx">
+      <Name>spaceship_1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\SpaceShip\spaceship_2.fbx">
+      <Name>spaceship_2</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>

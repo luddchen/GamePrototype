@@ -91,13 +91,13 @@ namespace Battlestation_Antaris.Model
 
             for (int i = 0; i < 40; i++ )
             {
-                if (random.Next(3) == 0)
+                if (random.Next(2) == 0)
                 {
-                    new SpatialObject(new Vector3(random.Next(2400) - 1200, random.Next(2400) - 1200, random.Next(2400) - 1200), "Models/compass", content, this);
+                    new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models/TargetShip//targetship_2", content, this);
                 }
                 else
                 {
-                    new SpatialObject(new Vector3(random.Next(2400) - 1200, random.Next(2400) - 1200, random.Next(2400) - 1200), "Models/SpaceShip//spaceship_v2_2", content, this);
+                    new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models/SpaceShip//spaceship_2", content, this);
                 }
             }
 
@@ -105,7 +105,7 @@ namespace Battlestation_Antaris.Model
             {
                 this.allTurrets.Add(
                     new Turret(
-                        new Vector3(random.Next(2400) - 1200, 1, random.Next(2400) - 1200), 
+                        new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), 
                         content, 
                         this));
             }
@@ -114,14 +114,14 @@ namespace Battlestation_Antaris.Model
             {
                 this.allRadars.Add(
                     new Radar(
-                        new Vector3(random.Next(2400) - 1200, 1, random.Next(2400) - 1200),
+                        new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200),
                         content,
                         this));
             }
 
 
             // create the player space ship
-            this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models/compass", content, this);
+            this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models/compass2", content, this);
 
 
             // create the player space station
