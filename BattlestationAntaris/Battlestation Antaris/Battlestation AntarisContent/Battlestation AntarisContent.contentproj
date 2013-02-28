@@ -171,13 +171,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Radar\radar.fbx">
-      <Name>radar</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Models\shield.fbx">
       <Name>shield</Name>
       <Importer>FbxImporter</Importer>
@@ -256,6 +249,20 @@
     </Compile>
     <Compile Include="Models\SpaceShip\spaceship_2.fbx">
       <Name>spaceship_2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Radar\radar.png">
+      <Name>radar</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Radar\radar_1.fbx">
+      <Name>radar_1</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>

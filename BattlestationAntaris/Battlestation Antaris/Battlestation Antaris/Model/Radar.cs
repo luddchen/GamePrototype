@@ -22,7 +22,7 @@ namespace Battlestation_Antaris.Model
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public Radar(Vector3 position, ContentManager content, WorldModel world) : base(position, "Models//Radar//radar", content, world) 
+        public Radar(Vector3 position, ContentManager content, WorldModel world) : base(position, "Models//Radar//radar_1", content, world) 
         {
             Random random = new Random((int)position.X);
 

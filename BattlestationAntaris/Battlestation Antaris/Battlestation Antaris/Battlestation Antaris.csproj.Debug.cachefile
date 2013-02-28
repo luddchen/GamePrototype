@@ -3,7 +3,6 @@ Content\Models\SpaceStation\spacestation.xnb
 Content\Models\Weapon\missile.xnb
 Content\Models\Weapon\laser.xnb
 Content\Models\Turret\turret.xnb
-Content\Models\Radar\radar.xnb
 Content\Models\shield.xnb
 Content\Models\SpaceStation\StationBox.xnb
 Content\Models\SpaceStation\StationCatwalk.xnb
@@ -43,5 +42,8 @@ Content\Models\SpaceShip\spaceship_1.xnb
 Content\Models\SpaceShip\spaceship_2.xnb
 Content\Models\SpaceShip\spaceship.xnb
 Content\Models\SpaceShip\spaceship_3.xnb
+Content\Models\Radar\radar_1.xnb
+Content\Models\Radar\radar.xnb
+Content\Models\Radar\radar_0.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa
