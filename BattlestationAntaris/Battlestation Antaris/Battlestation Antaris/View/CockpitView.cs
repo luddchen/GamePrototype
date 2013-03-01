@@ -139,11 +139,11 @@ namespace Battlestation_Antaris.View
             this.camera.ClampTo(this.game.world.spaceShip);
 
             // draw background
-            int nr = 1;
-            foreach (BackgroundObject bg in this.backgroundObjects)
-            {
-                bg.Draw(this.camera, nr++);
-            }
+            //int nr = 1;
+            //foreach (BackgroundObject bg in this.backgroundObjects)
+            //{
+            //    bg.Draw(this.camera, nr++);
+            //}
 
             SpatialObject shield = this.game.world.Shield;
 
@@ -170,26 +170,26 @@ namespace Battlestation_Antaris.View
                 }
 
                 
-                // draw shield -> testing
-                if (obj is SpaceStation || obj is Turret || obj is Radar)
-                {
-                    shield.model3d.Root.Transform = obj.rotation * Matrix.CreateScale(obj.bounding.Radius) 
-                                                    * Matrix.CreateTranslation(obj.globalPosition + obj.bounding.Center);
-                    shield.model3d.CopyAbsoluteBoneTransformsTo(shield.boneTransforms);
+                //// draw shield -> testing
+                //if (obj is SpaceStation || obj is Turret || obj is Radar)
+                //{
+                //    shield.model3d.Root.Transform = obj.rotation * Matrix.CreateScale(obj.bounding.Radius) 
+                //                                    * Matrix.CreateTranslation(obj.globalPosition + obj.bounding.Center);
+                //    shield.model3d.CopyAbsoluteBoneTransformsTo(shield.boneTransforms);
 
-                    foreach (ModelMesh mesh in shield.model3d.Meshes)
-                    {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            setLightning(effect);
+                //    foreach (ModelMesh mesh in shield.model3d.Meshes)
+                //    {
+                //        foreach (BasicEffect effect in mesh.Effects)
+                //        {
+                //            setLightning(effect);
 
-                            effect.World = shield.boneTransforms[mesh.ParentBone.Index];
-                            effect.View = this.camera.view;
-                            effect.Projection = this.camera.projection;
-                        }
-                        mesh.Draw();
-                    }
-                }
+                //            effect.World = shield.boneTransforms[mesh.ParentBone.Index];
+                //            effect.View = this.camera.view;
+                //            effect.Projection = this.camera.projection;
+                //        }
+                //        mesh.Draw();
+                //    }
+                //}
             }
 
 

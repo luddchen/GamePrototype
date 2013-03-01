@@ -106,7 +106,7 @@ namespace Battlestation_Antaris.View.HUD
 
                         effect.World = boneTransforms[mesh.ParentBone.Index];
                         effect.View = Matrix.CreateLookAt(Vector3.Zero, Vector3.Forward, Vector3.Up);
-                        effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4 / 2, this.device.Viewport.AspectRatio, 1, 5000); ;
+                        effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4 / 2, this.device.Viewport.AspectRatio, 1, 5000);
                     }
 
                     mesh.Draw();

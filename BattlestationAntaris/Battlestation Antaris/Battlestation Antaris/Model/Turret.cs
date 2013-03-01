@@ -36,52 +36,52 @@ namespace Battlestation_Antaris.Model
         }
 
 
-        /// <summary>
-        /// update the turret
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
-        {
-            ApplyRotation(gameTime);
+        ///// <summary>
+        ///// update the turret
+        ///// </summary>
+        ///// <param name="gameTime"></param>
+        //public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        //{
+        //    ApplyRotation(gameTime);
 
-            this.timeout--;
+        //    this.timeout--;
 
-            if (this.timeout < 0)
-            {
-                this.timeout = this.random.Next(30) + 30;
-                this.beams = this.random.Next(2) + 2;
-            }
+        //    if (this.timeout < 0)
+        //    {
+        //        this.timeout = this.random.Next(30) + 30;
+        //        this.beams = this.random.Next(2) + 2;
+        //    }
 
-            if (this.beams > 0)
-            {
-                Laser laser = new Laser(this, 0.0f, this.world.game.Content, this.world);
-                this.beams--;
-            }
+        //    if (this.beams > 0)
+        //    {
+        //        Laser laser = new Laser(this, 0.0f, this.world.game.Content, this.world);
+        //        this.beams--;
+        //    }
 
 
-            switch (this.random.Next(6))
-            {
-                case 0:
-                    InjectControl(Control.Control.PITCH_DOWN);
-                    break;
-                case 1:
-                    InjectControl(Control.Control.PITCH_UP);
-                    break;
-                case 2:
-                    InjectControl(Control.Control.YAW_LEFT);
-                    break;
-                case 3:
-                    InjectControl(Control.Control.YAW_RIGHT);
-                    break;
-                case 4:
-                    InjectControl(Control.Control.ROLL_ANTICLOCKWISE);
-                    break;
-                case 5:
-                    InjectControl(Control.Control.ROLL_CLOCKWISE);
-                    break;
-            }
+        //    switch (this.random.Next(6))
+        //    {
+        //        case 0:
+        //            InjectControl(Control.Control.PITCH_DOWN);
+        //            break;
+        //        case 1:
+        //            InjectControl(Control.Control.PITCH_UP);
+        //            break;
+        //        case 2:
+        //            InjectControl(Control.Control.YAW_LEFT);
+        //            break;
+        //        case 3:
+        //            InjectControl(Control.Control.YAW_RIGHT);
+        //            break;
+        //        case 4:
+        //            InjectControl(Control.Control.ROLL_ANTICLOCKWISE);
+        //            break;
+        //        case 5:
+        //            InjectControl(Control.Control.ROLL_CLOCKWISE);
+        //            break;
+        //    }
 
-        }
+        //}
 
     }
 
