@@ -49,7 +49,6 @@ namespace Battlestation_Antaris
         /// </summary>
         List<SituationController> allSituations;
 
-        Battlestation_Antaris.Model.CollisionOctree tree;
 
         /// <summary>
         /// creates a new Antaris game
@@ -92,11 +91,6 @@ namespace Battlestation_Antaris
             this.world = new Model.WorldModel(this);
 
             this.world.Initialize(Content);
-
-            // CollisionTree testing
-            tree = new Model.CollisionOctree(2, 1, new BoundingBox(new Vector3(-4000, -4000, -4000), new Vector3(4000, 4000, 4000)));
-            //tree.insertFromWorld(this.world);
-            //Console.Out.WriteLine(tree);
             
             base.Initialize();
         }
@@ -167,9 +161,6 @@ namespace Battlestation_Antaris
                     this.world.Update(gameTime);
                     break;
             }
-
-            tree.clear();
-            tree.insertFromWorld(this.world);
 
             base.Update(gameTime);
         }

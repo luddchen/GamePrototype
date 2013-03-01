@@ -63,6 +63,9 @@ namespace Battlestation_Antaris.Model
         private List<SpatialObject> removeList;
 
 
+        private Tools.Octree<SpatialObject> treeTest;
+
+
         /// <summary>
         /// creates the world
         /// </summary>
@@ -76,6 +79,9 @@ namespace Battlestation_Antaris.Model
 
             this.allWeapons = new List<SpatialObject>();
             this.removeList = new List<SpatialObject>();
+
+            // octree test
+            this.treeTest = new Tools.Octree<SpatialObject>(2, 1, new BoundingBox(new Vector3(-2400, -2400, -2400), new Vector3(2400,2400,2400)));
         }
 
 
@@ -162,6 +168,32 @@ namespace Battlestation_Antaris.Model
                 }
             }
             this.removeList.Clear();
+
+
+            // octree test
+            treeTest.clear();
+            foreach (SpatialObject obj in this.allObjects)
+            {
+                if (obj.isVisible)
+                {
+                    if (!treeTest.Add(obj, new BoundingSphere( obj.bounding.Center + obj.globalPosition, obj.bounding.Radius)))
+                    {
+                        treeTest.Add(obj);
+                    }
+                }
+            }
+
+            foreach (SpatialObject obj in this.allWeapons)
+            {
+                if (obj.isVisible)
+                {
+                    if (!treeTest.Add(obj, new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius)))
+                    {
+                        treeTest.Add(obj);
+                    }
+                }
+            }
+
         }
 
 
