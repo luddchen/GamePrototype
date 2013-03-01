@@ -63,7 +63,7 @@ namespace Battlestation_Antaris.Model
         private List<SpatialObject> removeList;
 
 
-        private Tools.Octree<SpatialObject> treeTest;
+        private Tools.DynamicOctree<SpatialObject> treeTest;
 
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Battlestation_Antaris.Model
             this.removeList = new List<SpatialObject>();
 
             // octree test
-            this.treeTest = new Tools.Octree<SpatialObject>(2, 1, new BoundingBox(new Vector3(-2400, -2400, -2400), new Vector3(2400,2400,2400)));
+            this.treeTest = new Tools.DynamicOctree<SpatialObject>(3, 1, 10, new BoundingBox(new Vector3(-5000, -5000, -5000), new Vector3(5000,5000,5000)));
         }
 
 
@@ -171,14 +171,15 @@ namespace Battlestation_Antaris.Model
 
 
             // octree test
-            treeTest.clear();
+            treeTest.Clear();
             foreach (SpatialObject obj in this.allObjects)
             {
                 if (obj.isVisible)
                 {
-                    if (!treeTest.Add(obj, new BoundingSphere( obj.bounding.Center + obj.globalPosition, obj.bounding.Radius)))
+                    BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
+                    if (!treeTest.Add(obj, itemSphere))
                     {
-                        treeTest.Add(obj);
+                        treeTest.AddItem(obj, itemSphere);
                     }
                 }
             }
@@ -187,13 +188,18 @@ namespace Battlestation_Antaris.Model
             {
                 if (obj.isVisible)
                 {
-                    if (!treeTest.Add(obj, new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius)))
+                    BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
+                    if (!treeTest.Add(obj, itemSphere))
                     {
-                        treeTest.Add(obj);
+                        treeTest.AddItem(obj, itemSphere);
                     }
                 }
             }
 
+            treeTest.BuildTree();
+            //Console.Out.WriteLine(treeTest.Count);
+            //Console.Out.WriteLine(treeTest.getCountString());
+            //Console.Out.WriteLine();
         }
 
 
