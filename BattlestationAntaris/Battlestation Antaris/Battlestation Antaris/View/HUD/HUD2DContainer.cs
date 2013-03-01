@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 namespace Battlestation_Antaris.View.HUD
 {
 
-    class HUD2DContainer : HUD2D
+    public class HUD2DContainer : HUD2D
     {
 
         // list of all childs

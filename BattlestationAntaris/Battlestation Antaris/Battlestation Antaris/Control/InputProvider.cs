@@ -126,6 +126,11 @@ namespace Battlestation_Antaris.Control
         }
 
 
+        public int getMouseWheelChange()
+        {
+            return (newMouseState.ScrollWheelValue - oldMouseState.ScrollWheelValue);
+        }
+
         /// <summary>
         /// get a list of control requests, depending on the configured key assignments
         /// </summary>
