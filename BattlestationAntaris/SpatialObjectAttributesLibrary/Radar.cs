@@ -13,16 +13,19 @@ namespace SpatialObjectAttributesLibrary
 
         public Radar()
         {
+            this.name = "Radar";
             this.Range = 0;
         }
 
         public Radar(float range)
         {
+            this.name = "Radar";
             this.Range = range;
         }
 
         public Radar(Radar radar)
         {
+            this.name = "Radar";
             this.Range = radar.Range;
         }
 
@@ -47,6 +50,15 @@ namespace SpatialObjectAttributesLibrary
         public override int getNumberOfValues()
         {
             return 1;
+        }
+
+
+        public override string ToString()
+        {
+            String output = "";
+            output += this.name + ":Range = " + this.Range + "\n";
+
+            return output;
         }
 
     }

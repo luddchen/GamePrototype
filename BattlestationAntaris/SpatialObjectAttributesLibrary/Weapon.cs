@@ -25,6 +25,7 @@ namespace SpatialObjectAttributesLibrary
         /// </summary>
         public Weapon()
         {
+            this.name = "Weapon";
             this.Damage = 0;
             this.Range = 0;
             this.ProjectileVelocity = 0;
@@ -37,6 +38,7 @@ namespace SpatialObjectAttributesLibrary
         /// <param name="weapon"></param>
         public Weapon(Weapon weapon)
         {
+            this.name = "Weapon";
             this.Damage = weapon.Damage;
             this.Range = weapon.Range;
             this.ProjectileVelocity = weapon.ProjectileVelocity;
@@ -51,6 +53,7 @@ namespace SpatialObjectAttributesLibrary
         /// <param name="projectileVelocity">projectile velocity</param>
         public Weapon(float damage, float range, float projectileVelocity)
         {
+            this.name = "Weapon";
             this.Damage = damage;
             this.Range = range;
             this.ProjectileVelocity = projectileVelocity;
@@ -84,6 +87,17 @@ namespace SpatialObjectAttributesLibrary
         public override int getNumberOfValues()
         {
             return 3;
+        }
+
+
+        public override string ToString()
+        {
+            String output = "";
+            output += this.name + ":Damage = " + this.Damage + "\n";
+            output += this.name + ":Range = " + this.Range + "\n";
+            output += this.name + ":ProjectileVelocity = " + this.ProjectileVelocity + "\n";
+
+            return output;
         }
 
     }

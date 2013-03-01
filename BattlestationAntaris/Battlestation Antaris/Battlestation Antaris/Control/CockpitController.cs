@@ -19,6 +19,8 @@ namespace Battlestation_Antaris.Control
         private HUD2DButton toCommandButton;
         private HUD2DButton toMenuButton;
         private FpsDisplay fpsDisplay;
+
+        private HUD2DButton debugButton;
         
         /// <summary>
         /// create a new cockpit controller
@@ -53,6 +55,9 @@ namespace Battlestation_Antaris.Control
 
             fpsDisplay = new FpsDisplay(new Vector2(50, 20), this.game);
             this.view.allHUD_2D.Add(fpsDisplay);
+
+            debugButton = new HUD2DButton("Debug", new Vector2(50, 100), 0.5f, this.game);
+            this.view.allHUD_2D.Add(debugButton);
         }
 
 
@@ -89,6 +94,11 @@ namespace Battlestation_Antaris.Control
             if (this.toMenuButton.isUpdatedClicked(this.game.inputProvider))
             {
                 this.game.switchTo(Situation.MENU);
+            }
+
+            if (this.debugButton.isUpdatedClicked(this.game.inputProvider))
+            {
+                Console.Out.WriteLine(this.game.world.spaceShip.attributes);
             }
 
             // redirect input

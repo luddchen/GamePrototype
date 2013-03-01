@@ -23,6 +23,7 @@ namespace SpatialObjectAttributesLibrary
 
         public Health()
         {
+            this.name = "Health";
             this.MaxHealthPoints = 0;
             this.CurrentHealthPoints = 0;
             this.RegenerationRate = 0;
@@ -31,6 +32,7 @@ namespace SpatialObjectAttributesLibrary
 
         public Health(Health health)
         {
+            this.name = "Health";
             this.MaxHealthPoints = health.MaxHealthPoints;
             this.CurrentHealthPoints = health.CurrentHealthPoints;
             this.RegenerationRate = health.RegenerationRate;
@@ -39,6 +41,7 @@ namespace SpatialObjectAttributesLibrary
 
         public Health(float maxHealthPoints, float regenarationRate, float repairCost)
         {
+            this.name = "Health";
             this.MaxHealthPoints = maxHealthPoints;
             this.CurrentHealthPoints = maxHealthPoints;
             this.RegenerationRate = regenarationRate;
@@ -108,6 +111,17 @@ namespace SpatialObjectAttributesLibrary
             this.CurrentHealthPoints -= damage;
 
             return (this.CurrentHealthPoints <= 0);
+        }
+
+        public override string ToString()
+        {
+            String output = "";
+            output += this.name + ":MaxHealthPoints = " + this.MaxHealthPoints + "\n";
+            output += this.name + ":CurrentHealthPoints = " + this.CurrentHealthPoints + "\n";
+            output += this.name + ":RegenerationRate = " + this.RegenerationRate + "\n";
+            output += this.name + ":RepairCost = " + this.RepairCost + "\n";
+
+            return output;
         }
 
     }

@@ -21,6 +21,7 @@ namespace SpatialObjectAttributesLibrary
 
         public Engine()
         {
+            this.name = "Engine";
             this.MaxVelocity = 0;
             this.CurrentVelocity = 0;
             this.Acceleration = 0;
@@ -29,6 +30,7 @@ namespace SpatialObjectAttributesLibrary
 
         public Engine(Engine engine)
         {
+            this.name = "Engine";
             this.MaxVelocity = engine.MaxVelocity;
             this.CurrentVelocity = engine.CurrentVelocity;
             this.Acceleration = engine.Acceleration;
@@ -37,6 +39,7 @@ namespace SpatialObjectAttributesLibrary
 
         public Engine(float maxVelocity, float acceleration, float resetForce)
         {
+            this.name = "Engine";
             this.MaxVelocity = maxVelocity;
             this.CurrentVelocity = 0;
             this.Acceleration = acceleration;
@@ -105,6 +108,17 @@ namespace SpatialObjectAttributesLibrary
         public override int getNumberOfValues()
         {
             return 3;
+        }
+
+        public override string ToString()
+        {
+            String output = "";
+            output += this.name + ":MaxVelocity = " + this.MaxVelocity + "\n";
+            output += this.name + ":CurrentVelocity = " + this.CurrentVelocity + "\n";
+            output += this.name + ":Acceleration = " + this.Acceleration + "\n";
+            output += this.name + ":ResetForce = " + this.ResetForce + "\n";
+
+            return output;
         }
 
     }

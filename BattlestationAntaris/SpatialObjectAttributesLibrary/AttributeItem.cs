@@ -6,6 +6,7 @@ namespace SpatialObjectAttributesLibrary
 
     public abstract class AttributeItem
     {
+        public String name;
 
         public abstract void setValues(float[] values, ref int index);
 

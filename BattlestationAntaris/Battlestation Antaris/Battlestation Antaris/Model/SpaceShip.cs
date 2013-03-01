@@ -23,7 +23,8 @@ namespace Battlestation_Antaris.Model
         public SpaceShip(Vector3 position, String modelName, ContentManager content, WorldModel world)
             : base(position, modelName, content, world)
         {
-            init(content);
+            this.attributes = new SpatialObjectAttributes(content.Load<SpatialObjectAttributes>("Attributes//SpaceShip"));
+            Console.Out.WriteLine(this.attributes);
         }
 
 
@@ -59,15 +60,6 @@ namespace Battlestation_Antaris.Model
                     this.attributes.Missile.CurrentReloadTime = this.attributes.Missile.ReloadTime;
                 }
             }
-        }
-
-
-        /// <summary>
-        /// initialize the space ship
-        /// </summary>
-        private void init(ContentManager content)
-        {
-            this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>("Attributes//SpaceShip") );
         }
 
     }

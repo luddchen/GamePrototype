@@ -24,6 +24,7 @@ namespace SpatialObjectAttributesLibrary
         public Missile()
             : base()
         {
+            this.name = "Missile";
             this.MaxAmount = 0;
             this.CurrentAmount = 0;
             this.ReloadTime = 0;
@@ -33,6 +34,7 @@ namespace SpatialObjectAttributesLibrary
         public Missile(Missile missile)
             : base(missile)
         {
+            this.name = "Missile";
             this.MaxAmount = missile.MaxAmount;
             this.CurrentAmount = missile.CurrentAmount;
             this.ReloadTime = missile.ReloadTime;
@@ -42,6 +44,7 @@ namespace SpatialObjectAttributesLibrary
         public Missile(float damage, float range, float projectileVelocity, float maxAmount, float reloadTime)
             : base(damage, range, projectileVelocity)
         {
+            this.name = "Missile";
             this.MaxAmount = maxAmount;
             this.CurrentAmount = 0;
             this.ReloadTime = reloadTime;
@@ -85,6 +88,18 @@ namespace SpatialObjectAttributesLibrary
         public override int getNumberOfValues()
         {
             return base.getNumberOfValues() + 2;
+        }
+
+
+        public override string ToString()
+        {
+            String output = base.ToString();
+            output += this.name + ":MaxAmount = " + this.MaxAmount + "\n";
+            output += this.name + ":CurrentAmount = " + this.CurrentAmount + "\n";
+            output += this.name + ":ReloadTime = " + this.ReloadTime + "\n";
+            output += this.name + ":RCurrentReloadTime = " + this.CurrentReloadTime + "\n";
+
+            return output;
         }
 
     }

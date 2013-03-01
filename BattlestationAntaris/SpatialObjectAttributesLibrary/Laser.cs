@@ -21,8 +21,9 @@ namespace SpatialObjectAttributesLibrary
         public float HeatRegeneration;
 
 
-        public Laser() : base() 
+        public Laser() : base()
         {
+            this.name = "Laser";
             this.HeatProduction = 0;
             this.HeatUntilCooldown = 0;
             this.CurrentHeat = 0;
@@ -32,6 +33,7 @@ namespace SpatialObjectAttributesLibrary
         public Laser(Laser laser)
             : base(laser)
         {
+            this.name = "Laser";
             this.HeatProduction = laser.HeatProduction;
             this.HeatUntilCooldown = laser.HeatUntilCooldown;
             this.CurrentHeat = laser.CurrentHeat;
@@ -41,6 +43,7 @@ namespace SpatialObjectAttributesLibrary
         public Laser(float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration)
             : base(damage, range, projectileVelocity)
         {
+            this.name = "Laser";
             this.HeatProduction = heatProduction;
             this.HeatUntilCooldown = heatUntilCooldown;
             this.CurrentHeat = 0;
@@ -84,6 +87,18 @@ namespace SpatialObjectAttributesLibrary
         public override int getNumberOfValues()
         {
             return base.getNumberOfValues() + 3;
+        }
+
+
+        public override string ToString()
+        {
+            String output = base.ToString();
+            output += this.name + ":HeatProduction = " + this.HeatProduction + "\n";
+            output += this.name + ":HeatUntilCooldown = " + this.HeatUntilCooldown + "\n";
+            output += this.name + ":CurrentHeat = " + this.CurrentHeat + "\n";
+            output += this.name + ":HeatRegeneration = " + this.HeatRegeneration + "\n";
+
+            return output;
         }
 
     }

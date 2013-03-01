@@ -57,6 +57,8 @@ namespace SpatialObjectAttributesLibrary
 
             this.Laser = new Laser();
             this.Missile = new Missile();
+
+            setNames();
         }
 
         public SpatialObjectAttributes(SpatialObjectAttributes soa)
@@ -74,6 +76,8 @@ namespace SpatialObjectAttributesLibrary
 
             this.Laser = new Laser(soa.Laser);
             this.Missile = new Missile(soa.Missile);
+
+            setNames();
         }
 
         public List<AttributeItem> getItems()
@@ -90,6 +94,27 @@ namespace SpatialObjectAttributesLibrary
             items.Add(this.Missile);
 
             return items;
+        }
+
+        public override string ToString()
+        {
+            String output = "SpatialObjectAttributes\n=======================\n";
+            foreach (AttributeItem item in getItems())
+            {
+                output += item.ToString();
+            }
+            output += "\n";
+
+            return output;
+        }
+
+        private void setNames()
+        {
+            this.Shield.name = "Shield";
+            this.Hull.name = "Hull";
+            this.EngineYaw.name += "(Yaw)";
+            this.EnginePitch.name += "(Pitch)";
+            this.EngineRoll.name += "(Roll)";
         }
 
     }
