@@ -19,11 +19,16 @@ namespace SpatialObjectAttributesContentPipelineExtension
     {
         public override TOutput Process(TInput input, ContentProcessorContext context)
         {
+
             SpatialObjectAttributes soa = new SpatialObjectAttributes();
 
             string[] valueStrings = input.Split(new char[] { '\n', ' ' });
 
             float[] values = new float[valueStrings.Length];
+
+            double testNum = 0.5;
+            char decimalSepparator;
+            decimalSepparator = testNum.ToString()[1];
 
             int index = 0;
 
@@ -35,7 +40,7 @@ namespace SpatialObjectAttributesContentPipelineExtension
                 } 
                 else 
                 {
-                    values[index++] = (float)Convert.ToDouble(valueStrings[i]);
+                    values[index++] = (float)double.Parse(valueStrings[i].Replace('.', decimalSepparator).Replace(',', decimalSepparator));
                 }
             }
 

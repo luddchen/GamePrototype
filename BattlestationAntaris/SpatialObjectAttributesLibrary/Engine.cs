@@ -11,6 +11,7 @@ namespace SpatialObjectAttributesLibrary
     /// </summary>
     public class Engine : AttributeItem
     {
+
         public float MaxVelocity;
 
         public float CurrentVelocity;
