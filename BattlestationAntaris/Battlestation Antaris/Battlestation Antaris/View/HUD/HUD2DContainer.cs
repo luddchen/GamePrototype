@@ -32,6 +32,12 @@ namespace Battlestation_Antaris.View.HUD
         }
 
 
+        public void Clear()
+        {
+            this.allChilds.Clear();
+        }
+
+
         public override void Draw(SpriteBatch spritBatch)
         {
             if (this.isVisible)

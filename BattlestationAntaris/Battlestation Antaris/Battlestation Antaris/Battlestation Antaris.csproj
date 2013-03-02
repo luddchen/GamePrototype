@@ -111,6 +111,7 @@
     <Compile Include="View\HUD\HUD2DContainer.cs" />
     <Compile Include="View\HUD\HUD2DString.cs" />
     <Compile Include="View\HUD\HUD2DTexture.cs" />
+    <Compile Include="View\HUD\MiniMap2D.cs" />
     <Compile Include="View\HUD\ShipAttributesVisualizer.cs" />
     <Compile Include="View\MenuView.cs" />
     <Compile Include="View\View.cs" />

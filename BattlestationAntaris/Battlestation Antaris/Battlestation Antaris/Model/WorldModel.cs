@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.Model
 {
@@ -109,37 +110,39 @@ namespace Battlestation_Antaris.Model
             {
                 if (random.Next(2) == 0)
                 {
-                    new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models/TargetShip//targetship_2", content, this);
+                    SpatialObject obj = 
+                        new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models//TargetShip//targetship_2", content, this);
+                    obj.minimapIcon = this.game.Content.Load<Texture2D>("Models//SpaceShip//spaceship_2d");
                 }
                 else
                 {
-                    new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models/SpaceShip//spaceship_2", content, this);
+                    SpatialObject obj =
+                        new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models//SpaceShip//spaceship1_2", content, this);
+                    obj.minimapIcon = this.game.Content.Load<Texture2D>("Models//SpaceShip//spaceship_2d");
                 }
             }
 
             for (int i = 0; i < 12; i++)
             {
-                this.allTurrets.Add(
-                    new Turret(
-                        new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200),
-                        content,
-                        this));
+                Turret turret = new Turret(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), content, this);
+                this.allTurrets.Add(turret);
+                turret.minimapIcon = this.game.Content.Load<Texture2D>("Models//Turret//turret_2d");
             }
 
             for (int i = 0; i < 32; i++)
             {
-                this.allRadars.Add(
-                    new Radar(
-                        new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200),
-                        content,
-                        this));
+                Radar radar = new Radar(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), content, this);
+                this.allRadars.Add(radar);
+                radar.minimapIcon = this.game.Content.Load<Texture2D>("Models//Radar//radar_2d");
             }
 
             // create the player space ship
-            this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models/compass2", content, this);
+            this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models//compass2", content, this);
+            this.spaceShip.minimapIcon = this.game.Content.Load<Texture2D>("Models//SpaceShip//spaceship_2d");
 
             // create the player space station
-            this.spaceStation = new SpaceStation(Vector3.Zero, "Models/SpaceStation/spacestation", content, this);
+            this.spaceStation = new SpaceStation(Vector3.Zero, "Models//SpaceStation/spacestation", content, this);
+            this.spaceStation.minimapIcon = this.game.Content.Load<Texture2D>("Models//SpaceStation//station_2d");
 
             // add dust near the players ship
             for (int i = 0; i < 100; i++)

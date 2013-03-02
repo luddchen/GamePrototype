@@ -56,6 +56,9 @@ namespace Battlestation_Antaris.Model
         public bool isVisible;
 
 
+        public Texture2D minimapIcon;
+
+
         /// <summary>
         /// a bounding sphere that contains the full (non translated) 3D model
         /// </summary>
