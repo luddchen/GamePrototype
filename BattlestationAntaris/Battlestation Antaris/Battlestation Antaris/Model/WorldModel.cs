@@ -58,6 +58,10 @@ namespace Battlestation_Antaris.Model
         /// </summary>
         public List<SpatialObject> allWeapons;
 
+        /// <summary>
+        /// a list of all space dust
+        /// </summary>
+        public List<Dust> allDust;
 
         /// <summary>
         /// loader for shield model
@@ -81,6 +85,7 @@ namespace Battlestation_Antaris.Model
             this.allObjects = new List<SpatialObject>();
             this.allRadars = new List<Radar>();
             this.allTurrets = new List<Turret>();
+            this.allDust = new List<Dust>();
 
             this.allWeapons = new List<SpatialObject>();
             this.removeList = new List<SpatialObject>();
@@ -130,13 +135,20 @@ namespace Battlestation_Antaris.Model
                         this));
             }
 
-
             // create the player space ship
             this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models/compass2", content, this);
 
-
             // create the player space station
             this.spaceStation = new SpaceStation(Vector3.Zero, "Models/SpaceStation/spacestation", content, this);
+
+            // add dust near the players ship
+            for (int i = 0; i < 1000; i++)
+            {
+                this.allDust.Add(new Dust(spaceShip, content, this));
+            }
+
+
+
 
             // initialize overview camera with centered space station
             this.overviewCamPos = this.spaceStation.globalPosition + new Vector3(0f, 2000f, 0f);
@@ -163,6 +175,13 @@ namespace Battlestation_Antaris.Model
             {
                 obj.Update(gameTime);
             }
+
+            // update all dust
+            foreach (SpatialObject obj in this.allDust)
+            {
+                obj.Update(gameTime);
+            }
+
 
             foreach (SpatialObject obj in this.removeList)
             {

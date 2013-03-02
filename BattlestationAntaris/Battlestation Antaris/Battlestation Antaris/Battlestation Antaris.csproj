@@ -81,6 +81,7 @@
     <Compile Include="Control\Situation.cs" />
     <Compile Include="Control\SituationController.cs" />
     <Compile Include="Control\WorldUpdate.cs" />
+    <Compile Include="Model\Dust.cs" />
     <Compile Include="Model\Laser.cs" />
     <Compile Include="Model\Missile.cs" />
     <Compile Include="Model\Radar.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Tools\DynamicOctree.cs" />
     <Compile Include="Tools\Octree.cs" />
+    <Compile Include="Tools\RandomGen.cs" />
     <Compile Include="Tools\Tools.cs" />
     <Compile Include="View\BackgroundObject.cs" />
     <Compile Include="View\Camera.cs" />
