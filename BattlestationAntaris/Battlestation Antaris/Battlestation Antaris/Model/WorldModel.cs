@@ -142,7 +142,7 @@ namespace Battlestation_Antaris.Model
             this.spaceStation = new SpaceStation(Vector3.Zero, "Models/SpaceStation/spacestation", content, this);
 
             // add dust near the players ship
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 this.allDust.Add(new Dust(spaceShip, content, this));
             }

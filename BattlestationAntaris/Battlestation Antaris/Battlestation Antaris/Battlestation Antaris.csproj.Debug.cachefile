@@ -45,5 +45,6 @@ Content\Models\BGTest\Galaxy_0.xnb
 Content\Models\TargetShip\targetship_3.xnb
 Content\Models\SpaceShip\spaceship_3.xnb
 Content\Models\Radar\radar_0.xnb
+Content\Models\Dust\dust.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa

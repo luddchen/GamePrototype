@@ -24,7 +24,6 @@ namespace Battlestation_Antaris.Model
             : base(position, modelName, content, world)
         {
             this.attributes = new SpatialObjectAttributes(content.Load<SpatialObjectAttributes>("Attributes//SpaceShip"));
-            Console.Out.WriteLine(this.attributes);
         }
 
 
