@@ -113,6 +113,7 @@ namespace Battlestation_Antaris.Model
                     SpatialObject obj = 
                         new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models//TargetShip//targetship_2", content, this);
                     obj.minimapIcon = this.game.Content.Load<Texture2D>("Models//SpaceShip//spaceship_2d");
+                    obj.isEnemy = true;
                 }
                 else
                 {

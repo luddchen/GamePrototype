@@ -58,6 +58,8 @@ namespace Battlestation_Antaris.Model
 
         public Texture2D minimapIcon;
 
+        public bool isEnemy;
+
 
         /// <summary>
         /// a bounding sphere that contains the full (non translated) 3D model
@@ -118,6 +120,7 @@ namespace Battlestation_Antaris.Model
             this.boneTransforms = new Matrix[model3d.Bones.Count];
             this.attributes = new SpatialObjectAttributes();
             this.rotationRepairCountdown = SpatialObject.MAX_ROTATION_UNTIL_REPAIR;
+            this.isEnemy = false;
 
             // compute the bounding sphere of the whole 3D model
             this.bounding = new BoundingSphere();

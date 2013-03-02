@@ -11,7 +11,7 @@ namespace Battlestation_Antaris.View.HUD
 
         public Vector2 abstractSize;
 
-        protected Vector2 size;
+        public Vector2 size;
 
         public float scale;
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.Model
 {
@@ -18,6 +19,7 @@ namespace Battlestation_Antaris.Model
             this.timeout = 360;
 
             this.globalPosition = Vector3.Add(this.globalPosition, Vector3.Multiply(this.rotation.Up, offset));
+            this.minimapIcon = content.Load<Texture2D>("Models//Weapon//laser_2d");
         }
 
 
