@@ -11,25 +11,13 @@ namespace Battlestation_Antaris.View
     /// <summary>
     /// the cockpit view
     /// </summary>
-    class CockpitView : View
+    class CockpitView : GameView
     {
-
-        /// <summary>
-        /// the cockpit camera
-        /// </summary>
-        Camera camera;
-
 
         /// <summary>
         /// the cockpit compass
         /// </summary>
         Compass3d compass;
-
-
-        /// <summary>
-        /// ambient light color for testing
-        /// </summary>
-        Vector3 ambientColor;
 
 
         /// <summary>
@@ -53,8 +41,6 @@ namespace Battlestation_Antaris.View
         public CockpitView(Game1 game)
             : base(game)
         {
-            this.camera = new Camera(this.game.GraphicsDevice);
-            this.ambientColor = new Vector3(0.5f, 0.5f, 0.5f);
             this.compass = new Compass3d(this.game.Content, this.game.GraphicsDevice);
             this.allHUD_3D.Add(this.compass);
             this.is3D = true;
@@ -139,104 +125,13 @@ namespace Battlestation_Antaris.View
             this.camera.ClampTo(this.game.world.spaceShip);
 
             // draw background
-            //int nr = 1;
-            //foreach (BackgroundObject bg in this.backgroundObjects)
-            //{
-            //    bg.Draw(this.camera, nr++);
-            //}
-
-            SpatialObject shield = this.game.world.Shield;
-
-            // draw world objects
-            foreach (SpatialObject obj in this.game.world.allObjects)
+            int nr = 1;
+            foreach (BackgroundObject bg in this.backgroundObjects)
             {
-                if (obj.isVisible)
-                {
-                    obj.model3d.Root.Transform = obj.rotation * Matrix.CreateTranslation(obj.globalPosition);
-                    obj.model3d.CopyAbsoluteBoneTransformsTo(obj.boneTransforms);
-
-                    foreach (ModelMesh mesh in obj.model3d.Meshes)
-                    {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            setLightning(effect);
-
-                            effect.World = obj.boneTransforms[mesh.ParentBone.Index];
-                            effect.View = this.camera.view;
-                            effect.Projection = this.camera.projection;
-                        }
-                        mesh.Draw();
-                    }
-                }
-
-                
-                //// draw shield -> testing
-                //if (obj is SpaceStation || obj is Turret || obj is Radar)
-                //{
-                //    shield.model3d.Root.Transform = obj.rotation * Matrix.CreateScale(obj.bounding.Radius) 
-                //                                    * Matrix.CreateTranslation(obj.globalPosition + obj.bounding.Center);
-                //    shield.model3d.CopyAbsoluteBoneTransformsTo(shield.boneTransforms);
-
-                //    foreach (ModelMesh mesh in shield.model3d.Meshes)
-                //    {
-                //        foreach (BasicEffect effect in mesh.Effects)
-                //        {
-                //            setLightning(effect);
-
-                //            effect.World = shield.boneTransforms[mesh.ParentBone.Index];
-                //            effect.View = this.camera.view;
-                //            effect.Projection = this.camera.projection;
-                //        }
-                //        mesh.Draw();
-                //    }
-                //}
+                bg.Draw(this.camera, nr++);
             }
 
-
-            // draw world weapons
-            foreach (SpatialObject obj in this.game.world.allWeapons)
-            {
-                if (obj.isVisible)
-                {
-                    obj.model3d.Root.Transform = obj.rotation * Matrix.CreateTranslation(obj.globalPosition);
-                    obj.model3d.CopyAbsoluteBoneTransformsTo(obj.boneTransforms);
-
-                    foreach (ModelMesh mesh in obj.model3d.Meshes)
-                    {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            setLightning(effect);
-
-                            effect.World = obj.boneTransforms[mesh.ParentBone.Index];
-                            effect.View = this.camera.view;
-                            effect.Projection = this.camera.projection;
-                        }
-                        mesh.Draw();
-                    }
-                }
-            }
-
+            base.DrawContent();
         }
-
-
-        private void setLightning(BasicEffect effect)
-        {
-            //effect.EnableDefaultLighting();
-
-            effect.LightingEnabled = true;
-            effect.DirectionalLight0.DiffuseColor = new Vector3(1.0f, 1.0f, 0.5f);
-            effect.DirectionalLight0.Direction = new Vector3(1, 1, -1);
-            effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 1);
-            effect.AmbientLightColor = this.ambientColor;
-            //effect.EmissiveColor = new Vector3(0, 0, 0.1f);
-            //effect.Alpha = 0.66f;
-
-            //effect.FogEnabled = true;
-            //effect.FogColor = Color.Red.ToVector3();
-            //effect.FogStart = 200.0f;
-            //effect.FogEnd = 210.0f;
-        }
-
     }
-
 }

@@ -66,7 +66,7 @@ namespace Battlestation_Antaris.Control
                 this.game.switchTo(Situation.COCKPIT);
             }
 
-            if (this.game.inputProvider.isMouseButtonPressed())
+            if (this.game.inputProvider.isLeftMouseButtonPressed())
             {
                 Vector2 mousePos = this.game.inputProvider.getMousePos();
 

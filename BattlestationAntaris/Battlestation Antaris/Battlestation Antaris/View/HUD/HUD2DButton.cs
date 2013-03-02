@@ -48,7 +48,7 @@ namespace Battlestation_Antaris.View.HUD
 
             if (this.Intersects(input.getMousePos()))
             {
-                if (input.isMouseButtonPressed())
+                if (input.isLeftMouseButtonPressed())
                 {
                     this.color = HUD2DButton.foregroundColorPressed;
                     this.BackgroundColor = HUD2DButton.backgroundColorPressed;

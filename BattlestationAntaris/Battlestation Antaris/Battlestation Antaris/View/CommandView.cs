@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Battlestation_Antaris.View.HUD;
+using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antaris.View
 {
@@ -7,7 +9,7 @@ namespace Battlestation_Antaris.View
     /// <summary>
     /// the command view
     /// </summary>
-    class CommandView : View
+    class CommandView : GameView
     {
 
         /// <summary>
@@ -17,16 +19,8 @@ namespace Battlestation_Antaris.View
         public CommandView(Game1 game)
             : base(game)
         {
+
         }
-
-
-        /// <summary>
-        /// draw the command view content
-        /// </summary>
-        protected override void DrawContent()
-        {
-        }
-
 
         /// <summary>
         /// initialize cammand view HUD and content
@@ -41,6 +35,21 @@ namespace Battlestation_Antaris.View
             this.allHUD_2D.Add(testString);
         }
 
+        /// <summary>
+        /// draw the command view content
+        /// </summary>
+        protected override void DrawContent()
+        {
+
+            // init depth buffer
+            this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true, DepthBufferWriteEnable = true };
+            this.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            // init camera
+            this.camera.Update(this.game.world.overviewCamPos, Vector3.Down, Vector3.Forward);
+
+            base.DrawContent();
+        }
     }
 
 }

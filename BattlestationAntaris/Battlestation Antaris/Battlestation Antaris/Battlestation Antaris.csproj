@@ -97,6 +97,7 @@
     <Compile Include="Tools\Tools.cs" />
     <Compile Include="View\BackgroundObject.cs" />
     <Compile Include="View\Camera.cs" />
+    <Compile Include="View\GameView.cs" />
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />
     <Compile Include="View\HUD\Compass3d.cs" />

@@ -13,11 +13,13 @@ namespace Battlestation_Antaris.Control
     class CommandController : SituationController
     {
 
-        private HUD2DTexture testTex;
-
         private HUD2DButton toMenuButton;
 
         private HUD2DButton toCockpitButton;
+
+        private const int MAX_CAMERA_ZOOM = 1000;
+
+        private const int MIN_CAMERA_ZOOM = 4000;
 
         /// <summary>
         /// create a new command controller
@@ -26,23 +28,12 @@ namespace Battlestation_Antaris.Control
         /// <param name="view">the used view</param>
         public CommandController(Game1 game, View.View view) : base(game, view) 
         {
-            // test content
-            testTex = new HUD2DTexture(this.game);
-            testTex.abstractPosition = new Vector2(0.5f, 0.4f);
-            testTex.positionType = HUDType.RELATIV;
-            testTex.abstractSize = new Vector2(0.5f, 0.5f);
-            testTex.sizeType = HUDType.RELATIV;
-            testTex.Texture = game.Content.Load<Texture2D>("Sprites//Galaxy");
-            testTex.color = new Color(150, 160, 70, 120);
-
-            this.view.allHUD_2D.Add(testTex);
-
-            toMenuButton = new HUD2DButton("Menu", new Vector2(0.3f, 0.8f), 0.7f, this.game);
+            toMenuButton = new HUD2DButton("Menu", new Vector2(0.1f, 0.9f), 0.7f, this.game);
             toMenuButton.positionType = HUDType.RELATIV;
 
             this.view.allHUD_2D.Add(toMenuButton);
 
-            toCockpitButton = new HUD2DButton("Cockpit", new Vector2(0.7f, 0.8f), 0.7f, this.game);
+            toCockpitButton = new HUD2DButton("Cockpit", new Vector2(0.9f, 0.9f), 0.7f, this.game);
             toCockpitButton.positionType = HUDType.RELATIV;
 
             this.view.allHUD_2D.Add(toCockpitButton);
@@ -66,14 +57,19 @@ namespace Battlestation_Antaris.Control
                 this.game.switchTo(Situation.COCKPIT);
             }
 
-            if (this.game.inputProvider.isMouseButtonPressed())
+            if (this.game.inputProvider.isLeftMouseButtonDown())
             {
-                Vector2 mousePos = this.game.inputProvider.getMousePos();
+                Vector2 mousePosChange = this.game.inputProvider.getMousePosChange();
+                this.game.world.overviewCamPos.X += mousePosChange.X;
+                this.game.world.overviewCamPos.Z += mousePosChange.Y;
+            }
 
-                if (this.testTex.Intersects(mousePos))
-                {
-                    testTex.rotation = testTex.rotation + 0.2f;
-                }
+            if (this.game.inputProvider.getMouseWheelChange() != 0)
+            {
+                float newCameraY = this.game.world.overviewCamPos.Y - 3 * this.game.inputProvider.getMouseWheelChange();
+                newCameraY = Math.Max(MAX_CAMERA_ZOOM, newCameraY);
+                newCameraY = Math.Min(MIN_CAMERA_ZOOM, newCameraY);
+                this.game.world.overviewCamPos.Y = newCameraY;
             }
         }
 

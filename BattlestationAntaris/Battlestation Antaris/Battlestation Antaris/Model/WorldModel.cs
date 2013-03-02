@@ -29,6 +29,11 @@ namespace Battlestation_Antaris.Model
         /// </summary>
         public SpaceStation spaceStation;
 
+        /// <summary>
+        /// the position of the camera in the command view
+        /// </summary>
+        public Vector3 overviewCamPos;
+
 
         /// <summary>
         /// a list of all player radars
@@ -95,35 +100,35 @@ namespace Battlestation_Antaris.Model
             // create 500 random objects to fill the space for testing
             Random random = new Random();
 
-            //for (int i = 0; i < 40; i++ )
-            //{
-            //    if (random.Next(2) == 0)
-            //    {
-            //        new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models/TargetShip//targetship_2", content, this);
-            //    }
-            //    else
-            //    {
-            //        new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models/SpaceShip//spaceship_2", content, this);
-            //    }
-            //}
+            for (int i = 0; i < 40; i++)
+            {
+                if (random.Next(2) == 0)
+                {
+                    new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models/TargetShip//targetship_2", content, this);
+                }
+                else
+                {
+                    new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models/SpaceShip//spaceship_2", content, this);
+                }
+            }
 
-            //for (int i = 0; i < 12; i++)
-            //{
-            //    this.allTurrets.Add(
-            //        new Turret(
-            //            new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), 
-            //            content, 
-            //            this));
-            //}
+            for (int i = 0; i < 12; i++)
+            {
+                this.allTurrets.Add(
+                    new Turret(
+                        new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200),
+                        content,
+                        this));
+            }
 
-            //for (int i = 0; i < 32; i++)
-            //{
-            //    this.allRadars.Add(
-            //        new Radar(
-            //            new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200),
-            //            content,
-            //            this));
-            //}
+            for (int i = 0; i < 32; i++)
+            {
+                this.allRadars.Add(
+                    new Radar(
+                        new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200),
+                        content,
+                        this));
+            }
 
 
             // create the player space ship
@@ -132,6 +137,9 @@ namespace Battlestation_Antaris.Model
 
             // create the player space station
             this.spaceStation = new SpaceStation(Vector3.Zero, "Models/SpaceStation/spacestation", content, this);
+
+            // initialize overview camera with centered space station
+            this.overviewCamPos = this.spaceStation.globalPosition + new Vector3(0f, 2000f, 0f);
 
             this.Shield = new SpatialObject(Vector3.Zero, "Models//shield", content, this);
             this.Shield.isVisible = false;
@@ -171,32 +179,32 @@ namespace Battlestation_Antaris.Model
 
 
             // octree test
-            //treeTest.Clear();
-            //foreach (SpatialObject obj in this.allObjects)
-            //{
-            //    if (obj.isVisible)
-            //    {
-            //        BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
-            //        if (!treeTest.Add(obj, itemSphere))
-            //        {
-            //            treeTest.AddItem(obj, itemSphere);
-            //        }
-            //    }
-            //}
+            treeTest.Clear();
+            foreach (SpatialObject obj in this.allObjects)
+            {
+                if (obj.isVisible)
+                {
+                    BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
+                    if (!treeTest.Add(obj, itemSphere))
+                    {
+                        treeTest.AddItem(obj, itemSphere);
+                    }
+                }
+            }
 
-            //foreach (SpatialObject obj in this.allWeapons)
-            //{
-            //    if (obj.isVisible)
-            //    {
-            //        BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
-            //        if (!treeTest.Add(obj, itemSphere))
-            //        {
-            //            treeTest.AddItem(obj, itemSphere);
-            //        }
-            //    }
-            //}
+            foreach (SpatialObject obj in this.allWeapons)
+            {
+                if (obj.isVisible)
+                {
+                    BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
+                    if (!treeTest.Add(obj, itemSphere))
+                    {
+                        treeTest.AddItem(obj, itemSphere);
+                    }
+                }
+            }
 
-            //treeTest.BuildTree();
+            treeTest.BuildTree();
             //Console.Out.WriteLine(treeTest.Count);
             //Console.Out.WriteLine(treeTest.getCountString());
             //Console.Out.WriteLine();

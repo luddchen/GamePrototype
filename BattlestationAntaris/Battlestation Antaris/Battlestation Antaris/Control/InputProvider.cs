@@ -108,10 +108,15 @@ namespace Battlestation_Antaris.Control
         }
 
 
-        public bool isMouseButtonPressed()
+        public bool isLeftMouseButtonPressed()
         {
             if (newMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released) return true;
             return false;
+        }
+
+        public bool isLeftMouseButtonDown()
+        {
+            return newMouseState.LeftButton == ButtonState.Pressed;
         }
 
         public Vector2 getMousePos()
@@ -125,7 +130,12 @@ namespace Battlestation_Antaris.Control
             return (oldMouseState.X == newMouseState.X && oldMouseState.Y == newMouseState.Y) ? false : true;
         }
 
-
+        public Vector2 getMousePosChange()
+        {
+            int XChange = oldMouseState.X - newMouseState.X;
+            int YChange = oldMouseState.Y - newMouseState.Y;
+            return new Vector2(XChange, YChange);
+        }
         public int getMouseWheelChange()
         {
             return (newMouseState.ScrollWheelValue - oldMouseState.ScrollWheelValue);
