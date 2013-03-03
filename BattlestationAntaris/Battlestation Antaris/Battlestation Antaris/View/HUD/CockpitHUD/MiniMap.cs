@@ -21,7 +21,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
 
         public static float MAX_SCALE = 0.500f;
 
-        public static Color BACKGROUND_COLOR = new Color(16, 24, 24, 128);
+        public static Color BACKGROUND_COLOR = new Color(16, 24, 24, 255);
 
         public static Color BORDER_COLOR = new Color(16, 16, 16, 8);
 
@@ -45,6 +45,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
             this.background.abstractSize = new Vector2(0.25f, 0.4f);
             this.background.sizeType = HUDType.RELATIV;
             this.background.layerDepth = 0.6f;
+            this.background.Texture = game.Content.Load<Texture2D>("Sprites//Square_Cross");
 
             this.foreground = new HUD2DTexture(game);
             this.foreground.color = MiniMap.BORDER_COLOR;

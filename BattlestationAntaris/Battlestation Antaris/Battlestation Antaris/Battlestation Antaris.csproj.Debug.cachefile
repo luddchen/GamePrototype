@@ -55,5 +55,6 @@ Content\Models\Turret\turret_2d.xnb
 Content\Models\SpaceStation\station_2d.xnb
 Content\Models\Weapon\laser_2d.xnb
 Content\Sprites\SquareBorder.xnb
+Content\Sprites\Square_Cross.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa
