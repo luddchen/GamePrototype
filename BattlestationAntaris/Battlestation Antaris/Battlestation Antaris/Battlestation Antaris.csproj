@@ -106,6 +106,7 @@
     <Compile Include="View\HUD\CommandHUD\BuildMenu.cs" />
     <Compile Include="View\HUD\CockpitHUD\Compass3d.cs" />
     <Compile Include="View\HUD\CockpitHUD\FpsDisplay.cs" />
+    <Compile Include="View\HUD\HUD2DButtonContainer.cs" />
     <Compile Include="View\HUD\HUD2DConcreteElement.cs" />
     <Compile Include="View\HUD\HUD2DButton.cs" />
     <Compile Include="View\HUD\HUD2D.cs" />

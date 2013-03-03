@@ -10,17 +10,17 @@ namespace Battlestation_Antaris.View.HUD
     public class HUD2DButton : HUD2DString
     {
 
-        private static Color backgroundColorNormal = new Color(50, 50, 100, 128);
+        public static Color backgroundColorNormal = new Color(32, 48, 48, 160);
 
-        private static Color backgroundColorHover = new Color(50, 50, 100, 128);
+        public static Color backgroundColorHover = new Color(40, 64, 64, 192);
 
-        private static Color backgroundColorPressed = new Color(50, 50, 100, 128);
+        public static Color backgroundColorPressed = new Color(32, 48, 48, 255);
 
-        private static Color foregroundColorNormal = Color.White;
+        public static Color foregroundColorNormal = Color.White;
 
-        private static Color foregroundColorHover = new Color(255, 255, 128);
+        public static Color foregroundColorHover = new Color(255, 255, 128);
 
-        private static Color foregroundColorPressed = new Color(128, 255, 128);
+        public static Color foregroundColorPressed = new Color(128, 255, 128);
 
         private static float scaleNormal = 1.0f;
 
@@ -38,7 +38,7 @@ namespace Battlestation_Antaris.View.HUD
 
             this.color = HUD2DButton.foregroundColorNormal;
             this.BackgroundColor = HUD2DButton.backgroundColorNormal;
-            this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\SquareRound");
+            this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\Button");
             this.BackgroundTextureOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
         }
 

@@ -25,14 +25,14 @@ namespace Battlestation_Antaris.View.HUD
         }
 
 
-        public void Add(HUD2D element)
+        public virtual void Add(HUD2D element)
         {
             this.allChilds.Add(element);
             element.ClientSizeChanged(this.position);
         }
 
 
-        public void Remove(HUD2D element)
+        public virtual void Remove(HUD2D element)
         {
             this.allChilds.Remove(element);
         }

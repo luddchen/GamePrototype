@@ -19,6 +19,8 @@ namespace Battlestation_Antaris.Control
 
         private HUD2DButton toCockpitButton;
 
+        private HUD2DButton exitButton;
+
         /// <summary>
         /// create a new menu controller
         /// </summary>
@@ -38,15 +40,31 @@ namespace Battlestation_Antaris.Control
 
             this.view.allHUD_2D.Add(testTex);
 
-            toCommandButton = new HUD2DButton("Command", new Vector2(0.3f, 0.8f), 0.7f, this.game);
-            toCommandButton.positionType = HUDType.RELATIV;
+            HUD2DButtonContainer buttons = 
+                new HUD2DButtonContainer(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(200, 100), HUDType.ABSOLUT, game);
 
-            this.view.allHUD_2D.Add(toCommandButton);
+            buttons.layerDepth = 0.4f;
 
-            toCockpitButton = new HUD2DButton("Cockpit", new Vector2(0.7f, 0.8f), 0.7f, this.game);
-            toCockpitButton.positionType = HUDType.RELATIV;
+            HUD2DTexture buttonsBackground = new HUD2DTexture(game);
+            buttonsBackground.sizeType = buttons.sizeType;
+            buttonsBackground.abstractSize = buttons.abstractSize;
+            buttonsBackground.color = HUD2DButton.backgroundColorNormal;
+            buttons.Add(buttonsBackground);
 
-            this.view.allHUD_2D.Add(toCockpitButton);
+
+            toCommandButton = new HUD2DButton("Command", Vector2.Zero, 1, this.game);
+
+            buttons.Add(toCommandButton);
+
+            toCockpitButton = new HUD2DButton("Cockpit", Vector2.Zero, 1, this.game);
+
+            buttons.Add(toCockpitButton);
+
+            exitButton = new HUD2DButton("Exit", Vector2.Zero, 1, this.game);
+
+            buttons.Add(exitButton);
+
+            this.view.allHUD_2D.Add(buttons);
         }
 
 
@@ -64,6 +82,11 @@ namespace Battlestation_Antaris.Control
             if (this.toCockpitButton.isUpdatedClicked(this.game.inputProvider))
             {
                 this.game.switchTo(Situation.COCKPIT);
+            }
+
+            if (this.exitButton.isUpdatedClicked(this.game.inputProvider))
+            {
+                this.game.Exit();
             }
 
             if (this.game.inputProvider.isLeftMouseButtonPressed())

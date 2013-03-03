@@ -36,6 +36,46 @@ namespace Battlestation_Antaris.View.HUD
         protected Texture2D BackgroundTexture;
 
 
+        public Vector2 BackgroundSize
+        {
+            get
+            {
+                Vector2 backgroundSize = new Vector2();
+                if (this.abstractSize == Vector2.Zero)
+                {
+                    backgroundSize = this.size * 1.2f;
+                }
+                else
+                {
+                    switch (this.sizeType) {
+
+                        case HUDType.ABSOLUT :
+                            backgroundSize = this.abstractSize;
+                            break;
+
+                        case HUDType.RELATIV :
+                            backgroundSize.X = this.abstractSize.X * this.game.GraphicsDevice.Viewport.Width;
+                            backgroundSize.Y = this.abstractSize.Y * this.game.GraphicsDevice.Viewport.Height;
+                            break;
+
+                        case HUDType.ABSOLUT_RELATIV :
+                            backgroundSize.X = this.abstractSize.X;
+                            backgroundSize.Y = this.abstractSize.Y * this.game.GraphicsDevice.Viewport.Height;
+                            break;
+
+                        case HUDType.RELATIV_ABSOLUT :
+                            backgroundSize.X = this.abstractSize.X * this.game.GraphicsDevice.Viewport.Width;
+                            backgroundSize.Y = this.abstractSize.Y;
+                            break;
+                    }
+
+                    backgroundSize *= this.scale;
+                }
+                return backgroundSize;
+            }
+        }
+
+
         /// <summary>
         /// the origin of the background image texture, if existent
         /// </summary>
@@ -76,7 +116,7 @@ namespace Battlestation_Antaris.View.HUD
         /// <param name="content">game content manager</param>
         public HUD2DString(Game1 game) : base(game)
         {
-            this.font = this.game.Content.Load<SpriteFont>("Fonts\\Linds");
+            this.font = this.game.Content.Load<SpriteFont>("Fonts\\Font");
             this.String = "HUD2DString";
         }
 
@@ -88,7 +128,7 @@ namespace Battlestation_Antaris.View.HUD
         /// <param name="content">game content manager</param>
         public HUD2DString(String text, Game1 game) : base(game)
         {
-            this.font = this.game.Content.Load<SpriteFont>("Fonts\\Linds");
+            this.font = this.game.Content.Load<SpriteFont>("Fonts\\Font");
             this.String = text;
         }
 
@@ -110,7 +150,7 @@ namespace Battlestation_Antaris.View.HUD
             if (text == null) { this.String = " "; }
             if (text != null) { this.String = text; }
 
-            if (font == null) { this.font = this.game.Content.Load<SpriteFont>("Fonts\\Linds"); }
+            if (font == null) { this.font = this.game.Content.Load<SpriteFont>("Fonts\\Font"); }
             if (font != null) { this.font = font; }
 
             this.abstractPosition = position ?? Vector2.Zero;
@@ -121,7 +161,7 @@ namespace Battlestation_Antaris.View.HUD
             if (backgroundColor != null)
             {
                 this.BackgroundColor = (Color)backgroundColor;
-                this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\SquareRound");
+                this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\Square");
                 this.BackgroundTextureOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
             }
         }
@@ -137,9 +177,10 @@ namespace Battlestation_Antaris.View.HUD
             {
                 if (this.BackgroundTexture != null)
                 {
+                    Vector2 bgSize = BackgroundSize;
                     Rectangle dest = 
                         new Rectangle(  (int)this.position.X, (int)this.position.Y, 
-                                        (int)(this.size.X * 1.2f), (int)this.size.Y);
+                                        (int)bgSize.X, (int)bgSize.Y);
 
                     spriteBatch.Draw(   this.BackgroundTexture, dest, null, 
                                         this.BackgroundColor, -this.rotation, 
@@ -164,10 +205,22 @@ namespace Battlestation_Antaris.View.HUD
             {
                 return false;
             }
-            if (point.X < position.X - size.X / 2 || point.X > position.X + size.X / 2 ||
-                point.Y < position.Y - size.Y / 2 || point.Y > position.Y + size.Y / 2)
+
+            if (this.BackgroundTexture == null)
             {
-                return false;
+                if (point.X < position.X - size.X / 2 || point.X > position.X + size.X / 2 ||
+                    point.Y < position.Y - size.Y / 2 || point.Y > position.Y + size.Y / 2)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (point.X < position.X - BackgroundSize.X / 2 || point.X > position.X + BackgroundSize.X / 2 ||
+                    point.Y < position.Y - BackgroundSize.Y / 2 || point.Y > position.Y + BackgroundSize.Y / 2)
+                {
+                    return false;
+                }
             }
             return true;
         }
