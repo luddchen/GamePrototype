@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Battlestation_Antaris.Model;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
 
 namespace Battlestation_Antaris.View
 {

@@ -114,6 +114,12 @@ namespace Battlestation_Antaris.Control
             return false;
         }
 
+        public bool isRightMouseButtonPressed()
+        {
+            if (newMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released) return true;
+            return false;
+        }
+
         public bool isLeftMouseButtonDown()
         {
             return newMouseState.LeftButton == ButtonState.Pressed;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
-namespace Battlestation_Antaris.View.HUD
+namespace Battlestation_Antaris.View.HUD.CockpitHUD
 {
     class FpsDisplay : HUD2DContainer
     {

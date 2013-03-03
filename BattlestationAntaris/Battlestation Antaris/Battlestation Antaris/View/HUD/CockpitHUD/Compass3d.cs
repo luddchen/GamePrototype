@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Battlestation_Antaris.View.HUD
+namespace Battlestation_Antaris.View.HUD.CockpitHUD
 {
 
     /// <summary>

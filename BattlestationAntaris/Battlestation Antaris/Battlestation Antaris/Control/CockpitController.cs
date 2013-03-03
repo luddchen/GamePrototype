@@ -1,8 +1,7 @@
 ﻿using System;
 using Battlestation_Antaris.View.HUD;
 using Microsoft.Xna.Framework;
-using Battlestation_Antaris.View;
-using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
 
 namespace Battlestation_Antaris.Control
 {
