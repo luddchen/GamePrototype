@@ -100,6 +100,8 @@ namespace Battlestation_Antaris.Control
                 Console.Out.WriteLine(this.game.world.spaceShip.attributes);
             }
 
+            this.game.world.miniMap.ZoomOnMouseWheelOver();
+
             // redirect input
             this.game.world.spaceShip.InjectControl( this.game.inputProvider.getInput() );
 

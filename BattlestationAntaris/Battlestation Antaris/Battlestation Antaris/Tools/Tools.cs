@@ -87,7 +87,7 @@ namespace Battlestation_Antaris.Tools
             double right = Vector3.Dot(targetVector, globalRotation.Right);
 
             // compute rotation on up-axis
-            return (float)Math.Atan2(forward, right);
+            return -(float)Math.Atan2(right, forward);
         }
 
 
