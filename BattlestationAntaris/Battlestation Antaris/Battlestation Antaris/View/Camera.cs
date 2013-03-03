@@ -40,7 +40,7 @@ namespace Battlestation_Antaris.View
         /// <summary>
         /// far clipping value
         /// </summary>
-        public float farClipping = 5000;
+        public float farClipping = 10000;
 
 
         /// <summary>

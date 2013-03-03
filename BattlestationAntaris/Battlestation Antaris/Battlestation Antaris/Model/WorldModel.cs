@@ -146,13 +146,10 @@ namespace Battlestation_Antaris.Model
             this.spaceStation.minimapIcon = this.game.Content.Load<Texture2D>("Models//SpaceStation//station_2d");
 
             // add dust near the players ship
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 200; i++)
             {
                 this.allDust.Add(new Dust(spaceShip, content, this));
             }
-
-
-
 
             // initialize overview camera with centered space station
             this.overviewCamPos = this.spaceStation.globalPosition + new Vector3(0f, 2000f, 0f);

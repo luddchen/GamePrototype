@@ -46,5 +46,14 @@ Content\Models\TargetShip\targetship_3.xnb
 Content\Models\SpaceShip\spaceship_3.xnb
 Content\Models\Radar\radar_0.xnb
 Content\Models\Dust\dust.xnb
+Content\Models\SpaceShip\spaceship1_2.xnb
+Content\Models\SpaceShip\spaceship1.xnb
+Content\Models\SpaceShip\spaceship_2d.xnb
+Content\Models\Radar\radar_2d.xnb
+Content\Models\Turret\turret_2d.xnb
+Content\Models\SpaceStation\station_2d.xnb
+Content\Models\Weapon\laser_2d.xnb
+Content\Sprites\SquareBorder.xnb
+Content\Models\SpaceShip\spaceship1_0.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa

@@ -10,7 +10,7 @@ namespace Battlestation_Antaris.Model
 {
     public class Dust : SpatialObject
     {
-        const int MAX_PARENT_DIST = 100;
+        const int MAX_PARENT_DIST = 1000;
 
         SpatialObject parent;
 
@@ -34,13 +34,13 @@ namespace Battlestation_Antaris.Model
         private void setRandomPos()
         {
             // create new dust in front of ship (depending on parents moving direction)
-            Vector3 localOffset = this.parent.rotation.Forward * MAX_PARENT_DIST * (float)(RandomGen.random.NextDouble() / 2 + 0.5);
+            Vector3 localOffset = this.parent.rotation.Forward * MAX_PARENT_DIST * (float)(RandomGen.random.NextDouble() * 2 - 0.9f);
 
             // move random right/left (depending on parents moving direction)
-            localOffset += this.parent.rotation.Right * (float)(RandomGen.random.NextDouble() - 0.5f) * MAX_PARENT_DIST * 0.8f;
+            localOffset += this.parent.rotation.Right * (float)(RandomGen.random.NextDouble() - 0.5f) * MAX_PARENT_DIST * 0.4f;
 
             // move random up/down (depending on parents moving direction)
-            localOffset += this.parent.rotation.Up * (float)(RandomGen.random.NextDouble() - 0.5f) * MAX_PARENT_DIST * 0.8f;
+            localOffset += this.parent.rotation.Up * (float)(RandomGen.random.NextDouble() - 0.5f) * MAX_PARENT_DIST * 0.4f;
 
 
             this.globalPosition = parent.globalPosition + localOffset;

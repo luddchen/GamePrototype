@@ -56,10 +56,12 @@ namespace Battlestation_Antaris
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferMultiSampling = true; // antialiasing
             Content.RootDirectory = "Content";
-            this.IsFixedTimeStep = false;
+            this.IsFixedTimeStep = true;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+
         }
 
 
