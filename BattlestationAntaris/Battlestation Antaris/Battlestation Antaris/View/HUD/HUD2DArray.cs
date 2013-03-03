@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.Control;
 
 namespace Battlestation_Antaris.View.HUD
 {
@@ -14,7 +15,9 @@ namespace Battlestation_Antaris.View.HUD
 
     public class HUD2DArray : HUD2DContainer
     {
-        public static Color BACKGROUND_COLOR = HUD2DButton.backgroundColorNormal;
+        public static Color BACKGROUND_COLOR = new Color(24, 32, 32, 128);
+
+        public static Color BACKGROUND_COLOR_HOVER = new Color(28, 36, 36, 192);
 
         public static float ABSOLUT_BORDER = 10;
 
@@ -64,7 +67,7 @@ namespace Battlestation_Antaris.View.HUD
 
             element.sizeType = this.sizeType;
             element.positionType = this.sizeType;
-            element.layerDepth = this.layerDepth * 0.9f;
+            element.layerDepth = this.layerDepth - 0.01f;
 
             Arrange();
 
@@ -108,12 +111,38 @@ namespace Battlestation_Antaris.View.HUD
                 {
                     itemPosition.X += itemSize.X;
                 }
+
+                item.ClientSizeChanged(this.position);
             }
         }
 
 
         public override void ClientSizeChanged(Vector2 offset)
         {
+
+            switch (this.sizeType)
+            {
+                case HUDType.RELATIV:
+                    this.size = new Vector2(this.game.GraphicsDevice.Viewport.Width * this.abstractSize.X,
+                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractSize.Y);
+                    break;
+
+                case HUDType.ABSOLUT:
+                    this.size = new Vector2(this.abstractSize.X,
+                                                 this.abstractSize.Y);
+                    break;
+
+                case HUDType.ABSOLUT_RELATIV:
+                    this.size = new Vector2(this.abstractSize.X,
+                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractSize.Y);
+                    break;
+
+                case HUDType.RELATIV_ABSOLUT:
+                    this.size = new Vector2(this.game.GraphicsDevice.Viewport.Width * this.abstractSize.X,
+                                                 this.abstractSize.Y);
+                    break;
+            }
+
             base.ClientSizeChanged(offset);
 
             if (this.background != null)
@@ -131,6 +160,7 @@ namespace Battlestation_Antaris.View.HUD
                 this.background.sizeType = this.sizeType;
                 this.background.abstractSize = this.abstractSize;
                 this.background.color = HUD2DArray.BACKGROUND_COLOR;
+                this.background.layerDepth = this.layerDepth;
 
                 this.background.ClientSizeChanged(this.position);
             }
@@ -143,13 +173,49 @@ namespace Battlestation_Antaris.View.HUD
 
         public override void Draw(SpriteBatch spritBatch)
         {
-            base.Draw(spritBatch);
-
             if (this.isVisible && this.background != null)
             {
                 this.background.Draw(spritBatch);
             }
+
+            base.Draw(spritBatch);
         }
+
+
+        public override bool Intersects(Vector2 point)
+        {
+            if (point.X < position.X - scale * size.X / 2 || point.X > position.X + scale * size.X / 2 ||
+                point.Y < position.Y - scale * size.Y / 2 || point.Y > position.Y + scale * size.Y / 2)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        public bool IsUpdatedHovered(InputProvider input)
+        {
+            bool hover = false;
+            if (Intersects(input.getMousePos())) 
+            {
+                hover = true;
+            }
+
+            if (this.background != null)
+            {
+                if (hover)
+                {
+                    this.background.color = HUD2DArray.BACKGROUND_COLOR_HOVER;
+                }
+                else
+                {
+                    this.background.color = HUD2DArray.BACKGROUND_COLOR;
+                }
+            }
+
+            return hover;
+        }
+
 
     }
 

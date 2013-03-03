@@ -15,11 +15,23 @@ namespace Battlestation_Antaris.Control
 
         private HUD2DTexture testTex;
 
+        private HUD2DArray buttonGrid;
+
+        private HUD2DArray buttons1;
+
+        private HUD2DArray buttons2;
+
         private HUD2DButton toCommandButton;
 
         private HUD2DButton toCockpitButton;
 
         private HUD2DButton exitButton;
+
+        private HUD2DButton xButton;
+
+        private HUD2DButton yButton;
+
+        private HUD2DButton zButton;
 
         /// <summary>
         /// create a new menu controller
@@ -37,36 +49,51 @@ namespace Battlestation_Antaris.Control
             testTex.abstractSize = new Vector2(0.5f, 0.5f);
             testTex.sizeType = HUDType.RELATIV;
             testTex.Texture = game.Content.Load<Texture2D>("Sprites//Erde2");
+            testTex.layerDepth = 1.0f;
 
             this.view.allHUD_2D.Add(testTex);
 
-            HUD2DArray buttons = 
-                new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
+            this.buttonGrid = new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
+            this.buttonGrid.layerDepth = 0.5f;
+            this.buttonGrid.direction = LayoutDirection.VERTICAL;
+            this.buttonGrid.CreateBackground(true);
 
-            buttons.layerDepth = 0.4f;
-            buttons.CreateBackground(true);
-            buttons.direction = LayoutDirection.HORIZONTAL;
+            this.buttons1 =  new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
+            this.buttons1.direction = LayoutDirection.HORIZONTAL;
 
-            //HUD2DTexture buttonsBackground = new HUD2DTexture(game);
-            //buttonsBackground.sizeType = buttons.sizeType;
-            //buttonsBackground.abstractSize = buttons.abstractSize;
-            //buttonsBackground.color = HUD2DButton.backgroundColorNormal;
-            //buttons.Add(buttonsBackground);
+            this.buttons2 = new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
+            this.buttons2.direction = LayoutDirection.HORIZONTAL;
+
+            this.buttonGrid.Add(this.buttons1);
+            this.buttonGrid.Add(this.buttons2);
 
 
-            toCommandButton = new HUD2DButton("Command", Vector2.Zero, 1, this.game);
+            this.buttons1.CreateBackground(true);
 
-            buttons.Add(toCommandButton);
+            this.toCommandButton = new HUD2DButton("Command", Vector2.Zero, 1, this.game);
+            this.buttons1.Add(toCommandButton);
 
-            toCockpitButton = new HUD2DButton("Cockpit", Vector2.Zero, 1, this.game);
+            this.toCockpitButton = new HUD2DButton("Cockpit", Vector2.Zero, 1, this.game);
+            this.buttons1.Add(toCockpitButton);
 
-            buttons.Add(toCockpitButton);
+            this.exitButton = new HUD2DButton("Exit", Vector2.Zero, 1, this.game);
+            this.buttons1.Add(this.exitButton);
 
-            exitButton = new HUD2DButton("Exit", Vector2.Zero, 1, this.game);
+            this.buttons2.CreateBackground(true);
 
-            buttons.Add(exitButton);
+            this.xButton = new HUD2DButton("X", Vector2.Zero, 1, this.game);
+            this.buttons2.Add(xButton);
 
-            this.view.allHUD_2D.Add(buttons);
+            this.yButton = new HUD2DButton("Y", Vector2.Zero, 1, this.game);
+            this.buttons2.Add(yButton);
+
+            this.zButton = new HUD2DButton("Z", Vector2.Zero, 1, this.game);
+            this.buttons2.Add(this.zButton);
+
+            this.view.allHUD_2D.Add(this.buttonGrid);
+
+            this.buttonGrid.ClientSizeChanged(Vector2.Zero);
+
         }
 
 
@@ -76,6 +103,18 @@ namespace Battlestation_Antaris.Control
         /// <param name="gameTime">the game time</param>
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            if (this.buttonGrid.IsUpdatedHovered(this.game.inputProvider)) { }
+
+            if (this.buttons1.IsUpdatedHovered(this.game.inputProvider)) {}
+
+            if (this.buttons2.IsUpdatedHovered(this.game.inputProvider)) { }
+
+            if (this.xButton.isUpdatedClicked(this.game.inputProvider)) { }
+
+            if (this.yButton.isUpdatedClicked(this.game.inputProvider)) { }
+
+            if (this.zButton.isUpdatedClicked(this.game.inputProvider)) { }
+
             if (this.toCommandButton.isUpdatedClicked(this.game.inputProvider))
             {
                 this.game.switchTo(Situation.COMMAND);

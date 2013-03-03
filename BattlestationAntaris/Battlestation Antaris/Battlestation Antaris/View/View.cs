@@ -73,9 +73,8 @@ namespace Battlestation_Antaris.View
             // draw content
             DrawContent();
 
-
             // draw 2D HUD elements
-            this.game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            this.game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);//, SamplerState.AnisotropicClamp, DepthStencilState.DepthRead, null);
 
             foreach (HUD2D element in this.allHUD_2D)
             {

@@ -38,7 +38,7 @@ namespace Battlestation_Antaris.View.HUD
 
             this.color = HUD2DButton.foregroundColorNormal;
             this.BackgroundColor = HUD2DButton.backgroundColorNormal;
-            this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\Button");
+            this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\Button2");
             this.BackgroundTextureOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
         }
 

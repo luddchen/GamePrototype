@@ -95,10 +95,6 @@ namespace Battlestation_Antaris.View.HUD
         /// <returns>true if there is an intersetion</returns>
         public override bool Intersects(Vector2 point)
         {
-            //if (Rotation != 0)
-            //{
-            //    return false;
-            //}
             if (point.X < position.X - scale * size.X / 2 || point.X > position.X + scale * size.X / 2 ||
                 point.Y < position.Y - scale * size.Y / 2 || point.Y > position.Y + scale * size.Y / 2)
             {

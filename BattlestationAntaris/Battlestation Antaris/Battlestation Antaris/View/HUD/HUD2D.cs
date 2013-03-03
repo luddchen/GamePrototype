@@ -127,6 +127,12 @@ namespace Battlestation_Antaris.View.HUD
             }
         }
 
+
+        public override string ToString()
+        {
+            return "HUD2DItem : pos = " + this.position + " , size = " + this.size + " , scale = " + this.scale + " , layer = " + this.layerDepth;
+        }
+
     }
 
 }
