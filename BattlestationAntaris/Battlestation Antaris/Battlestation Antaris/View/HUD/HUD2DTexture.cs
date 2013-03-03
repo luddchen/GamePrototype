@@ -9,7 +9,7 @@ namespace Battlestation_Antaris.View.HUD
     /// <summary>
     /// a Head Up Display Texture
     /// </summary>
-    public class HUD2DTexture : HUD2DConcreteElement
+    public class HUD2DTexture : HUD2D
     {
         private Texture2D texture;
 

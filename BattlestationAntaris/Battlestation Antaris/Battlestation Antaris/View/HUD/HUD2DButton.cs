@@ -24,7 +24,7 @@ namespace Battlestation_Antaris.View.HUD
 
         private static float scaleNormal = 1.0f;
 
-        private static float scaleHover = 1.04f;
+        private static float scaleHover = 0.99f;
 
         private static float scalePressed = 0.96f;
 

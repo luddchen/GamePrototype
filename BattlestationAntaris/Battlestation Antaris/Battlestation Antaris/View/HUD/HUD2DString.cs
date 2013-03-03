@@ -9,7 +9,7 @@ namespace Battlestation_Antaris.View.HUD
     /// <summary>
     /// a Head Up Display String
     /// </summary>
-    public class HUD2DString :HUD2DConcreteElement
+    public class HUD2DString : HUD2D
     {
 
         /// <summary>

@@ -40,16 +40,18 @@ namespace Battlestation_Antaris.Control
 
             this.view.allHUD_2D.Add(testTex);
 
-            HUD2DButtonContainer buttons = 
-                new HUD2DButtonContainer(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(200, 100), HUDType.ABSOLUT, game);
+            HUD2DArray buttons = 
+                new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
 
             buttons.layerDepth = 0.4f;
+            buttons.CreateBackground(true);
+            buttons.direction = LayoutDirection.HORIZONTAL;
 
-            HUD2DTexture buttonsBackground = new HUD2DTexture(game);
-            buttonsBackground.sizeType = buttons.sizeType;
-            buttonsBackground.abstractSize = buttons.abstractSize;
-            buttonsBackground.color = HUD2DButton.backgroundColorNormal;
-            buttons.Add(buttonsBackground);
+            //HUD2DTexture buttonsBackground = new HUD2DTexture(game);
+            //buttonsBackground.sizeType = buttons.sizeType;
+            //buttonsBackground.abstractSize = buttons.abstractSize;
+            //buttonsBackground.color = HUD2DButton.backgroundColorNormal;
+            //buttons.Add(buttonsBackground);
 
 
             toCommandButton = new HUD2DButton("Command", Vector2.Zero, 1, this.game);

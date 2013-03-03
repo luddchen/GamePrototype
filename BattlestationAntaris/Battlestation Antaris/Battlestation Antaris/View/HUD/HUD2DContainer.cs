@@ -67,6 +67,12 @@ namespace Battlestation_Antaris.View.HUD
         }
 
 
+        public override bool Intersects(Vector2 point)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 
 }
