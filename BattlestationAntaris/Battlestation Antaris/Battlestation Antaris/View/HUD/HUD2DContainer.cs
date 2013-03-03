@@ -10,7 +10,7 @@ namespace Battlestation_Antaris.View.HUD
     {
 
         // list of all childs
-        private List<HUD2D> allChilds;
+        protected List<HUD2D> allChilds;
 
 
 
@@ -29,6 +29,12 @@ namespace Battlestation_Antaris.View.HUD
         {
             this.allChilds.Add(element);
             element.ClientSizeChanged(this.position);
+        }
+
+
+        public void Remove(HUD2D element)
+        {
+            this.allChilds.Remove(element);
         }
 
 

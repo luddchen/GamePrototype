@@ -79,6 +79,23 @@ namespace Battlestation_Antaris.Tools
         /// </summary>
         /// <param name="targetVector">the target vector</param>
         /// <param name="globalRotation">the global rotation matrix</param>
+        /// <returns>the rotation on up-axis</returns>
+        public static float GetUpAxisRotation(Vector3 targetVector, Matrix globalRotation)
+        {
+            // project local target vector into global target vector
+            double forward = Vector3.Dot(targetVector, globalRotation.Forward);
+            double right = Vector3.Dot(targetVector, globalRotation.Right);
+
+            // compute rotation on up-axis
+            return (float)Math.Atan2(forward, right);
+        }
+
+
+        /// <summary>
+        /// computes the rotation of a target vector in relation to an other rotation matrix
+        /// </summary>
+        /// <param name="targetVector">the target vector</param>
+        /// <param name="globalRotation">the global rotation matrix</param>
         /// <returns>the rotation on up-axis (Vector3.Z) and on right-axis (Vector3.X)</returns>
         public static Vector3 GetRotation(Vector3 targetVector, Matrix globalRotation)
         {

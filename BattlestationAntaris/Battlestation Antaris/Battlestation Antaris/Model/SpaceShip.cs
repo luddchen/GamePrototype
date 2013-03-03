@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
 using SpatialObjectAttributesLibrary;
+using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
 
 namespace Battlestation_Antaris.Model
 {
@@ -24,6 +26,9 @@ namespace Battlestation_Antaris.Model
             : base(position, modelName, content, world)
         {
             this.attributes = new SpatialObjectAttributes(content.Load<SpatialObjectAttributes>("Attributes//SpaceShip"));
+            this.miniMapIcon.Texture = content.Load<Texture2D>("Models//SpaceShip//spaceship_2d");
+            this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
+            //this.miniMapIcon.scale = 2.0f;
         }
 
 

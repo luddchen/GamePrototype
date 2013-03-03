@@ -76,7 +76,8 @@ namespace Battlestation_Antaris.View
 
             this.allHUD_2D.Add(new ShipAttributesVisualizer(0.1f, 0.7f, this.game.world.spaceShip, this.game));
 
-            this.allHUD_2D.Add(new MiniMap2D(new Vector2(0.85f, 0.5f), HUDType.RELATIV, this.game));
+            this.allHUD_2D.Add(this.game.world.miniMap);
+            this.game.world.miniMap.abstractPosition = new Vector2(0.85f, 0.5f);
 
             Random random = new Random();
 

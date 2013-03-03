@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
 
 namespace Battlestation_Antaris.Model
 {
@@ -19,7 +20,9 @@ namespace Battlestation_Antaris.Model
             this.timeout = 360;
 
             this.globalPosition = Vector3.Add(this.globalPosition, Vector3.Multiply(this.rotation.Up, offset));
-            this.minimapIcon = content.Load<Texture2D>("Models//Weapon//laser_2d");
+            this.miniMapIcon.Texture = content.Load<Texture2D>("Models//Weapon//laser_2d");
+            this.miniMapIcon.color = MiniMap.WEAPON_COLOR;
+            this.miniMapIcon.scale = 0.4f;
         }
 
 
@@ -31,6 +34,8 @@ namespace Battlestation_Antaris.Model
             if (this.timeout == 0)
             {
                 this.world.removeObject(this);
+                this.miniMapIcon.RemoveFromWorld();
+                this.miniMapIcon = null;
             }
         }
 

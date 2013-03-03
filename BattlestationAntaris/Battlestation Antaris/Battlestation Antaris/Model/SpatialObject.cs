@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpatialObjectAttributesLibrary;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
 
 namespace Battlestation_Antaris.Model
 {
@@ -56,7 +57,8 @@ namespace Battlestation_Antaris.Model
         public bool isVisible;
 
 
-        public Texture2D minimapIcon;
+        public MiniMapIcon miniMapIcon;
+        //public Texture2D minimapIcon;
 
         public bool isEnemy;
 
@@ -121,6 +123,15 @@ namespace Battlestation_Antaris.Model
             this.attributes = new SpatialObjectAttributes();
             this.rotationRepairCountdown = SpatialObject.MAX_ROTATION_UNTIL_REPAIR;
             this.isEnemy = false;
+
+            // dirty hack
+            if (!(this is Dust))
+            {
+                this.miniMapIcon = new MiniMapIcon(null, this, this.world.game);
+                this.miniMapIcon.Texture = content.Load<Texture2D>("Models//SpaceShip//spaceship_2d");
+                this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
+                this.miniMapIcon.AddToWorld();
+            }
 
             // compute the bounding sphere of the whole 3D model
             this.bounding = new BoundingSphere();

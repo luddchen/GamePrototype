@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
 
 namespace Battlestation_Antaris.Model
 {
@@ -41,6 +43,11 @@ namespace Battlestation_Antaris.Model
             this.attributes.Radar.Range = 500.0f;
 
             this.objectsInRange = new List<SpatialObject>();
+
+            this.miniMapIcon.Texture = content.Load<Texture2D>("Models//Radar//radar_2d");
+            this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
+            this.miniMapIcon.scale = 0.7f;
+            this.miniMapIcon.updateRotation = false;
         }
 
 
