@@ -127,7 +127,9 @@ namespace Battlestation_Antaris.Model
                 else
                 {
                     SpatialObject obj =
-                        new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models//SpaceShip//spaceship1_2", content, this);
+                        new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models//Cubus//Cubus_0", content, this);
+                    obj.isEnemy = true;
+                    obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
                 }
             }
 
