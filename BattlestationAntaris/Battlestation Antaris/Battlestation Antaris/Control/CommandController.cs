@@ -2,7 +2,10 @@
 using Microsoft.Xna.Framework;
 using Battlestation_Antaris.View.HUD;
 using Battlestation_Antaris.View.HUD.CommandHUD;
-using Battlestation_Antaris.View.HUD.CockpitHUD;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using Battlestation_Antaris.Model;
+using Battlestation_Antaris.Tools;
 
 namespace Battlestation_Antaris.Control
 {
@@ -16,7 +19,7 @@ namespace Battlestation_Antaris.Control
 
         private const int MIN_CAMERA_ZOOM = 4000;
 
-        private enum CommandMode { SCROLL, BUILD }
+        private enum CommandMode { NORMAL, BUILD }
 
         private CommandMode currentMode;
 
@@ -28,6 +31,8 @@ namespace Battlestation_Antaris.Control
 
         private BuildMenu buildMenu;
 
+        private Dictionary<Type, MouseTexture> mouseTextures;
+
         /// <summary>
         /// create a new command controller
         /// </summary>
@@ -35,7 +40,7 @@ namespace Battlestation_Antaris.Control
         /// <param name="view">the used view</param>
         public CommandController(Game1 game, View.View view) : base(game, view) 
         {
-            this.currentMode = CommandMode.SCROLL;
+            this.currentMode = CommandMode.NORMAL;
 
             toMenuButton = new HUD2DButton("Menu", new Vector2(0.1f, 0.9f), 0.7f, this.game);
             toMenuButton.positionType = HUDType.RELATIV;
@@ -47,6 +52,11 @@ namespace Battlestation_Antaris.Control
 
             buildMenu = new BuildMenu(new Vector2(0.9f, 0.5f), HUDType.RELATIV, this.game);
             this.view.allHUD_2D.Add(buildMenu);
+
+            mouseTextures = new Dictionary<Type, MouseTexture>();
+            mouseTextures.Add(typeof(Battlestation_Antaris.Model.Turret), new MouseTexture(game.Content.Load<Texture2D>("Models//Turret//turret_2d"), game));
+            mouseTextures.Add(typeof(Battlestation_Antaris.Model.Radar), new MouseTexture(game.Content.Load<Texture2D>("Models//Radar//radar_2d"), game));
+            this.view.allHUD_2D.AddRange(mouseTextures.Values);
 
             mapConfig = new MiniMap.Config(new Vector2(0.5f, 0.5f), new Vector2(0.625f, 1f), new Vector2(0.625f, 1f));
             mapConfig.iconPositionScale = 0.25f;
@@ -75,34 +85,31 @@ namespace Battlestation_Antaris.Control
                 this.game.switchTo(Situation.COCKPIT);
             }
 
-            if (this.buildMenu.isUpdatedClicked(this.game.inputProvider))
-            {
-                this.currentMode = CommandMode.BUILD;
-            }
-
-            if (this.game.inputProvider.isRightMouseButtonPressed())
-            {
-                this.currentMode = CommandMode.SCROLL;
-            }
-
-            if (currentMode == CommandMode.SCROLL && this.game.inputProvider.isLeftMouseButtonDown())
-            {
-                Vector2 mousePosChange = this.game.inputProvider.getMousePosChange();
-                this.game.world.overviewCamPos.X += mousePosChange.X;
-                this.game.world.overviewCamPos.Z += mousePosChange.Y;
-            }
-
-
             if (currentMode == CommandMode.BUILD)
             {
+                // activate mouse texture
                 Type buildingType = buildMenu.getBuildingType();
-                // TODO: draw building at mouse position
+                this.mouseTextures[buildingType].isVisible = true;
+                this.mouseTextures[buildingType].update();
             }
 
-            if (currentMode == CommandMode.BUILD && this.game.inputProvider.isLeftMouseButtonDown())
+            if (currentMode == CommandMode.BUILD && this.game.inputProvider.isLeftMouseButtonPressed())
             {
                 Type buildingType = buildMenu.getBuildingType();
-                // TODO: create and add building to the model
+                SpatialObject newStructure = SpatialObjectFactory.buildSpatialObject(buildingType);
+                newStructure.globalPosition = new Vector3(RandomGen.random.Next(2400) - 1200, 0, RandomGen.random.Next(2400) - 1200);
+            }
+
+            if (currentMode == CommandMode.BUILD && this.game.inputProvider.isRightMouseButtonPressed())
+            {
+                Type buildingType = buildMenu.getBuildingType();
+                this.mouseTextures[buildingType].isVisible = false;
+                this.currentMode = CommandMode.NORMAL;
+            }
+
+            if (currentMode == CommandMode.NORMAL && this.buildMenu.isUpdatedClicked(this.game.inputProvider))
+            {
+                this.currentMode = CommandMode.BUILD;
             }
 
             if (this.game.inputProvider.getMouseWheelChange() != 0)

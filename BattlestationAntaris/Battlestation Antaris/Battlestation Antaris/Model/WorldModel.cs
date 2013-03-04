@@ -37,11 +37,6 @@ namespace Battlestation_Antaris.Model
         /// </summary>
         public SpaceStation spaceStation;
 
-        /// <summary>
-        /// the position of the camera in the command view
-        /// </summary>
-        public Vector3 overviewCamPos;
-
 
         /// <summary>
         /// a list of all player radars
@@ -115,7 +110,7 @@ namespace Battlestation_Antaris.Model
             // create 500 random objects to fill the space for testing
             Random random = new Random();
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 10; i++)
             {
                 if (random.Next(2) == 0)
                 {
@@ -133,13 +128,13 @@ namespace Battlestation_Antaris.Model
                 }
             }
 
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Turret turret = new Turret(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), content, this);
                 this.allTurrets.Add(turret);
             }
 
-            for (int i = 0; i < 32; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Radar radar = new Radar(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), content, this);
                 this.allRadars.Add(radar);
@@ -147,7 +142,7 @@ namespace Battlestation_Antaris.Model
 
             // create the player space ship
             this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models//compass2", content, this);
-            this.spaceShip.isVisible = false;
+            this.spaceShip.isVisible = true;
 
             // create the player space station
             this.spaceStation = new SpaceStation(Vector3.Zero, "Models//SpaceStation/spacestation", content, this);
@@ -157,9 +152,6 @@ namespace Battlestation_Antaris.Model
             {
                 this.allDust.Add(new Dust(spaceShip, content, this));
             }
-
-            // initialize overview camera with centered space station
-            this.overviewCamPos = this.spaceStation.globalPosition + new Vector3(0f, 2000f, 0f);
 
             this.Shield = new SpatialObject(Vector3.Zero, "Models//shield", content, this);
             this.Shield.isVisible = false;

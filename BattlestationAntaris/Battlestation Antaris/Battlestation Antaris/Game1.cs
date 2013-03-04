@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Battlestation_Antaris.Control;
 using System.Collections.Generic;
 using System;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antaris
 {
@@ -93,6 +94,8 @@ namespace Battlestation_Antaris
             this.world = new Model.WorldModel(this);
 
             this.world.Initialize(Content);
+
+            SpatialObjectFactory.initializeFactory(this.Content, this.world);
             
             base.Initialize();
         }

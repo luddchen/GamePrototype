@@ -15,6 +15,7 @@ Content\Models\SpaceShip\spaceship_2.xnb
 Content\Models\Radar\radar_1.xnb
 Content\Models\Dust\dust.xnb
 Content\Models\SpaceShip\spaceship1_2.xnb
+Content\Models\Cubus\Cubus_0.xnb
 Content\Models\SpaceStation\StationBox.xnb
 Content\Models\SpaceStation\StationCatwalk.xnb
 Content\Models\SpaceStation\StationSphere.xnb
@@ -38,6 +39,11 @@ Content\Models\Turret\turret_2d.xnb
 Content\Models\SpaceStation\station_2d.xnb
 Content\Models\Weapon\laser_2d.xnb
 Content\Sprites\SquareBorder.xnb
+Content\Sprites\Square_Cross.xnb
+Content\Sprites\Button.xnb
+Content\Sprites\Button2.xnb
+Content\Models\Cubus\cubus.xnb
+Content\Sprites\battlestation.xnb
 Content\Fonts\Font.xnb
 Content\Fonts\FontSmall.xnb
 Content\Fonts\Linds.xnb
@@ -55,8 +61,6 @@ Content\Models\TargetShip\targetship_3.xnb
 Content\Models\SpaceShip\spaceship_3.xnb
 Content\Models\Radar\radar_0.xnb
 Content\Models\SpaceShip\spaceship1_0.xnb
-Content\Sprites\Square_Cross.xnb
-Content\Sprites\Button.xnb
-Content\Sprites\Button2.xnb
+Content\Models\Cubus\cubus_1.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa

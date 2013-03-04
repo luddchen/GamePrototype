@@ -88,6 +88,7 @@
     <Compile Include="Model\SpaceShip.cs" />
     <Compile Include="Model\SpaceStation.cs" />
     <Compile Include="Model\SpatialObject.cs" />
+    <Compile Include="Model\SpatialObjectFactory.cs" />
     <Compile Include="Model\Turret.cs" />
     <Compile Include="Model\WorldModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="View\Camera.cs" />
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />
+    <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
     <Compile Include="View\HUD\MiniMapIcon.cs" />
     <Compile Include="View\HUD\CommandHUD\BuildMenu.cs" />
     <Compile Include="View\HUD\CockpitHUD\Compass3d.cs" />

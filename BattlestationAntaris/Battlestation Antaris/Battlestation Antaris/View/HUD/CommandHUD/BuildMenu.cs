@@ -41,13 +41,13 @@ namespace Battlestation_Antaris.View.HUD.CommandHUD
             if (this.buildTurretButton.isUpdatedClicked(this.game.inputProvider))
             {
                 clicked = true;
-                buildingObjectType = Type.GetType("Battlestation_Antaris.Model.Turret");
+                buildingObjectType = typeof(Battlestation_Antaris.Model.Turret);
             }
 
             if (this.buildRadarButton.isUpdatedClicked(this.game.inputProvider))
             {
                 clicked = true;
-                buildingObjectType = Type.GetType("Battlestation_Antaris.Model.Radar");
+                buildingObjectType = typeof(Battlestation_Antaris.Model.Radar);
             }
             return clicked;
         }
