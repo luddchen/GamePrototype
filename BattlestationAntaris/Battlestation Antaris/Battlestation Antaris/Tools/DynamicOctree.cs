@@ -172,6 +172,64 @@ namespace Battlestation_Antaris.Tools
             return output;
         }
 
+
+        public Tuple<T, float?> CastRay(Ray ray, bool bothDirections)
+        {
+            Tuple<T, float?> tuple = new Tuple<T, float?>(default(T), null);
+
+            foreach (Tuple<T, BoundingSphere> item in this.items)
+            {
+                float? distance = ray.Intersects(item.Item2);
+
+                if (distance != null)
+                {
+                    if (tuple.Item2 != null)
+                    {
+                        if (distance < tuple.Item2)
+                        {
+                            if (!((!bothDirections) && (distance < 0)))
+                            {
+                                tuple = new Tuple<T, float?>(item.Item1, distance);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        tuple = new Tuple<T, float?>(item.Item1, distance);
+                    }
+                }
+            }
+
+
+            foreach (DynamicOctree<T> tree in this.subTrees)
+            {
+                float? distance = ray.Intersects(tree.bounding);
+
+                if (distance != null)
+                {
+                    Tuple<T, float?> treeCastTuple = tree.CastRay(ray, bothDirections);
+
+                    if (treeCastTuple.Item2 != null)
+                    {
+                        if (tuple.Item2 != null)
+                        {
+                            if (treeCastTuple.Item2 < tuple.Item2)
+                            {
+                                tuple = treeCastTuple;
+                            }
+                        }
+                        else
+                        {
+                            tuple = treeCastTuple;
+                        }
+                    }
+                }
+
+            }
+
+            return tuple;
+        }
+
     }
 
 }

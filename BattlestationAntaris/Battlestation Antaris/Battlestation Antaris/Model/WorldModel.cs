@@ -147,6 +147,7 @@ namespace Battlestation_Antaris.Model
 
             // create the player space ship
             this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models//compass2", content, this);
+            this.spaceShip.isVisible = false;
 
             // create the player space station
             this.spaceStation = new SpaceStation(Vector3.Zero, "Models//SpaceStation/spacestation", content, this);
@@ -218,22 +219,25 @@ namespace Battlestation_Antaris.Model
                 }
             }
 
-            foreach (SpatialObject obj in this.allWeapons)
-            {
-                if (obj.isVisible)
-                {
-                    BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
-                    if (!treeTest.Add(obj, itemSphere))
-                    {
-                        treeTest.AddItem(obj, itemSphere);
-                    }
-                }
-            }
+            //foreach (SpatialObject obj in this.allWeapons)
+            //{
+            //    if (obj.isVisible)
+            //    {
+            //        BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
+            //        if (!treeTest.Add(obj, itemSphere))
+            //        {
+            //            treeTest.AddItem(obj, itemSphere);
+            //        }
+            //    }
+            //}
 
             treeTest.BuildTree();
             //Console.Out.WriteLine(treeTest.Count);
             //Console.Out.WriteLine(treeTest.getCountString());
             //Console.Out.WriteLine();
+
+            Console.Out.WriteLine(
+                treeTest.CastRay(new Ray(this.spaceShip.globalPosition, this.spaceShip.rotation.Forward), false));
         }
 
 
