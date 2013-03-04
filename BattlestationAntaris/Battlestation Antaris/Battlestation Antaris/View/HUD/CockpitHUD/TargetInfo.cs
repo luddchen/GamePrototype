@@ -14,6 +14,8 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
 
         private WorldModel world;
 
+        public SpatialObject target;
+
 
         public TargetInfo(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType , Game1 game)
             : base(abstractPosition, positionType, abstractSize, sizeType , game)
@@ -38,7 +40,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
 
             float testDist = float.MaxValue;
 
-            SpatialObject target = this.world.treeTest.CastRay(new Ray(this.world.spaceShip.globalPosition, this.world.spaceShip.rotation.Forward), 1, ref testDist);
+            target = this.world.treeTest.CastRay(new Ray(this.world.spaceShip.globalPosition, this.world.spaceShip.rotation.Forward), 1, ref testDist);
 
             if (target != null)
             {

@@ -193,12 +193,17 @@ namespace Battlestation_Antaris.Tools
 
             foreach (DynamicOctree<T> tree in this.subTrees)
             {
-                distance = targetDistance;
-                T subTreeTargetObject = tree.CastRay(ray, minDist, ref targetDistance);
+                float? treeDist = ray.Intersects(tree.bounding);
 
-                if (targetDistance < distance)
+                if (treeDist != null && treeDist < targetDistance)
                 {
-                    targetObject = subTreeTargetObject;
+                    distance = targetDistance;
+                    T subTreeTargetObject = tree.CastRay(ray, minDist, ref targetDistance);
+
+                    if (targetDistance < distance)
+                    {
+                        targetObject = subTreeTargetObject;
+                    }
                 }
             }
 

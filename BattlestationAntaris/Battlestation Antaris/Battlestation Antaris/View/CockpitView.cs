@@ -30,6 +30,9 @@ namespace Battlestation_Antaris.View
         Compass3d compass;
 
 
+        TargetInfo targetInfo;
+
+
         /// <summary>
         /// a list of background images
         /// </summary>
@@ -38,6 +41,7 @@ namespace Battlestation_Antaris.View
 
         // test ----------------------
         Microsoft.Xna.Framework.Graphics.Model bgModel;
+        Microsoft.Xna.Framework.Graphics.Model targetCrossModel;
 
         Matrix[] boneTransforms;
 
@@ -92,7 +96,12 @@ namespace Battlestation_Antaris.View
 
             this.allHUD_2D.Add(new ShipAttributesVisualizer(0.1f, 0.7f, this.game.world.spaceShip, this.game));
 
-            this.allHUD_2D.Add(new TargetInfo(new Vector2(60, 200), HUDType.ABSOLUT, new Vector2(150, 60), HUDType.ABSOLUT, this.game));
+            this.targetInfo = new TargetInfo(new Vector2(60, 200), HUDType.ABSOLUT, new Vector2(150, 60), HUDType.ABSOLUT, this.game);
+            this.allHUD_2D.Add(this.targetInfo);
+
+            this.rotation = Matrix.Identity;
+            this.targetCrossModel = game.Content.Load<Microsoft.Xna.Framework.Graphics.Model>("Models//TargetCross");
+            this.boneTransforms = new Matrix[this.targetCrossModel.Bones.Count];
 
             Random random = new Random();
 
@@ -152,6 +161,7 @@ namespace Battlestation_Antaris.View
             drawWorldObjects();
             drawWorldWeapons();
 
+            drawTargetCross();
         }
 
         protected void drawWorldObjects()
@@ -243,6 +253,30 @@ namespace Battlestation_Antaris.View
                         }
                         mesh.Draw();
                     }
+                }
+            }
+        }
+
+
+        private void drawTargetCross()
+        {
+            if (this.targetInfo.target != null)
+            {
+                this.targetCrossModel.Root.Transform = 
+                    Matrix.CreateScale(this.targetInfo.target.bounding.Radius) * this.game.world.spaceShip.rotation * Matrix.CreateTranslation(this.targetInfo.target.globalPosition);
+                this.targetCrossModel.CopyAbsoluteBoneTransformsTo(this.boneTransforms);
+
+                foreach (ModelMesh mesh in this.targetCrossModel.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        setLightning(effect);
+
+                        effect.World = this.boneTransforms[mesh.ParentBone.Index];
+                        effect.View = this.camera.view;
+                        effect.Projection = this.camera.projection;
+                    }
+                    mesh.Draw();
                 }
             }
         }
