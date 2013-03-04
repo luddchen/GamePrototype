@@ -31,6 +31,12 @@ namespace Battlestation_Antaris.Model
             }
         }
 
+
+        public override string ToString()
+        {
+            return "Missile";
+        }
+
     }
 
 }

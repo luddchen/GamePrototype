@@ -80,5 +80,11 @@ namespace Battlestation_Antaris.Model
             StationAxis.Transform = Matrix.CreateRotationZ(AxisRot) * StationAxisTransform;
         }
 
+
+        public override string ToString()
+        {
+            return "SpaceStation";
+        }
+
     }
 }

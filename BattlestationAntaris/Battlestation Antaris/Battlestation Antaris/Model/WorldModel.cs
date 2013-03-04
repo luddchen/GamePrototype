@@ -75,7 +75,7 @@ namespace Battlestation_Antaris.Model
         private List<SpatialObject> removeList;
 
 
-        private Tools.DynamicOctree<SpatialObject> treeTest;
+        public Tools.DynamicOctree<SpatialObject> treeTest;
 
 
         /// <summary>
@@ -224,12 +224,7 @@ namespace Battlestation_Antaris.Model
             //}
 
             treeTest.BuildTree();
-            //Console.Out.WriteLine(treeTest.Count);
-            //Console.Out.WriteLine(treeTest.getCountString());
-            //Console.Out.WriteLine();
 
-            Console.Out.WriteLine(
-                treeTest.CastRay(new Ray(this.spaceShip.globalPosition, this.spaceShip.rotation.Forward), false));
         }
 
 

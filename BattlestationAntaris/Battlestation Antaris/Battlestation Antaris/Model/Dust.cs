@@ -45,5 +45,11 @@ namespace Battlestation_Antaris.Model
 
             this.globalPosition = parent.globalPosition + localOffset;
         }
+
+
+        public override string ToString()
+        {
+            return "Dust";
+        }
     }
 }

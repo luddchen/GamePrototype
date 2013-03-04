@@ -88,6 +88,12 @@ namespace Battlestation_Antaris.Model
             //Console.Out.WriteLine("Objects in Range : " + this.objectsInRange.Count);
         }
 
+
+        public override string ToString()
+        {
+            return "Radar";
+        }
+
     }
 
 }

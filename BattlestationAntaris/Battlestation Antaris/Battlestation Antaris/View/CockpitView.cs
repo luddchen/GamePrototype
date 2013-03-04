@@ -92,6 +92,8 @@ namespace Battlestation_Antaris.View
 
             this.allHUD_2D.Add(new ShipAttributesVisualizer(0.1f, 0.7f, this.game.world.spaceShip, this.game));
 
+            this.allHUD_2D.Add(new TargetInfo(new Vector2(60, 200), HUDType.ABSOLUT, new Vector2(150, 60), HUDType.ABSOLUT, this.game));
+
             Random random = new Random();
 
             // background

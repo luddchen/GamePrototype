@@ -173,62 +173,38 @@ namespace Battlestation_Antaris.Tools
         }
 
 
-        public Tuple<T, float?> CastRay(Ray ray, bool bothDirections)
+        public T CastRay(Ray ray, float minDist, ref float targetDistance)
         {
-            Tuple<T, float?> tuple = new Tuple<T, float?>(default(T), null);
+            T targetObject = default(T);
+
+            float distance;
 
             foreach (Tuple<T, BoundingSphere> item in this.items)
             {
-                float? distance = ray.Intersects(item.Item2);
+                distance = ray.Intersects(item.Item2) ?? targetDistance;
 
-                if (distance != null)
+                if (distance > minDist && distance < targetDistance)
                 {
-                    if (tuple.Item2 != null)
-                    {
-                        if (distance < tuple.Item2)
-                        {
-                            if (!((!bothDirections) && (distance < 0)))
-                            {
-                                tuple = new Tuple<T, float?>(item.Item1, distance);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        tuple = new Tuple<T, float?>(item.Item1, distance);
-                    }
+                    targetDistance = distance;
+                    targetObject = item.Item1;
                 }
             }
 
 
             foreach (DynamicOctree<T> tree in this.subTrees)
             {
-                float? distance = ray.Intersects(tree.bounding);
+                distance = targetDistance;
+                T subTreeTargetObject = tree.CastRay(ray, minDist, ref targetDistance);
 
-                if (distance != null)
+                if (targetDistance < distance)
                 {
-                    Tuple<T, float?> treeCastTuple = tree.CastRay(ray, bothDirections);
-
-                    if (treeCastTuple.Item2 != null)
-                    {
-                        if (tuple.Item2 != null)
-                        {
-                            if (treeCastTuple.Item2 < tuple.Item2)
-                            {
-                                tuple = treeCastTuple;
-                            }
-                        }
-                        else
-                        {
-                            tuple = treeCastTuple;
-                        }
-                    }
+                    targetObject = subTreeTargetObject;
                 }
-
             }
 
-            return tuple;
+            return targetObject;
         }
+
 
     }
 
