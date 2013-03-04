@@ -9,7 +9,7 @@ namespace Battlestation_Antaris.View
     /// <summary>
     /// the command view
     /// </summary>
-    class CommandView : GameView
+    class CommandView : View
     {
 
         /// <summary>
@@ -33,6 +33,7 @@ namespace Battlestation_Antaris.View
             testString.positionType = HUDType.RELATIV;
 
             this.allHUD_2D.Add(testString);
+            this.allHUD_2D.Add(this.game.world.miniMap);
         }
 
         /// <summary>
@@ -45,10 +46,6 @@ namespace Battlestation_Antaris.View
             this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true, DepthBufferWriteEnable = true };
             this.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
-            // init camera
-            this.camera.Update(this.game.world.overviewCamPos, Vector3.Down, Vector3.Forward);
-
-            base.DrawContent();
         }
     }
 

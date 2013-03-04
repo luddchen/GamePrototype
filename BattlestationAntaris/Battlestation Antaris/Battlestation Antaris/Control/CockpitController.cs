@@ -20,6 +20,8 @@ namespace Battlestation_Antaris.Control
         private FpsDisplay fpsDisplay;
 
         private HUD2DButton debugButton;
+
+        private MiniMap.Config mapConfig;
         
         /// <summary>
         /// create a new cockpit controller
@@ -57,6 +59,13 @@ namespace Battlestation_Antaris.Control
 
             debugButton = new HUD2DButton("Debug", new Vector2(50, 100), 0.5f, this.game);
             this.view.allHUD_2D.Add(debugButton);
+
+            mapConfig = new MiniMap.Config(new Vector2(0.85f, 0.5f), new Vector2(0.25f, 0.4f), new Vector2(0.25f, 0.4f));
+        }
+
+        public override void onEnter()
+        {
+            this.game.world.miniMap.changeConfig(this.mapConfig);
         }
 
 

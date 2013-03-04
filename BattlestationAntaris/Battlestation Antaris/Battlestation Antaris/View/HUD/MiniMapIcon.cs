@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Battlestation_Antaris.Model;
 
-namespace Battlestation_Antaris.View.HUD.CockpitHUD
+namespace Battlestation_Antaris.View.HUD
 {
 
     public class MiniMapIcon : HUD2DTexture

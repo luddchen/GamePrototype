@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD;
 using Battlestation_Antaris.View.HUD.CockpitHUD;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antaris.View
 {
@@ -11,8 +12,17 @@ namespace Battlestation_Antaris.View
     /// <summary>
     /// the cockpit view
     /// </summary>
-    class CockpitView : GameView
+    class CockpitView : View
     {
+        /// <summary>
+        /// the game view camera
+        /// </summary>
+        protected Camera camera;
+
+        /// <summary>
+        /// ambient light color for testing
+        /// </summary>
+        Vector3 ambientColor;
 
         /// <summary>
         /// the cockpit compass
@@ -41,6 +51,9 @@ namespace Battlestation_Antaris.View
         public CockpitView(Game1 game)
             : base(game)
         {
+            this.camera = new Camera(this.game.GraphicsDevice);
+            this.ambientColor = new Vector3(0.5f, 0.5f, 0.5f);
+
             this.compass = new Compass3d(this.game.Content, this.game.GraphicsDevice);
             this.allHUD_3D.Add(this.compass);
             this.is3D = true;
@@ -55,6 +68,7 @@ namespace Battlestation_Antaris.View
         /// </summary>
         public override void Initialize()
         {
+
             // 3D HUD
             this.compass.Initialize(this.game.world.spaceShip);
 
@@ -65,19 +79,18 @@ namespace Battlestation_Antaris.View
             testString.positionType = HUDType.RELATIV;
             this.allHUD_2D.Add(testString);
 
-            HUD2DTexture cokpitTexture = new HUD2DTexture(this.game);
-            cokpitTexture.abstractPosition = new Vector2(0.5f, 0.5f);
-            cokpitTexture.positionType = HUDType.RELATIV;
-            cokpitTexture.abstractSize = new Vector2(1, 1);
-            cokpitTexture.sizeType = HUDType.RELATIV;
-            cokpitTexture.Texture = game.Content.Load<Texture2D>("Sprites//cockpit3");
-            cokpitTexture.layerDepth = 1.0f;
-            this.allHUD_2D.Add(cokpitTexture);
-
-            this.allHUD_2D.Add(new ShipAttributesVisualizer(0.1f, 0.7f, this.game.world.spaceShip, this.game));
+            HUD2DTexture cockpitTexture = new HUD2DTexture(this.game);
+            cockpitTexture.abstractPosition = new Vector2(0.5f, 0.5f);
+            cockpitTexture.positionType = HUDType.RELATIV;
+            cockpitTexture.abstractSize = new Vector2(1, 1);
+            cockpitTexture.sizeType = HUDType.RELATIV;
+            cockpitTexture.Texture = game.Content.Load<Texture2D>("Sprites//cockpit3");
+            cockpitTexture.layerDepth = 1.0f;
+            this.allHUD_2D.Add(cockpitTexture);
 
             this.allHUD_2D.Add(this.game.world.miniMap);
-            this.game.world.miniMap.abstractPosition = new Vector2(0.85f, 0.5f);
+
+            this.allHUD_2D.Add(new ShipAttributesVisualizer(0.1f, 0.7f, this.game.world.spaceShip, this.game));
 
             Random random = new Random();
 
@@ -134,7 +147,102 @@ namespace Battlestation_Antaris.View
                 bg.Draw(this.camera, nr++);
             }
 
-            base.DrawContent();
+            drawWorldObjects();
+            drawWorldWeapons();
+
+        }
+
+        protected void drawWorldObjects()
+        {
+            SpatialObject shield = this.game.world.Shield;
+
+            // draw world objects
+            foreach (SpatialObject obj in this.game.world.allObjects)
+            {
+                if (obj.isVisible)
+                {
+                    obj.model3d.Root.Transform = obj.rotation * Matrix.CreateTranslation(obj.globalPosition);
+                    obj.model3d.CopyAbsoluteBoneTransformsTo(obj.boneTransforms);
+
+                    foreach (ModelMesh mesh in obj.model3d.Meshes)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            setLightning(effect);
+
+                            effect.World = obj.boneTransforms[mesh.ParentBone.Index];
+                            effect.View = this.camera.view;
+                            effect.Projection = this.camera.projection;
+                        }
+                        mesh.Draw();
+                    }
+                }
+
+
+                //// draw shield -> testing
+                //if (obj is SpaceStation || obj is Turret || obj is Radar)
+                //{
+                //    shield.model3d.Root.Transform = obj.rotation * Matrix.CreateScale(obj.bounding.Radius) 
+                //                                    * Matrix.CreateTranslation(obj.globalPosition + obj.bounding.Center);
+                //    shield.model3d.CopyAbsoluteBoneTransformsTo(shield.boneTransforms);
+
+                //    foreach (ModelMesh mesh in shield.model3d.Meshes)
+                //    {
+                //        foreach (BasicEffect effect in mesh.Effects)
+                //        {
+                //            setLightning(effect);
+
+                //            effect.World = shield.boneTransforms[mesh.ParentBone.Index];
+                //            effect.View = this.camera.view;
+                //            effect.Projection = this.camera.projection;
+                //        }
+                //        mesh.Draw();
+                //    }
+                //}
+            }
+        }
+
+        private void setLightning(BasicEffect effect)
+        {
+            //effect.EnableDefaultLighting();
+
+            effect.LightingEnabled = true;
+            effect.DirectionalLight0.DiffuseColor = new Vector3(1.0f, 1.0f, 0.5f);
+            effect.DirectionalLight0.Direction = new Vector3(1, 1, -1);
+            effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 1);
+            effect.AmbientLightColor = this.ambientColor;
+            //effect.EmissiveColor = new Vector3(0, 0, 0.1f);
+            //effect.Alpha = 0.66f;
+
+            //effect.FogEnabled = true;
+            //effect.FogColor = Color.Red.ToVector3();
+            //effect.FogStart = 200.0f;
+            //effect.FogEnd = 210.0f;
+        }
+
+        protected void drawWorldWeapons()
+        {
+            foreach (SpatialObject obj in this.game.world.allWeapons)
+            {
+                if (obj.isVisible)
+                {
+                    obj.model3d.Root.Transform = obj.rotation * Matrix.CreateTranslation(obj.globalPosition);
+                    obj.model3d.CopyAbsoluteBoneTransformsTo(obj.boneTransforms);
+
+                    foreach (ModelMesh mesh in obj.model3d.Meshes)
+                    {
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            setLightning(effect);
+
+                            effect.World = obj.boneTransforms[mesh.ParentBone.Index];
+                            effect.View = this.camera.view;
+                            effect.Projection = this.camera.projection;
+                        }
+                        mesh.Draw();
+                    }
+                }
+            }
         }
     }
 }

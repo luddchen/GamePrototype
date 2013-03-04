@@ -99,10 +99,9 @@
     <Compile Include="Tools\Tools.cs" />
     <Compile Include="View\BackgroundObject.cs" />
     <Compile Include="View\Camera.cs" />
-    <Compile Include="View\GameView.cs" />
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />
-    <Compile Include="View\HUD\CockpitHUD\MiniMapIcon.cs" />
+    <Compile Include="View\HUD\MiniMapIcon.cs" />
     <Compile Include="View\HUD\CommandHUD\BuildMenu.cs" />
     <Compile Include="View\HUD\CockpitHUD\Compass3d.cs" />
     <Compile Include="View\HUD\CockpitHUD\FpsDisplay.cs" />
@@ -113,7 +112,7 @@
     <Compile Include="View\HUD\HUD2DContainer.cs" />
     <Compile Include="View\HUD\HUD2DString.cs" />
     <Compile Include="View\HUD\HUD2DTexture.cs" />
-    <Compile Include="View\HUD\CockpitHUD\MiniMap.cs" />
+    <Compile Include="View\HUD\MiniMap.cs" />
     <Compile Include="View\HUD\CockpitHUD\ShipAttributesVisualizer.cs" />
     <Compile Include="View\MenuView.cs" />
     <Compile Include="View\View.cs" />

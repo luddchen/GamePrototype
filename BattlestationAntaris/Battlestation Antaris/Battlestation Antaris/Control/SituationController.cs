@@ -46,6 +46,22 @@ namespace Battlestation_Antaris.Control
         /// <param name="gameTime">the game time</param>
         public abstract void Update(GameTime gameTime);
 
+        /// <summary>
+        /// called upon switching to this situation
+        /// </summary>
+        public virtual void onEnter()
+        {
+
+        }
+
+        /// <summary>
+        /// called upon leaving this situation
+        /// </summary>
+        public virtual void onExit()
+        {
+
+        }
+
 
     }
 

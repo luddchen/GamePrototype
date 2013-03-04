@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Battlestation_Antaris.View.HUD;
 using Battlestation_Antaris.View.HUD.CommandHUD;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
 
 namespace Battlestation_Antaris.Control
 {
@@ -22,6 +23,8 @@ namespace Battlestation_Antaris.Control
         private HUD2DButton toMenuButton;
 
         private HUD2DButton toCockpitButton;
+
+        private MiniMap.Config mapConfig;
 
         private BuildMenu buildMenu;
 
@@ -45,6 +48,14 @@ namespace Battlestation_Antaris.Control
             buildMenu = new BuildMenu(new Vector2(0.9f, 0.5f), HUDType.RELATIV, this.game);
             this.view.allHUD_2D.Add(buildMenu);
 
+            mapConfig = new MiniMap.Config(new Vector2(0.5f, 0.5f), new Vector2(0.625f, 1f), new Vector2(0.625f, 1f));
+            mapConfig.iconPositionScale = 0.25f;
+
+        }
+
+        public override void onEnter()
+        {
+            this.game.world.miniMap.changeConfig(this.mapConfig);
         }
 
 
@@ -96,10 +107,7 @@ namespace Battlestation_Antaris.Control
 
             if (this.game.inputProvider.getMouseWheelChange() != 0)
             {
-                float newCameraY = this.game.world.overviewCamPos.Y - 3 * this.game.inputProvider.getMouseWheelChange();
-                newCameraY = Math.Max(MAX_CAMERA_ZOOM, newCameraY);
-                newCameraY = Math.Min(MIN_CAMERA_ZOOM, newCameraY);
-                this.game.world.overviewCamPos.Y = newCameraY;
+                this.game.world.miniMap.ZoomOnMouseWheelOver();
             }
         }
 

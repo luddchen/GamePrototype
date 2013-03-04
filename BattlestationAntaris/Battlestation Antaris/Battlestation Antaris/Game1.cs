@@ -128,7 +128,12 @@ namespace Battlestation_Antaris
         /// <param name="situation">the new active situation</param>
         public void switchTo(Situation situation)
         {
+            if (this.activeSituation != null)
+            {
+                this.activeSituation.onExit();
+            }
             this.activeSituation = this.allSituations[(int)situation];
+            this.activeSituation.onEnter();
             this.IsMouseVisible = true;
             this.activeSituation.view.Window_ClientSizeChanged();
         }

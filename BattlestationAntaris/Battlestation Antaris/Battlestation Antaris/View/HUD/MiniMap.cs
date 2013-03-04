@@ -3,12 +3,29 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Battlestation_Antaris.Model;
 using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.Control;
 
-namespace Battlestation_Antaris.View.HUD.CockpitHUD
+namespace Battlestation_Antaris.View.HUD
 {
 
     public class MiniMap : HUD2DContainer
     {
+        public class Config
+        {
+            public Vector2 abstractPosition;
+            public Vector2 bgAbstractSize;
+            public Vector2 fgAbstractSize;
+            public float iconPositionScale;
+
+            public Config(Vector2 abstractPosition, Vector2 bgAbstractSize, Vector2 fgAbstractSize)
+            {
+                this.abstractPosition = abstractPosition;
+                this.bgAbstractSize = bgAbstractSize;
+                this.fgAbstractSize = fgAbstractSize;
+                iconPositionScale = 0.1f;
+            }
+        }
+
         public static Color ENEMY_COLOR = Color.Red;
 
         public static Color FRIEND_COLOR = Color.Blue;
@@ -27,7 +44,6 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
 
         public static Color BORDER_COLOR_HOVER = new Color(32, 32, 32, 32);
 
-
         private HUD2DTexture background;
 
         private HUD2DTexture foreground;
@@ -36,6 +52,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
 
         public float iconPositionScale = 0.1f;
 
+        private MiniMap.Config oldConfig;
 
         public MiniMap(Vector2 abstractPosition, HUDType positionType, Game1 game)
             : base(abstractPosition, positionType, game)
@@ -122,6 +139,19 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
             {
                 this.foreground.color = MiniMap.BORDER_COLOR;
             }
+        }
+
+        public void changeConfig(MiniMap.Config config)
+        {
+            if (oldConfig != null)
+            {
+                oldConfig.iconPositionScale = this.iconPositionScale;
+            }
+            oldConfig = config;
+            this.abstractPosition = config.abstractPosition;
+            this.background.abstractSize = config.bgAbstractSize;
+            this.foreground.abstractSize = config.fgAbstractSize;
+            this.iconPositionScale = config.iconPositionScale;
         }
 
     }
