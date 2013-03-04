@@ -42,7 +42,7 @@ namespace Battlestation_Antaris
         /// <summary>
         /// the active situation (control/view)
         /// </summary>
-        SituationController activeSituation;
+        public SituationController activeSituation;
 
 
         /// <summary>

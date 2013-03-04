@@ -203,6 +203,10 @@ namespace Battlestation_Antaris.Model
 
             // octree test
             treeTest.Clear();
+
+            bool shipVisible = this.spaceShip.isVisible;
+            this.spaceShip.isVisible = false;
+
             foreach (SpatialObject obj in this.allObjects)
             {
                 if (obj.isVisible)
@@ -214,6 +218,8 @@ namespace Battlestation_Antaris.Model
                     }
                 }
             }
+
+            this.spaceShip.isVisible = shipVisible;
 
             //foreach (SpatialObject obj in this.allWeapons)
             //{
@@ -229,7 +235,26 @@ namespace Battlestation_Antaris.Model
 
             this.treeTest.BuildTree();
 
-            this.RayCastPool.StartRayCasting();
+            BoundingSphere shipSphere = this.spaceShip.bounding;
+            shipSphere.Center += this.spaceShip.globalPosition;
+
+            List<Tuple<SpatialObject, SpatialObject>> collList =
+                this.treeTest.CheckCollisions(
+                    new Tuple<SpatialObject, BoundingSphere>(this.spaceShip, shipSphere));
+
+            //Console.Out.WriteLine("Collisions : " + collList.Count);
+
+            if (collList.Count > 0)
+            {
+                this.game.activeSituation.view.backgroundColor = Color.DarkRed;
+            }
+            else
+            {
+                this.game.activeSituation.view.backgroundColor = Color.Black;
+            }
+
+            // test for threaded raycasting of all turrets
+            //this.RayCastPool.StartRayCasting();
 
         }
 

@@ -211,6 +211,65 @@ namespace Battlestation_Antaris.Tools
         }
 
 
+        public List<Tuple<T, T>> CheckCollisions(Tuple<T, BoundingSphere> toCheck)
+        {
+            List<Tuple<T, T>> list = new List<Tuple<T, T>>();
+
+            foreach (Tuple<T, BoundingSphere> item in this.items)
+            {
+                if (toCheck.Item2.Intersects(item.Item2))
+                {
+                    list.Add(new Tuple<T, T>(toCheck.Item1, item.Item1));
+                }
+            }
+
+            foreach (DynamicOctree<T> tree in this.subTrees)
+            {
+                if (toCheck.Item2.Intersects(tree.bounding))
+                {
+                    list.InsertRange(0, tree.CheckCollisions(toCheck));
+                }
+            }
+
+            return list;
+        }
+
+
+        /// <summary>
+        /// seems to be bugged
+        /// </summary>
+        /// <returns></returns>
+        public List<Tuple<T, T>> CheckCollisions()
+        {
+            List<Tuple<T, T>> list = new List<Tuple<T, T>>();
+
+            // check within this node
+            for (int nr1 = 0; nr1 < this.items.Count - 1; nr1++)
+            {
+                for (int nr2 = nr1 + 1; nr2 < this.items.Count; nr2++)
+                {
+                    if (this.items[nr1].Item2.Intersects(this.items[nr2].Item2)) 
+                    {
+                        list.Add( new Tuple<T,T>(this.items[nr1].Item1,this.items[nr2].Item1)); 
+                    }
+                }
+            }
+
+            foreach (Tuple<T, BoundingSphere> item in this.items)
+            {
+                foreach (DynamicOctree<T> tree in this.subTrees)
+                {
+                    if (item.Item2.Intersects(tree.bounding)) 
+                    {
+                        list.InsertRange(0, tree.CheckCollisions(item));
+                    }
+                }
+            }
+
+            return list;
+        }
+
+
     }
 
 }

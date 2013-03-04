@@ -9,7 +9,7 @@ namespace Battlestation_Antaris.View
     /// <summary>
     /// abstract basis class for views
     /// </summary>
-    abstract class View
+    public abstract class View
     {
 
         /// <summary>

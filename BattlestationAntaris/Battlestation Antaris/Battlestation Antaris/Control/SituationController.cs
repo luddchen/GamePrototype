@@ -6,7 +6,7 @@ namespace Battlestation_Antaris.Control
     /// <summary>
     /// abstract basis class for situation controller
     /// </summary>
-    abstract class SituationController
+    public abstract class SituationController
     {
 
         /// <summary>
