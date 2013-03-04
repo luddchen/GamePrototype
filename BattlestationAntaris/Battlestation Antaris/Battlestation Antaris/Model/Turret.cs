@@ -55,7 +55,7 @@ namespace Battlestation_Antaris.Model
             if (this.timeout < 0)
             {
                 this.timeout = this.random.Next(30) + 30;
-                this.beams = this.random.Next(2) + 2;
+                this.beams = 1;// this.random.Next(2) + 2;
             }
 
             if (this.beams > 0)

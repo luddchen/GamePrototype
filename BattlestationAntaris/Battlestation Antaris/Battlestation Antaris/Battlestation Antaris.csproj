@@ -97,6 +97,7 @@
     <Compile Include="Tools\DynamicOctree.cs" />
     <Compile Include="Tools\Octree.cs" />
     <Compile Include="Tools\RandomGen.cs" />
+    <Compile Include="Tools\RayCastThreadPool.cs" />
     <Compile Include="Tools\Tools.cs" />
     <Compile Include="View\BackgroundObject.cs" />
     <Compile Include="View\Camera.cs" />

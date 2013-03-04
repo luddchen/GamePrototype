@@ -77,6 +77,8 @@ namespace Battlestation_Antaris.Model
 
         public Tools.DynamicOctree<SpatialObject> treeTest;
 
+        private Tools.RayCastThreadPool RayCastPool;
+
 
         /// <summary>
         /// creates the world
@@ -97,6 +99,8 @@ namespace Battlestation_Antaris.Model
 
             // octree test
             this.treeTest = new Tools.DynamicOctree<SpatialObject>(3, 1, 10, new BoundingBox(new Vector3(-5000, -5000, -5000), new Vector3(5000,5000,5000)));
+
+            this.RayCastPool = new Tools.RayCastThreadPool(this);
         }
 
 
@@ -128,7 +132,7 @@ namespace Battlestation_Antaris.Model
                 }
             }
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 12; i++)
             {
                 Turret turret = new Turret(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), content, this);
                 this.allTurrets.Add(turret);
@@ -223,7 +227,9 @@ namespace Battlestation_Antaris.Model
             //    }
             //}
 
-            treeTest.BuildTree();
+            this.treeTest.BuildTree();
+
+            this.RayCastPool.StartRayCasting();
 
         }
 
