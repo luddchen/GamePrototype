@@ -10,17 +10,17 @@ namespace Battlestation_Antaris.View.HUD
     public class HUD2DButton : HUD2DString
     {
 
-        public static Color backgroundColorNormal = new Color(32, 48, 48, 160);
+        public Color backgroundColorNormal = new Color(32, 48, 48, 160);
 
-        public static Color backgroundColorHover = new Color(40, 64, 64, 192);
+        public Color backgroundColorHover = new Color(40, 64, 64, 192);
 
-        public static Color backgroundColorPressed = new Color(32, 48, 48, 255);
+        public Color backgroundColorPressed = new Color(32, 48, 48, 255);
 
-        public static Color foregroundColorNormal = Color.White;
+        public Color foregroundColorNormal = Color.White;
 
-        public static Color foregroundColorHover = new Color(255, 255, 128);
+        public Color foregroundColorHover = new Color(255, 255, 128);
 
-        public static Color foregroundColorPressed = new Color(128, 255, 128);
+        public Color foregroundColorPressed = new Color(128, 255, 128);
 
         private static float scaleNormal = 1.0f;
 
@@ -36,8 +36,8 @@ namespace Battlestation_Antaris.View.HUD
             this.overallScale = scale;
             this.scale = scale;
 
-            this.color = HUD2DButton.foregroundColorNormal;
-            this.BackgroundColor = HUD2DButton.backgroundColorNormal;
+            this.color = this.foregroundColorNormal;
+            this.BackgroundColor = this.backgroundColorNormal;
             this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\Button2");
             this.BackgroundTextureOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
         }
@@ -50,22 +50,22 @@ namespace Battlestation_Antaris.View.HUD
             {
                 if (input.isLeftMouseButtonPressed())
                 {
-                    this.color = HUD2DButton.foregroundColorPressed;
-                    this.BackgroundColor = HUD2DButton.backgroundColorPressed;
+                    this.color = this.foregroundColorPressed;
+                    this.BackgroundColor = this.backgroundColorPressed;
                     this.scale = HUD2DButton.scalePressed * this.overallScale;
                     clicked = true;
                 }
                 else
                 {
-                    this.color = HUD2DButton.foregroundColorHover;
-                    this.BackgroundColor = HUD2DButton.backgroundColorHover;
+                    this.color = this.foregroundColorHover;
+                    this.BackgroundColor = this.backgroundColorHover;
                     this.scale = HUD2DButton.scaleHover * this.overallScale;
                 }
             }
             else
             {
-                this.color = HUD2DButton.foregroundColorNormal;
-                this.BackgroundColor = HUD2DButton.backgroundColorNormal;
+                this.color = this.foregroundColorNormal;
+                this.BackgroundColor = this.backgroundColorNormal;
                 this.scale = HUD2DButton.scaleNormal * this.overallScale;
             }
 

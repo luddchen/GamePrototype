@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Battlestation_Antaris.View.HUD;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.View
 {
@@ -34,6 +35,16 @@ namespace Battlestation_Antaris.View
         public override void Initialize()
         {
             // test content
+            HUD2DTexture testTex = new HUD2DTexture(this.game);
+            testTex.abstractPosition = new Vector2(0.5f, 0.4f);
+            testTex.positionType = HUDType.RELATIV;
+            testTex.abstractSize = new Vector2(1f, 1f);
+            testTex.sizeType = HUDType.RELATIV;
+            testTex.Texture = game.Content.Load<Texture2D>("Sprites//battlestation");
+            testTex.layerDepth = 1.0f;
+
+            this.allHUD_2D.Add(testTex);
+
             HUD2DString testString = new HUD2DString("Antaris Menu", this.game);
             testString.abstractPosition = new Vector2(0.5f, 0.1f);
             testString.positionType = HUDType.RELATIV;

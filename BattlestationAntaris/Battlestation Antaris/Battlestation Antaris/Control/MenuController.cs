@@ -3,6 +3,7 @@ using Battlestation_Antaris.View;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD;
+using System.Collections.Generic;
 
 namespace Battlestation_Antaris.Control
 {
@@ -13,25 +14,34 @@ namespace Battlestation_Antaris.Control
     class MenuController : SituationController
     {
 
-        private HUD2DTexture testTex;
-
         private HUD2DArray buttonGrid;
 
         private HUD2DArray buttons1;
 
-        private HUD2DArray buttons2;
+        private HUD2DArray optionsButtonGroup;
 
         private HUD2DButton toCommandButton;
 
         private HUD2DButton toCockpitButton;
 
+        private HUD2DButton optionsButton;
+
         private HUD2DButton exitButton;
 
-        private HUD2DButton xButton;
+        private HUD2DButton videoButton;
 
-        private HUD2DButton yButton;
+        private HUD2DButton soundButton;
 
-        private HUD2DButton zButton;
+        private HUD2DButton controlButton;
+
+
+        private List<HUD2DContainer> contentPages;
+
+        private HUD2DArray videoPage;
+
+        private HUD2DArray soundPage;
+
+        private HUD2DArray controlPage;
 
         /// <summary>
         /// create a new menu controller
@@ -43,32 +53,24 @@ namespace Battlestation_Antaris.Control
             this.worldUpdate = WorldUpdate.NO_UPDATE;
 
             // test content
-            testTex = new HUD2DTexture(this.game);
-            testTex.abstractPosition = new Vector2(0.5f, 0.4f);
-            testTex.positionType = HUDType.RELATIV;
-            testTex.abstractSize = new Vector2(0.5f, 0.5f);
-            testTex.sizeType = HUDType.RELATIV;
-            testTex.Texture = game.Content.Load<Texture2D>("Sprites//Erde2");
-            testTex.layerDepth = 1.0f;
-
-            this.view.allHUD_2D.Add(testTex);
 
             this.buttonGrid = new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
             this.buttonGrid.layerDepth = 0.5f;
             this.buttonGrid.direction = LayoutDirection.VERTICAL;
-            this.buttonGrid.CreateBackground(true);
+            //this.buttonGrid.CreateBackground(true);
 
             this.buttons1 =  new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
             this.buttons1.direction = LayoutDirection.HORIZONTAL;
 
-            this.buttons2 = new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
-            this.buttons2.direction = LayoutDirection.HORIZONTAL;
+            this.optionsButtonGroup = new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
+            this.optionsButtonGroup.direction = LayoutDirection.HORIZONTAL;
+            this.optionsButtonGroup.isVisible = false;
 
+            this.buttonGrid.Add(this.optionsButtonGroup);
             this.buttonGrid.Add(this.buttons1);
-            this.buttonGrid.Add(this.buttons2);
 
 
-            this.buttons1.CreateBackground(true);
+            //this.buttons1.CreateBackground(true);
 
             this.toCommandButton = new HUD2DButton("Command", Vector2.Zero, 1, this.game);
             this.buttons1.Add(toCommandButton);
@@ -76,24 +78,53 @@ namespace Battlestation_Antaris.Control
             this.toCockpitButton = new HUD2DButton("Cockpit", Vector2.Zero, 1, this.game);
             this.buttons1.Add(toCockpitButton);
 
+            this.optionsButton = new HUD2DButton("Options", Vector2.Zero, 1, this.game);
+            this.buttons1.Add(optionsButton);
+
             this.exitButton = new HUD2DButton("Exit", Vector2.Zero, 1, this.game);
             this.buttons1.Add(this.exitButton);
 
-            this.buttons2.CreateBackground(true);
+            //this.buttons2.CreateBackground(true);
 
-            this.xButton = new HUD2DButton("X", Vector2.Zero, 1, this.game);
-            this.buttons2.Add(xButton);
+            this.videoButton = new HUD2DButton("Video", Vector2.Zero, 1, this.game);
+            this.optionsButtonGroup.Add(videoButton);
 
-            this.yButton = new HUD2DButton("Y", Vector2.Zero, 1, this.game);
-            this.buttons2.Add(yButton);
+            this.soundButton = new HUD2DButton("Sound", Vector2.Zero, 1, this.game);
+            this.optionsButtonGroup.Add(soundButton);
 
-            this.zButton = new HUD2DButton("Z", Vector2.Zero, 1, this.game);
-            this.buttons2.Add(this.zButton);
+            this.controlButton = new HUD2DButton("Control", Vector2.Zero, 1, this.game);
+            this.optionsButtonGroup.Add(this.controlButton);
+
 
             this.view.allHUD_2D.Add(this.buttonGrid);
 
-            this.buttonGrid.ClientSizeChanged(Vector2.Zero);
+            //this.buttonGrid.ClientSizeChanged(Vector2.Zero);
 
+            this.contentPages = new List<HUD2DContainer>();
+
+            this.videoPage = new HUD2DArray(new Vector2(0.5f, 0.4f), HUDType.RELATIV, new Vector2(0.7f, 0.5f), HUDType.RELATIV, game);
+            this.videoPage.CreateBackground(true);
+            this.videoPage.Add(new HUD2DString("Video", game));
+
+            this.soundPage = new HUD2DArray(new Vector2(0.5f, 0.4f), HUDType.RELATIV, new Vector2(0.7f, 0.5f), HUDType.RELATIV, game);
+            this.soundPage.CreateBackground(true);
+            this.soundPage.Add(new HUD2DString("Sound", game));
+
+            this.controlPage = new HUD2DArray(new Vector2(0.5f, 0.4f), HUDType.RELATIV, new Vector2(0.7f, 0.5f), HUDType.RELATIV, game);
+            this.controlPage.CreateBackground(true);
+            this.controlPage.Add(new HUD2DString("Control", game));
+
+            this.contentPages.Add(this.videoPage);
+            this.contentPages.Add(this.soundPage);
+            this.contentPages.Add(this.controlPage);
+
+            foreach (HUD2DContainer container in this.contentPages)
+            {
+                container.isVisible = false;
+                this.view.allHUD_2D.Add(container);
+            }
+
+            this.view.Window_ClientSizeChanged();
         }
 
 
@@ -103,17 +134,13 @@ namespace Battlestation_Antaris.Control
         /// <param name="gameTime">the game time</param>
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (this.buttonGrid.IsUpdatedHovered(this.game.inputProvider)) { }
 
-            if (this.buttons1.IsUpdatedHovered(this.game.inputProvider)) {}
+            if (this.videoButton.isUpdatedClicked(this.game.inputProvider)) { }
 
-            if (this.buttons2.IsUpdatedHovered(this.game.inputProvider)) { }
+            if (this.soundButton.isUpdatedClicked(this.game.inputProvider)) { }
 
-            if (this.xButton.isUpdatedClicked(this.game.inputProvider)) { }
+            if (this.controlButton.isUpdatedClicked(this.game.inputProvider)) { }
 
-            if (this.yButton.isUpdatedClicked(this.game.inputProvider)) { }
-
-            if (this.zButton.isUpdatedClicked(this.game.inputProvider)) { }
 
             if (this.toCommandButton.isUpdatedClicked(this.game.inputProvider))
             {
@@ -125,20 +152,63 @@ namespace Battlestation_Antaris.Control
                 this.game.switchTo(Situation.COCKPIT);
             }
 
+            if (this.optionsButton.isUpdatedClicked(this.game.inputProvider))
+            {
+                Color temp = this.optionsButton.foregroundColorHover;
+                this.optionsButton.foregroundColorHover = this.optionsButton.foregroundColorNormal;
+                this.optionsButton.foregroundColorNormal = temp;
+
+                if (this.optionsButtonGroup.isVisible)
+                {
+                    this.optionsButtonGroup.isVisible = false;
+
+                    foreach (HUD2DContainer container in this.contentPages)
+                    {
+                        container.isVisible = false;
+                    }
+                }
+                else
+                {
+                    this.optionsButtonGroup.isVisible = true;
+                }
+            }
+
             if (this.exitButton.isUpdatedClicked(this.game.inputProvider))
             {
                 this.game.Exit();
             }
 
-            if (this.game.inputProvider.isLeftMouseButtonPressed())
-            {
-                Vector2 mousePos = this.game.inputProvider.getMousePos();
 
-                if (this.testTex.Intersects(mousePos))
+            if (this.optionsButtonGroup.isVisible)
+            {
+                if (this.videoButton.isUpdatedClicked(this.game.inputProvider))
                 {
-                    testTex.rotation = testTex.rotation + 0.2f;
+                    foreach (HUD2DContainer container in this.contentPages)
+                    {
+                        container.isVisible = false;
+                    }
+                    this.videoPage.isVisible = true;
+                }
+
+                if (this.soundButton.isUpdatedClicked(this.game.inputProvider))
+                {
+                    foreach (HUD2DContainer container in this.contentPages)
+                    {
+                        container.isVisible = false;
+                    }
+                    this.soundPage.isVisible = true;
+                }
+
+                if (this.controlButton.isUpdatedClicked(this.game.inputProvider))
+                {
+                    foreach (HUD2DContainer container in this.contentPages)
+                    {
+                        container.isVisible = false;
+                    }
+                    this.controlPage.isVisible = true;
                 }
             }
+
         }
 
     }
