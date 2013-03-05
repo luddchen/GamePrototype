@@ -78,7 +78,6 @@ namespace Battlestation_Antaris.View.HUD
 
         public override void Draw(SpriteBatch spritBatch)
         {
-
             Vector2 backgroundSize = (this.background.size - this.iconSize) / 2;
 
             foreach (HUD2D element in this.allChilds) 
@@ -152,6 +151,20 @@ namespace Battlestation_Antaris.View.HUD
             this.background.abstractSize = config.bgAbstractSize;
             this.foreground.abstractSize = config.fgAbstractSize;
             this.iconPositionScale = config.iconPositionScale;
+        }
+
+        public Vector2 screenToMiniMapCoord(Vector2 screenCoord)
+        {
+            return screenCoord - this.position;
+        }
+
+        public Vector3 miniMapToWorldCoord(Vector2 miniMapCoord)
+        {
+            Vector3 worldCoord = new Vector3();
+            worldCoord.X = miniMapCoord.X / this.iconPositionScale;
+            worldCoord.Y = 0f;
+            worldCoord.Z = miniMapCoord.Y / this.iconPositionScale;
+            return worldCoord;
         }
 
     }

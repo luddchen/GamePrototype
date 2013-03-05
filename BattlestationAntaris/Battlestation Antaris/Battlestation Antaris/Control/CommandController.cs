@@ -33,6 +33,8 @@ namespace Battlestation_Antaris.Control
 
         private Dictionary<Type, MouseTexture> mouseTextures;
 
+        private MouseTexture currentMouseTexture;
+
         /// <summary>
         /// create a new command controller
         /// </summary>
@@ -68,6 +70,11 @@ namespace Battlestation_Antaris.Control
             this.game.world.miniMap.changeConfig(this.mapConfig);
         }
 
+        public override void onExit()
+        {
+            this.currentMode = CommandMode.NORMAL;
+        }
+
 
         /// <summary>
         /// update the command controller
@@ -88,33 +95,47 @@ namespace Battlestation_Antaris.Control
             if (currentMode == CommandMode.BUILD)
             {
                 // activate mouse texture
-                Type buildingType = buildMenu.getBuildingType();
+                Type buildingType = buildMenu.getStructureType();
                 this.mouseTextures[buildingType].isVisible = true;
                 this.mouseTextures[buildingType].update();
             }
 
             if (currentMode == CommandMode.BUILD && this.game.inputProvider.isLeftMouseButtonPressed())
             {
-                Type buildingType = buildMenu.getBuildingType();
-                SpatialObject newStructure = SpatialObjectFactory.buildSpatialObject(buildingType);
-                newStructure.globalPosition = new Vector3(RandomGen.random.Next(2400) - 1200, 0, RandomGen.random.Next(2400) - 1200);
+                createNewStructure();
             }
 
             if (currentMode == CommandMode.BUILD && this.game.inputProvider.isRightMouseButtonPressed())
             {
-                Type buildingType = buildMenu.getBuildingType();
-                this.mouseTextures[buildingType].isVisible = false;
+                Type structureType = buildMenu.getStructureType();
+                this.mouseTextures[structureType].isVisible = false;
                 this.currentMode = CommandMode.NORMAL;
             }
 
-            if (currentMode == CommandMode.NORMAL && this.buildMenu.isUpdatedClicked(this.game.inputProvider))
+            if (this.buildMenu.isUpdatedClicked(this.game.inputProvider))
             {
+                if (this.currentMouseTexture != null)
+                {
+                    this.currentMouseTexture.isVisible = false;
+                }
                 this.currentMode = CommandMode.BUILD;
             }
 
             if (this.game.inputProvider.getMouseWheelChange() != 0)
             {
                 this.game.world.miniMap.ZoomOnMouseWheelOver();
+            }
+        }
+
+        private void createNewStructure()
+        {
+            Type structureType = buildMenu.getStructureType();
+            Vector2 mousePos = this.game.inputProvider.getMousePos();
+            if (this.game.world.miniMap.Intersects(mousePos))
+            {
+                SpatialObject newStructure = SpatialObjectFactory.buildSpatialObject(structureType);
+                Vector2 miniMapCoord = this.game.world.miniMap.screenToMiniMapCoord(this.game.inputProvider.getMousePos());
+                newStructure.globalPosition = this.game.world.miniMap.miniMapToWorldCoord(miniMapCoord);
             }
         }
 

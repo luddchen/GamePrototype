@@ -52,7 +52,7 @@ namespace Battlestation_Antaris.View.HUD.CommandHUD
             return clicked;
         }
 
-        public Type getBuildingType()
+        public Type getStructureType()
         {
             return buildingObjectType;
         }

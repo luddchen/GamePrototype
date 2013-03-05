@@ -62,5 +62,6 @@ Content\Models\SpaceShip\spaceship_3.xnb
 Content\Models\Radar\radar_0.xnb
 Content\Models\SpaceShip\spaceship1_0.xnb
 Content\Models\Cubus\cubus_1.xnb
+Content\Models\TargetCross.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa
