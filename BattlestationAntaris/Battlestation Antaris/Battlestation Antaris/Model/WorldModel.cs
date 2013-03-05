@@ -159,6 +159,14 @@ namespace Battlestation_Antaris.Model
 
             this.Shield = new SpatialObject(Vector3.Zero, "Models//shield", content, this);
             this.Shield.isVisible = false;
+
+
+            // reflection demo
+            Object[] parameters = new Object[2];
+            parameters[0] = Control.ControlKey.SPACE;
+            parameters[1] = Control.ControlState.UP;
+            Tools.ReflectionDemo.PrintAttribute(this.treeTest, "bounding");
+            Console.Out.WriteLine(Tools.ReflectionDemo.CallMethod(this.game.inputProvider, "isKeyOnState", parameters));
         }
 
 
