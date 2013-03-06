@@ -47,7 +47,7 @@ namespace Battlestation_Antaris.View
         public void Draw( Camera camera, int nr)
         {
             bgModel.Root.Transform = Matrix.CreateScale(camera.farClipping * scale / 10)
-                        * Matrix.CreateTranslation(Vector3.Forward * (camera.farClipping * 0.99f - nr))
+                        * Matrix.CreateTranslation(Vector3.Forward * (camera.farClipping * 0.95f - nr))
                         * rotation
                         * Matrix.CreateTranslation(this.game.world.spaceShip.globalPosition);
 
@@ -57,7 +57,7 @@ namespace Battlestation_Antaris.View
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    //effect.EnableDefaultLighting();
+                    effect.EnableDefaultLighting();
                     effect.LightingEnabled = true;
                     effect.DirectionalLight0.DiffuseColor = this.color;
                     effect.DirectionalLight0.Direction = this.rotation.Forward;

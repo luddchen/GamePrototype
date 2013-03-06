@@ -58,6 +58,9 @@ namespace Battlestation_Antaris
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferMultiSampling = true; // antialiasing
+            graphics.PreferredBackBufferWidth = (int) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9);
+            graphics.PreferredBackBufferHeight = (int) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9);
+            graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
             this.IsFixedTimeStep = true;
             Window.AllowUserResizing = true;
@@ -73,7 +76,10 @@ namespace Battlestation_Antaris
         /// <param name="e">event</param>
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            this.activeSituation.view.Window_ClientSizeChanged();
+            if (this.activeSituation != null)
+            {
+                this.activeSituation.view.Window_ClientSizeChanged();
+            }
         }
 
 

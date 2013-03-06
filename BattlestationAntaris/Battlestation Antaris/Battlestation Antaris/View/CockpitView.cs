@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD;
 using Battlestation_Antaris.View.HUD.CockpitHUD;
 using Battlestation_Antaris.Model;
+using Battlestation_Antaris.Tools;
 
 namespace Battlestation_Antaris.View
 {
@@ -37,6 +38,8 @@ namespace Battlestation_Antaris.View
         /// a list of background images
         /// </summary>
         List<BackgroundObject> backgroundObjects;
+
+        Skybox skybox;
 
 
         // test ----------------------
@@ -106,36 +109,34 @@ namespace Battlestation_Antaris.View
             Random random = new Random();
 
             // background
-            for (int i = 0; i < 120; i++)
+            for (int i = 0; i < 4; i++)
             {
-                float yaw = (float)(random.NextDouble() * Math.PI * 2);
-                float pitch = (float)(random.NextDouble() * Math.PI);
-                float roll = (float)(random.NextDouble() * Math.PI * 2);
-                Matrix bgRot = Tools.Tools.YawPitchRoll(Matrix.Identity, yaw, pitch, roll);
-                int red = 128 + random.Next(127);
-                int green = 128 + random.Next(127);
-                int blue = 128 + random.Next(127);
-                Color bgColor = new Color(red, green, blue);
-                float scale = 0.25f + (float)random.NextDouble() * 1.25f;
-
-                this.backgroundObjects.Add(new BackgroundObject("Models//BGTest//test2", bgRot, scale, bgColor, game));
+                addBackgroundObject("Models//BGTest//test2");
             }
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 1; i++)
             {
-                float yaw = (float)(random.NextDouble() * Math.PI * 2);
-                float pitch = (float)(random.NextDouble() * Math.PI);
-                float roll = (float)(random.NextDouble() * Math.PI * 2);
-                Matrix bgRot = Tools.Tools.YawPitchRoll(Matrix.Identity, yaw, pitch, roll);
-                int red = 128 + random.Next(127);
-                int green = 128 + random.Next(127);
-                int blue = 128 + random.Next(127);
-                Color bgColor = new Color(red, green, blue);
-                float scale = 0.25f + (float)random.NextDouble() * 1.25f;
-
-                this.backgroundObjects.Add(new BackgroundObject("Models//BGTest//test", bgRot, scale, bgColor, game));
+                addBackgroundObject("Models//BGTest//test");
             }
 
+            skybox = new Skybox("Models//Skysphere//skysphere", this.game);
+
+
+        }
+
+        private void addBackgroundObject(String model)
+        {
+            float yaw = (float)(RandomGen.random.NextDouble() * Math.PI * 2);
+            float pitch = (float)(RandomGen.random.NextDouble() * Math.PI);
+            float roll = (float)(RandomGen.random.NextDouble() * Math.PI * 2);
+            Matrix bgRot = Tools.Tools.YawPitchRoll(Matrix.Identity, yaw, pitch, roll);
+            int red = 128 + RandomGen.random.Next(127);
+            int green = 128 + RandomGen.random.Next(127);
+            int blue = 128 + RandomGen.random.Next(127);
+            Color bgColor = new Color(red, green, blue);
+            float scale = 1.25f + (float)RandomGen.random.NextDouble() * 1.5f;
+
+            this.backgroundObjects.Add(new BackgroundObject(model, bgRot, scale, bgColor, game));
         }
 
 
@@ -151,6 +152,8 @@ namespace Battlestation_Antaris.View
             // init camera
             this.camera.ClampTo(this.game.world.spaceShip);
 
+            this.skybox.Draw(this.camera);
+
             // draw background
             int nr = 1;
             foreach (BackgroundObject bg in this.backgroundObjects)
@@ -160,8 +163,10 @@ namespace Battlestation_Antaris.View
 
             drawWorldObjects();
             drawWorldWeapons();
+            drawGrid();
 
             drawTargetCross();
+
         }
 
         protected void drawWorldObjects()
@@ -257,7 +262,6 @@ namespace Battlestation_Antaris.View
             }
         }
 
-
         private void drawTargetCross()
         {
             if (this.targetInfo.target != null)
@@ -270,8 +274,6 @@ namespace Battlestation_Antaris.View
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        setLightning(effect);
-
                         effect.World = this.boneTransforms[mesh.ParentBone.Index];
                         effect.View = this.camera.view;
                         effect.Projection = this.camera.projection;
@@ -280,5 +282,11 @@ namespace Battlestation_Antaris.View
                 }
             }
         }
+
+        private void drawGrid()
+        {
+
+        }
+
     }
 }

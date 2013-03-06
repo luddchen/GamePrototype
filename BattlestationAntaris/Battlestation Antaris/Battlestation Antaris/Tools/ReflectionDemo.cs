@@ -6,12 +6,12 @@ namespace Battlestation_Antaris.Tools
     public class ReflectionDemo
     {
 
-        public abstract class ReflectiveCall<T, V>
+        public abstract class ReflectiveCall<T>
         {
-            public T obj;
+            public Object obj;
             public String methodName;
             public Object[] parameters;
-            public abstract String resultFormat(V obj);
+            public abstract String resultFormat(T resultObj);
         }
 
         public static void PrintAttribute(Object obj, String attributeName)
@@ -27,9 +27,9 @@ namespace Battlestation_Antaris.Tools
         }
 
 
-        public static String CallMethod<T, V>(ReflectiveCall<T, V> refCall)
+        public static String CallMethod<T>(ReflectiveCall<T> refCall)
         {
-            V result = (V)CallMethod(refCall.obj, refCall.methodName, refCall.parameters);
+            T result = (T) CallMethod(refCall.obj, refCall.methodName, refCall.parameters);
             return refCall.resultFormat(result);
         }
 

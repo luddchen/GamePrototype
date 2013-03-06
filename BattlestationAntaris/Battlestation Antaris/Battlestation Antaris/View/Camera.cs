@@ -62,7 +62,7 @@ namespace Battlestation_Antaris.View
         /// <param name="up">new up vector</param>
         public void Update(Vector3 position, Vector3 direction, Vector3 up)
         {
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4 / 2, this.device.Viewport.AspectRatio, this.nearClipping, this.farClipping);
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, this.device.Viewport.AspectRatio, this.nearClipping, this.farClipping);
             view = Matrix.CreateLookAt(position, Vector3.Add(position, direction), up);
         }
 
