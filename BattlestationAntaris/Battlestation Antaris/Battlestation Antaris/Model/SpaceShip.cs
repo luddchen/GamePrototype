@@ -15,6 +15,8 @@ namespace Battlestation_Antaris.Model
     public class SpaceShip : SpatialObject
     {
 
+        public SpatialObject target;
+
         /// <summary>
         /// create a new space ship within the world
         /// </summary>
@@ -39,7 +41,7 @@ namespace Battlestation_Antaris.Model
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Update(gameTime);
-
+            
             if (this.attributes.Missile.CurrentReloadTime > 0)
             {
                 this.attributes.Missile.CurrentReloadTime--;
@@ -64,6 +66,14 @@ namespace Battlestation_Antaris.Model
                     this.attributes.Missile.CurrentReloadTime = this.attributes.Missile.ReloadTime;
                 }
             }
+
+            if (control == Control.Control.TARGET_NEXT_ENEMY)
+            {
+                Console.WriteLine("Blubb!");
+                float testDist = float.MaxValue;
+                this.target = this.world.treeTest.CastRay(new Ray(this.globalPosition, this.rotation.Forward), 1, ref testDist);
+            }
+
         }
 
 

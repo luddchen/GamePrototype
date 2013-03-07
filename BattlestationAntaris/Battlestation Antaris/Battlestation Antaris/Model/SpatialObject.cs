@@ -44,6 +44,8 @@ namespace Battlestation_Antaris.Model
         /// </summary>
         public Matrix rotation;
 
+        public Vector3 scale;
+
 
         /// <summary>
         /// the position within the world model
@@ -118,6 +120,7 @@ namespace Battlestation_Antaris.Model
             this.isVisible = true;
             this.globalPosition = position;
             this.rotation = Matrix.Identity;
+            this.scale = Vector3.One;
             this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
             this.boneTransforms = new Matrix[model3d.Bones.Count];
             this.attributes = new SpatialObjectAttributes();

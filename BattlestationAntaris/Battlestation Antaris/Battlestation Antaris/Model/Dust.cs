@@ -18,17 +18,22 @@ namespace Battlestation_Antaris.Model
             : base(parent.globalPosition, "Models//Dust//dust", content, world)
         {
             this.parent = parent;
+            this.scale.X = 0.5f;
+            this.scale.Y = 0.5f;
             setRandomPos();
         }
 
         public override void Update(GameTime gameTime)
         {
+
             base.Update(gameTime);
             float distToParent = Vector3.Distance(parent.globalPosition, this.globalPosition);
             if (distToParent > (MAX_PARENT_DIST))
             {
                 setRandomPos();
             }
+            this.rotation = this.parent.rotation;
+            this.scale.Z = Math.Abs(this.parent.attributes.Engine.CurrentVelocity) + 1;
         }
 
         private void setRandomPos()

@@ -22,7 +22,7 @@ namespace Battlestation_Antaris.View.HUD
                 this.abstractPosition = abstractPosition;
                 this.bgAbstractSize = bgAbstractSize;
                 this.fgAbstractSize = fgAbstractSize;
-                iconPositionScale = 0.1f;
+                iconPositionScale = 0.08f;
             }
         }
 

@@ -37,15 +37,12 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spritBatch)
         {
-
-            float testDist = float.MaxValue;
-
-            target = this.world.treeTest.CastRay(new Ray(this.world.spaceShip.globalPosition, this.world.spaceShip.rotation.Forward), 1, ref testDist);
+            this.target = this.world.spaceShip.target;
 
             if (target != null)
             {
                 this.targetObject.String = target.ToString();
-                this.targetDistance.String = String.Format("{0:F0} m", testDist);
+                //this.targetDistance.String = String.Format("{0:F0} m", testDist);
                 this.isVisible = true;
             }
             else

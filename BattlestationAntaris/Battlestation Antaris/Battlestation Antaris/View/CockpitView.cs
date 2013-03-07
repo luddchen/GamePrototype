@@ -99,7 +99,7 @@ namespace Battlestation_Antaris.View
 
             this.allHUD_2D.Add(this.game.world.miniMap);
 
-            this.allHUD_2D.Add(new ShipAttributesVisualizer(0.1f, 0.7f, this.game.world.spaceShip, this.game));
+            this.allHUD_2D.Add(new ShipAttributesVisualizer(0.07f, 0.9f, this.game.world.spaceShip, this.game));
 
             this.targetInfo = new TargetInfo(new Vector2(60, 200), HUDType.ABSOLUT, new Vector2(150, 60), HUDType.ABSOLUT, this.game);
             this.allHUD_2D.Add(this.targetInfo);
@@ -180,7 +180,7 @@ namespace Battlestation_Antaris.View
             {
                 if (obj.isVisible)
                 {
-                    obj.model3d.Root.Transform = obj.rotation * Matrix.CreateTranslation(obj.globalPosition);
+                    obj.model3d.Root.Transform = Matrix.CreateScale(obj.scale) * obj.rotation * Matrix.CreateTranslation(obj.globalPosition);
                     obj.model3d.CopyAbsoluteBoneTransformsTo(obj.boneTransforms);
 
                     foreach (ModelMesh mesh in obj.model3d.Meshes)

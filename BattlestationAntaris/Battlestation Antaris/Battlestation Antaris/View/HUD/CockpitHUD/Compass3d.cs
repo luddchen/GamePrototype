@@ -88,11 +88,11 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
                 Vector3 rot = Tools.Tools.GetRotation(pointer, this.source.rotation);
 
                 // rotate, scale and translate the 3d model
-                model3d.Root.Transform = Matrix.CreateScale(0.1f)
+                model3d.Root.Transform = Matrix.CreateScale(0.05f)
                                         * Matrix.CreateFromAxisAngle(Vector3.Forward, rot.X)
                                         * Matrix.CreateFromAxisAngle(Vector3.Up, rot.Z)
                                         * Matrix.CreateTranslation(Vector3.Add( Vector3.Multiply(Vector3.Forward, 1.8f) ,
-                                                                                Vector3.Multiply(Vector3.Down, 0.3f)));
+                                                                                Vector3.Multiply(Vector3.Down, -0.3f)));
 
                 // and create transformation matrices for all 3d parts
                 model3d.CopyAbsoluteBoneTransformsTo(boneTransforms);

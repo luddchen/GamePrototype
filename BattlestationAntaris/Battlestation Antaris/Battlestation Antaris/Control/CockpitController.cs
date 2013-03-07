@@ -60,7 +60,7 @@ namespace Battlestation_Antaris.Control
             debugButton = new HUD2DButton("Debug", new Vector2(50, 100), 0.5f, this.game);
             this.view.allHUD_2D.Add(debugButton);
 
-            mapConfig = new MiniMap.Config(new Vector2(0.85f, 0.5f), new Vector2(0.25f, 0.4f), new Vector2(0.25f, 0.4f));
+            mapConfig = new MiniMap.Config(new Vector2(0.5f, 0.91f), new Vector2(0.25f, 0.18f), new Vector2(0.25f, 0.18f));
         }
 
         public override void onEnter()
