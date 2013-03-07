@@ -9,9 +9,9 @@ namespace Battlestation_Antaris.View
 {
     class Grid
     {
-        private const float SCALE = 1000f;
-        private const int NR_GRIDS = 3;
-        private const int Y_POS = -300;
+        private const float SCALE = 600;
+        private const int NR_GRIDS = 8;
+        private const int Y_POS = -1000;
 
         private Game1 game;
         private Microsoft.Xna.Framework.Graphics.Model grid;
@@ -41,7 +41,6 @@ namespace Battlestation_Antaris.View
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
-                            //effect.EnableDefaultLighting();
                             effect.World = boneTransforms[mesh.ParentBone.Index];
                             effect.View = camera.view;
                             effect.Projection = camera.projection;
