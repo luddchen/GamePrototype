@@ -103,6 +103,7 @@
     <Compile Include="View\Camera.cs" />
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />
+    <Compile Include="View\Grid.cs" />
     <Compile Include="View\HUD\CockpitHUD\TargetInfo.cs" />
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
     <Compile Include="View\HUD\MiniMapIcon.cs" />

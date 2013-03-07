@@ -41,6 +41,8 @@ namespace Battlestation_Antaris.View
 
         Skybox skybox;
 
+        Grid grid;
+
 
         // test ----------------------
         Microsoft.Xna.Framework.Graphics.Model bgModel;
@@ -120,6 +122,7 @@ namespace Battlestation_Antaris.View
             }
 
             skybox = new Skybox("Models//Skysphere//skysphere", this.game);
+            grid = new Grid("Models//Grid//grid", this.game);
 
 
         }
@@ -163,9 +166,8 @@ namespace Battlestation_Antaris.View
 
             drawWorldObjects();
             drawWorldWeapons();
-            drawGrid();
-
             drawTargetCross();
+            this.grid.Draw(this.camera);
 
         }
 

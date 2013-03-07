@@ -47,12 +47,6 @@ Content\Sprites\Button.xnb
 Content\Sprites\Button2.xnb
 Content\Models\Cubus\cubus.xnb
 Content\Sprites\battlestation.xnb
-Content\Sprites\Skybox\stars_bk.xnb
-Content\Sprites\Skybox\stars_dn.xnb
-Content\Sprites\Skybox\stars_fr.xnb
-Content\Sprites\Skybox\stars_lf.xnb
-Content\Sprites\Skybox\stars_rt.xnb
-Content\Sprites\Skybox\stars_up.xnb
 Content\Models\Skybox\skybox1.xnb
 Content\Models\Skysphere\skysphere1.xnb
 Content\Fonts\Font.xnb
@@ -75,5 +69,8 @@ Content\Models\SpaceShip\spaceship1_0.xnb
 Content\Models\Cubus\cubus_1.xnb
 Content\Models\Skybox\skybox1_0.xnb
 Content\Models\Skysphere\skysphere1_0.xnb
+Content\Models\Grid\grid.xnb
+Content\Models\Grid\grid1.xnb
+Content\Models\Grid\grid1_0.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa

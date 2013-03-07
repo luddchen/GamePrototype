@@ -61,6 +61,7 @@ namespace Battlestation_Antaris
             graphics.PreferredBackBufferWidth = (int) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9);
             graphics.PreferredBackBufferHeight = (int) (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9);
             graphics.IsFullScreen = false;
+            graphics.SynchronizeWithVerticalRetrace = true;
             Content.RootDirectory = "Content";
             this.IsFixedTimeStep = true;
             Window.AllowUserResizing = true;
