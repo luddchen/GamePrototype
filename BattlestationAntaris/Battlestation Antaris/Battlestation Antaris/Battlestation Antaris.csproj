@@ -91,6 +91,7 @@
     <Compile Include="Model\SpatialObjectFactory.cs" />
     <Compile Include="Model\Turret.cs" />
     <Compile Include="Model\WorldModel.cs" />
+    <Compile Include="PrimitiveBatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -104,6 +105,14 @@
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />
     <Compile Include="View\Grid.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Connection.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Container.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Input.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Item.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_ItemPort.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Mixer.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Output.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Transformer.cs" />
     <Compile Include="View\HUD\CockpitHUD\TargetInfo.cs" />
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
     <Compile Include="View\HUD\MiniMapIcon.cs" />

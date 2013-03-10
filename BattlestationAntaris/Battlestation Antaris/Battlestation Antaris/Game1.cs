@@ -28,6 +28,12 @@ namespace Battlestation_Antaris
 
 
         /// <summary>
+        /// game primitive batch
+        /// </summary>
+        public PrimitiveBatch primitiveBatch;
+
+
+        /// <summary>
         /// game input provider
         /// </summary>
         public InputProvider inputProvider;
@@ -81,6 +87,11 @@ namespace Battlestation_Antaris
             {
                 this.activeSituation.view.Window_ClientSizeChanged();
             }
+
+            if (this.primitiveBatch != null)
+            {
+                this.primitiveBatch.ClientSizeChanged(this.GraphicsDevice.Viewport);
+            }
         }
 
 
@@ -114,6 +125,7 @@ namespace Battlestation_Antaris
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            primitiveBatch = new PrimitiveBatch(GraphicsDevice);
 
             foreach (SituationController situation in this.allSituations)
             {

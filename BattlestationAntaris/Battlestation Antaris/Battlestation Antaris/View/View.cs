@@ -71,7 +71,7 @@ namespace Battlestation_Antaris.View
             this.game.GraphicsDevice.Clear(this.backgroundColor);
 
             // draw content
-            DrawContent();
+            DrawPreContent();
 
             // draw 2D HUD elements
             this.game.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);//, SamplerState.AnisotropicClamp, DepthStencilState.DepthRead, null);
@@ -95,13 +95,20 @@ namespace Battlestation_Antaris.View
                 }
             }
 
+            DrawPostContent();
+
         }
 
 
         /// <summary>
         /// draw the view content
         /// </summary>
-        abstract protected void DrawContent();
+        abstract protected void DrawPreContent();
+
+
+        protected virtual void DrawPostContent()
+        {
+        }
 
 
         public virtual void Window_ClientSizeChanged()

@@ -146,7 +146,7 @@ namespace Battlestation_Antaris.View
         /// <summary>
         /// draw cockpit view content
         /// </summary>
-        protected override void DrawContent()
+        protected override void DrawPreContent()
         {
             // init depth buffer
             this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true, DepthBufferWriteEnable = true };

@@ -39,7 +39,7 @@ namespace Battlestation_Antaris.View
         /// <summary>
         /// draw the command view content
         /// </summary>
-        protected override void DrawContent()
+        protected override void DrawPreContent()
         {
 
             // init depth buffer

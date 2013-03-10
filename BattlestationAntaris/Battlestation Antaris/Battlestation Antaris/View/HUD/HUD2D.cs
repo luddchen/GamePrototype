@@ -39,7 +39,7 @@ namespace Battlestation_Antaris.View.HUD
 
         public HUDType positionType;
         public Vector2 abstractPosition;
-        protected Vector2 position;
+        public Vector2 position;
 
         public HUDType sizeType;
         public Vector2 abstractSize;
@@ -76,6 +76,12 @@ namespace Battlestation_Antaris.View.HUD
             this.rotation = 0.0f;
             this.effect = SpriteEffects.None;
             this.color = Color.White;
+        }
+
+
+        public virtual void setLayerDepth(float layerDepth)
+        {
+            this.layerDepth = layerDepth;
         }
 
 
