@@ -72,6 +72,8 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\AI\AI.cs" />
+    <Compile Include="Control\AI\ValueProvider.cs" />
     <Compile Include="Control\CockpitController.cs" />
     <Compile Include="Control\CommandController.cs" />
     <Compile Include="Control\Control.cs" />
@@ -119,6 +121,24 @@
     <Compile Include="View\HUD\HUD2DTexture.cs" />
     <Compile Include="View\HUD\MiniMap.cs" />
     <Compile Include="View\HUD\CockpitHUD\ShipAttributesVisualizer.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Connection.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Container.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Item.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Input.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_ItemPort.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Mixer.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Output.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Transformer.cs" />
+    <Compile Include="View\HUD\Compass3d.cs" />
+    <Compile Include="View\HUD\FpsDisplay.cs" />
+    <Compile Include="View\HUD\HUDButton.cs" />
+    <Compile Include="View\HUD\HUDElement2D.cs" />
+    <Compile Include="View\HUD\HUDElement3D.cs" />
+    <Compile Include="View\HUD\HUDRelativeContainer.cs" />
+    <Compile Include="View\HUD\HUDRelativeTexture.cs" />
+    <Compile Include="View\HUD\HUDString.cs" />
+    <Compile Include="View\HUD\HUDTexture.cs" />
+    <Compile Include="View\HUD\ShipAttributesVisualizer.cs" />
     <Compile Include="View\MenuView.cs" />
     <Compile Include="View\Skybox.cs" />
     <Compile Include="View\View.cs" />
