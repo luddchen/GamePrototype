@@ -14,9 +14,9 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         public List<AI_ItemPort> outputs;
 
-        private HUD2DTexture background;
+        public HUD2DTexture background;
 
-        private HUD2DString typeString;
+        public HUD2DString typeString;
 
 
         public AI_Item(Vector2 abstractPosition, HUDType positionType, String typeName, Game1 game)
@@ -37,9 +37,8 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
             this.typeString = new HUD2DString(typeName, game);
             this.typeString.positionType = this.sizeType;
-            this.typeString.abstractPosition = new Vector2(0, -this.abstractSize.Y / 4);
+            this.typeString.abstractPosition = new Vector2(0, -this.abstractSize.Y / 5);
             this.typeString.scale = 0.6f;
-            this.typeString.layerDepth = this.layerDepth - 0.01f;
             Add(this.typeString);
         }
 
@@ -47,7 +46,6 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         public void AddPort(AI_ItemPort.PortType portType)
         {
             AI_ItemPort newPort = new AI_ItemPort(Vector2.Zero, HUDType.ABSOLUT, portType, this, this.game);
-            newPort.setLayerDepth( this.layerDepth - 0.01f );
 
             Vector2 portPosition = new Vector2(-this.abstractSize.X / 2, 0);
             float portOffset = 0;
@@ -56,7 +54,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             {
                 case AI_ItemPort.PortType.INPUT :
                     this.inputs.Add(newPort);
-                    portPosition.Y = -(this.abstractSize.Y/2);
+                    portPosition.Y = -(this.abstractSize.Y / 2 + 3);
                     portOffset = this.abstractSize.X / (this.inputs.Count + 1);
                     foreach (AI_ItemPort port in this.inputs)
                     {
@@ -66,7 +64,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
                     break;
                 case AI_ItemPort.PortType.OUTPUT :
                     this.outputs.Add(newPort);
-                    portPosition.Y = (this.abstractSize.Y/2);
+                    portPosition.Y = (this.abstractSize.Y / 2 + 3);
                     portOffset = this.abstractSize.X / (this.outputs.Count + 1);
                     foreach (AI_ItemPort port in this.outputs)
                     {
@@ -77,6 +75,21 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             }
 
             Add(newPort);
+        }
+
+
+        public override void setLayerDepth(float layerDepth)
+        {
+            base.setLayerDepth(layerDepth);
+            foreach (AI_ItemPort port in this.inputs)
+            {
+                port.setLayerDepth(this.layerDepth + 0.01f);
+            }
+            foreach (AI_ItemPort port in this.outputs)
+            {
+                port.setLayerDepth(this.layerDepth + 0.01f);
+            }
+            this.background.setLayerDepth(this.layerDepth);
         }
 
     }
