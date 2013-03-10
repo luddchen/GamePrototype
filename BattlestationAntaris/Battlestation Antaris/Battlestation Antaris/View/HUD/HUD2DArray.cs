@@ -67,7 +67,6 @@ namespace Battlestation_Antaris.View.HUD
 
             element.sizeType = this.sizeType;
             element.positionType = this.sizeType;
-            element.layerDepth = this.layerDepth - 0.01f;
 
             Arrange();
 
@@ -112,12 +111,12 @@ namespace Battlestation_Antaris.View.HUD
                     itemPosition.X += itemSize.X;
                 }
 
-                item.ClientSizeChanged(this.position);
+                item.ClientSizeChanged();
             }
         }
 
 
-        public override void ClientSizeChanged(Vector2 offset)
+        public override void ClientSizeChanged()
         {
 
             switch (this.sizeType)
@@ -143,11 +142,11 @@ namespace Battlestation_Antaris.View.HUD
                     break;
             }
 
-            base.ClientSizeChanged(offset);
+            base.ClientSizeChanged();
 
             if (this.background != null)
             {
-                this.background.ClientSizeChanged(this.position);
+                this.background.ClientSizeChanged();
             }
         }
 
@@ -160,9 +159,10 @@ namespace Battlestation_Antaris.View.HUD
                 this.background.sizeType = this.sizeType;
                 this.background.abstractSize = this.abstractSize;
                 this.background.color = HUD2DArray.BACKGROUND_COLOR;
-                this.background.layerDepth = this.layerDepth;
+                this.background.setLayerDepth(this.layerDepth);
+                this.background.parent = this;
 
-                this.background.ClientSizeChanged(this.position);
+                this.background.ClientSizeChanged();
             }
             else
             {

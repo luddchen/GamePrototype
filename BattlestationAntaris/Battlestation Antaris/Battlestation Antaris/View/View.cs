@@ -115,7 +115,7 @@ namespace Battlestation_Antaris.View
         {
             foreach (HUD2D element in this.allHUD_2D)
             {
-                element.ClientSizeChanged(Vector2.Zero);
+                element.ClientSizeChanged();
             }
         }
 

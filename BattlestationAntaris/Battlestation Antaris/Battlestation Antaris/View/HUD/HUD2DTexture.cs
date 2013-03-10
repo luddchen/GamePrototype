@@ -104,9 +104,9 @@ namespace Battlestation_Antaris.View.HUD
         }
 
 
-        public override void ClientSizeChanged(Vector2 offset)
+        public override void ClientSizeChanged()
         {
-            base.ClientSizeChanged(offset);
+            base.ClientSizeChanged();
 
             switch (this.sizeType)
             {

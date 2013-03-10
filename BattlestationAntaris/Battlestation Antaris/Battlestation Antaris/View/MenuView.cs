@@ -62,7 +62,7 @@ namespace Battlestation_Antaris.View
                             this.moveItem.abstractPosition.Y = this.moveItem.position.Y / this.game.GraphicsDevice.Viewport.Height;
                             break;
                     }
-                    this.moveItem.ClientSizeChanged(Vector2.Zero);
+                    this.moveItem.ClientSizeChanged();
                 }
                 else
                 {

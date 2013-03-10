@@ -57,7 +57,6 @@ namespace Battlestation_Antaris.Control
             this.buttonGrid = new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
             this.buttonGrid.layerDepth = 0.5f;
             this.buttonGrid.direction = LayoutDirection.VERTICAL;
-            //this.buttonGrid.CreateBackground(true);
 
             this.buttons1 =  new HUD2DArray(new Vector2(0.5f, 0.8f), HUDType.RELATIV, new Vector2(600, 150), HUDType.ABSOLUT, game);
             this.buttons1.direction = LayoutDirection.HORIZONTAL;
@@ -69,8 +68,6 @@ namespace Battlestation_Antaris.Control
             this.buttonGrid.Add(this.optionsButtonGroup);
             this.buttonGrid.Add(this.buttons1);
 
-
-            //this.buttons1.CreateBackground(true);
 
             this.toCommandButton = new HUD2DButton("Command", Vector2.Zero, 1, this.game);
             this.buttons1.Add(toCommandButton);
@@ -84,8 +81,6 @@ namespace Battlestation_Antaris.Control
             this.exitButton = new HUD2DButton("Exit", Vector2.Zero, 1, this.game);
             this.buttons1.Add(this.exitButton);
 
-            //this.buttons2.CreateBackground(true);
-
             this.videoButton = new HUD2DButton("Video", Vector2.Zero, 1, this.game);
             this.optionsButtonGroup.Add(videoButton);
 
@@ -98,7 +93,6 @@ namespace Battlestation_Antaris.Control
 
             this.view.allHUD_2D.Add(this.buttonGrid);
 
-            //this.buttonGrid.ClientSizeChanged(Vector2.Zero);
 
             this.contentPages = new List<HUD2DContainer>();
 

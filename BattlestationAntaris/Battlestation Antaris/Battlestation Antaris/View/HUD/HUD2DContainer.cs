@@ -27,8 +27,10 @@ namespace Battlestation_Antaris.View.HUD
 
         public virtual void Add(HUD2D element)
         {
+            element.parent = this;
+            element.setLayerDepth(this.layerDepth - 0.01f);
             this.allChilds.Add(element);
-            element.ClientSizeChanged(this.position);
+            element.ClientSizeChanged();
         }
 
 
@@ -44,6 +46,16 @@ namespace Battlestation_Antaris.View.HUD
         }
 
 
+        public override void setLayerDepth(float layerDepth)
+        {
+            base.setLayerDepth(layerDepth);
+            foreach (HUD2D item in this.allChilds)
+            {
+                item.setLayerDepth(this.layerDepth - 0.01f);
+            }
+        }
+
+
         public override void Draw(SpriteBatch spritBatch)
         {
             if (this.isVisible)
@@ -56,13 +68,13 @@ namespace Battlestation_Antaris.View.HUD
         }
 
 
-        public override void ClientSizeChanged(Vector2 offset)
+        public override void ClientSizeChanged()
         {
-            base.ClientSizeChanged(offset);
+            base.ClientSizeChanged();
 
             foreach (HUD2D item in this.allChilds)
             {
-                item.ClientSizeChanged(this.position);
+                item.ClientSizeChanged();
             }
         }
 

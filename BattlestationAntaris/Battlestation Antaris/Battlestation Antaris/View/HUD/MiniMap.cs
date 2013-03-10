@@ -100,7 +100,7 @@ namespace Battlestation_Antaris.View.HUD
                 }
             }
 
-            ClientSizeChanged(Vector2.Zero);
+            ClientSizeChanged();
 
             base.Draw(spritBatch);
         }

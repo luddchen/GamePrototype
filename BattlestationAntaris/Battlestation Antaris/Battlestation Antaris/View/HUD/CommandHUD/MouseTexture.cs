@@ -19,7 +19,7 @@ namespace Battlestation_Antaris.View.HUD.CommandHUD
         public virtual void update()
         {
             this.abstractPosition = this.game.inputProvider.getMousePos();
-            ClientSizeChanged(Vector2.Zero);
+            ClientSizeChanged();
         }
     }
 }

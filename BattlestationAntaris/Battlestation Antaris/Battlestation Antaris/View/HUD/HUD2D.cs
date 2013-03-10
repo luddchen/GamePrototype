@@ -58,6 +58,8 @@ namespace Battlestation_Antaris.View.HUD
 
         public bool isVisible;
 
+        public HUD2D parent;
+
 
         public HUD2D(Game1 game)
         {
@@ -105,9 +107,16 @@ namespace Battlestation_Antaris.View.HUD
         /// callback if the game window size change
         /// </summary>
         /// <param name="offset"></param>
-        public virtual void ClientSizeChanged(Vector2 offset)
+        public virtual void ClientSizeChanged()
         {
-            this.position = offset;
+            if (this.parent != null)
+            {
+                this.position = this.parent.position;
+            }
+            else
+            {
+                this.position = Vector2.Zero;
+            }
 
             switch (this.positionType)
             {
