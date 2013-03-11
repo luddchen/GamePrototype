@@ -61,18 +61,26 @@ namespace Battlestation_Antaris.View.HUD
             this.background.color = MiniMap.BACKGROUND_COLOR;
             this.background.abstractSize = new Vector2(0.25f, 0.4f);
             this.background.sizeType = HUDType.RELATIV;
-            this.background.layerDepth = 0.6f;
             this.background.Texture = game.Content.Load<Texture2D>("Sprites//Square_Cross");
 
             this.foreground = new HUD2DTexture(game);
             this.foreground.color = MiniMap.BORDER_COLOR;
             this.foreground.abstractSize = new Vector2(0.25f, 0.4f);
             this.foreground.sizeType = HUDType.RELATIV;
-            this.foreground.layerDepth = 0.4f;
             this.foreground.Texture = game.Content.Load<Texture2D>("Sprites//SquareBorder");
 
             Add(this.background);
             Add(this.foreground);
+
+            this.background.layerDepth = this.layerDepth;
+            this.foreground.layerDepth = this.layerDepth - 0.01f;
+        }
+
+
+        public override void setLayerDepth(float layerDepth)
+        {
+            base.setLayerDepth(layerDepth);
+            this.background.layerDepth = this.layerDepth;
         }
 
 
