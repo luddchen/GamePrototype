@@ -14,6 +14,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         public List<AI_Connection> aiConnections;
 
         private AI_Item moveItem;
+        private Vector2 moveOffset;
 
 
         public AI_Container(Game1 game)
@@ -77,13 +78,6 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             con5.setTarget(ai_Item4.inputs[0]);
 
             Add(con5);
-
-            foreach (AI_Item item in this.aiItems)
-            {
-                item.setLayerDepth(this.layerDepth);
-                Console.Out.WriteLine("item layerdepth = " + item.layerDepth);
-                Console.Out.WriteLine("item background layerdepth = " + item.background.layerDepth);
-            }
         }
 
 
@@ -125,9 +119,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
                     {
                         if (item is AI_Item)
                         {
-                            if (((AI_Item)item).Intersects(this.game.inputProvider.getMousePos()))
+                            if (((AI_Item)item).typeString.Intersects(this.game.inputProvider.getMousePos()))
                             {
                                 this.moveItem = (AI_Item)item;
+                                this.moveOffset = item.position - this.game.inputProvider.getMousePos();
                                 break;
                             }
                         }
@@ -138,7 +133,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             {
                 if (this.game.inputProvider.isLeftMouseButtonDown())
                 {
-                    this.moveItem.position = this.game.inputProvider.getMousePos();
+                    this.moveItem.position = this.game.inputProvider.getMousePos() + this.moveOffset;
                     switch (this.moveItem.positionType)
                     {
                         case HUDType.ABSOLUT:

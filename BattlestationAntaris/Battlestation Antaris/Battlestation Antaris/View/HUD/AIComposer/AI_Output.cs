@@ -13,13 +13,13 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             REMEMBER
         }
 
-        OutputType outputType;
-
         public AI_Output(Vector2 abstractPosition, HUDType positionType, Game1 game)
             : base(abstractPosition, positionType, "Output", game)
         {
-            this.outputType = OutputType.RESULT;
+            this.subType = OutputType.RESULT;
             AddPort(AI_ItemPort.PortType.INPUT);
+
+            this.subTypeString.String = this.subType.ToString();
         }
 
     }

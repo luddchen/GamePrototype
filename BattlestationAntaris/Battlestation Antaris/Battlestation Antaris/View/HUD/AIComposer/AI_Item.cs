@@ -10,6 +10,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         String itemTypeName;
 
+        protected Object subType;
+
+        public static int PORT_OFFSET = 4;
+
         public List<AI_ItemPort> inputs;
 
         public List<AI_ItemPort> outputs;
@@ -17,6 +21,12 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         public HUD2DTexture background;
 
         public HUD2DString typeString;
+
+        protected HUD2DString subTypeString;
+
+        private HUD2DButton nextSubType;
+
+        private HUD2DButton previousSubType;
 
 
         public AI_Item(Vector2 abstractPosition, HUDType positionType, String typeName, Game1 game)
@@ -30,16 +40,35 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             this.outputs = new List<AI_ItemPort>();
 
             this.background = new HUD2DTexture(game);
-            this.background.color = Color.DarkGreen;
+            this.background.color = new Color(0 ,48, 0);
             this.background.sizeType = this.sizeType;
             this.background.abstractSize = this.abstractSize;
             Add(this.background);
 
             this.typeString = new HUD2DString(typeName, game);
             this.typeString.positionType = this.sizeType;
-            this.typeString.abstractPosition = new Vector2(0, -this.abstractSize.Y / 5);
             this.typeString.scale = 0.6f;
+            this.typeString.abstractPosition = new Vector2(0, -(this.abstractSize.Y - this.typeString.size.Y) / 2);
             Add(this.typeString);
+
+            this.subTypeString = new HUD2DString(" ", game);
+            this.subTypeString.scale = 0.5f;
+            this.subTypeString.positionType = this.sizeType;
+            this.subTypeString.abstractSize = new Vector2(this.abstractSize.X, this.subTypeString.size.Y);
+            this.subTypeString.abstractPosition = new Vector2(0, -(this.abstractSize.Y - this.typeString.size.Y * 3) / 2);
+            Add(this.subTypeString);
+
+            this.nextSubType = new HUD2DButton(">", Vector2.Zero, 0.8f, game);
+            this.nextSubType.positionType = this.sizeType;
+            this.nextSubType.abstractPosition = new Vector2((this.abstractSize.X - this.nextSubType.size.X) / 2 - 2, -(this.abstractSize.Y - this.typeString.size.Y * 3) / 2);
+            this.nextSubType.SetAction(delegate() { switchToNextSubType(); });
+            Add(this.nextSubType);
+
+            this.previousSubType = new HUD2DButton("<", Vector2.Zero, 0.8f, game);
+            this.previousSubType.positionType = this.sizeType;
+            this.previousSubType.abstractPosition = new Vector2(-(this.abstractSize.X - this.nextSubType.size.X) / 2 + 2, -(this.abstractSize.Y - this.typeString.size.Y * 3) / 2);
+            this.previousSubType.SetAction(delegate() { switchToPreviousSubType(); });
+            Add(this.previousSubType);
         }
 
 
@@ -54,7 +83,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             {
                 case AI_ItemPort.PortType.INPUT :
                     this.inputs.Add(newPort);
-                    portPosition.Y = -(this.abstractSize.Y / 2 + 3);
+                    portPosition.Y = -(this.abstractSize.Y / 2 + PORT_OFFSET);
                     portOffset = this.abstractSize.X / (this.inputs.Count + 1);
                     foreach (AI_ItemPort port in this.inputs)
                     {
@@ -64,7 +93,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
                     break;
                 case AI_ItemPort.PortType.OUTPUT :
                     this.outputs.Add(newPort);
-                    portPosition.Y = (this.abstractSize.Y / 2 + 3);
+                    portPosition.Y = (this.abstractSize.Y / 2 + PORT_OFFSET);
                     portOffset = this.abstractSize.X / (this.outputs.Count + 1);
                     foreach (AI_ItemPort port in this.outputs)
                     {
@@ -90,6 +119,48 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
                 port.setLayerDepth(this.layerDepth + 0.01f);
             }
             this.background.setLayerDepth(this.layerDepth);
+        }
+
+
+        protected virtual void switchToNextSubType()
+        {
+            if (this.subType is Enum)
+            {
+                Type type = this.subType.GetType();
+
+                int oldSubType = (int)this.subType;
+                Array subTypes = Enum.GetValues(type);
+                if (oldSubType + 1 < subTypes.Length)
+                {
+                    this.subType = subTypes.GetValue(oldSubType + 1);
+                }
+                else
+                {
+                    this.subType = subTypes.GetValue(0);
+                }
+                this.subTypeString.String = this.subType.ToString().Replace('_', ' ');
+            }
+        }
+
+
+        protected virtual void switchToPreviousSubType()
+        {
+            if (this.subType is Enum)
+            {
+                Type type = this.subType.GetType();
+
+                int oldSubType = (int)this.subType;
+                Array subTypes = Enum.GetValues(type);
+                if (oldSubType - 1 >= 0)
+                {
+                    this.subType = subTypes.GetValue(oldSubType - 1);
+                }
+                else
+                {
+                    this.subType = subTypes.GetValue(subTypes.Length - 1);
+                }
+                this.subTypeString.String = this.subType.ToString().Replace('_', ' ');
+            }
         }
 
     }

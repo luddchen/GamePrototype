@@ -16,15 +16,15 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             INVERSE
         }
 
-        TransformerType transformerType;
-
         public AI_Transformer(Vector2 abstractPosition, HUDType positionType, Game1 game)
             : base(abstractPosition, positionType, "Transformer", game)
         {
-            this.transformerType = TransformerType.SCALE;
+            this.subType = TransformerType.SCALE;
 
             AddPort(AI_ItemPort.PortType.INPUT);
             AddPort( AI_ItemPort.PortType.OUTPUT);
+
+            this.subTypeString.String = this.subType.ToString();
         }
 
     }

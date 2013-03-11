@@ -17,14 +17,14 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             HULL_HEALTH
         }
 
-        public InputType inputType;
-
         public AI_Input(Vector2 abstractPosition, HUDType positionType, Game1 game) 
             : base(abstractPosition, positionType, "Input", game)
         {
-            this.inputType = InputType.DISTANCE;
+            this.subType = InputType.DISTANCE;
 
             AddPort(AI_ItemPort.PortType.OUTPUT);
+
+            this.subTypeString.String = this.subType.ToString();
         }
 
     }
