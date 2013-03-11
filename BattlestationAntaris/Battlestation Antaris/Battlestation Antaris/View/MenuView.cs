@@ -13,8 +13,6 @@ namespace Battlestation_Antaris.View
     class MenuView : View
     {
 
-        private AI_Container aiContainer;
-
         /// <summary>
         /// creates a new menu view
         /// </summary>
@@ -29,8 +27,6 @@ namespace Battlestation_Antaris.View
         /// </summary>
         protected override void DrawPreContent()
         {
-            // dirty update
-            this.aiContainer.Update();
         }
 
         /// <summary>
@@ -38,7 +34,6 @@ namespace Battlestation_Antaris.View
         /// </summary>
         protected override void DrawPostContent()
         {
-            this.aiContainer.DrawConnections();
         }
 
 
@@ -63,9 +58,6 @@ namespace Battlestation_Antaris.View
             testString.positionType = HUDType.RELATIV;
 
             this.allHUD_2D.Add(testString);
-
-            this.aiContainer = new AI_Container(this.game);
-            this.allHUD_2D.Add(this.aiContainer);
         }
 
     }

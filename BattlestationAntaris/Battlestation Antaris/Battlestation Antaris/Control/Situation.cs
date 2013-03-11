@@ -20,7 +20,12 @@
         /// <summary>
         /// the menu situation
         /// </summary>
-        MENU = 2 
+        MENU = 2,
+
+        /// <summary>
+        /// the ai-builder/editor situation
+        /// </summary>
+        AI_BUILDER = 3
     }
 
 }

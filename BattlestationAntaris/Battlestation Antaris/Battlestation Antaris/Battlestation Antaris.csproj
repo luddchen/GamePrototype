@@ -72,6 +72,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\AIController.cs" />
     <Compile Include="Control\CockpitController.cs" />
     <Compile Include="Control\CommandController.cs" />
     <Compile Include="Control\Control.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Tools\RayCastThreadPool.cs" />
     <Compile Include="Tools\ReflectionDemo.cs" />
     <Compile Include="Tools\Tools.cs" />
+    <Compile Include="View\AIView.cs" />
     <Compile Include="View\BackgroundObject.cs" />
     <Compile Include="View\Camera.cs" />
     <Compile Include="View\CockpitView.cs" />

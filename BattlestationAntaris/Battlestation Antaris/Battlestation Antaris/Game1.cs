@@ -107,6 +107,7 @@ namespace Battlestation_Antaris
             this.allSituations.Add(new CockpitController(this, new View.CockpitView(this)));
             this.allSituations.Add(new CommandController(this, new View.CommandView(this)));
             this.allSituations.Add(new MenuController(this, new View.MenuView(this)));
+            this.allSituations.Add(new AIController(this, new View.AIView(this)));
 
             // create and initialize world model
             this.world = new Model.WorldModel(this);
