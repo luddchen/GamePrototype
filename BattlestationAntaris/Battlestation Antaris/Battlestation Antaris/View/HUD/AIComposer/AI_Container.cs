@@ -132,8 +132,6 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
                         if (this.moveConnection != null)
                         {
-                            Console.WriteLine(port.portType + " , " + this.movePort.portType);
-
                             if (port.portType == this.movePort.portType)
                             {
                                 if (port.portType == AI_ItemPort.PortType.INPUT && port.connections.Count > 0)
@@ -242,7 +240,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             bool isWithin = true;
             Vector2 mousePos = this.game.inputProvider.getMousePos();
             if (mousePos.X < this.game.GraphicsDevice.Viewport.Width * 0.05f
-                || mousePos.X > this.game.GraphicsDevice.Viewport.Width * 0.75f
+                || mousePos.X > this.game.GraphicsDevice.Viewport.Width * 0.8f
                 || mousePos.Y < this.game.GraphicsDevice.Viewport.Height * 0.05f
                 || mousePos.Y > this.game.GraphicsDevice.Viewport.Height * 0.95f)
             {

@@ -4,6 +4,7 @@ using Battlestation_Antaris.View.HUD;
 using Microsoft.Xna.Framework;
 using Battlestation_Antaris.View;
 using Battlestation_Antaris.View.HUD.AIComposer;
+using Battlestation_Antaris.Control.AI;
 
 namespace Battlestation_Antaris.Control
 {
@@ -18,6 +19,18 @@ namespace Battlestation_Antaris.Control
             toMenuButton.SetAction(delegate() { this.game.switchTo(Situation.MENU); });
             toMenuButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add(toMenuButton);
+
+
+            HUD2DButton verifyButton = new HUD2DButton("Verify", new Vector2(0.9f, 0.8f), 0.8f, this.game);
+            verifyButton.SetAction(
+                delegate() 
+                {
+                    AI.AI ai = new AI.AI();
+                    ai.Create(((AIView)this.view).aiContainer);
+                    Console.WriteLine(ai);
+                });
+            verifyButton.positionType = HUDType.RELATIV;
+            this.view.allHUD_2D.Add(verifyButton);
 
 
             HUD2DArray addButtonArray = new HUD2DArray(new Vector2(0.9f, 0.5f), HUDType.RELATIV, new Vector2(250, 300), HUDType.ABSOLUT, game);

@@ -11,7 +11,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         String itemTypeName;
 
-        protected Object subType;
+        public Object subType;
 
         public static int PORT_OFFSET = 4;
 
