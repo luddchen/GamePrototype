@@ -6,7 +6,7 @@ namespace Battlestation_Antaris.Control
     /// <summary>
     /// abstract basis class for situation controller
     /// </summary>
-    public abstract class SituationController
+    public class SituationController
     {
 
         /// <summary>
@@ -44,7 +44,10 @@ namespace Battlestation_Antaris.Control
         /// update this situation controller
         /// </summary>
         /// <param name="gameTime">the game time</param>
-        public abstract void Update(GameTime gameTime);
+        public virtual void Update(GameTime gameTime)
+        {
+            this.view.ButtonUpdate();
+        }
 
         /// <summary>
         /// called upon switching to this situation

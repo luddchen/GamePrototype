@@ -41,6 +41,7 @@ namespace Battlestation_Antaris.Control
                     0.5f,
                     this.game);
 
+            this.toCommandButton.SetAction(delegate() { this.game.switchTo(Situation.COMMAND); });
             buttons.Add(toCommandButton);
 
             toMenuButton =
@@ -50,14 +51,15 @@ namespace Battlestation_Antaris.Control
                     0.5f,
                     this.game);
 
+            this.toMenuButton.SetAction(delegate() { this.game.switchTo(Situation.MENU); });
             buttons.Add(toMenuButton);
-
             this.view.allHUD_2D.Add(buttons);
 
             fpsDisplay = new FpsDisplay(new Vector2(50, 20), this.game);
             this.view.allHUD_2D.Add(fpsDisplay);
 
             debugButton = new HUD2DButton("Debug", new Vector2(50, 100), 0.5f, this.game);
+            this.debugButton.SetAction(delegate() { Console.Out.WriteLine(this.game.world.spaceShip.attributes); });
             this.view.allHUD_2D.Add(debugButton);
 
             mapConfig = new MiniMap.Config(new Vector2(0.5f, 0.91f), new Vector2(0.25f, 0.18f), new Vector2(0.25f, 0.18f));
@@ -75,6 +77,8 @@ namespace Battlestation_Antaris.Control
         /// <param name="gameTime">the game time</param>
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            base.Update(gameTime);
+
             fpsDisplay.Update(gameTime);
 
             if (this.game.inputProvider.isMouseMoved())
@@ -92,21 +96,6 @@ namespace Battlestation_Antaris.Control
                 {
                     this.game.IsMouseVisible = false;
                 }
-            }
-
-            if (this.toCommandButton.isUpdatedClicked(this.game.inputProvider))
-            {
-                this.game.switchTo(Situation.COMMAND);
-            }
-
-            if (this.toMenuButton.isUpdatedClicked(this.game.inputProvider))
-            {
-                this.game.switchTo(Situation.MENU);
-            }
-
-            if (this.debugButton.isUpdatedClicked(this.game.inputProvider))
-            {
-                Console.Out.WriteLine(this.game.world.spaceShip.attributes);
             }
 
             this.game.world.miniMap.ZoomOnMouseWheelOver();

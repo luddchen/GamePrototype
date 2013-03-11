@@ -44,12 +44,14 @@ namespace Battlestation_Antaris.Control
         {
             this.currentMode = CommandMode.NORMAL;
 
-            toMenuButton = new HUD2DButton("Menu", new Vector2(0.1f, 0.9f), 0.7f, this.game);
-            toMenuButton.positionType = HUDType.RELATIV;
+            this.toMenuButton = new HUD2DButton("Menu", new Vector2(0.1f, 0.9f), 0.7f, this.game);
+            this.toMenuButton.SetAction(delegate() { this.game.switchTo(Situation.MENU); });
+            this.toMenuButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add(toMenuButton);
 
-            toCockpitButton = new HUD2DButton("Cockpit", new Vector2(0.9f, 0.9f), 0.7f, this.game);
-            toCockpitButton.positionType = HUDType.RELATIV;
+            this.toCockpitButton = new HUD2DButton("Cockpit", new Vector2(0.9f, 0.9f), 0.7f, this.game);
+            this.toCockpitButton.SetAction(delegate() { this.game.switchTo(Situation.COCKPIT); });
+            this.toCockpitButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add(toCockpitButton);
 
             buildMenu = new BuildMenu(new Vector2(0.9f, 0.5f), HUDType.RELATIV, this.game);
@@ -82,15 +84,7 @@ namespace Battlestation_Antaris.Control
         /// <param name="gameTime">the game time</param>
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            if (this.toMenuButton.isUpdatedClicked(this.game.inputProvider))
-            {
-                this.game.switchTo(Situation.MENU);
-            }
-
-            if (this.toCockpitButton.isUpdatedClicked(this.game.inputProvider))
-            {
-                this.game.switchTo(Situation.COCKPIT);
-            }
+            base.Update(gameTime);
 
             if (currentMode == CommandMode.BUILD)
             {

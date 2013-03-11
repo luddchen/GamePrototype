@@ -119,6 +119,35 @@ namespace Battlestation_Antaris.View
             }
         }
 
+
+        public void ButtonUpdate()
+        {
+            foreach (HUD2D item in this.allHUD_2D) 
+            {
+                ButtonUpdate(item);
+            }
+        }
+
+        private void ButtonUpdate(HUD2D item)
+        {
+            if (item.isVisible)
+            {
+                if (item is HUD2DButton)
+                {
+                    ((HUD2DButton)item).isUpdatedClicked(this.game.inputProvider);
+                }
+                
+                if (item is HUD2DContainer)
+                {
+                    foreach (HUD2D child in ((HUD2DContainer)item).allChilds)
+                    {
+                        ButtonUpdate(child);
+                    }
+                }
+
+            }
+        }
+
     }
 
 }

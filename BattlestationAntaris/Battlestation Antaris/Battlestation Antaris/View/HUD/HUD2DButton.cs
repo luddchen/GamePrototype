@@ -30,6 +30,9 @@ namespace Battlestation_Antaris.View.HUD
 
         private float overallScale;
 
+        private Action action;
+
+
         public HUD2DButton(String text, Vector2 position, float scale, Game1 game) : base(text, game)
         {
             this.abstractPosition = position;
@@ -54,6 +57,10 @@ namespace Battlestation_Antaris.View.HUD
                     this.BackgroundColor = this.backgroundColorPressed;
                     this.scale = HUD2DButton.scalePressed * this.overallScale;
                     clicked = true;
+                    if (this.action != null)
+                    {
+                        this.action();
+                    }
                 }
                 else
                 {
@@ -70,6 +77,20 @@ namespace Battlestation_Antaris.View.HUD
             }
 
             return clicked;
+        }
+
+
+        public void SetAction(Action action)
+        {
+            this.action = action;
+        }
+
+
+        public void Toggle()
+        {
+            Color temp = this.foregroundColorHover;
+            this.foregroundColorHover = this.foregroundColorNormal;
+            this.foregroundColorNormal = temp;
         }
 
     }

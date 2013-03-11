@@ -70,24 +70,37 @@ namespace Battlestation_Antaris.Control
 
 
             this.toCommandButton = new HUD2DButton("Command", Vector2.Zero, 1, this.game);
+            this.toCommandButton.SetAction(delegate() { this.game.switchTo(Situation.COMMAND); });
             this.buttons1.Add(toCommandButton);
 
             this.toCockpitButton = new HUD2DButton("Cockpit", Vector2.Zero, 1, this.game);
+            this.toCockpitButton.SetAction(delegate() { this.game.switchTo(Situation.COCKPIT); });
             this.buttons1.Add(toCockpitButton);
 
             this.optionsButton = new HUD2DButton("Options", Vector2.Zero, 1, this.game);
+            this.optionsButton.SetAction(
+                delegate() 
+                { 
+                    this.optionsButton.Toggle(); 
+                    hidePages();
+                    this.optionsButtonGroup.isVisible = !(this.optionsButtonGroup.isVisible);
+                });
             this.buttons1.Add(optionsButton);
 
             this.exitButton = new HUD2DButton("Exit", Vector2.Zero, 1, this.game);
+            this.exitButton.SetAction(delegate() { this.game.Exit(); });
             this.buttons1.Add(this.exitButton);
 
             this.videoButton = new HUD2DButton("Video", Vector2.Zero, 1, this.game);
+            this.videoButton.SetAction(delegate() { showPage(this.videoPage); });
             this.optionsButtonGroup.Add(videoButton);
 
             this.soundButton = new HUD2DButton("Sound", Vector2.Zero, 1, this.game);
+            this.soundButton.SetAction(delegate() { showPage(this.soundPage); });
             this.optionsButtonGroup.Add(soundButton);
 
             this.controlButton = new HUD2DButton("Control", Vector2.Zero, 1, this.game);
+            this.controlButton.SetAction(delegate() { showPage(this.controlPage); });
             this.optionsButtonGroup.Add(this.controlButton);
 
 
@@ -128,81 +141,22 @@ namespace Battlestation_Antaris.Control
         /// <param name="gameTime">the game time</param>
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-
-            if (this.videoButton.isUpdatedClicked(this.game.inputProvider)) { }
-
-            if (this.soundButton.isUpdatedClicked(this.game.inputProvider)) { }
-
-            if (this.controlButton.isUpdatedClicked(this.game.inputProvider)) { }
+            base.Update(gameTime);
+        }
 
 
-            if (this.toCommandButton.isUpdatedClicked(this.game.inputProvider))
+        private void hidePages()
+        {
+            foreach (HUD2DContainer container in this.contentPages)
             {
-                this.game.switchTo(Situation.COMMAND);
+                container.isVisible = false;
             }
+        }
 
-            if (this.toCockpitButton.isUpdatedClicked(this.game.inputProvider))
-            {
-                this.game.switchTo(Situation.COCKPIT);
-            }
-
-            if (this.optionsButton.isUpdatedClicked(this.game.inputProvider))
-            {
-                Color temp = this.optionsButton.foregroundColorHover;
-                this.optionsButton.foregroundColorHover = this.optionsButton.foregroundColorNormal;
-                this.optionsButton.foregroundColorNormal = temp;
-
-                if (this.optionsButtonGroup.isVisible)
-                {
-                    this.optionsButtonGroup.isVisible = false;
-
-                    foreach (HUD2DContainer container in this.contentPages)
-                    {
-                        container.isVisible = false;
-                    }
-                }
-                else
-                {
-                    this.optionsButtonGroup.isVisible = true;
-                }
-            }
-
-            if (this.exitButton.isUpdatedClicked(this.game.inputProvider))
-            {
-                this.game.Exit();
-            }
-
-
-            if (this.optionsButtonGroup.isVisible)
-            {
-                if (this.videoButton.isUpdatedClicked(this.game.inputProvider))
-                {
-                    foreach (HUD2DContainer container in this.contentPages)
-                    {
-                        container.isVisible = false;
-                    }
-                    this.videoPage.isVisible = true;
-                }
-
-                if (this.soundButton.isUpdatedClicked(this.game.inputProvider))
-                {
-                    foreach (HUD2DContainer container in this.contentPages)
-                    {
-                        container.isVisible = false;
-                    }
-                    this.soundPage.isVisible = true;
-                }
-
-                if (this.controlButton.isUpdatedClicked(this.game.inputProvider))
-                {
-                    foreach (HUD2DContainer container in this.contentPages)
-                    {
-                        container.isVisible = false;
-                    }
-                    this.controlPage.isVisible = true;
-                }
-            }
-
+        private void showPage(HUD2DContainer container)
+        {
+            hidePages();
+            container.isVisible = true;
         }
 
     }

@@ -10,7 +10,7 @@ namespace Battlestation_Antaris.View.HUD
     {
 
         // list of all childs
-        protected List<HUD2D> allChilds;
+        public List<HUD2D> allChilds;
 
 
 
