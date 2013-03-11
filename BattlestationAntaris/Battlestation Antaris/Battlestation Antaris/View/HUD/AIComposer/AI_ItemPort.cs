@@ -19,6 +19,12 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         public List<AI_Connection> connections;
 
+        public AI_ItemPort(Vector2 abstractPosition, HUDType positionType, PortType portType, Game1 game)
+            : base(game)
+        {
+            this.portType = portType;
+            this.connections = new List<AI_Connection>();
+        }
 
         public AI_ItemPort(Vector2 abstractPosition, HUDType positionType, PortType portType, AI_Item item, Game1 game)
             : base(game)
@@ -61,11 +67,6 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             }
         }
 
-
-        //public override void setLayerDepth(float layerDepth)
-        //{
-        //    base.setLayerDepth(layerDepth);
-        //}
 
     }
 

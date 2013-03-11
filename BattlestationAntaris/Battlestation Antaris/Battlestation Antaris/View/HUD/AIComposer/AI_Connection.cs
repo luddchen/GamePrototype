@@ -28,7 +28,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
                 this.source.connections.Remove(this);
             }
             this.source = source;
-            this.source.connections.Add(this);
+            if (source != null)
+            {
+                this.source.connections.Add(this);
+            }
         }
 
         public void setTarget(AI_ItemPort target)
@@ -38,7 +41,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
                 this.target.connections.Remove(this);
             }
             this.target = target;
-            this.target.connections.Add(this);
+            if (target != null)
+            {
+                this.target.connections.Add(this);
+            }
         }
 
         public AI_ItemPort getSource()

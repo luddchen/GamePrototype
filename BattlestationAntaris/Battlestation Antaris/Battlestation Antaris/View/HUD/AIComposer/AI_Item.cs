@@ -7,6 +7,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
     public class AI_Item : HUD2DContainer
     {
+        public AI_Container container;
 
         String itemTypeName;
 
@@ -27,6 +28,8 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         private HUD2DButton nextSubType;
 
         private HUD2DButton previousSubType;
+
+        private HUD2DButton removeButton;
 
 
         public AI_Item(Vector2 abstractPosition, HUDType positionType, String typeName, Game1 game)
@@ -50,6 +53,15 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             this.typeString.scale = 0.6f;
             this.typeString.abstractPosition = new Vector2(0, -(this.abstractSize.Y - this.typeString.size.Y) / 2);
             Add(this.typeString);
+
+            this.removeButton = new HUD2DButton("X", new Vector2(this.abstractSize.X / 2 - 8, -(this.abstractSize.Y / 2) + 8), 0.5f, game);
+            this.removeButton.positionType = this.sizeType;
+            this.removeButton.foregroundColorNormal = Color.Red;
+            this.removeButton.foregroundColorHover = Color.White;
+            this.removeButton.backgroundColorNormal = new Color(0, 0, 0, 0);
+            this.removeButton.backgroundColorHover = new Color(0, 0, 0, 0);
+            this.removeButton.SetAction(delegate() { Destroy(); });
+            Add(this.removeButton);
 
             this.subTypeString = new HUD2DString(" ", game);
             this.subTypeString.scale = 0.5f;
@@ -161,6 +173,33 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
                 }
                 this.subTypeString.String = this.subType.ToString().Replace('_', ' ');
             }
+        }
+
+
+        private void Destroy() 
+        {
+            foreach (AI_ItemPort port in this.inputs)
+            {
+                while(port.connections.Count > 0)
+                {
+                    this.container.aiConnections.Remove(port.connections[0]);
+                    port.connections[0].Delete();
+                }
+                port.connections.Clear();
+            }
+
+            foreach (AI_ItemPort port in this.outputs)
+            {
+                while (port.connections.Count > 0)
+                {
+                    this.container.aiConnections.Remove(port.connections[0]);
+                    port.connections[0].Delete();
+                }
+                port.connections.Clear();
+            }
+
+            this.container.removeList.Add(this);
+
         }
 
     }

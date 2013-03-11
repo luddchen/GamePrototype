@@ -16,38 +16,24 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         private AI_Item moveItem;
         private Vector2 moveOffset;
 
+        private AI_Connection moveConnection;
+        private AI_ItemPort movePort;
+
+        public List<HUD2D> removeList;
+
 
         public AI_Container(Game1 game)
             : base(new Vector2(0, 0), HUDType.RELATIV, game)
         {
+            this.removeList = new List<HUD2D>();
             this.aiItems = new List<AI_Item>();
             this.aiConnections = new List<AI_Connection>();
 
-
-            AI_Input ai_Item1 = new AI_Input(new Vector2(0.1f, 0.2f), HUDType.RELATIV, this.game);
-
+            AI_Input ai_Item1 = new AI_Input(new Vector2(0.4f, 0.3f), HUDType.RELATIV, this.game);
             Add(ai_Item1);
 
-            AI_Transformer ai_Item2 = new AI_Transformer(new Vector2(0.1f, 0.4f), HUDType.RELATIV, this.game);
-
+            AI_Output ai_Item2 = new AI_Output(new Vector2(0.4f, 0.7f), HUDType.RELATIV, this.game);
             Add(ai_Item2);
-
-            AI_Input ai_Item12 = new AI_Input(new Vector2(0.3f, 0.2f), HUDType.RELATIV, this.game);
-
-            Add(ai_Item12);
-
-            AI_Transformer ai_Item22 = new AI_Transformer(new Vector2(0.3f, 0.4f), HUDType.RELATIV, this.game);
-
-            Add(ai_Item22);
-
-            AI_Mixer ai_Item3 = new AI_Mixer(new Vector2(0.2f, 0.6f), HUDType.RELATIV, this.game);
-
-            Add(ai_Item3);
-
-            AI_Output ai_Item4 = new AI_Output(new Vector2(0.2f, 0.8f), HUDType.RELATIV, this.game);
-
-            Add(ai_Item4);
-
 
             AI_Connection con1 = new AI_Connection(this.game);
             con1.setSource(ai_Item1.outputs[0]);
@@ -55,29 +41,6 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
             Add(con1);
 
-            AI_Connection con2 = new AI_Connection(this.game);
-            con2.setSource(ai_Item12.outputs[0]);
-            con2.setTarget(ai_Item22.inputs[0]);
-
-            Add(con2);
-
-            AI_Connection con3 = new AI_Connection(this.game);
-            con3.setSource(ai_Item2.outputs[0]);
-            con3.setTarget(ai_Item3.inputs[0]);
-
-            Add(con3);
-
-            AI_Connection con4 = new AI_Connection(this.game);
-            con4.setSource(ai_Item22.outputs[0]);
-            con4.setTarget(ai_Item3.inputs[1]);
-
-            Add(con4);
-
-            AI_Connection con5 = new AI_Connection(this.game);
-            con5.setSource(ai_Item3.outputs[0]);
-            con5.setTarget(ai_Item4.inputs[0]);
-
-            Add(con5);
         }
 
 
@@ -85,6 +48,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         {
             if (element is AI_Item)
             {
+                ((AI_Item)element).container = this;
                 this.aiItems.Add((AI_Item)element);
             }
             base.Add(element);
@@ -111,46 +75,181 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         public void Update()
         {
-            if (this.moveItem == null)
+            foreach (HUD2D item in this.removeList)
             {
-                if (this.game.inputProvider.isLeftMouseButtonPressed())
+                Remove(item);
+            }
+            this.removeList.Clear();
+
+            if (isMouseInBuildingBox())
+            {
+                if (this.moveItem == null)
                 {
-                    foreach (HUD2D item in this.allChilds)
+                    if (this.game.inputProvider.isLeftMouseButtonPressed())
                     {
-                        if (item is AI_Item)
+                        foreach (HUD2D item in this.allChilds)
                         {
-                            if (((AI_Item)item).typeString.Intersects(this.game.inputProvider.getMousePos()))
+                            if (item is AI_Item)
                             {
-                                this.moveItem = (AI_Item)item;
-                                this.moveOffset = item.position - this.game.inputProvider.getMousePos();
-                                break;
+                                if (((AI_Item)item).typeString.Intersects(this.game.inputProvider.getMousePos()))
+                                {
+                                    this.moveItem = (AI_Item)item;
+                                    this.moveOffset = item.position - this.game.inputProvider.getMousePos();
+                                    break;
+                                }
                             }
                         }
                     }
                 }
-            }
-            else
-            {
-                if (this.game.inputProvider.isLeftMouseButtonDown())
+                else
                 {
-                    this.moveItem.position = this.game.inputProvider.getMousePos() + this.moveOffset;
-                    switch (this.moveItem.positionType)
+                    if (this.game.inputProvider.isLeftMouseButtonDown())
                     {
-                        case HUDType.ABSOLUT:
-                            this.moveItem.abstractPosition = this.moveItem.position;
-                            break;
-                        case HUDType.RELATIV:
-                            this.moveItem.abstractPosition.X = this.moveItem.position.X / this.game.GraphicsDevice.Viewport.Width;
-                            this.moveItem.abstractPosition.Y = this.moveItem.position.Y / this.game.GraphicsDevice.Viewport.Height;
-                            break;
+                        this.moveItem.position = this.game.inputProvider.getMousePos() + this.moveOffset;
+                        switch (this.moveItem.positionType)
+                        {
+                            case HUDType.ABSOLUT:
+                                this.moveItem.abstractPosition = this.moveItem.position;
+                                break;
+                            case HUDType.RELATIV:
+                                this.moveItem.abstractPosition.X = this.moveItem.position.X / this.game.GraphicsDevice.Viewport.Width;
+                                this.moveItem.abstractPosition.Y = this.moveItem.position.Y / this.game.GraphicsDevice.Viewport.Height;
+                                break;
+                        }
+                        this.moveItem.ClientSizeChanged();
                     }
-                    this.moveItem.ClientSizeChanged();
+                    else
+                    {
+                        this.moveItem = null;
+                    }
+                }
+
+                AI_ItemPort port = getMouseOverPort();
+                if (port != null)
+                {
+                    if (this.game.inputProvider.isLeftMouseButtonPressed())
+                    {
+
+                        if (this.moveConnection != null)
+                        {
+                            Console.WriteLine(port.portType + " , " + this.movePort.portType);
+
+                            if (port.portType == this.movePort.portType)
+                            {
+                                if (port.portType == AI_ItemPort.PortType.INPUT && port.connections.Count > 0)
+                                {
+                                    AI_Connection old = port.connections[0];
+                                    old.setSource(null);
+                                    old.setTarget(null);
+                                    this.aiConnections.Remove(old);
+                                }
+
+                                port.Add(this.moveConnection);
+                                if (this.moveConnection.getTarget() != null 
+                                    && this.moveConnection.getSource() != null 
+                                    && this.moveConnection.getTarget().item == this.moveConnection.getSource().item)
+                                {
+                                    this.moveConnection.setTarget(null);
+                                    this.moveConnection.setSource(null);
+                                    this.aiConnections.Remove(this.moveConnection);
+                                }
+                                Remove(this.movePort);
+                                this.movePort = null;
+                                this.moveConnection = null;
+                            }
+                        }
+                        else
+                        {
+                            this.moveConnection = new AI_Connection(this.game);
+
+                            AI_ItemPort.PortType portType = (port.portType == AI_ItemPort.PortType.INPUT) ? AI_ItemPort.PortType.OUTPUT : AI_ItemPort.PortType.INPUT;
+                            this.movePort = new AI_ItemPort(this.game.inputProvider.getMousePos(), HUDType.ABSOLUT, portType, this.game);
+
+                            port.Add(this.moveConnection);
+                            this.movePort.Add(this.moveConnection);
+
+                            Add(this.movePort);
+                            this.aiConnections.Add(this.moveConnection);
+                        }
+
+                    }
                 }
                 else
                 {
-                    this.moveItem = null;
+                    if (this.moveConnection != null)
+                    {
+                        if (this.game.inputProvider.isLeftMouseButtonPressed())
+                        {
+                            this.moveConnection.setTarget(null);
+                            this.moveConnection.setSource(null);
+
+                            this.aiConnections.Remove(this.moveConnection);
+                            Remove(this.movePort);
+
+                            this.moveConnection = null;
+                            this.movePort = null;
+                        }
+                    }
+                }
+
+                if (this.moveConnection != null)
+                {
+                    this.movePort.position = this.game.inputProvider.getMousePos();
+                }
+
+            }
+        }
+
+
+        private AI_ItemPort getMouseOverPort()
+        {
+
+            foreach (AI_Item item in this.aiItems)
+            {
+                foreach (AI_ItemPort port in item.inputs)
+                {
+                    if (port.Intersects(this.game.inputProvider.getMousePos()))
+                    {
+                        port.color = Color.Green;
+                        return port;
+                    }
+                    else
+                    {
+                        port.color = Color.White;
+                    }
+                }
+
+                foreach (AI_ItemPort port in item.outputs)
+                {
+                    if (port.Intersects(this.game.inputProvider.getMousePos()))
+                    {
+                        port.color = Color.Green;
+                        return port;
+                    }
+                    else
+                    {
+                        port.color = Color.White;
+                    }
                 }
             }
+
+            return null;
+        }
+
+
+        private bool isMouseInBuildingBox()
+        {
+            bool isWithin = true;
+            Vector2 mousePos = this.game.inputProvider.getMousePos();
+            if (mousePos.X < this.game.GraphicsDevice.Viewport.Width * 0.05f
+                || mousePos.X > this.game.GraphicsDevice.Viewport.Width * 0.75f
+                || mousePos.Y < this.game.GraphicsDevice.Viewport.Height * 0.05f
+                || mousePos.Y > this.game.GraphicsDevice.Viewport.Height * 0.95f)
+            {
+                isWithin = false;
+            }
+
+            return isWithin;
         }
 
     }

@@ -8,7 +8,7 @@ namespace Battlestation_Antaris.View
     public class AIView : View
     {
 
-        private AI_Container aiContainer;
+        public AI_Container aiContainer;
 
         public AIView(Game1 game)
             : base(game)
