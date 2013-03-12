@@ -136,15 +136,12 @@ namespace Battlestation_Antaris.Control.AI
 
                 connections.RemoveAt(0);
             }
-            Console.WriteLine(this.maxIndice + " : " + this.inputs.Count);
         }
 
 
         public void ThreadPoolCallback(Object threadContext)
         {
             this.targetResults.Clear();
-
-            Console.WriteLine(this.maxIndice);
 
             foreach (SpatialObject target in this.targetObjects)
             {
@@ -190,14 +187,40 @@ namespace Battlestation_Antaris.Control.AI
                     }
                     if (item is AI_Transformer)
                     {
-                        // simple copy for testing
-                        values[tuple.Item2[0]] = values[tuple.Item1[0]];
+                        switch ((AI_Transformer.TransformerType)item.subType)
+                        {
+                            case AI_Transformer.TransformerType.SCALE :
+                                values[tuple.Item2[0]] = values[tuple.Item1[0]];
+                                break;
+                            case AI_Transformer.TransformerType.INVERSE :
+                                values[tuple.Item2[0]] = 1 - values[tuple.Item1[0]];
+                                break;
+                            case AI_Transformer.TransformerType.SQR :
+                                values[tuple.Item2[0]] = values[tuple.Item1[0]] * values[tuple.Item1[0]];
+                                break;
+                            case AI_Transformer.TransformerType.SQRT :
+                                values[tuple.Item2[0]] = (float)Math.Sqrt(values[tuple.Item1[0]]);
+                                break;
+                        }
                         continue;
                     }
                     if (item is AI_Mixer)
                     {
-                        // simple avg for testing
-                        values[tuple.Item2[0]] = (values[tuple.Item1[0]] + values[tuple.Item1[1]]) / 2;
+                        switch ((AI_Mixer.MixerType)item.subType)
+                        {
+                            case AI_Mixer.MixerType.AVG:
+                                values[tuple.Item2[0]] = (values[tuple.Item1[0]] + values[tuple.Item1[1]]) / 2;
+                                break;
+                            case AI_Mixer.MixerType.MAX:
+                                values[tuple.Item2[0]] = Math.Max(values[tuple.Item1[0]], values[tuple.Item1[1]]);
+                                break;
+                            case AI_Mixer.MixerType.MIN:
+                                values[tuple.Item2[0]] = Math.Min(values[tuple.Item1[0]], values[tuple.Item1[1]]);
+                                break;
+                            case AI_Mixer.MixerType.MULTIPLY:
+                                values[tuple.Item2[0]] = values[tuple.Item1[0]] * values[tuple.Item1[1]];
+                                break;
+                        }
                         continue;
                     }
                     if (item is AI_Output)

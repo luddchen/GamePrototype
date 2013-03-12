@@ -61,6 +61,16 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         }
 
 
+        public override void Remove(HUD2D element)
+        {
+            if (element is AI_Item)
+            {
+                this.aiItems.Remove((AI_Item)element);
+            }
+            base.Remove(element);
+        }
+
+
         public void DrawConnections()
         {
             this.game.primitiveBatch.Begin(PrimitiveType.LineList);
