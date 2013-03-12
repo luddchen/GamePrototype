@@ -20,7 +20,7 @@ namespace Battlestation_Antaris.Control
             toMenuButton.SetAction(delegate() { this.game.switchTo(Situation.MENU); });
             toMenuButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add(toMenuButton);
-
+            this.worldUpdate = WorldUpdate.NO_UPDATE;
 
             HUD2DButton verifyButton = new HUD2DButton("Verify", new Vector2(0.9f, 0.8f), 0.8f, this.game);
             verifyButton.SetAction(

@@ -38,6 +38,7 @@ namespace Battlestation_Antaris.Control.AI
             this.inputs = new List<AI_Input.InputType>(ai.inputs);
             this.items = new List<AI_Item>(ai.items);
             this.portIndices = new List<Tuple<int[], int[]>>(ai.portIndices);
+            this.maxIndice = ai.maxIndice;
             this.targetObjects = new List<SpatialObject>();
             this.targetResults = new List<float>();
         }
@@ -135,12 +136,15 @@ namespace Battlestation_Antaris.Control.AI
 
                 connections.RemoveAt(0);
             }
+            Console.WriteLine(this.maxIndice + " : " + this.inputs.Count);
         }
 
 
         public void ThreadPoolCallback(Object threadContext)
         {
             this.targetResults.Clear();
+
+            Console.WriteLine(this.maxIndice);
 
             foreach (SpatialObject target in this.targetObjects)
             {
@@ -150,7 +154,7 @@ namespace Battlestation_Antaris.Control.AI
                     continue;
                 }
 
-                float[] values = new float[this.maxIndice + 1];
+                float[] values = new float[this.maxIndice];
 
                 // init inputs
                 for (int i = 0; i < this.inputs.Count; i++ )

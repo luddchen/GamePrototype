@@ -77,39 +77,31 @@ namespace Battlestation_Antaris.Model
 
                 if (target != null)
                 {
-                    Vector3 rot = Tools.Tools.GetRotation(this.globalPosition - target.globalPosition, this.rotation);
+                    Vector3 rot = Tools.Tools.GetRotation(target.globalPosition - this.globalPosition, this.rotation);
                     
                     bool fire = true;
 
-                    if (rot.Z < -0.05f && this.attributes.EngineYaw.CurrentVelocity >= 0)
+                    if (rot.Z < this.attributes.EngineYaw.CurrentVelocity)
+                    {
+                        InjectControl(Control.Control.YAW_RIGHT);
+                    }
+
+                    if (rot.Z > this.attributes.EngineYaw.CurrentVelocity)
                     {
                         InjectControl(Control.Control.YAW_LEFT);
-                        fire = false;
-                    }
-                    else
-                    {
-                        if (rot.Z > 0.05f && this.attributes.EngineYaw.CurrentVelocity <= 0)
-                        {
-                            InjectControl(Control.Control.YAW_RIGHT);
-                            fire = false;
-                        }
                     }
 
-                    if (rot.X < -0.05f && this.attributes.EnginePitch.CurrentVelocity >=0)
+                    if (rot.X < this.attributes.EnginePitch.CurrentVelocity)
+                    {
+                        InjectControl(Control.Control.PITCH_DOWN);
+                    }
+
+                    if (rot.X > this.attributes.EnginePitch.CurrentVelocity)
                     {
                         InjectControl(Control.Control.PITCH_UP);
-                        fire = false;
-                    }
-                    else
-                    {
-                        if (rot.X > 0.05f && this.attributes.EnginePitch.CurrentVelocity <= 0)
-                        {
-                            InjectControl(Control.Control.PITCH_DOWN);
-                            fire = false;
-                        }
                     }
 
-                    if ((Math.Abs(rot.X) < Math.PI && Math.Abs(rot.Z) < Math.PI))
+                    if ((Math.Abs(rot.X) < Math.PI/90 && Math.Abs(rot.Z) < Math.PI/90))
                     {
                         this.beamCooldown--;
                         if (this.beamCooldown < 0)
