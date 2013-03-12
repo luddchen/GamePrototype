@@ -54,7 +54,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
         public Compass3d(ContentManager content, GraphicsDevice device)
         {
             // init 3d model and its transformation matrices
-            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>("Models/compass2");
+            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>("Models/compass3");
             this.boneTransforms = new Matrix[model3d.Bones.Count];
 
             this.device = device;
@@ -89,7 +89,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
 
                 // rotate, scale and translate the 3d model
                 model3d.Root.Transform = Matrix.CreateScale(0.05f)
-                                        * Matrix.CreateFromAxisAngle(Vector3.Forward, rot.X)
+                                        * Matrix.CreateFromAxisAngle(Vector3.Right, rot.X)
                                         * Matrix.CreateFromAxisAngle(Vector3.Up, rot.Z)
                                         * Matrix.CreateTranslation(Vector3.Add( Vector3.Multiply(Vector3.Forward, 1.8f) ,
                                                                                 Vector3.Multiply(Vector3.Down, -0.3f)));

@@ -107,13 +107,13 @@ namespace Battlestation_Antaris.Tools
             double up = Vector3.Dot(targetVector, globalRotation.Up);
 
             // compute rotation on up-axis
-            rotation.Z = (float)Math.Atan2(forward, right);
+            rotation.Z = -(float)Math.Atan2(right, forward);
 
             // compute length of local target vector after projection on forward-right-plane 
             double planeDist = Math.Sqrt(forward * forward + right * right);
 
             // compute rotation on right-axis
-            rotation.X = (float)Math.Atan2(planeDist, up);
+            rotation.X = (float)Math.Atan2(up, planeDist);
 
             return rotation;
         }

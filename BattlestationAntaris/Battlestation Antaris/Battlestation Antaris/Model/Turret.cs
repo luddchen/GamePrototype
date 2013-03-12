@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using SpatialObjectAttributesLibrary;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD;
+using Battlestation_Antaris.Control.AI;
 
 namespace Battlestation_Antaris.Model
 {
@@ -14,12 +15,13 @@ namespace Battlestation_Antaris.Model
     /// </summary>
     public class Turret : SpatialObject
     {
+        public AI ai;
 
         private Random random;
 
         private int timeout;
 
-        private int beams;
+        private int beamCooldown;
 
         /// <summary>
         /// create a new turret and insert into the world
@@ -32,13 +34,14 @@ namespace Battlestation_Antaris.Model
         {
             this.random = new Random((int)position.X);
             this.timeout = this.random.Next(120) + 60;
-            this.beams = 0;
+            this.beamCooldown = 30;
 
             this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>("Attributes//Turret") );
 
             this.miniMapIcon.Texture = content.Load<Texture2D>("Models//Turret//turret_2d");
             this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
             //this.miniMapIcon.scale = 2.0f;
+
         }
 
 
@@ -50,41 +53,74 @@ namespace Battlestation_Antaris.Model
         {
             ApplyRotation(gameTime);
 
-            this.timeout--;
+            this.attributes.EngineYaw.ApplyResetForce();
+            this.attributes.EnginePitch.ApplyResetForce();
+            this.attributes.EngineRoll.ApplyResetForce();
 
-            if (this.timeout < 0)
+            if (this.ai != null)
             {
-                this.timeout = this.random.Next(30) + 30;
-                this.beams = 1;// this.random.Next(2) + 2;
-            }
+                this.ai.targetObjects = this.world.allObjects;
 
-            if (this.beams > 0)
-            {
-                Laser laser = new Laser(this, 0.0f, this.world.game.Content, this.world);
-                this.beams--;
-            }
+                this.ai.ThreadPoolCallback(null);
 
+                float maxValue = 0;
+                SpatialObject target = null;
 
-            switch (this.random.Next(6))
-            {
-                case 0:
-                    InjectControl(Control.Control.PITCH_DOWN);
-                    break;
-                case 1:
-                    InjectControl(Control.Control.PITCH_UP);
-                    break;
-                case 2:
-                    InjectControl(Control.Control.YAW_LEFT);
-                    break;
-                case 3:
-                    InjectControl(Control.Control.YAW_RIGHT);
-                    break;
-                case 4:
-                    InjectControl(Control.Control.ROLL_ANTICLOCKWISE);
-                    break;
-                case 5:
-                    InjectControl(Control.Control.ROLL_CLOCKWISE);
-                    break;
+                for (int i = 0; i < this.ai.targetResults.Count; i++)
+                {
+                    if (maxValue < this.ai.targetResults[i])
+                    {
+                        maxValue = this.ai.targetResults[i];
+                        target = this.ai.targetObjects[i];
+                    }
+                }
+
+                if (target != null)
+                {
+                    Vector3 rot = Tools.Tools.GetRotation(this.globalPosition - target.globalPosition, this.rotation);
+                    
+                    bool fire = true;
+
+                    if (rot.Z < -0.05f && this.attributes.EngineYaw.CurrentVelocity >= 0)
+                    {
+                        InjectControl(Control.Control.YAW_LEFT);
+                        fire = false;
+                    }
+                    else
+                    {
+                        if (rot.Z > 0.05f && this.attributes.EngineYaw.CurrentVelocity <= 0)
+                        {
+                            InjectControl(Control.Control.YAW_RIGHT);
+                            fire = false;
+                        }
+                    }
+
+                    if (rot.X < -0.05f && this.attributes.EnginePitch.CurrentVelocity >=0)
+                    {
+                        InjectControl(Control.Control.PITCH_UP);
+                        fire = false;
+                    }
+                    else
+                    {
+                        if (rot.X > 0.05f && this.attributes.EnginePitch.CurrentVelocity <= 0)
+                        {
+                            InjectControl(Control.Control.PITCH_DOWN);
+                            fire = false;
+                        }
+                    }
+
+                    if ((Math.Abs(rot.X) < Math.PI && Math.Abs(rot.Z) < Math.PI))
+                    {
+                        this.beamCooldown--;
+                        if (this.beamCooldown < 0)
+                        {
+                            this.beamCooldown = 30;
+                            Laser laser = new Laser(this, 0.0f, this.world.game.Content, this.world);
+                            //InjectControl(Control.Control.FIRE_LASER);
+                        }
+                    }
+                }
+
             }
 
         }

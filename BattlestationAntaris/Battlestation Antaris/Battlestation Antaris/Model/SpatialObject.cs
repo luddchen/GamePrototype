@@ -80,7 +80,7 @@ namespace Battlestation_Antaris.Model
         /// <summary>
         /// a counter to determine the need of rotation matrix repair
         /// </summary>
-        private int rotationRepairCountdown;
+        protected int rotationRepairCountdown;
 
 
         /// <summary>

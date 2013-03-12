@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Battlestation_Antaris.View.HUD.AIComposer;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antaris.Control.AI
 {
@@ -16,21 +17,38 @@ namespace Battlestation_Antaris.Control.AI
 
         int maxIndice;
 
+        public SpatialObject source;
+
+        public List<SpatialObject> targetObjects;
+
+        public List<float> targetResults;
+
 
         public AI()
         {
             this.inputs = new List<AI_Input.InputType>();
             this.items = new List<AI_Item>();
             this.portIndices = new List<Tuple<int[], int[]>>();
+            this.targetObjects = new List<SpatialObject>();
+            this.targetResults = new List<float>();
+        }
+
+        public AI(AI ai)
+        {
+            this.inputs = new List<AI_Input.InputType>(ai.inputs);
+            this.items = new List<AI_Item>(ai.items);
+            this.portIndices = new List<Tuple<int[], int[]>>(ai.portIndices);
+            this.targetObjects = new List<SpatialObject>();
+            this.targetResults = new List<float>();
         }
 
         public void Create(AI_Container aiContainer)
         {
             this.inputs.Clear();
             this.items.Clear();
+            this.portIndices.Clear();
             // create lists for input ,connection , items
             List<AI_Connection> connections = new List<AI_Connection>();
-            this.portIndices.Clear();
 
             foreach(AI_Item item in aiContainer.aiItems) 
             {
@@ -116,6 +134,77 @@ namespace Battlestation_Antaris.Control.AI
                 }
 
                 connections.RemoveAt(0);
+            }
+        }
+
+
+        public void ThreadPoolCallback(Object threadContext)
+        {
+            this.targetResults.Clear();
+
+            foreach (SpatialObject target in this.targetObjects)
+            {
+                if (target == this.source || target is Dust)
+                {
+                    this.targetResults.Add(-1.0f);
+                    continue;
+                }
+
+                float[] values = new float[this.maxIndice + 1];
+
+                // init inputs
+                for (int i = 0; i < this.inputs.Count; i++ )
+                {
+                    switch (this.inputs[i])
+                    {
+                        case AI_Input.InputType.DISTANCE :
+                            values[i] = ValueProvider.Distance(this.source, target, this.source.attributes.Laser.Range);
+                            break;
+                        case AI_Input.InputType.ORTHOGONAL_VELOCITY :
+                            values[i] = ValueProvider.OrthogonalVelocity(this.source, target, this.source.attributes.Laser.ProjectileVelocity);
+                            break;
+                        case AI_Input.InputType.ROTATION :
+                            values[i] = ValueProvider.Rotation(this.source, target);
+                            break;
+                        case AI_Input.InputType.SHIELD_HEALTH :
+                            values[i] = ValueProvider.ShieldStatus(target);
+                            break;
+                        case AI_Input.InputType.HULL_HEALTH :
+                            values[i] = ValueProvider.HullStatus(target);
+                            break;
+                    }
+                }
+
+
+                foreach (AI_Item item in this.items)
+                {
+                    Tuple<int[], int[]> tuple = this.portIndices[this.items.IndexOf(item)];
+
+                    if (item is AI_Input)
+                    {
+                        continue;
+                    }
+                    if (item is AI_Transformer)
+                    {
+                        // simple copy for testing
+                        values[tuple.Item2[0]] = values[tuple.Item1[0]];
+                        continue;
+                    }
+                    if (item is AI_Mixer)
+                    {
+                        // simple avg for testing
+                        values[tuple.Item2[0]] = (values[tuple.Item1[0]] + values[tuple.Item1[1]]) / 2;
+                        continue;
+                    }
+                    if (item is AI_Output)
+                    {
+                        // assuming only one output, so last value in values is the result
+                        continue;
+                    }
+                }
+
+                // copy result
+                this.targetResults.Add(values[values.Length - 1]);
             }
         }
 

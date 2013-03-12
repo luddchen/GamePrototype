@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Battlestation_Antaris.View;
 using Battlestation_Antaris.View.HUD.AIComposer;
 using Battlestation_Antaris.Control.AI;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antaris.Control
 {
@@ -28,6 +29,12 @@ namespace Battlestation_Antaris.Control
                     AI.AI ai = new AI.AI();
                     ai.Create(((AIView)this.view).aiContainer);
                     Console.WriteLine(ai);
+
+                    foreach (Turret turret in this.game.world.allTurrets) 
+                    {
+                        turret.ai = new AI.AI(ai);
+                        turret.ai.source = turret;
+                    }
                 });
             verifyButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add(verifyButton);
