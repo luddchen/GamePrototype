@@ -19,8 +19,6 @@ namespace Battlestation_Antaris.Control
         private HUD2DButton toMenuButton;
         private FpsDisplay fpsDisplay;
 
-        private HUD2DButton debugButton;
-
         private MiniMap.Config mapConfig;
         
         /// <summary>
@@ -57,10 +55,6 @@ namespace Battlestation_Antaris.Control
 
             fpsDisplay = new FpsDisplay(new Vector2(50, 20), this.game);
             this.view.allHUD_2D.Add(fpsDisplay);
-
-            debugButton = new HUD2DButton("Debug", new Vector2(50, 100), 0.5f, this.game);
-            this.debugButton.SetAction(delegate() { Console.Out.WriteLine(this.game.world.spaceShip.attributes); });
-            this.view.allHUD_2D.Add(debugButton);
 
             mapConfig = new MiniMap.Config(new Vector2(0.5f, 0.91f), new Vector2(0.25f, 0.18f), new Vector2(0.25f, 0.18f));
         }

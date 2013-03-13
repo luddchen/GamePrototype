@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using SpatialObjectAttributesLibrary;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD;
+using Battlestation_Antaris.Tools;
 
 namespace Battlestation_Antaris.Model
 {
@@ -74,6 +75,34 @@ namespace Battlestation_Antaris.Model
                 this.target = this.world.treeTest.CastRay(new Ray(this.globalPosition, this.rotation.Forward), 1, ref testDist);
             }
 
+        }
+
+        public override void addDebugOutput()
+        {
+            Game1.debugViewer.Add(new DebugElement(this, "Speed", delegate(Object obj)
+            {
+                return String.Format("{0:F2}", (obj as SpaceShip).attributes.Engine.CurrentVelocity);
+            }));
+
+            Game1.debugViewer.Add(new DebugElement(this, "Yaw", delegate(Object obj)
+            {
+                return String.Format("{0:F2}", (obj as SpaceShip).attributes.EngineYaw.CurrentVelocity * 100);
+            }));
+
+            Game1.debugViewer.Add(new DebugElement(this, "Pitch", delegate(Object obj)
+            {
+                return String.Format("{0:F2}", (obj as SpaceShip).attributes.EnginePitch.CurrentVelocity * 100);
+            }));
+
+            Game1.debugViewer.Add(new DebugElement(this, "Roll", delegate(Object obj)
+            {
+                return String.Format("{0:F2}", (obj as SpaceShip).attributes.EngineRoll.CurrentVelocity * 100);
+            }));
+
+            Game1.debugViewer.Add(new DebugElement(this, "Distance", delegate(Object obj)
+            {
+                return String.Format("{0:F0}", (obj as SpaceShip).globalPosition.Length());
+            }));
         }
 
 

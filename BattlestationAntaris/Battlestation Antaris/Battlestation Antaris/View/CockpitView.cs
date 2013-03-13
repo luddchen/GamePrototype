@@ -83,11 +83,6 @@ namespace Battlestation_Antaris.View
 
 
             // 2D HUD
-            HUD2DString testString = new HUD2DString("Antaris Cockpit : W/S - Engine , A/D - Roll", null, null, null, new Color(32, 32, 32, 64), 0.45f, 0.0f, this.game);
-            testString.abstractPosition = new Vector2(0.5f, 0.05f);
-            testString.positionType = HUDType.RELATIV;
-            this.allHUD_2D.Add(testString);
-
             HUD2DTexture cockpitTexture = new HUD2DTexture(this.game);
             cockpitTexture.abstractPosition = new Vector2(0.5f, 0.5f);
             cockpitTexture.positionType = HUDType.RELATIV;
@@ -98,8 +93,6 @@ namespace Battlestation_Antaris.View
             this.allHUD_2D.Add(cockpitTexture);
 
             this.allHUD_2D.Add(this.game.world.miniMap);
-
-            this.allHUD_2D.Add(new ShipAttributesVisualizer(0.07f, 0.9f, this.game.world.spaceShip, this.game));
 
             this.targetInfo = new TargetInfo(new Vector2(60, 200), HUDType.ABSOLUT, new Vector2(150, 60), HUDType.ABSOLUT, this.game);
             this.allHUD_2D.Add(this.targetInfo);
@@ -283,11 +276,6 @@ namespace Battlestation_Antaris.View
                     mesh.Draw();
                 }
             }
-        }
-
-        private void drawGrid()
-        {
-
         }
 
     }

@@ -5,6 +5,7 @@ using Battlestation_Antaris.Control;
 using System.Collections.Generic;
 using System;
 using Battlestation_Antaris.Model;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antaris
 {
@@ -14,6 +15,12 @@ namespace Battlestation_Antaris
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        private const Boolean ACTIVATE_DEBUG = true;
+
+        /// <summary>
+        /// DebugViewer draws debugOutput ingame
+        /// </summary>
+        public static DebugViewer debugViewer;
 
         /// <summary>
         /// game graphics device manager
@@ -72,7 +79,6 @@ namespace Battlestation_Antaris
             this.IsFixedTimeStep = true;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
-
         }
 
 
@@ -102,6 +108,8 @@ namespace Battlestation_Antaris
         {
             this.inputProvider = new InputProvider();
 
+            Game1.debugViewer = new DebugViewer(this);
+
             // create situations (control and views)
             this.allSituations = new List<SituationController>();
             this.allSituations.Add(new CockpitController(this, new View.CockpitView(this)));
@@ -115,8 +123,21 @@ namespace Battlestation_Antaris
             this.world.Initialize(Content);
 
             SpatialObjectFactory.initializeFactory(this.Content, this.world);
+
+            initializeDebug();
             
             base.Initialize();
+        }
+
+        private void initializeDebug()
+        {
+            if (ACTIVATE_DEBUG)
+            {
+                foreach (SituationController situationControl in allSituations)
+                {
+                    situationControl.view.allHUD_2D.Add(Game1.debugViewer);
+                }
+            }
         }
 
 
@@ -170,7 +191,6 @@ namespace Battlestation_Antaris
         {
             // update input
             this.inputProvider.Update();
-
 
             switch (this.activeSituation.worldUpdate)
             {

@@ -145,6 +145,7 @@ namespace Battlestation_Antaris.Model
             }
 
             this.world.addObject(this);
+            this.addDebugOutput();
         }
 
 
@@ -304,6 +305,7 @@ namespace Battlestation_Antaris.Model
 
         }
 
+        public virtual void addDebugOutput() { }
 
         public override string ToString()
         {

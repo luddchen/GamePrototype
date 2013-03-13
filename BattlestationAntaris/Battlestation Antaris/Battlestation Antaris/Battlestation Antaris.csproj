@@ -98,6 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Tools\DebugElement.cs" />
     <Compile Include="Tools\DynamicOctree.cs" />
     <Compile Include="Tools\RandomGen.cs" />
     <Compile Include="Tools\RayCastThreadPool.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="View\HUD\AIComposer\AI_Transformer.cs" />
     <Compile Include="View\HUD\CockpitHUD\TargetInfo.cs" />
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
+    <Compile Include="View\HUD\DebugViewer.cs" />
     <Compile Include="View\HUD\MiniMapIcon.cs" />
     <Compile Include="View\HUD\CommandHUD\BuildMenu.cs" />
     <Compile Include="View\HUD\CockpitHUD\Compass3d.cs" />
@@ -131,7 +133,6 @@
     <Compile Include="View\HUD\HUD2DString.cs" />
     <Compile Include="View\HUD\HUD2DTexture.cs" />
     <Compile Include="View\HUD\MiniMap.cs" />
-    <Compile Include="View\HUD\CockpitHUD\ShipAttributesVisualizer.cs" />
     <Compile Include="View\MenuView.cs" />
     <Compile Include="View\Skybox.cs" />
     <Compile Include="View\View.cs" />
