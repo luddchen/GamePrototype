@@ -111,9 +111,17 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             float xOff = pointVec.X / lineVec.X;
             float yOff = pointVec.Y / lineVec.Y;
 
+            if (Math.Abs(lineVec.X) < 0.01f)
+            {
+                if (Math.Abs(pointVec.X) < 1f && yOff > 0.05f && yOff < 0.95f)
+                {
+                    return true;
+                }
+            }
+
             if (xOff > 0.05f && xOff < 0.95f && yOff > 0.05f && yOff < 0.95f)
             {
-                if (Math.Abs(xOff - yOff) < 0.1f)
+                if (Math.Abs(xOff - yOff) < 0.2f)
                 {
                     return true;
                 }
