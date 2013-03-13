@@ -15,9 +15,14 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         public int width = 3;
 
+        public Color colorNormal = Color.Yellow;
+
+        public Color colorHighlight = Color.Red;
+
         public AI_Connection(Game1 game)
             : base(game)
         {
+            this.color = this.colorNormal;
         }
 
 
@@ -85,14 +90,14 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
                 {
                     for (Vector2 pos = new Vector2(-this.width / 2, 0); pos.X <= (this.width / 2); pos.X += 1.0f)
                     {
-                        primitiveBatch.AddVertex(this.source.position + pos, Color.Yellow);
-                        primitiveBatch.AddVertex(this.target.position + pos, Color.Yellow);
+                        primitiveBatch.AddVertex(this.source.position + pos, this.color);
+                        primitiveBatch.AddVertex(this.target.position + pos, this.color);
                     }
                 }
                 else
                 {
-                    primitiveBatch.AddVertex(this.source.position, Color.Yellow);
-                    primitiveBatch.AddVertex(this.target.position, Color.Yellow);
+                    primitiveBatch.AddVertex(this.source.position, this.color);
+                    primitiveBatch.AddVertex(this.target.position, this.color);
                 }
             }
         }
@@ -100,7 +105,21 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         public override bool Intersects(Vector2 point)
         {
-            throw new NotImplementedException();
+            Vector2 lineVec = this.target.position - this.source.position; // Vector source -> target
+            Vector2 pointVec = point - this.source.position; // Vector source -> point
+
+            float xOff = pointVec.X / lineVec.X;
+            float yOff = pointVec.Y / lineVec.Y;
+
+            if (xOff > 0.05f && xOff < 0.95f && yOff > 0.05f && yOff < 0.95f)
+            {
+                if (Math.Abs(xOff - yOff) < 0.1f)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     }

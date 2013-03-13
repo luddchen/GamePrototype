@@ -87,7 +87,14 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         {
             foreach (HUD2D item in this.removeList)
             {
-                Remove(item);
+                if (item is AI_Connection)
+                {
+                    this.aiConnections.Remove((AI_Connection)item);
+                }
+                else
+                {
+                    Remove(item);
+                }
             }
             this.removeList.Clear();
 
@@ -205,6 +212,24 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
                     this.movePort.position = this.game.inputProvider.getMousePos();
                 }
 
+
+                foreach (AI_Connection con in this.aiConnections)
+                {
+                    if (con.Intersects(this.game.inputProvider.getMousePos()))
+                    {
+                        con.color = con.colorHighlight;
+                        if (this.game.inputProvider.isLeftMouseButtonPressed())
+                        {
+                            con.Delete();
+                            this.removeList.Add(con);
+                        }
+                    }
+                    else
+                    {
+                        con.color = con.colorNormal;
+                    }
+                }
+
             }
         }
 
@@ -261,7 +286,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         }
 
 
-        public void Clear()
+        public void ClearAI()
         {
             foreach (AI_Connection c in this.aiConnections)
             {

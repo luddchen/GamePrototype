@@ -81,7 +81,7 @@ namespace Battlestation_Antaris.Control.AI
 
         public static void ReadAIContainer(String fileName, AI_Container aiContainer, Game1 game)
         {
-            aiContainer.Clear();
+            aiContainer.ClearAI();
 
             XmlTextReader reader = new XmlTextReader(fileName);
 
