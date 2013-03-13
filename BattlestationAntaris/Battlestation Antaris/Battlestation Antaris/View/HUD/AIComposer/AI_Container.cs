@@ -260,6 +260,22 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             return isWithin;
         }
 
+
+        public void Clear()
+        {
+            foreach (AI_Connection c in this.aiConnections)
+            {
+                c.Delete();
+            }
+            this.aiConnections.Clear();
+
+            foreach (AI_Item i in this.aiItems)
+            {
+                this.allChilds.Remove(i);
+            }
+            this.aiItems.Clear();
+        }
+
     }
 
 }
