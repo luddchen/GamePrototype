@@ -9,7 +9,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
     {
         public AI_Container container;
 
-        String itemTypeName;
+        protected String itemTypeName;
 
         public Object subType;
 
@@ -23,7 +23,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         public HUD2DString typeString;
 
-        protected HUD2DString subTypeString;
+        public HUD2DString subTypeString;
 
         private HUD2DButton nextSubType;
 
@@ -32,13 +32,13 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         private HUD2DButton removeButton;
 
 
-        public AI_Item(Vector2 abstractPosition, HUDType positionType, String typeName, Game1 game)
+        public AI_Item(Vector2 abstractPosition, HUDType positionType, Game1 game)
             : base(abstractPosition, positionType, game)
         {
             this.sizeType = HUDType.ABSOLUT;
             this.abstractSize = new Vector2(200, 100);
 
-            this.itemTypeName = typeName;
+            this.itemTypeName = "X";
             this.inputs = new List<AI_ItemPort>();
             this.outputs = new List<AI_ItemPort>();
 
@@ -48,7 +48,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             this.background.abstractSize = this.abstractSize;
             Add(this.background);
 
-            this.typeString = new HUD2DString(typeName, game);
+            this.typeString = new HUD2DString(this.itemTypeName, game);
             this.typeString.positionType = this.sizeType;
             this.typeString.scale = 0.6f;
             this.typeString.abstractPosition = new Vector2(0, -(this.abstractSize.Y - this.typeString.size.Y) / 2);

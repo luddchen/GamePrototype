@@ -39,6 +39,24 @@ namespace Battlestation_Antaris.Control
             verifyButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add(verifyButton);
 
+            HUD2DButton saveButton = new HUD2DButton("Save", new Vector2(0.85f, 0.88f), 0.6f, this.game);
+            saveButton.SetAction(
+                delegate()
+                {
+                    AI_XML.WriteAIContainer("testAI.xml", ((View.AIView)this.view).aiContainer);
+                });
+            saveButton.positionType = HUDType.RELATIV;
+            this.view.allHUD_2D.Add(saveButton);
+
+            HUD2DButton loadButton = new HUD2DButton("Load", new Vector2(0.92f, 0.88f), 0.6f, this.game);
+            loadButton.SetAction(
+                delegate()
+                {
+                    AI_XML.ReadAIContainer("testAI.xml", ((View.AIView)this.view).aiContainer, this.game);
+                });
+            loadButton.positionType = HUDType.RELATIV;
+            this.view.allHUD_2D.Add(loadButton);
+
 
             HUD2DArray addButtonArray = new HUD2DArray(new Vector2(0.9f, 0.5f), HUDType.RELATIV, new Vector2(250, 300), HUDType.ABSOLUT, game);
             addButtonArray.direction = LayoutDirection.VERTICAL;

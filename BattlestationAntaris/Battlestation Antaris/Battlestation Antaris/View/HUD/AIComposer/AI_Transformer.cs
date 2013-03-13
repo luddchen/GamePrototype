@@ -17,9 +17,11 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         }
 
         public AI_Transformer(Vector2 abstractPosition, HUDType positionType, Game1 game)
-            : base(abstractPosition, positionType, "Transformer", game)
+            : base(abstractPosition, positionType, game)
         {
             this.subType = TransformerType.SCALE;
+            this.itemTypeName = "Transformer";
+            this.typeString.String = this.itemTypeName;
 
             AddPort(AI_ItemPort.PortType.INPUT);
             AddPort( AI_ItemPort.PortType.OUTPUT);

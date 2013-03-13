@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Control\AIController.cs" />
     <Compile Include="Control\AI\AI.cs" />
+    <Compile Include="Control\AI\AI_XML.cs" />
     <Compile Include="Control\AI\ValueProvider.cs" />
     <Compile Include="Control\CockpitController.cs" />
     <Compile Include="Control\CommandController.cs" />
