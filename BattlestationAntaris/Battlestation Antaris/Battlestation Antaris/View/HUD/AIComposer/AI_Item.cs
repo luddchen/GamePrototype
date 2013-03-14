@@ -9,9 +9,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
     {
         public AI_Container container;
 
-        protected String itemTypeName;
-
-        public Object subType;
+        protected Object subType;
 
         public static int PORT_OFFSET = 4;
 
@@ -23,7 +21,9 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         public HUD2DString typeString;
 
-        public HUD2DString subTypeString;
+        protected HUD2DString subTypeString;
+
+        public float[] parameters;
 
         private HUD2DButton nextSubType;
 
@@ -38,7 +38,6 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             this.sizeType = HUDType.ABSOLUT;
             this.abstractSize = new Vector2(200, 100);
 
-            this.itemTypeName = "X";
             this.inputs = new List<AI_ItemPort>();
             this.outputs = new List<AI_ItemPort>();
 
@@ -48,7 +47,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             this.background.abstractSize = this.abstractSize;
             Add(this.background);
 
-            this.typeString = new HUD2DString(this.itemTypeName, game);
+            this.typeString = new HUD2DString("X", game);
             this.typeString.positionType = this.sizeType;
             this.typeString.scale = 0.6f;
             this.typeString.abstractPosition = new Vector2(0, -(this.abstractSize.Y - this.typeString.size.Y) / 2);
@@ -56,10 +55,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
             this.removeButton = new HUD2DButton("X", new Vector2(this.abstractSize.X / 2 - 8, -(this.abstractSize.Y / 2) + 8), 0.5f, game);
             this.removeButton.positionType = this.sizeType;
-            this.removeButton.foregroundColorNormal = Color.Red;
-            this.removeButton.foregroundColorHover = Color.White;
-            this.removeButton.backgroundColorNormal = new Color(0, 0, 0, 0);
-            this.removeButton.backgroundColorHover = new Color(0, 0, 0, 0);
+            this.removeButton.style = ButtonStyle.RemoveButtonStyle();
             this.removeButton.SetAction(delegate() { Destroy(); });
             Add(this.removeButton);
 
@@ -142,15 +138,16 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
                 int oldSubType = (int)this.subType;
                 Array subTypes = Enum.GetValues(type);
+                Object newSubType = null;
                 if (oldSubType + 1 < subTypes.Length)
                 {
-                    this.subType = subTypes.GetValue(oldSubType + 1);
+                    newSubType = subTypes.GetValue(oldSubType + 1);
                 }
                 else
                 {
-                    this.subType = subTypes.GetValue(0);
+                    newSubType = subTypes.GetValue(0);
                 }
-                this.subTypeString.String = this.subType.ToString().Replace('_', ' ');
+                SetSubType(newSubType);
             }
         }
 
@@ -163,16 +160,28 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
                 int oldSubType = (int)this.subType;
                 Array subTypes = Enum.GetValues(type);
+                Object newSubType = null;
                 if (oldSubType - 1 >= 0)
                 {
-                    this.subType = subTypes.GetValue(oldSubType - 1);
+                    newSubType = subTypes.GetValue(oldSubType - 1);
                 }
                 else
                 {
-                    this.subType = subTypes.GetValue(subTypes.Length - 1);
+                    newSubType = subTypes.GetValue(subTypes.Length - 1);
                 }
-                this.subTypeString.String = this.subType.ToString().Replace('_', ' ');
+                SetSubType(newSubType);
             }
+        }
+
+        public virtual void SetSubType(Object subType)
+        {
+            this.subType = subType;
+            this.subTypeString.String = this.subType.ToString().Replace('_', ' ');
+        }
+
+        public Object GetSubType()
+        {
+            return this.subType;
         }
 
 

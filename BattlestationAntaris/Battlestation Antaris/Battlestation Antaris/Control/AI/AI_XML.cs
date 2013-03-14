@@ -23,15 +23,34 @@ namespace Battlestation_Antaris.Control.AI
                 foreach (AI_Item item in aiContainer.aiItems)
                 {
                     writer.WriteStartElement("Item");
-                        writer.WriteAttributeString("Type", item.GetType().ToString());
+                        writer.WriteAttributeString("type", item.GetType().ToString());
 
                         writer.WriteStartElement("SubType");
-                            writer.WriteString(item.subType.ToString());
+                            writer.WriteString(item.GetSubType().ToString());
                         writer.WriteEndElement();
 
                         writer.WriteStartElement("Position");
                             writer.WriteAttributeString("x", item.abstractPosition.X.ToString());
                             writer.WriteAttributeString("y", item.abstractPosition.Y.ToString());
+                        writer.WriteEndElement();
+
+                        int paramCount = 0;
+                        if (item.parameters != null)
+                        {
+                            paramCount = item.parameters.Length;
+                        }
+                        writer.WriteStartElement("Parameters");
+                        writer.WriteAttributeString("count", paramCount.ToString());
+                        if (item.parameters != null)
+                        {
+                            for (int i = 0; i < paramCount; i++)
+                            {
+                                writer.WriteStartElement("Param");
+                                writer.WriteAttributeString("value", item.parameters[i].ToString());
+                                writer.WriteEndElement();
+                            }
+                        }
+
                         writer.WriteEndElement();
 
                     writer.WriteEndElement();
@@ -44,13 +63,13 @@ namespace Battlestation_Antaris.Control.AI
                     writer.WriteStartElement("Connection");
 
                         writer.WriteStartElement("Source");
-                            writer.WriteAttributeString("Item", aiContainer.aiItems.IndexOf(connection.getSource().item).ToString());
-                            writer.WriteAttributeString("Port", connection.getSource().item.outputs.IndexOf(connection.getSource()).ToString());
+                            writer.WriteAttributeString("item", aiContainer.aiItems.IndexOf(connection.getSource().item).ToString());
+                            writer.WriteAttributeString("port", connection.getSource().item.outputs.IndexOf(connection.getSource()).ToString());
                         writer.WriteEndElement();
 
                         writer.WriteStartElement("Target");
-                            writer.WriteAttributeString("Item", aiContainer.aiItems.IndexOf(connection.getTarget().item).ToString());
-                            writer.WriteAttributeString("Port", connection.getTarget().item.inputs.IndexOf(connection.getTarget()).ToString());
+                            writer.WriteAttributeString("item", aiContainer.aiItems.IndexOf(connection.getTarget().item).ToString());
+                            writer.WriteAttributeString("port", connection.getTarget().item.inputs.IndexOf(connection.getTarget()).ToString());
                         writer.WriteEndElement();
 
                     writer.WriteEndElement();
@@ -85,9 +104,7 @@ namespace Battlestation_Antaris.Control.AI
                         item = (AI_Item)Activator.CreateInstance(type, parameters);
 
                         ContinueToNode(reader, "SubType");
-                        Type subType = item.subType.GetType();
-                        item.subType = Enum.Parse(subType, reader.ReadString());
-                        item.subTypeString.String = item.subType.ToString().Replace('_',' ');
+                        item.SetSubType(Enum.Parse(item.GetSubType().GetType(), reader.ReadString()));
 
                         ContinueToNode(reader, "Position");
                         item.abstractPosition.X = float.Parse(reader.GetAttribute(0));

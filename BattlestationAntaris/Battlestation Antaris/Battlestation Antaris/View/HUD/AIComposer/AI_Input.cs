@@ -20,13 +20,11 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
         public AI_Input(Vector2 abstractPosition, HUDType positionType, Game1 game) 
             : base(abstractPosition, positionType, game)
         {
-            this.subType = InputType.DISTANCE;
-            this.itemTypeName = "Input";
-            this.typeString.String = this.itemTypeName;
+            this.typeString.String = "Input";
 
             AddPort(AI_ItemPort.PortType.OUTPUT);
 
-            this.subTypeString.String = this.subType.ToString();
+            SetSubType(InputType.DISTANCE);
         }
 
     }

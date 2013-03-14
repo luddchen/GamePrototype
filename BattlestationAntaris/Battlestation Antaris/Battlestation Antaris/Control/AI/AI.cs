@@ -55,15 +55,15 @@ namespace Battlestation_Antaris.Control.AI
             {
                 if (item is AI_Input)
                 {
-                    if (! this.inputs.Contains((AI_Input.InputType)item.subType))
+                    if (! this.inputs.Contains((AI_Input.InputType)item.GetSubType()))
                     {
-                        this.inputs.Add((AI_Input.InputType)item.subType);
+                        this.inputs.Add((AI_Input.InputType)item.GetSubType());
                     }
                     connections.AddRange(((AI_Input)item).outputs[0].connections);
                     items.Add(item);
                     int[] read = new int[0];
                     int[] write = new int[1];
-                    write[0] = this.inputs.IndexOf((AI_Input.InputType)item.subType);
+                    write[0] = this.inputs.IndexOf((AI_Input.InputType)item.GetSubType());
                     Tuple<int[], int[]> indices = new Tuple<int[], int[]>(read, write);
                     portIndices.Add(indices);
                 }
@@ -187,7 +187,7 @@ namespace Battlestation_Antaris.Control.AI
                     }
                     if (item is AI_Transformer)
                     {
-                        switch ((AI_Transformer.TransformerType)item.subType)
+                        switch ((AI_Transformer.TransformerType)item.GetSubType())
                         {
                             case AI_Transformer.TransformerType.SCALE :
                                 values[tuple.Item2[0]] = values[tuple.Item1[0]];
@@ -206,7 +206,7 @@ namespace Battlestation_Antaris.Control.AI
                     }
                     if (item is AI_Mixer)
                     {
-                        switch ((AI_Mixer.MixerType)item.subType)
+                        switch ((AI_Mixer.MixerType)item.GetSubType())
                         {
                             case AI_Mixer.MixerType.AVG:
                                 values[tuple.Item2[0]] = (values[tuple.Item1[0]] + values[tuple.Item1[1]]) / 2;

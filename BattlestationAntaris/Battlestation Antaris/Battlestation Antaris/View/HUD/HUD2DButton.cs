@@ -10,23 +10,25 @@ namespace Battlestation_Antaris.View.HUD
     public class HUD2DButton : HUD2DString
     {
 
-        public Color backgroundColorNormal = new Color(32, 48, 48, 160);
+        //public Color backgroundColorNormal = new Color(32, 48, 48, 160);
 
-        public Color backgroundColorHover = new Color(40, 64, 64, 192);
+        //public Color backgroundColorHover = new Color(40, 64, 64, 192);
 
-        public Color backgroundColorPressed = new Color(32, 48, 48, 255);
+        //public Color backgroundColorPressed = new Color(32, 48, 48, 255);
 
-        public Color foregroundColorNormal = Color.White;
+        //public Color foregroundColorNormal = Color.White;
 
-        public Color foregroundColorHover = new Color(255, 255, 128);
+        //public Color foregroundColorHover = new Color(255, 255, 128);
 
-        public Color foregroundColorPressed = new Color(128, 255, 128);
+        //public Color foregroundColorPressed = new Color(128, 255, 128);
 
-        private static float scaleNormal = 1.0f;
+        //private static float scaleNormal = 1.0f;
 
-        private static float scaleHover = 0.99f;
+        //private static float scaleHover = 0.99f;
 
-        private static float scalePressed = 0.96f;
+        //private static float scalePressed = 0.96f;
+
+        public ButtonStyle style;
 
         private float overallScale;
 
@@ -38,9 +40,10 @@ namespace Battlestation_Antaris.View.HUD
             this.abstractPosition = position;
             this.overallScale = scale;
             this.scale = scale;
+            this.style = ButtonStyle.DefaultButtonStyle();
 
-            this.color = this.foregroundColorNormal;
-            this.BackgroundColor = this.backgroundColorNormal;
+            this.color = this.style.foregroundColorNormal;
+            this.BackgroundColor = this.style.backgroundColorNormal;
             this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\Button2");
             this.BackgroundTextureOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
         }
@@ -53,9 +56,9 @@ namespace Battlestation_Antaris.View.HUD
             {
                 if (input.isLeftMouseButtonPressed())
                 {
-                    this.color = this.foregroundColorPressed;
-                    this.BackgroundColor = this.backgroundColorPressed;
-                    this.scale = HUD2DButton.scalePressed * this.overallScale;
+                    this.color = this.style.foregroundColorPressed;
+                    this.BackgroundColor = this.style.backgroundColorPressed;
+                    this.scale = this.style.scalePressed * this.overallScale;
                     clicked = true;
                     if (this.action != null)
                     {
@@ -64,16 +67,16 @@ namespace Battlestation_Antaris.View.HUD
                 }
                 else
                 {
-                    this.color = this.foregroundColorHover;
-                    this.BackgroundColor = this.backgroundColorHover;
-                    this.scale = HUD2DButton.scaleHover * this.overallScale;
+                    this.color = this.style.foregroundColorHover;
+                    this.BackgroundColor = this.style.backgroundColorHover;
+                    this.scale = this.style.scaleHover * this.overallScale;
                 }
             }
             else
             {
-                this.color = this.foregroundColorNormal;
-                this.BackgroundColor = this.backgroundColorNormal;
-                this.scale = HUD2DButton.scaleNormal * this.overallScale;
+                this.color = this.style.foregroundColorNormal;
+                this.BackgroundColor = this.style.backgroundColorNormal;
+                this.scale = this.style.scaleNormal * this.overallScale;
             }
 
             return clicked;
@@ -88,9 +91,9 @@ namespace Battlestation_Antaris.View.HUD
 
         public void Toggle()
         {
-            Color temp = this.foregroundColorHover;
-            this.foregroundColorHover = this.foregroundColorNormal;
-            this.foregroundColorNormal = temp;
+            Color temp = this.style.foregroundColorHover;
+            this.style.foregroundColorHover = this.style.foregroundColorNormal;
+            this.style.foregroundColorNormal = temp;
         }
 
     }

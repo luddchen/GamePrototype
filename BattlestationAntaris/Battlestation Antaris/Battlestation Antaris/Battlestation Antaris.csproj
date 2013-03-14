@@ -119,6 +119,7 @@
     <Compile Include="View\HUD\AIComposer\AI_Mixer.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Output.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Transformer.cs" />
+    <Compile Include="View\HUD\ButtonStyle.cs" />
     <Compile Include="View\HUD\CockpitHUD\TargetInfo.cs" />
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
     <Compile Include="View\HUD\DebugViewer.cs" />
