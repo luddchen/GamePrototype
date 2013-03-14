@@ -17,13 +17,13 @@ namespace Battlestation_Antaris.Control
             : base(game, view)
         {
             HUD2DButton toMenuButton = new HUD2DButton("Menu", new Vector2(0.9f, 0.95f), 0.7f, this.game);
-            toMenuButton.SetAction(delegate() { this.game.switchTo(Situation.MENU); });
+            toMenuButton.SetPressedAction(delegate() { this.game.switchTo(Situation.MENU); });
             toMenuButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add(toMenuButton);
             this.worldUpdate = WorldUpdate.NO_UPDATE;
 
             HUD2DButton verifyButton = new HUD2DButton("Verify", new Vector2(0.9f, 0.8f), 0.8f, this.game);
-            verifyButton.SetAction(
+            verifyButton.SetPressedAction(
                 delegate() 
                 {
                     AI.AI ai = new AI.AI();
@@ -40,7 +40,7 @@ namespace Battlestation_Antaris.Control
             this.view.allHUD_2D.Add(verifyButton);
 
             HUD2DButton saveButton = new HUD2DButton("Save", new Vector2(0.85f, 0.88f), 0.6f, this.game);
-            saveButton.SetAction(
+            saveButton.SetPressedAction(
                 delegate()
                 {
                     AI_XML.WriteAIContainer("testAI.xml", ((View.AIView)this.view).aiContainer);
@@ -49,7 +49,7 @@ namespace Battlestation_Antaris.Control
             this.view.allHUD_2D.Add(saveButton);
 
             HUD2DButton loadButton = new HUD2DButton("Load", new Vector2(0.92f, 0.88f), 0.6f, this.game);
-            loadButton.SetAction(
+            loadButton.SetPressedAction(
                 delegate()
                 {
                     AI_XML.ReadAIContainer("testAI.xml", ((View.AIView)this.view).aiContainer, this.game);
@@ -63,25 +63,25 @@ namespace Battlestation_Antaris.Control
             this.view.allHUD_2D.Add(addButtonArray);
 
             HUD2DButton addInputButton = new HUD2DButton("Input", new Vector2(0.9f, 0.3f), 0.7f, this.game);
-            addInputButton.SetAction(delegate() { ((AIView)this.view).aiContainer.Add(new AI_Input(new Vector2(0.7f, 0.1f), HUDType.RELATIV, game)); });
+            addInputButton.SetPressedAction(delegate() { ((AIView)this.view).aiContainer.Add(new AI_Input(new Vector2(0.7f, 0.1f), HUDType.RELATIV, game)); });
             addInputButton.positionType = HUDType.RELATIV;
             addButtonArray.Add(addInputButton);
 
 
             HUD2DButton addTransformerButton = new HUD2DButton("Transformer", new Vector2(0.9f, 0.4f), 0.7f, this.game);
-            addTransformerButton.SetAction(delegate() { ((AIView)this.view).aiContainer.Add(new AI_Transformer(new Vector2(0.7f, 0.1f), HUDType.RELATIV, game)); });
+            addTransformerButton.SetPressedAction(delegate() { ((AIView)this.view).aiContainer.Add(new AI_Transformer(new Vector2(0.7f, 0.1f), HUDType.RELATIV, game)); });
             addTransformerButton.positionType = HUDType.RELATIV;
             addButtonArray.Add(addTransformerButton);
 
 
             HUD2DButton addMixerButton = new HUD2DButton("Mixer", new Vector2(0.9f, 0.5f), 0.7f, this.game);
-            addMixerButton.SetAction(delegate() { ((AIView)this.view).aiContainer.Add(new AI_Mixer(new Vector2(0.7f, 0.1f), HUDType.RELATIV, game)); });
+            addMixerButton.SetPressedAction(delegate() { ((AIView)this.view).aiContainer.Add(new AI_Mixer(new Vector2(0.7f, 0.1f), HUDType.RELATIV, game)); });
             addMixerButton.positionType = HUDType.RELATIV;
             addButtonArray.Add(addMixerButton);
 
 
             HUD2DButton addOutputButton = new HUD2DButton("Output", new Vector2(0.9f, 0.6f), 0.7f, this.game);
-            addOutputButton.SetAction(delegate() { ((AIView)this.view).aiContainer.Add(new AI_Output(new Vector2(0.7f, 0.1f), HUDType.RELATIV, game)); });
+            addOutputButton.SetPressedAction(delegate() { ((AIView)this.view).aiContainer.Add(new AI_Output(new Vector2(0.7f, 0.1f), HUDType.RELATIV, game)); });
             addOutputButton.positionType = HUDType.RELATIV;
             addButtonArray.Add(addOutputButton);
         }

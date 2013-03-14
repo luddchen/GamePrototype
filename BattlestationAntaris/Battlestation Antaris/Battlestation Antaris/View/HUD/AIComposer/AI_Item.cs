@@ -23,7 +23,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         protected HUD2DString subTypeString;
 
-        public float[] parameters;
+        protected float[] parameters;
 
         private HUD2DButton nextSubType;
 
@@ -56,7 +56,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             this.removeButton = new HUD2DButton("X", new Vector2(this.abstractSize.X / 2 - 8, -(this.abstractSize.Y / 2) + 8), 0.5f, game);
             this.removeButton.positionType = this.sizeType;
             this.removeButton.style = ButtonStyle.RemoveButtonStyle();
-            this.removeButton.SetAction(delegate() { Destroy(); });
+            this.removeButton.SetPressedAction(delegate() { Destroy(); });
             Add(this.removeButton);
 
             this.subTypeString = new HUD2DString(" ", game);
@@ -69,13 +69,13 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
             this.nextSubType = new HUD2DButton(">", Vector2.Zero, 0.8f, game);
             this.nextSubType.positionType = this.sizeType;
             this.nextSubType.abstractPosition = new Vector2((this.abstractSize.X - this.nextSubType.size.X) / 2 - 2, -(this.abstractSize.Y - this.typeString.size.Y * 3) / 2);
-            this.nextSubType.SetAction(delegate() { switchToNextSubType(); });
+            this.nextSubType.SetPressedAction(delegate() { switchToNextSubType(); });
             Add(this.nextSubType);
 
             this.previousSubType = new HUD2DButton("<", Vector2.Zero, 0.8f, game);
             this.previousSubType.positionType = this.sizeType;
             this.previousSubType.abstractPosition = new Vector2(-(this.abstractSize.X - this.nextSubType.size.X) / 2 + 2, -(this.abstractSize.Y - this.typeString.size.Y * 3) / 2);
-            this.previousSubType.SetAction(delegate() { switchToPreviousSubType(); });
+            this.previousSubType.SetPressedAction(delegate() { switchToPreviousSubType(); });
             Add(this.previousSubType);
         }
 
@@ -209,6 +209,37 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
             this.container.removeList.Add(this);
 
+        }
+
+        public void SetParameterCount(int count)
+        {
+            this.parameters = new float[count];
+        }
+
+        public int GetParameterCount()
+        {
+            if (this.parameters == null)
+            {
+                return 0;
+            }
+            return this.parameters.Length;
+        }
+
+        public virtual void SetParameter(int index, float value) 
+        {
+            if (this.parameters != null && index < this.parameters.Length)
+            {
+                this.parameters[index] = value;
+            }
+        }
+
+        public virtual float GetParameter(int index)
+        {
+            if (this.parameters != null && index < this.parameters.Length)
+            {
+                return this.parameters[index];
+            }
+            return 0;
         }
 
     }

@@ -39,7 +39,7 @@ namespace Battlestation_Antaris.Control
                     0.5f,
                     this.game);
 
-            this.toCommandButton.SetAction(delegate() { this.game.switchTo(Situation.COMMAND); });
+            this.toCommandButton.SetPressedAction(delegate() { this.game.switchTo(Situation.COMMAND); });
             buttons.Add(toCommandButton);
 
             toMenuButton =
@@ -49,7 +49,7 @@ namespace Battlestation_Antaris.Control
                     0.5f,
                     this.game);
 
-            this.toMenuButton.SetAction(delegate() { this.game.switchTo(Situation.MENU); });
+            this.toMenuButton.SetPressedAction(delegate() { this.game.switchTo(Situation.MENU); });
             buttons.Add(toMenuButton);
             this.view.allHUD_2D.Add(buttons);
 

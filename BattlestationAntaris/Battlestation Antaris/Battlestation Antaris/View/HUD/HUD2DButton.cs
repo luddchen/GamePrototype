@@ -10,29 +10,12 @@ namespace Battlestation_Antaris.View.HUD
     public class HUD2DButton : HUD2DString
     {
 
-        //public Color backgroundColorNormal = new Color(32, 48, 48, 160);
-
-        //public Color backgroundColorHover = new Color(40, 64, 64, 192);
-
-        //public Color backgroundColorPressed = new Color(32, 48, 48, 255);
-
-        //public Color foregroundColorNormal = Color.White;
-
-        //public Color foregroundColorHover = new Color(255, 255, 128);
-
-        //public Color foregroundColorPressed = new Color(128, 255, 128);
-
-        //private static float scaleNormal = 1.0f;
-
-        //private static float scaleHover = 0.99f;
-
-        //private static float scalePressed = 0.96f;
-
         public ButtonStyle style;
 
         private float overallScale;
 
-        private Action action;
+        private Action pressedAction;
+        private Action downAction;
 
 
         public HUD2DButton(String text, Vector2 position, float scale, Game1 game) : base(text, game)
@@ -44,7 +27,12 @@ namespace Battlestation_Antaris.View.HUD
 
             this.color = this.style.foregroundColorNormal;
             this.BackgroundColor = this.style.backgroundColorNormal;
-            this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\Button2");
+            SetBackgroundTexture("Sprites\\Button2");
+        }
+
+        public void SetBackgroundTexture(String background) 
+        {
+            this.BackgroundTexture = this.game.Content.Load<Texture2D>(background);
             this.BackgroundTextureOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
         }
 
@@ -60,13 +48,17 @@ namespace Battlestation_Antaris.View.HUD
                     this.BackgroundColor = this.style.backgroundColorPressed;
                     this.scale = this.style.scalePressed * this.overallScale;
                     clicked = true;
-                    if (this.action != null)
+                    if (this.pressedAction != null)
                     {
-                        this.action();
+                        this.pressedAction();
                     }
                 }
                 else
                 {
+                    if (input.isLeftMouseButtonDown() && this.downAction != null)
+                    {
+                        this.downAction();
+                    }
                     this.color = this.style.foregroundColorHover;
                     this.BackgroundColor = this.style.backgroundColorHover;
                     this.scale = this.style.scaleHover * this.overallScale;
@@ -83,9 +75,14 @@ namespace Battlestation_Antaris.View.HUD
         }
 
 
-        public void SetAction(Action action)
+        public void SetPressedAction(Action action)
         {
-            this.action = action;
+            this.pressedAction = action;
+        }
+
+        public void SetDownAction(Action action)
+        {
+            this.downAction = action;
         }
 
 

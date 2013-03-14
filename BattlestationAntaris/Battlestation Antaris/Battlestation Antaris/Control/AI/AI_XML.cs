@@ -35,20 +35,17 @@ namespace Battlestation_Antaris.Control.AI
                         writer.WriteEndElement();
 
                         int paramCount = 0;
-                        if (item.parameters != null)
+                        if (item.GetParameterCount() > 0)
                         {
-                            paramCount = item.parameters.Length;
+                            paramCount = item.GetParameterCount();
                         }
                         writer.WriteStartElement("Parameters");
                         writer.WriteAttributeString("count", paramCount.ToString());
-                        if (item.parameters != null)
+                        for (int i = 0; i < paramCount; i++)
                         {
-                            for (int i = 0; i < paramCount; i++)
-                            {
-                                writer.WriteStartElement("Param");
-                                writer.WriteAttributeString("value", item.parameters[i].ToString());
-                                writer.WriteEndElement();
-                            }
+                            writer.WriteStartElement("Param");
+                            writer.WriteAttributeString("value", item.GetParameter(i).ToString());
+                            writer.WriteEndElement();
                         }
 
                         writer.WriteEndElement();
@@ -109,6 +106,15 @@ namespace Battlestation_Antaris.Control.AI
                         ContinueToNode(reader, "Position");
                         item.abstractPosition.X = float.Parse(reader.GetAttribute(0));
                         item.abstractPosition.Y = float.Parse(reader.GetAttribute(1));
+
+                        ContinueToNode(reader, "Parameters");
+                        int count = int.Parse(reader.GetAttribute(0));
+                        item.SetParameterCount(count);
+                        for (int index = 0; index < count; index++)
+                        {
+                            ContinueToNode(reader, "Param");
+                            item.SetParameter(index, float.Parse(reader.GetAttribute(0)));
+                        }
 
                         aiContainer.Add(item);
 

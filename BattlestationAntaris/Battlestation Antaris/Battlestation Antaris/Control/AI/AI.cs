@@ -190,7 +190,7 @@ namespace Battlestation_Antaris.Control.AI
                         switch ((AI_Transformer.TransformerType)item.GetSubType())
                         {
                             case AI_Transformer.TransformerType.SCALE :
-                                values[tuple.Item2[0]] = values[tuple.Item1[0]];
+                                values[tuple.Item2[0]] = values[tuple.Item1[0]] * item.GetParameter(0);
                                 break;
                             case AI_Transformer.TransformerType.INVERSE :
                                 values[tuple.Item2[0]] = 1 - values[tuple.Item1[0]];
@@ -209,7 +209,8 @@ namespace Battlestation_Antaris.Control.AI
                         switch ((AI_Mixer.MixerType)item.GetSubType())
                         {
                             case AI_Mixer.MixerType.AVG:
-                                values[tuple.Item2[0]] = (values[tuple.Item1[0]] + values[tuple.Item1[1]]) / 2;
+                                values[tuple.Item2[0]] = 
+                                    values[tuple.Item1[0]] * (1.0f - item.GetParameter(0)) + values[tuple.Item1[1]] * (item.GetParameter(0));
                                 break;
                             case AI_Mixer.MixerType.MAX:
                                 values[tuple.Item2[0]] = Math.Max(values[tuple.Item1[0]], values[tuple.Item1[1]]);

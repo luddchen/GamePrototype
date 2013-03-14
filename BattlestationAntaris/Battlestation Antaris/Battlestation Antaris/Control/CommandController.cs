@@ -45,12 +45,12 @@ namespace Battlestation_Antaris.Control
             this.currentMode = CommandMode.NORMAL;
 
             this.toMenuButton = new HUD2DButton("Menu", new Vector2(0.1f, 0.9f), 0.7f, this.game);
-            this.toMenuButton.SetAction(delegate() { this.game.switchTo(Situation.MENU); });
+            this.toMenuButton.SetPressedAction(delegate() { this.game.switchTo(Situation.MENU); });
             this.toMenuButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add(toMenuButton);
 
             this.toCockpitButton = new HUD2DButton("Cockpit", new Vector2(0.9f, 0.9f), 0.7f, this.game);
-            this.toCockpitButton.SetAction(delegate() { this.game.switchTo(Situation.COCKPIT); });
+            this.toCockpitButton.SetPressedAction(delegate() { this.game.switchTo(Situation.COCKPIT); });
             this.toCockpitButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add(toCockpitButton);
 

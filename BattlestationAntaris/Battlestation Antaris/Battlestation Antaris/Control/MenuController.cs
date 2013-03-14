@@ -58,19 +58,19 @@ namespace Battlestation_Antaris.Control
 
 
             HUD2DButton toCommandButton = new HUD2DButton("Command", Vector2.Zero, 0.9f, this.game);
-            toCommandButton.SetAction(delegate() { this.game.switchTo(Situation.COMMAND); });
+            toCommandButton.SetPressedAction(delegate() { this.game.switchTo(Situation.COMMAND); });
             this.buttons1.Add(toCommandButton);
 
             HUD2DButton toCockpitButton = new HUD2DButton("Cockpit", Vector2.Zero, 0.9f, this.game);
-            toCockpitButton.SetAction(delegate() { this.game.switchTo(Situation.COCKPIT); });
+            toCockpitButton.SetPressedAction(delegate() { this.game.switchTo(Situation.COCKPIT); });
             this.buttons1.Add(toCockpitButton);
 
             HUD2DButton toAIButton = new HUD2DButton("Editor", Vector2.Zero, 0.9f, this.game);
-            toAIButton.SetAction(delegate() { this.game.switchTo(Situation.AI_BUILDER); });
+            toAIButton.SetPressedAction(delegate() { this.game.switchTo(Situation.AI_BUILDER); });
             this.buttons1.Add(toAIButton);
 
             this.optionsButton = new HUD2DButton("Options", Vector2.Zero, 0.9f, this.game);
-            this.optionsButton.SetAction(
+            this.optionsButton.SetPressedAction(
                 delegate() 
                 { 
                     this.optionsButton.Toggle(); 
@@ -80,19 +80,19 @@ namespace Battlestation_Antaris.Control
             this.buttons1.Add(this.optionsButton);
 
             HUD2DButton exitButton = new HUD2DButton("Exit", Vector2.Zero, 0.9f, this.game);
-            exitButton.SetAction(delegate() { this.game.Exit(); });
+            exitButton.SetPressedAction(delegate() { this.game.Exit(); });
             this.buttons1.Add(exitButton);
 
             HUD2DButton videoButton = new HUD2DButton("Video", Vector2.Zero, 0.9f, this.game);
-            videoButton.SetAction(delegate() { showPage(this.videoPage); });
+            videoButton.SetPressedAction(delegate() { showPage(this.videoPage); });
             this.optionsButtonGroup.Add(videoButton);
 
             HUD2DButton soundButton = new HUD2DButton("Sound", Vector2.Zero, 0.9f, this.game);
-            soundButton.SetAction(delegate() { showPage(this.soundPage); });
+            soundButton.SetPressedAction(delegate() { showPage(this.soundPage); });
             this.optionsButtonGroup.Add(soundButton);
 
             HUD2DButton controlButton = new HUD2DButton("Control", Vector2.Zero, 0.9f, this.game);
-            controlButton.SetAction(delegate() { showPage(this.controlPage); });
+            controlButton.SetPressedAction(delegate() { showPage(this.controlPage); });
             this.optionsButtonGroup.Add(controlButton);
 
 

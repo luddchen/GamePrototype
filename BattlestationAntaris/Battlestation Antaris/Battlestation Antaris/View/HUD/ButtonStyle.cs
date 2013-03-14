@@ -62,5 +62,24 @@ namespace Battlestation_Antaris.View.HUD
 
             return newStyle;
         }
+
+        public static ButtonStyle SliderButtonStyle()
+        {
+            ButtonStyle newStyle = new ButtonStyle();
+
+            newStyle.backgroundColorNormal = Color.White;
+            newStyle.backgroundColorHover = new Color(128, 255, 128);
+            newStyle.backgroundColorPressed = new Color(128, 255, 128);
+
+            newStyle.foregroundColorNormal = Color.White;
+            newStyle.foregroundColorHover = Color.White;
+            newStyle.foregroundColorPressed = Color.White;
+
+            newStyle.scaleNormal = 1.0f;
+            newStyle.scaleHover = 1.0f;
+            newStyle.scalePressed = 1.0f;
+
+            return newStyle;
+        }
     }
 }
