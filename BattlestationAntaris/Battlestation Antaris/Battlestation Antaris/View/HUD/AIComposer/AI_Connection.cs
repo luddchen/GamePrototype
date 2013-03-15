@@ -105,6 +105,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer
 
         public override bool Intersects(Vector2 point)
         {
+            if (this.source == null || this.target == null)
+            {
+                return false;
+            }
             Vector2 lineVec = this.target.position - this.source.position; // Vector source -> target
             Vector2 pointVec = point - this.source.position; // Vector source -> point
 

@@ -261,8 +261,11 @@ namespace Battlestation_Antaris.View
         {
             if (this.targetInfo.target != null)
             {
-                this.targetCrossModel.Root.Transform = 
-                    Matrix.CreateScale(this.targetInfo.target.bounding.Radius) * this.game.world.spaceShip.rotation * Matrix.CreateTranslation(this.targetInfo.target.globalPosition);
+                Vector3 tRot = Tools.Tools.GetRotation(this.targetInfo.target.globalPosition - this.game.world.spaceShip.globalPosition, this.game.world.spaceShip.rotation);
+                Matrix crossRot = Tools.Tools.YawPitchRoll(this.game.world.spaceShip.rotation, tRot.Z, tRot.X, tRot.Y);
+
+                this.targetCrossModel.Root.Transform =
+                    Matrix.CreateScale(this.targetInfo.target.bounding.Radius) * crossRot * Matrix.CreateTranslation(this.targetInfo.target.globalPosition);
                 this.targetCrossModel.CopyAbsoluteBoneTransformsTo(this.boneTransforms);
 
                 foreach (ModelMesh mesh in this.targetCrossModel.Meshes)
