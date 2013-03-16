@@ -47,7 +47,7 @@ namespace Battlestation_Antaris.View
         public void Draw( Camera camera, int nr)
         {
             Matrix world = Matrix.CreateScale(camera.farClipping * scale / 10)
-                            * Matrix.CreateTranslation(Vector3.Forward * (camera.farClipping * 0.95f - nr))
+                            * Matrix.CreateTranslation(Vector3.Forward * (camera.farClipping * 0.9f - nr))
                             * rotation
                             * Matrix.CreateTranslation(this.game.world.spaceShip.globalPosition);
 

@@ -18,6 +18,12 @@ namespace Battlestation_Antaris.Model
 
         public SpatialObject target;
 
+        private float[] laserOffsets;
+
+        private int laserIndex = 0;
+
+        private int laserCooldown = 0;
+
         /// <summary>
         /// create a new space ship within the world
         /// </summary>
@@ -32,6 +38,7 @@ namespace Battlestation_Antaris.Model
             this.miniMapIcon.Texture = content.Load<Texture2D>("Models//SpaceShip//spaceship_2d");
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
             //this.miniMapIcon.scale = 2.0f;
+            this.laserOffsets = new float[2] { -4.0f, 4.0f };
         }
 
 
@@ -54,9 +61,20 @@ namespace Battlestation_Antaris.Model
         {
             base.InjectControl(control);
 
-            if (control == Control.Control.FIRE_LASER)
+            if (this.laserCooldown > 0)
             {
-                Laser laser = new Laser(this, -2.0f, this.world.game.Content, this.world);
+                this.laserCooldown--;
+            }
+
+            if (control == Control.Control.FIRE_LASER && this.laserCooldown == 0)
+            {
+                Laser laser = new Laser(this, -2.0f, this.laserOffsets[this.laserIndex], this.world.game.Content, this.world);
+                this.laserCooldown = 15;
+                this.laserIndex++;
+                if (this.laserIndex >= this.laserOffsets.Length)
+                {
+                    this.laserIndex = 0;
+                }
             }
 
             if (control == Control.Control.FIRE_MISSILE)

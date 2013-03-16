@@ -74,5 +74,6 @@ Content\Models\Skysphere\skysphere1_0.xnb
 Content\Models\Grid\grid1_0.xnb
 Content\Models\compass3.xnb
 Content\Sprites\Slider.xnb
+Content\Sprites\Cross.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa

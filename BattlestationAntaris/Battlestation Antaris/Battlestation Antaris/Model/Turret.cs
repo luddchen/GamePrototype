@@ -107,8 +107,7 @@ namespace Battlestation_Antaris.Model
                         if (this.beamCooldown < 0)
                         {
                             this.beamCooldown = 30;
-                            Laser laser = new Laser(this, 0.0f, this.world.game.Content, this.world);
-                            //InjectControl(Control.Control.FIRE_LASER);
+                            Laser laser = new Laser(this, 0.0f, 0.0f, this.world.game.Content, this.world);
                         }
                     }
                 }

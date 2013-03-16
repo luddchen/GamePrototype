@@ -83,6 +83,11 @@ namespace Battlestation_Antaris.View
             this.targetInfo = new TargetInfo(new Vector2(60, 200), HUDType.ABSOLUT, new Vector2(150, 60), HUDType.ABSOLUT, this.game);
             this.allHUD_2D.Add(this.targetInfo);
 
+            HUD2DTexture cross = new HUD2DTexture(this.game.Content.Load<Texture2D>("Sprites//Cross"), new Vector2(0.5f, 0.5f), new Vector2(48, 48), null, 1.0f, 0, this.game);
+            cross.positionType = HUDType.RELATIV;
+            cross.layerDepth = 0.8f;
+            this.allHUD_2D.Add(cross);
+
             this.targetCrossModel = game.Content.Load<Microsoft.Xna.Framework.Graphics.Model>("Models//TargetCross");
             this.targetCrossBoneTransforms = new Matrix[this.targetCrossModel.Bones.Count];
 
