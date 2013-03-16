@@ -46,6 +46,11 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
         public Vector3 target;
 
 
+        private Matrix view;
+        private Matrix projection;
+        private Vector3 position;
+
+
         /// <summary>
         /// creates a new compass instance
         /// </summary>
@@ -59,6 +64,10 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
 
             this.device = device;
             this.target = new Vector3();    // target vector = zero
+
+            this.view = Matrix.CreateLookAt(Vector3.Zero, Vector3.Forward, Vector3.Up);
+            this.projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4 / 2, this.device.Viewport.AspectRatio, 1, 5000);
+            this.position = Vector3.Add(Vector3.Multiply(Vector3.Forward, 1.8f), Vector3.Multiply(Vector3.Down, -0.3f));
         }
 
 
@@ -77,7 +86,6 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
         /// </summary>
         public override void Draw()
         {
-
             // if source is set
             if (this.source != null)
             {
@@ -87,32 +95,10 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD
                 // get local rotation
                 Vector3 rot = Tools.Tools.GetRotation(pointer, this.source.rotation);
 
-                // rotate, scale and translate the 3d model
-                model3d.Root.Transform = Matrix.CreateScale(0.05f)
-                                        * Matrix.CreateFromAxisAngle(Vector3.Right, rot.X)
-                                        * Matrix.CreateFromAxisAngle(Vector3.Up, rot.Z)
-                                        * Matrix.CreateTranslation(Vector3.Add( Vector3.Multiply(Vector3.Forward, 1.8f) ,
-                                                                                Vector3.Multiply(Vector3.Down, -0.3f)));
-
-                // and create transformation matrices for all 3d parts
-                model3d.CopyAbsoluteBoneTransformsTo(boneTransforms);
-
-                // draw
-                foreach (ModelMesh mesh in model3d.Meshes)
-                {
-                    foreach (BasicEffect effect in mesh.Effects)
-                    {
-                        effect.EnableDefaultLighting();
-
-                        effect.World = boneTransforms[mesh.ParentBone.Index];
-                        effect.View = Matrix.CreateLookAt(Vector3.Zero, Vector3.Forward, Vector3.Up);
-                        effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4 / 2, this.device.Viewport.AspectRatio, 1, 5000);
-                    }
-
-                    mesh.Draw();
-                }
-
-
+                Tools.Draw3D.Draw(model3d, boneTransforms, this.view, this.projection,
+                                    this.position,
+                                    Matrix.CreateFromAxisAngle(Vector3.Right, rot.X) * Matrix.CreateFromAxisAngle(Vector3.Up, rot.Z),
+                                    new Vector3(0.05f));
             }
 
         }

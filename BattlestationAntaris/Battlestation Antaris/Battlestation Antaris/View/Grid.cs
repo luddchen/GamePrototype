@@ -37,16 +37,7 @@ namespace Battlestation_Antaris.View
                 for (int row = 0; row < NR_GRIDS; row++)
                 {
                     calcPosition(column, row);
-                    foreach (ModelMesh mesh in grid.Meshes)
-                    {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            effect.World = boneTransforms[mesh.ParentBone.Index];
-                            effect.View = camera.view;
-                            effect.Projection = camera.projection;
-                        }
-                        mesh.Draw();
-                    }
+                    Tools.Draw3D.Draw(grid, boneTransforms, camera.view, camera.projection);
                 }
             }
         }

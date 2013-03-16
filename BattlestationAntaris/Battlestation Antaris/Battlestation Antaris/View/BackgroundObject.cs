@@ -46,29 +46,12 @@ namespace Battlestation_Antaris.View
         /// <param name="spriteBatch">the spritebatch</param>
         public void Draw( Camera camera, int nr)
         {
-            bgModel.Root.Transform = Matrix.CreateScale(camera.farClipping * scale / 10)
-                        * Matrix.CreateTranslation(Vector3.Forward * (camera.farClipping * 0.95f - nr))
-                        * rotation
-                        * Matrix.CreateTranslation(this.game.world.spaceShip.globalPosition);
+            Matrix world = Matrix.CreateScale(camera.farClipping * scale / 10)
+                            * Matrix.CreateTranslation(Vector3.Forward * (camera.farClipping * 0.95f - nr))
+                            * rotation
+                            * Matrix.CreateTranslation(this.game.world.spaceShip.globalPosition);
 
-            bgModel.CopyAbsoluteBoneTransformsTo(boneTransforms);
-
-            foreach (ModelMesh mesh in bgModel.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.EnableDefaultLighting();
-                    effect.LightingEnabled = true;
-                    effect.DirectionalLight0.DiffuseColor = this.color;
-                    effect.DirectionalLight0.Direction = this.rotation.Forward;
-                    //effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 1);
-
-                    effect.World = boneTransforms[mesh.ParentBone.Index];
-                    effect.View = camera.view;
-                    effect.Projection = camera.projection;
-                }
-                mesh.Draw();
-            }
+            Tools.Draw3D.Draw(this.bgModel, this.boneTransforms, camera.view, camera.projection, world);
         }
 
     }

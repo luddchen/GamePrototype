@@ -100,6 +100,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Tools\DebugElement.cs" />
+    <Compile Include="Tools\Draw3D.cs" />
     <Compile Include="Tools\DynamicOctree.cs" />
     <Compile Include="Tools\RandomGen.cs" />
     <Compile Include="Tools\RayCastThreadPool.cs" />

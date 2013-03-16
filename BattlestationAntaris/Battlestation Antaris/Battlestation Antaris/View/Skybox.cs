@@ -27,22 +27,9 @@ namespace Battlestation_Antaris.View
         /// </summary>
         public void Draw(Camera camera)
         {
-            float scale = camera.farClipping * 0.99f;
-            skybox.Root.Transform = Matrix.CreateScale(scale) * Matrix.CreateTranslation(this.game.world.spaceShip.globalPosition);
-
-            skybox.CopyAbsoluteBoneTransformsTo(boneTransforms);
-
-            foreach (ModelMesh mesh in skybox.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    //effect.EnableDefaultLighting();
-                    effect.World = boneTransforms[mesh.ParentBone.Index];
-                    effect.View = camera.view;
-                    effect.Projection = camera.projection;
-                }
-                mesh.Draw();
-            }
+            Tools.Draw3D.Draw(skybox, boneTransforms, camera.view, camera.projection,
+                                this.game.world.spaceShip.globalPosition, Matrix.Identity, 
+                                new Vector3(camera.farClipping * 0.99f));
         }
     }
 }
