@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.Model;
 using Battlestation_Antaris.View;
+using System;
 
 namespace Battlestation_Antaris.Tools
 {
@@ -17,12 +18,11 @@ namespace Battlestation_Antaris.Tools
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    lighting(effect);
-
                     effect.World = boneTransforms[mesh.ParentBone.Index];
                     effect.View = view;
                     effect.Projection = projection;
                 }
+
                 mesh.Draw();
             }
         }
@@ -68,33 +68,36 @@ namespace Battlestation_Antaris.Tools
         }
 
 
-        public delegate void Lighting(BasicEffect effect);
+        public static void Draw(List<List<SpatialObject>> allObjectLists, Camera camera)
+        {
+            foreach (List<SpatialObject> allObjects in allObjectLists)
+            {
+                Draw(allObjects, camera);
+            }
+        }
 
 
-        public static Lighting lighting = DefaultLighting;
-
-
-        private static void DefaultLighting(BasicEffect effect)
+        public static void DefaultLighting(BasicEffect effect)
         {
             effect.EnableDefaultLighting();
         }
 
 
-        private static void Lighting1(BasicEffect effect)
+        public static void Lighting1(BasicEffect effect)
         {
             effect.LightingEnabled = true;
-            effect.DirectionalLight0.DiffuseColor = new Vector3(1.0f, 1.0f, 0.5f);
+            effect.DirectionalLight0.DiffuseColor = new Vector3(0.8f, 0.75f, 0.6f);
             effect.DirectionalLight0.Direction = new Vector3(1, 1, -1);
-            effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 1);
-            effect.AmbientLightColor = new Vector3(0.5f, 0.5f, 0.5f);
-            //effect.EmissiveColor = new Vector3(0, 0, 0.1f);
-            //effect.Alpha = 0.66f;
+            effect.DirectionalLight0.SpecularColor = new Vector3(1, 1, 0.9f);
+            effect.AmbientLightColor = new Vector3(0.4f, 0.4f, 0.4f);
+            effect.PreferPerPixelLighting = true;
 
-            //effect.FogEnabled = true;
-            //effect.FogColor = Color.Red.ToVector3();
-            //effect.FogStart = 200.0f;
-            //effect.FogEnd = 210.0f;
+            effect.FogEnabled = true;
+            effect.FogColor = new Vector3(0.15f, 0.125f, 0.12f);
+            effect.FogStart = 100f;
+            effect.FogEnd = 10000f;
         }
+
 
     }
 

@@ -79,8 +79,6 @@ namespace Battlestation_Antaris.Model
                 {
                     Vector3 rot = Tools.Tools.GetRotation(target.globalPosition - this.globalPosition, this.rotation);
                     
-                    bool fire = true;
-
                     if (rot.Z < this.attributes.EngineYaw.CurrentVelocity)
                     {
                         InjectControl(Control.Control.YAW_RIGHT);

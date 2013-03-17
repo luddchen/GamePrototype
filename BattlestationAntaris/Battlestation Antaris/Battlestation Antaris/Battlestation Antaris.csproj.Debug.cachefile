@@ -1,4 +1,3 @@
-Content\Models\compass2.xnb
 Content\Models\SpaceStation\spacestation.xnb
 Content\Models\Weapon\missile.xnb
 Content\Models\Weapon\laser.xnb
@@ -20,6 +19,7 @@ Content\Models\Skybox\skybox.xnb
 Content\Models\Skysphere\skysphere.xnb
 Content\Models\Grid\grid.xnb
 Content\Models\Dust\dust.xnb
+Content\Models\compass3.xnb
 Content\Models\SpaceStation\StationBox.xnb
 Content\Models\SpaceStation\StationCatwalk.xnb
 Content\Models\SpaceStation\StationSphere.xnb
@@ -51,6 +51,8 @@ Content\Sprites\battlestation.xnb
 Content\Models\Skybox\skybox1.xnb
 Content\Models\Skysphere\skysphere1.xnb
 Content\Models\Grid\grid1.xnb
+Content\Sprites\Slider.xnb
+Content\Sprites\Cross.xnb
 Content\Fonts\Font.xnb
 Content\Fonts\FontSmall.xnb
 Content\Fonts\Linds.xnb
@@ -72,8 +74,5 @@ Content\Models\Cubus\cubus_1.xnb
 Content\Models\Skybox\skybox1_0.xnb
 Content\Models\Skysphere\skysphere1_0.xnb
 Content\Models\Grid\grid1_0.xnb
-Content\Models\compass3.xnb
-Content\Sprites\Slider.xnb
-Content\Sprites\Cross.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa

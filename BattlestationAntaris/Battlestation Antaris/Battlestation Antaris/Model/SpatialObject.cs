@@ -122,6 +122,13 @@ namespace Battlestation_Antaris.Model
             this.rotation = Matrix.Identity;
             this.scale = Vector3.One;
             this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
+            foreach (ModelMesh mesh in model3d.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    Tools.Draw3D.Lighting1(effect);
+                }
+            }
             this.boneTransforms = new Matrix[model3d.Bones.Count];
             this.attributes = new SpatialObjectAttributes();
             this.rotationRepairCountdown = SpatialObject.MAX_ROTATION_UNTIL_REPAIR;

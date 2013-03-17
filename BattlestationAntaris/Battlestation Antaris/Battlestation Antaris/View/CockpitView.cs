@@ -104,8 +104,6 @@ namespace Battlestation_Antaris.View
 
             skybox = new Skybox("Models//Skysphere//skysphere", this.game);
             grid = new Grid("Models//Grid//grid", this.game);
-
-
         }
 
         private void addBackgroundObject(String model)
@@ -146,8 +144,6 @@ namespace Battlestation_Antaris.View
                 this.compass.target = this.game.world.spaceStation.globalPosition;
             }
 
-            this.skybox.Draw(this.camera);
-
             // draw background
             int nr = 1;
             foreach (BackgroundObject bg in this.backgroundObjects)
@@ -157,8 +153,10 @@ namespace Battlestation_Antaris.View
 
             Tools.Draw3D.Draw(this.game.world.allObjects, this.camera);
             Tools.Draw3D.Draw(this.game.world.allWeapons, this.camera);
+
             drawTargetCross();
-            this.grid.Draw(this.camera);
+            this.grid.Draw(this.camera); 
+            this.skybox.Draw(this.camera);
 
         }
 

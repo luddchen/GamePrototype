@@ -145,7 +145,7 @@ namespace Battlestation_Antaris.Model
             }
 
             // create the player space ship
-            this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models//compass2", content, this);
+            this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models//compass3", content, this);
             this.spaceShip.isVisible = true;
 
             // create the player space station
