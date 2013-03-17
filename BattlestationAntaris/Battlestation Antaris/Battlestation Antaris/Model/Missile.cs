@@ -27,7 +27,7 @@ namespace Battlestation_Antaris.Model
 
             if (this.timeout == 0)
             {
-                this.world.removeObject(this);
+                this.world.Remove(this);
             }
         }
 

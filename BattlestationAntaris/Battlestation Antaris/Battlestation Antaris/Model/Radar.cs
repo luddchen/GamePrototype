@@ -74,18 +74,16 @@ namespace Battlestation_Antaris.Model
                 }
             }
 
-            // weapons
-            foreach (SpatialObject obj in this.world.allWeapons)
-            {
-                distance = Vector3.Distance(this.globalPosition, obj.globalPosition);
+            //// weapons
+            //foreach (SpatialObject obj in this.world.allWeapons)
+            //{
+            //    distance = Vector3.Distance(this.globalPosition, obj.globalPosition);
 
-                if (distance <= this.attributes.Radar.Range)
-                {
-                    this.objectsInRange.Add(obj);
-                }
-            }
-
-            //Console.Out.WriteLine("Objects in Range : " + this.objectsInRange.Count);
+            //    if (distance <= this.attributes.Radar.Range)
+            //    {
+            //        this.objectsInRange.Add(obj);
+            //    }
+            //}
         }
 
 

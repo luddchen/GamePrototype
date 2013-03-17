@@ -20,6 +20,10 @@ namespace SpatialObjectAttributesLibrary
 
         public float ResetForce;
 
+        public bool ZeroBarrier = false;
+
+        private bool ZeroRelaxed = true;
+
         public Engine()
         {
             this.name = "Engine";
@@ -53,6 +57,8 @@ namespace SpatialObjectAttributesLibrary
         /// </summary>
         public void ApplyResetForce()
         {
+            this.ZeroRelaxed = true;
+
             if (this.CurrentVelocity >= this.ResetForce)
             {
                 this.CurrentVelocity -= this.ResetForce;
@@ -69,14 +75,36 @@ namespace SpatialObjectAttributesLibrary
 
         public void Accelerate()
         {
-            this.CurrentVelocity += this.Acceleration;
-            this.CurrentVelocity = Math.Min(this.CurrentVelocity, this.MaxVelocity);
+            if (this.ZeroRelaxed)
+            {
+                if (this.ZeroBarrier && this.CurrentVelocity < 0 && this.CurrentVelocity >= -this.Acceleration)
+                {
+                    this.CurrentVelocity = 0;
+                    this.ZeroRelaxed = false;
+                }
+                else
+                {
+                    this.CurrentVelocity += this.Acceleration;
+                    this.CurrentVelocity = Math.Min(this.CurrentVelocity, this.MaxVelocity);
+                }
+            }
         }
 
         public void Decelerate()
         {
-            this.CurrentVelocity -= this.Acceleration;
-            this.CurrentVelocity = Math.Max(this.CurrentVelocity, -this.MaxVelocity);
+            if (this.ZeroRelaxed)
+            {
+                if (this.ZeroBarrier && this.CurrentVelocity > 0 && this.CurrentVelocity <= this.Acceleration)
+                {
+                    this.CurrentVelocity = 0;
+                    this.ZeroRelaxed = false;
+                }
+                else
+                {
+                    this.CurrentVelocity -= this.Acceleration;
+                    this.CurrentVelocity = Math.Max(this.CurrentVelocity, -this.MaxVelocity);
+                }
+            }
         }
 
 

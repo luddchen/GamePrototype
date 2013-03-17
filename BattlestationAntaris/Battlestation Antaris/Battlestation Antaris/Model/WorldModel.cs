@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD;
+using Battlestation_Antaris.View;
 
 namespace Battlestation_Antaris.Model
 {
@@ -41,13 +42,13 @@ namespace Battlestation_Antaris.Model
         /// <summary>
         /// a list of all player radars
         /// </summary>
-        public List<Radar> allRadars;
+        private List<SpatialObject> allRadars;
 
 
         /// <summary>
         /// a list of all player turrets
         /// </summary>
-        public List<Turret> allTurrets;
+        public List<SpatialObject> allTurrets;
 
 
         /// <summary>
@@ -59,17 +60,17 @@ namespace Battlestation_Antaris.Model
         /// <summary>
         /// a list of all Laser beams
         /// </summary>
-        public List<SpatialObject> allWeapons;
+        private List<SpatialObject> allWeapons;
 
         /// <summary>
         /// a list of all space dust
         /// </summary>
-        public List<Dust> allDust;
+        private List<SpatialObject> allDust;
 
-        /// <summary>
-        /// loader for shield model
-        /// </summary>
-        public SpatialObject Shield;
+
+        public List<List<SpatialObject>> allDrawable;
+
+        public List<List<SpatialObject>> allUpdatable;
 
 
         private List<SpatialObject> removeList;
@@ -88,11 +89,25 @@ namespace Battlestation_Antaris.Model
         {
             this.game = game;
             this.allObjects = new List<SpatialObject>();
-            this.allRadars = new List<Radar>();
-            this.allTurrets = new List<Turret>();
-            this.allDust = new List<Dust>();
-
+            this.allRadars = new List<SpatialObject>();
+            this.allTurrets = new List<SpatialObject>();
+            this.allDust = new List<SpatialObject>();
             this.allWeapons = new List<SpatialObject>();
+
+            this.allDrawable = new List<List<SpatialObject>>();
+            this.allDrawable.Add(this.allObjects);
+            this.allDrawable.Add(this.allRadars);
+            this.allDrawable.Add(this.allTurrets);
+            this.allDrawable.Add(this.allDust);
+            this.allDrawable.Add(this.allWeapons);
+
+            this.allUpdatable = new List<List<SpatialObject>>();
+            this.allUpdatable.Add(this.allObjects);
+            this.allUpdatable.Add(this.allRadars);
+            this.allUpdatable.Add(this.allTurrets);
+            this.allUpdatable.Add(this.allDust);
+            this.allUpdatable.Add(this.allWeapons);
+
             this.removeList = new List<SpatialObject>();
 
             this.miniMap = new MiniMap(Vector2.Zero, View.HUD.HUDType.RELATIV, game);
@@ -135,13 +150,11 @@ namespace Battlestation_Antaris.Model
             for (int i = 0; i < 12; i++)
             {
                 Turret turret = new Turret(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), content, this);
-                this.allTurrets.Add(turret);
             }
 
             for (int i = 0; i < 6; i++)
             {
                 Radar radar = new Radar(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), content, this);
-                this.allRadars.Add(radar);
             }
 
             // create the player space ship
@@ -154,19 +167,9 @@ namespace Battlestation_Antaris.Model
             // add dust near the players ship
             for (int i = 0; i < 200; i++)
             {
-                this.allDust.Add(new Dust(spaceShip, content, this));
+                Dust dust = new Dust(spaceShip, content, this);
             }
 
-            this.Shield = new SpatialObject(Vector3.Zero, "Models//shield", content, this);
-            this.Shield.isVisible = false;
-
-
-            // reflection demo
-            Object[] parameters = new Object[2];
-            parameters[0] = Control.ControlKey.SPACE;
-            parameters[1] = Control.ControlState.UP;
-            Tools.ReflectionDemo.PrintAttribute(this.treeTest, "bounding");
-            Console.Out.WriteLine(Tools.ReflectionDemo.CallMethod(this.game.inputProvider, "isKeyOnState", parameters));
         }
 
 
@@ -177,36 +180,13 @@ namespace Battlestation_Antaris.Model
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             // update all spatial objects
-            foreach (SpatialObject obj in this.allObjects)
+            foreach (List<SpatialObject> list in this.allUpdatable)
             {
-                obj.Update(gameTime);
-            }
-
-            // update all laser beams
-            foreach (SpatialObject obj in this.allWeapons)
-            {
-                obj.Update(gameTime);
-            }
-
-            // update all dust
-            foreach (SpatialObject obj in this.allDust)
-            {
-                obj.Update(gameTime);
-            }
-
-
-            foreach (SpatialObject obj in this.removeList)
-            {
-                if ((obj is Laser) || (obj is Missile))
+                foreach (SpatialObject obj in list)
                 {
-                    this.allWeapons.Remove(obj);
-                }
-                else
-                {
-                    this.allObjects.Remove(obj);
+                    obj.Update(gameTime);
                 }
             }
-            this.removeList.Clear();
 
 
             // octree test
@@ -229,18 +209,6 @@ namespace Battlestation_Antaris.Model
 
             this.spaceShip.isVisible = shipVisible;
 
-            //foreach (SpatialObject obj in this.allWeapons)
-            //{
-            //    if (obj.isVisible)
-            //    {
-            //        BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
-            //        if (!treeTest.Add(obj, itemSphere))
-            //        {
-            //            treeTest.AddItem(obj, itemSphere);
-            //        }
-            //    }
-            //}
-
             this.treeTest.BuildTree();
 
             BoundingSphere shipSphere = this.spaceShip.bounding;
@@ -254,11 +222,11 @@ namespace Battlestation_Antaris.Model
 
             if (collList.Count > 0)
             {
-                this.game.activeSituation.view.backgroundColor = Color.DarkRed;
+                this.game.activeSituation.view.backgroundColor = Color.Red;
             }
             else
             {
-                this.game.activeSituation.view.backgroundColor = Color.Black;
+                this.game.activeSituation.view.backgroundColor = Color.White;
             }
 
             // test for threaded raycasting of all turrets
@@ -277,10 +245,51 @@ namespace Battlestation_Antaris.Model
             {
                 this.allWeapons.Add(obj);
             }
+            else if (obj is Dust)
+            {
+                this.allDust.Add(obj);
+            }
+            else if (obj is Radar)
+            {
+                this.allRadars.Add(obj);
+            }
+            else if (obj is Turret)
+            {
+                this.allTurrets.Add(obj);
+            }
             else
             {
                 this.allObjects.Add(obj);
+            } 
+        }
+
+
+        private void RemoveNow()
+        {
+            foreach (SpatialObject obj in this.removeList)
+            {
+                if ((obj is Laser) || (obj is Missile))
+                {
+                    this.allWeapons.Remove(obj);
+                }
+                else if (obj is Dust)
+                {
+                    this.allDust.Remove(obj);
+                }
+                else if (obj is Radar)
+                {
+                    this.allRadars.Remove(obj);
+                }
+                else if (obj is Turret)
+                {
+                    this.allTurrets.Remove(obj);
+                }
+                else
+                {
+                    this.allObjects.Remove(obj);
+                } 
             }
+            this.removeList.Clear();
         }
 
 
@@ -288,7 +297,7 @@ namespace Battlestation_Antaris.Model
         /// trigger object remove
         /// </summary>
         /// <param name="laser">laser to remove</param>
-        public void removeObject(SpatialObject obj)
+        public void Remove(SpatialObject obj)
         {
             this.removeList.Add(obj);
         }

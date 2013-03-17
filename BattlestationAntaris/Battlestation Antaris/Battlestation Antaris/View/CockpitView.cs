@@ -27,6 +27,8 @@ namespace Battlestation_Antaris.View
 
         TargetInfo targetInfo;
 
+        HUD2DTexture cockpitTexture;
+
 
         /// <summary>
         /// a list of background images
@@ -54,7 +56,7 @@ namespace Battlestation_Antaris.View
             this.allHUD_3D.Add(this.compass);
             this.is3D = true;
 
-            this.backgroundColor = Color.Black;
+            this.backgroundColor = Color.White;
             this.backgroundObjects = new List<BackgroundObject>();
         }
 
@@ -69,7 +71,7 @@ namespace Battlestation_Antaris.View
 
 
             // 2D HUD
-            HUD2DTexture cockpitTexture = new HUD2DTexture(this.game);
+            cockpitTexture = new HUD2DTexture(this.game);
             cockpitTexture.abstractPosition = new Vector2(0.5f, 0.5f);
             cockpitTexture.positionType = HUDType.RELATIV;
             cockpitTexture.abstractSize = new Vector2(1, 1);
@@ -127,6 +129,8 @@ namespace Battlestation_Antaris.View
         /// </summary>
         protected override void DrawPreContent()
         {
+            this.cockpitTexture.color = this.backgroundColor;
+
             // init depth buffer
             this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true, DepthBufferWriteEnable = true };
             this.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
@@ -144,7 +148,7 @@ namespace Battlestation_Antaris.View
                 this.compass.target = this.game.world.spaceStation.globalPosition;
             }
 
-
+            
             this.skybox.Draw(this.camera);
 
             // draw background
@@ -154,8 +158,7 @@ namespace Battlestation_Antaris.View
                 bg.Draw(this.camera, nr++);
             }
 
-            Tools.Draw3D.Draw(this.game.world.allObjects, this.camera);
-            Tools.Draw3D.Draw(this.game.world.allWeapons, this.camera);
+            Tools.Draw3D.Draw(this.game.world.allDrawable, this.camera);
 
             drawTargetCross();
             this.grid.Draw(this.camera);

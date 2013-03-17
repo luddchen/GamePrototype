@@ -39,6 +39,8 @@ namespace Battlestation_Antaris.Model
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
             //this.miniMapIcon.scale = 2.0f;
             this.laserOffsets = new float[2] { -4.0f, 4.0f };
+
+            this.attributes.Engine.ZeroBarrier = true;
         }
 
 

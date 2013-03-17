@@ -62,8 +62,7 @@ namespace Battlestation_Antaris.Model
 
             if (this.timeout == 0)
             {
-                this.parent = null;
-                this.world.removeObject(this);
+                this.world.Remove(this);
                 this.miniMapIcon.RemoveFromWorld();
                 this.miniMapIcon = null;
             }
