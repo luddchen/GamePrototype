@@ -124,8 +124,10 @@
     <Compile Include="View\HUD\ButtonStyle.cs" />
     <Compile Include="View\HUD\CockpitHUD\LaserHeat.cs" />
     <Compile Include="View\HUD\CockpitHUD\TargetInfo.cs" />
+    <Compile Include="View\HUD\CockpitHUD\Velocity.cs" />
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
     <Compile Include="View\HUD\DebugViewer.cs" />
+    <Compile Include="View\HUD\HUD2DValueBar.cs" />
     <Compile Include="View\HUD\MiniMapIcon.cs" />
     <Compile Include="View\HUD\CommandHUD\BuildMenu.cs" />
     <Compile Include="View\HUD\CockpitHUD\Compass3d.cs" />
