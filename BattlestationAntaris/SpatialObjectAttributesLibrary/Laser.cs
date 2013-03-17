@@ -40,8 +40,8 @@ namespace SpatialObjectAttributesLibrary
             this.HeatRegeneration = laser.HeatRegeneration;
         }
 
-        public Laser(float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration)
-            : base(damage, range, projectileVelocity)
+        public Laser(float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration, float reloadTime)
+            : base(damage, range, projectileVelocity, reloadTime)
         {
             this.name = "Laser";
             this.HeatProduction = heatProduction;
@@ -51,9 +51,9 @@ namespace SpatialObjectAttributesLibrary
         }
 
 
-        public void set(float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration)
+        public void set(float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration, float reloadTime)
         {
-            base.set(damage, range, projectileVelocity);
+            base.set(damage, range, projectileVelocity, reloadTime);
 
             this.HeatProduction = heatProduction;
             this.HeatUntilCooldown = heatUntilCooldown;
@@ -74,12 +74,12 @@ namespace SpatialObjectAttributesLibrary
         public override float[] getValues()
         {
             float[] values1 = base.getValues();
-            float[] values2 = new float[6];
-            Array.Copy(values1, 0, values2, 0, 3);
+            float[] values2 = new float[getNumberOfValues()];
+            Array.Copy(values1, 0, values2, 0, base.getNumberOfValues());
 
-            values2[3] = this.HeatProduction;
-            values2[4] = this.HeatUntilCooldown;
-            values2[5] = this.HeatRegeneration;
+            values2[base.getNumberOfValues()] = this.HeatProduction;
+            values2[base.getNumberOfValues()+1] = this.HeatUntilCooldown;
+            values2[base.getNumberOfValues()+2] = this.HeatRegeneration;
 
             return values2;
         }

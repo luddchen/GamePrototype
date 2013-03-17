@@ -22,8 +22,6 @@ namespace Battlestation_Antaris.Model
 
         private int laserIndex = 0;
 
-        private int laserCooldown = 0;
-
         /// <summary>
         /// create a new space ship within the world
         /// </summary>
@@ -51,6 +49,17 @@ namespace Battlestation_Antaris.Model
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             base.Update(gameTime);
+
+            this.attributes.Laser.CurrentHeat -= this.attributes.Laser.HeatRegeneration;
+            if (this.attributes.Laser.CurrentHeat < 0)
+            {
+                this.attributes.Laser.CurrentHeat = 0;
+            }
+
+            if (this.attributes.Laser.CurrentReloadTime > 0)
+            {
+                this.attributes.Laser.CurrentReloadTime--;
+            }
             
             if (this.attributes.Missile.CurrentReloadTime > 0)
             {
@@ -63,15 +72,12 @@ namespace Battlestation_Antaris.Model
         {
             base.InjectControl(control);
 
-            if (this.laserCooldown > 0)
+            if (control == Control.Control.FIRE_LASER && this.attributes.Laser.CurrentReloadTime <= 0
+                && this.attributes.Laser.CurrentHeat < this.attributes.Laser.HeatUntilCooldown)
             {
-                this.laserCooldown--;
-            }
-
-            if (control == Control.Control.FIRE_LASER && this.laserCooldown == 0)
-            {
+                this.attributes.Laser.CurrentHeat += this.attributes.Laser.HeatProduction;
+                this.attributes.Laser.CurrentReloadTime = this.attributes.Laser.ReloadTime;
                 Laser laser = new Laser(this, -2.0f, this.laserOffsets[this.laserIndex], this.world.game.Content, this.world);
-                this.laserCooldown = 15;
                 this.laserIndex++;
                 if (this.laserIndex >= this.laserOffsets.Length)
                 {
@@ -90,7 +96,7 @@ namespace Battlestation_Antaris.Model
 
             if (control == Control.Control.TARGET_NEXT_ENEMY)
             {
-                Console.WriteLine("Blubb!");
+                //Console.WriteLine("Blubb!");
                 float testDist = float.MaxValue;
                 this.target = this.world.treeTest.CastRay(new Ray(this.globalPosition, this.rotation.Forward), 1, ref testDist);
             }
@@ -104,24 +110,29 @@ namespace Battlestation_Antaris.Model
                 return String.Format("{0:F2}", (obj as SpaceShip).attributes.Engine.CurrentVelocity);
             }));
 
-            Game1.debugViewer.Add(new DebugElement(this, "Yaw", delegate(Object obj)
-            {
-                return String.Format("{0:F2}", (obj as SpaceShip).attributes.EngineYaw.CurrentVelocity * 100);
-            }));
+            //Game1.debugViewer.Add(new DebugElement(this, "Yaw", delegate(Object obj)
+            //{
+            //    return String.Format("{0:F2}", (obj as SpaceShip).attributes.EngineYaw.CurrentVelocity * 100);
+            //}));
 
-            Game1.debugViewer.Add(new DebugElement(this, "Pitch", delegate(Object obj)
-            {
-                return String.Format("{0:F2}", (obj as SpaceShip).attributes.EnginePitch.CurrentVelocity * 100);
-            }));
+            //Game1.debugViewer.Add(new DebugElement(this, "Pitch", delegate(Object obj)
+            //{
+            //    return String.Format("{0:F2}", (obj as SpaceShip).attributes.EnginePitch.CurrentVelocity * 100);
+            //}));
 
-            Game1.debugViewer.Add(new DebugElement(this, "Roll", delegate(Object obj)
-            {
-                return String.Format("{0:F2}", (obj as SpaceShip).attributes.EngineRoll.CurrentVelocity * 100);
-            }));
+            //Game1.debugViewer.Add(new DebugElement(this, "Roll", delegate(Object obj)
+            //{
+            //    return String.Format("{0:F2}", (obj as SpaceShip).attributes.EngineRoll.CurrentVelocity * 100);
+            //}));
 
             Game1.debugViewer.Add(new DebugElement(this, "Distance", delegate(Object obj)
             {
                 return String.Format("{0:F0}", (obj as SpaceShip).globalPosition.Length());
+            }));
+
+            Game1.debugViewer.Add(new DebugElement(this, "Laser Heat", delegate(Object obj)
+            {
+                return String.Format("{0:F1}", (obj as SpaceShip).attributes.Laser.CurrentHeat);
             }));
         }
 

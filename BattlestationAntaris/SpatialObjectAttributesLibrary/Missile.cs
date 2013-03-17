@@ -16,10 +16,6 @@ namespace SpatialObjectAttributesLibrary
 
         public float CurrentAmount;
 
-        public float ReloadTime;
-
-        public float CurrentReloadTime;
-
 
         public Missile()
             : base()
@@ -27,8 +23,6 @@ namespace SpatialObjectAttributesLibrary
             this.name = "Missile";
             this.MaxAmount = 0;
             this.CurrentAmount = 0;
-            this.ReloadTime = 0;
-            this.CurrentReloadTime = 0;
         }
 
         public Missile(Missile missile)
@@ -37,29 +31,23 @@ namespace SpatialObjectAttributesLibrary
             this.name = "Missile";
             this.MaxAmount = missile.MaxAmount;
             this.CurrentAmount = missile.CurrentAmount;
-            this.ReloadTime = missile.ReloadTime;
-            this.CurrentReloadTime = missile.CurrentReloadTime;
         }
 
         public Missile(float damage, float range, float projectileVelocity, float maxAmount, float reloadTime)
-            : base(damage, range, projectileVelocity)
+            : base(damage, range, projectileVelocity, reloadTime)
         {
             this.name = "Missile";
             this.MaxAmount = maxAmount;
             this.CurrentAmount = 0;
-            this.ReloadTime = reloadTime;
-            this.CurrentReloadTime = 0;
         }
 
 
         public void set(float damage, float range, float projectileVelocity, float maxAmount, float reloadTime)
         {
-            base.set(damage, range, projectileVelocity);
+            base.set(damage, range, projectileVelocity, reloadTime);
 
             this.MaxAmount = maxAmount;
             this.CurrentAmount = 0;
-            this.ReloadTime = reloadTime;
-            this.CurrentReloadTime = 0;
         }
 
 
@@ -69,25 +57,22 @@ namespace SpatialObjectAttributesLibrary
 
             this.MaxAmount = values[index++];
             this.CurrentAmount = 0;
-            this.ReloadTime = values[index++];
-            this.CurrentReloadTime = 0;
         }
 
         public override float[] getValues()
         {
             float[] values1 = base.getValues();
-            float[] values2 = new float[5];
-            Array.Copy(values1, 0, values2, 0, 3);
+            float[] values2 = new float[getNumberOfValues()];
+            Array.Copy(values1, 0, values2, 0, base.getNumberOfValues());
 
-            values2[3] = this.MaxAmount;
-            values2[4] = this.ReloadTime;
+            values2[base.getNumberOfValues()] = this.MaxAmount;
 
             return values2;
         }
 
         public override int getNumberOfValues()
         {
-            return base.getNumberOfValues() + 2;
+            return base.getNumberOfValues() + 1;
         }
 
 
@@ -96,8 +81,6 @@ namespace SpatialObjectAttributesLibrary
             String output = base.ToString();
             output += this.name + ":MaxAmount = " + this.MaxAmount + "\n";
             output += this.name + ":CurrentAmount = " + this.CurrentAmount + "\n";
-            output += this.name + ":ReloadTime = " + this.ReloadTime + "\n";
-            output += this.name + ":RCurrentReloadTime = " + this.CurrentReloadTime + "\n";
 
             return output;
         }
