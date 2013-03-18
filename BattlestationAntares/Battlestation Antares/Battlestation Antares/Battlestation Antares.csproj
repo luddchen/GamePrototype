@@ -107,7 +107,6 @@
     <Compile Include="Tools\DynamicOctree.cs" />
     <Compile Include="Tools\RandomGen.cs" />
     <Compile Include="Tools\RayCastThreadPool.cs" />
-    <Compile Include="Tools\ReflectionDemo.cs" />
     <Compile Include="Tools\Tools.cs" />
     <Compile Include="View\AIView.cs" />
     <Compile Include="View\BackgroundObject.cs" />
@@ -131,6 +130,7 @@
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
     <Compile Include="View\HUD\DebugViewer.cs" />
     <Compile Include="View\HUD\HUD2DValueBar.cs" />
+    <Compile Include="View\HUD\HUD2DValueCircle.cs" />
     <Compile Include="View\HUD\MiniMapIcon.cs" />
     <Compile Include="View\HUD\CommandHUD\BuildMenu.cs" />
     <Compile Include="View\HUD\CockpitHUD\Compass3d.cs" />

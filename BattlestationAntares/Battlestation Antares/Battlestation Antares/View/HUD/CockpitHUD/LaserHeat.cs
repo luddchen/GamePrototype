@@ -6,6 +6,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
         public LaserHeat( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, Antares game )
             : base( abstractPosition, positionType, abstractSize, sizeType, false, game ) {
+            this.SetDiscrete();
             this.GetValue =
                 delegate() {
                     return this.game.world.spaceShip.attributes.Laser.CurrentHeat / this.game.world.spaceShip.attributes.Laser.HeatUntilCooldown;

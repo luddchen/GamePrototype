@@ -15,20 +15,22 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
             this.sizeType = sizeType;
 
             this.posVel = new HUD2DValueBar( new Vector2( 0, -this.abstractSize.Y / 4 ), this.sizeType,
-                                            new Vector2( abstractSize.X, abstractSize.Y / 2 ), this.sizeType, false, game );
+                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.sizeType, false, game );
             this.posVel.GetValue =
                 delegate() {
                     return Math.Max( 0, this.game.world.spaceShip.attributes.Engine.CurrentVelocity / this.game.world.spaceShip.attributes.Engine.MaxVelocity );
                 };
-
+            this.posVel.SetDiscreteBig();
+            this.posVel.SetMaxColor( Color.Yellow );
 
             this.negVel = new HUD2DValueBar( new Vector2( 0, this.abstractSize.Y / 4 ), this.sizeType,
-                                            new Vector2( abstractSize.X, abstractSize.Y / 2 ), this.sizeType, true, game );
+                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.sizeType, true, game );
             this.negVel.GetValue =
                 delegate() {
                     return -Math.Min( 0, this.game.world.spaceShip.attributes.Engine.CurrentVelocity / this.game.world.spaceShip.attributes.Engine.MaxVelocity );
                 };
-
+            this.negVel.SetDiscreteBig();
+            this.negVel.SetMaxColor(Color.Yellow);
 
             Add( this.posVel );
             Add( this.negVel );

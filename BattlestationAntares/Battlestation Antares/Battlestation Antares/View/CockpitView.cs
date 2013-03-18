@@ -89,6 +89,13 @@ namespace Battlestation_Antares.View {
             this.allHUD_2D.Add( new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV, game ) );
             this.allHUD_2D.Add( new LaserHeat( new Vector2( 0.35f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV, game ) );
 
+            HUD2DValueCircle circle = new HUD2DValueCircle( new Vector2( 0.25f, 0.925f ), HUDType.RELATIV, new Vector2( 0.06f, 0.1f ), HUDType.RELATIV, game );
+            circle.GetValue =
+                delegate() {
+                    return Math.Abs( this.game.world.spaceShip.attributes.Engine.CurrentVelocity / this.game.world.spaceShip.attributes.Engine.MaxVelocity );
+                };
+            this.allHUD_2D.Add( circle );
+
             this.targetCrossModel = game.Content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//TargetCross" );
             this.targetCrossBoneTransforms = new Matrix[this.targetCrossModel.Bones.Count];
 
