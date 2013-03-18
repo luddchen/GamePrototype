@@ -30,27 +30,27 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private HUD2DButton removeButton;
 
 
-        public AI_Item( Vector2 abstractPosition, HUDType positionType, Antares game )
-            : base( abstractPosition, positionType, game ) {
+        public AI_Item( Vector2 abstractPosition, HUDType positionType)
+            : base( abstractPosition, positionType) {
             this.sizeType = HUDType.ABSOLUT;
             this.abstractSize = new Vector2( 200, 100 );
 
             this.inputs = new List<AI_ItemPort>();
             this.outputs = new List<AI_ItemPort>();
 
-            this.background = new HUD2DTexture( game );
+            this.background = new HUD2DTexture();
             this.background.color = new Color( 0, 48, 0 );
             this.background.sizeType = this.sizeType;
             this.background.abstractSize = this.abstractSize;
             Add( this.background );
 
-            this.typeString = new HUD2DString( "X", game );
+            this.typeString = new HUD2DString( "X");
             this.typeString.positionType = this.sizeType;
             this.typeString.scale = 0.6f;
             this.typeString.abstractPosition = new Vector2( 0, -( this.abstractSize.Y - this.typeString.size.Y ) / 2 );
             Add( this.typeString );
 
-            this.removeButton = new HUD2DButton( "X", new Vector2( this.abstractSize.X / 2 - 8, -( this.abstractSize.Y / 2 ) + 8 ), 0.5f, game );
+            this.removeButton = new HUD2DButton( "X", new Vector2( this.abstractSize.X / 2 - 8, -( this.abstractSize.Y / 2 ) + 8 ), 0.5f);
             this.removeButton.positionType = this.sizeType;
             this.removeButton.style = ButtonStyle.RemoveButtonStyle();
             this.removeButton.SetPressedAction( delegate() {
@@ -58,14 +58,14 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             } );
             Add( this.removeButton );
 
-            this.subTypeString = new HUD2DString( " ", game );
+            this.subTypeString = new HUD2DString( " ");
             this.subTypeString.scale = 0.5f;
             this.subTypeString.positionType = this.sizeType;
             this.subTypeString.abstractSize = new Vector2( this.abstractSize.X, this.subTypeString.size.Y );
             this.subTypeString.abstractPosition = new Vector2( 0, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
             Add( this.subTypeString );
 
-            this.nextSubType = new HUD2DButton( ">", Vector2.Zero, 0.8f, game );
+            this.nextSubType = new HUD2DButton( ">", Vector2.Zero, 0.8f);
             this.nextSubType.positionType = this.sizeType;
             this.nextSubType.abstractPosition = new Vector2( ( this.abstractSize.X - this.nextSubType.size.X ) / 2 - 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
             this.nextSubType.SetPressedAction( delegate() {
@@ -73,7 +73,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             } );
             Add( this.nextSubType );
 
-            this.previousSubType = new HUD2DButton( "<", Vector2.Zero, 0.8f, game );
+            this.previousSubType = new HUD2DButton( "<", Vector2.Zero, 0.8f);
             this.previousSubType.positionType = this.sizeType;
             this.previousSubType.abstractPosition = new Vector2( -( this.abstractSize.X - this.nextSubType.size.X ) / 2 + 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
             this.previousSubType.SetPressedAction( delegate() {
@@ -84,7 +84,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
 
         public void AddPort( AI_ItemPort.PortType portType ) {
-            AI_ItemPort newPort = new AI_ItemPort( Vector2.Zero, HUDType.ABSOLUT, portType, this, this.game );
+            AI_ItemPort newPort = new AI_ItemPort( Vector2.Zero, HUDType.ABSOLUT, portType, this);
 
             Vector2 portPosition = new Vector2( -this.abstractSize.X / 2, 0 );
             float portOffset = 0;

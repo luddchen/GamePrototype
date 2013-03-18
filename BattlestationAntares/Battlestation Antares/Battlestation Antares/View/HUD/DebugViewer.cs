@@ -13,15 +13,14 @@ namespace Battlestation_Antares.View.HUD {
 
         private List<HUD2DString> outputStrings;
 
-        public DebugViewer( Antares game )
-            : base( new Vector2( 10f, 0.05f ), HUDType.ABSOLUT_RELATIV, game ) {
+        public DebugViewer() : base( new Vector2( 10f, 0.05f ), HUDType.ABSOLUT_RELATIV) {
             this.activeDebugging = false;
             this.debugElements = new List<DebugElement>();
             this.outputStrings = new List<HUD2DString>();
         }
 
         public void Add( DebugElement debugElement ) {
-            HUD2DString newHUDStr = new HUD2DString( "", null, null, null, null, 0.35f, 0.0f, this.game );
+            HUD2DString newHUDStr = new HUD2DString( "", null, null, null, null, 0.35f, 0.0f);
             this.debugElements.Add( debugElement );
             this.outputStrings.Add( newHUDStr );
 

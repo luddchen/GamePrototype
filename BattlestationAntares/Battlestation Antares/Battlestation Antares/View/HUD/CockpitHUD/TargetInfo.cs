@@ -15,13 +15,14 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
         public SpatialObject target;
 
 
-        public TargetInfo( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, Antares game )
-            : base( abstractPosition, positionType, abstractSize, sizeType, game ) {
-            this.world = this.game.world;
+        public TargetInfo( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
+            : base( abstractPosition, positionType, abstractSize, sizeType) 
+        {
+            this.world = Antares.world;
 
-            targetObject = new HUD2DString( "", game );
+            targetObject = new HUD2DString( "");
             targetObject.scale = 0.5f;
-            targetDistance = new HUD2DString( "", game );
+            targetDistance = new HUD2DString( "");
             targetDistance.scale = 0.5f;
 
             Add( targetObject );

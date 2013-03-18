@@ -11,15 +11,12 @@ namespace Battlestation_Antares.View {
         private const int NR_GRIDS = 8;
         private const int Y_POS = -1000;
 
-        private Antares game;
         private Microsoft.Xna.Framework.Graphics.Model grid;
         private Matrix[] boneTransforms;
 
 
-        public Grid( String name, Antares game ) {
-            this.game = game;
-
-            this.grid = this.game.Content.Load<Microsoft.Xna.Framework.Graphics.Model>( name );
+        public Grid( String name) {
+            this.grid = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( name );
             boneTransforms = new Matrix[this.grid.Bones.Count];
         }
 
@@ -38,11 +35,11 @@ namespace Battlestation_Antares.View {
 
         private void calcPosition( int column, int row ) {
             int rotationDirection = 1;
-            Vector3 translation = this.game.world.spaceShip.globalPosition;
+            Vector3 translation = Antares.world.spaceShip.globalPosition;
             translation.Y = Y_POS;
             translation.X = ( (int)( translation.X / ( 2 * SCALE ) ) ) * 2 * SCALE + 2 * SCALE * column - SCALE * NR_GRIDS;
             translation.Z = ( (int)( translation.Z / ( 2 * SCALE ) ) ) * 2 * SCALE + 2 * SCALE * row - SCALE * NR_GRIDS;
-            if ( this.game.world.spaceShip.globalPosition.Y >= Y_POS ) {
+            if ( Antares.world.spaceShip.globalPosition.Y >= Y_POS ) {
                 rotationDirection = -1;
             }
             grid.Root.Transform = Matrix.CreateScale( SCALE ) * Matrix.CreateRotationX( MathHelper.PiOver2 * rotationDirection ) * Matrix.CreateTranslation( translation );

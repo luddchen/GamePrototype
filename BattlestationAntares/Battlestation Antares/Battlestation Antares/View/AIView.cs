@@ -8,12 +8,9 @@ namespace Battlestation_Antares.View {
 
         public AI_Container aiContainer;
 
-        public AIView( Antares game )
-            : base( game ) {
-        }
 
         public override void Initialize() {
-            this.aiContainer = new AI_Container( this.game );
+            this.aiContainer = new AI_Container();
             this.allHUD_2D.Add( this.aiContainer );
         }
 

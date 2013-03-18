@@ -50,19 +50,19 @@ namespace Battlestation_Antares.View.HUD {
 
         private MiniMap.Config oldConfig;
 
-        public MiniMap( Vector2 abstractPosition, HUDType positionType, Antares game )
-            : base( abstractPosition, positionType, game ) {
-            this.background = new HUD2DTexture( game );
+        public MiniMap( Vector2 abstractPosition, HUDType positionType)
+            : base( abstractPosition, positionType) {
+            this.background = new HUD2DTexture();
             this.background.color = MiniMap.BACKGROUND_COLOR;
             this.background.abstractSize = new Vector2( 0.25f, 0.4f );
             this.background.sizeType = HUDType.RELATIV;
-            this.background.Texture = game.Content.Load<Texture2D>( "Sprites//Square_Cross" );
+            this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//Square_Cross" );
 
-            this.foreground = new HUD2DTexture( game );
+            this.foreground = new HUD2DTexture();
             this.foreground.color = MiniMap.BORDER_COLOR;
             this.foreground.abstractSize = new Vector2( 0.25f, 0.4f );
             this.foreground.sizeType = HUDType.RELATIV;
-            this.foreground.Texture = game.Content.Load<Texture2D>( "Sprites//SquareBorder" );
+            this.foreground.Texture = Antares.content.Load<Texture2D>( "Sprites//SquareBorder" );
 
             Add( this.background );
             Add( this.foreground );
@@ -103,10 +103,10 @@ namespace Battlestation_Antares.View.HUD {
 
 
         public void ZoomOnMouseWheelOver() {
-            if ( this.background.Intersects( this.game.inputProvider.getMousePos() ) ) {
+            if ( this.background.Intersects( Antares.inputProvider.getMousePos() ) ) {
                 this.foreground.color = MiniMap.BORDER_COLOR_HOVER;
 
-                int wheelChange = this.game.inputProvider.getMouseWheelChange();
+                int wheelChange = Antares.inputProvider.getMouseWheelChange();
 
                 if ( wheelChange != 0 ) {
                     if ( wheelChange > 0 ) {

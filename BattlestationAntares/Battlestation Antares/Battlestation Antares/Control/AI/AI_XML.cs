@@ -72,7 +72,7 @@ namespace Battlestation_Antares.Control.AI {
         }
 
 
-        public static void ReadAIContainer( String fileName, AI_Container aiContainer, Antares game ) {
+        public static void ReadAIContainer( String fileName, AI_Container aiContainer ) {
             aiContainer.ClearAI();
 
             XmlTextReader reader = new XmlTextReader( fileName );
@@ -83,10 +83,9 @@ namespace Battlestation_Antares.Control.AI {
                         AI_Item item = null;
 
                         Type type = Type.GetType( reader.GetAttribute( 0 ) );
-                        Object[] parameters = new Object[3];
+                        Object[] parameters = new Object[2];
                         parameters[0] = new Vector2( 0.5f, 0.5f );
                         parameters[1] = HUDType.RELATIV;
-                        parameters[2] = game;
                         item = (AI_Item)Activator.CreateInstance( type, parameters );
 
                         ContinueToNode( reader, "SubType" );
@@ -109,7 +108,7 @@ namespace Battlestation_Antares.Control.AI {
                     }
 
                     if ( reader.Name == "Connection" ) {
-                        AI_Connection connection = new AI_Connection( game );
+                        AI_Connection connection = new AI_Connection();
 
                         ContinueToNode( reader, "Source" );
                         int sourceItemIndex = int.Parse( reader.GetAttribute( 0 ) );

@@ -32,7 +32,6 @@ namespace Battlestation_Antares.View.HUD {
     /// abstract basis class for 2D HUD elements
     /// </summary>
     public abstract class HUD2D {
-        protected Antares game;
 
         public HUDType positionType;
         public Vector2 abstractPosition;
@@ -58,9 +57,7 @@ namespace Battlestation_Antares.View.HUD {
         public HUD2D parent;
 
 
-        public HUD2D( Antares game ) {
-            this.game = game;
-
+        public HUD2D() {
             this.positionType = HUDType.ABSOLUT;
             this.abstractPosition = Vector2.Zero;
             this.position = Vector2.Zero;
@@ -111,8 +108,8 @@ namespace Battlestation_Antares.View.HUD {
 
             switch ( this.positionType ) {
                 case HUDType.RELATIV:
-                    this.position += new Vector2( this.game.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
-                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractPosition.Y );
+                    this.position += new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
+                                                 Antares.graphics.GraphicsDevice.Viewport.Height * this.abstractPosition.Y );
                     break;
 
                 case HUDType.ABSOLUT:
@@ -122,11 +119,11 @@ namespace Battlestation_Antares.View.HUD {
 
                 case HUDType.ABSOLUT_RELATIV:
                     this.position += new Vector2( this.abstractPosition.X,
-                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractPosition.Y );
+                                                 Antares.graphics.GraphicsDevice.Viewport.Height * this.abstractPosition.Y );
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.position += new Vector2( this.game.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
+                    this.position += new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
                                                  this.abstractPosition.Y );
                     break;
             }

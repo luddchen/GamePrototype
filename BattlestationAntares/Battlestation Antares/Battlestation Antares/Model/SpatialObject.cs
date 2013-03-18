@@ -131,7 +131,7 @@ namespace Battlestation_Antares.Model {
 
             // dirty hack
             if ( !( this is Dust ) ) {
-                this.miniMapIcon = new MiniMapIcon( null, this, this.world.game );
+                this.miniMapIcon = new MiniMapIcon( null, this);
                 this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//SpaceShip//spaceship_2d" );
                 this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
                 this.miniMapIcon.AddToWorld();

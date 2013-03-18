@@ -17,8 +17,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public Color colorHighlight = Color.Red;
 
-        public AI_Connection( Antares game )
-            : base( game ) {
+        public AI_Connection() {
             this.color = this.colorNormal;
         }
 

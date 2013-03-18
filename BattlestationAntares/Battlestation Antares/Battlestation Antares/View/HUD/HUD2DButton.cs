@@ -16,8 +16,8 @@ namespace Battlestation_Antares.View.HUD {
         private Action downAction;
 
 
-        public HUD2DButton( String text, Vector2 position, float scale, Antares game )
-            : base( text, game ) {
+        public HUD2DButton( String text, Vector2 position, float scale)
+            : base( text) {
             this.abstractPosition = position;
             this.overallScale = scale;
             this.scale = scale;
@@ -29,7 +29,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
         public void SetBackgroundTexture( String background ) {
-            this.BackgroundTexture = this.game.Content.Load<Texture2D>( background );
+            this.BackgroundTexture = Antares.content.Load<Texture2D>( background );
             this.BackgroundTextureOrigin = new Vector2( BackgroundTexture.Width / 2, BackgroundTexture.Height / 2 );
         }
 

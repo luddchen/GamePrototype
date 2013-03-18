@@ -16,14 +16,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public List<AI_Connection> connections;
 
-        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType, Antares game )
-            : base( game ) {
+        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType) {
             this.portType = portType;
             this.connections = new List<AI_Connection>();
         }
 
-        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType, AI_Item item, Antares game )
-            : base( game ) {
+        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType, AI_Item item) {
             this.portType = portType;
             this.item = item;
             this.connections = new List<AI_Connection>();

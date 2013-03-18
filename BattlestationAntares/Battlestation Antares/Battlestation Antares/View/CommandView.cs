@@ -14,8 +14,7 @@ namespace Battlestation_Antares.View {
         /// creates a new command view
         /// </summary>
         /// <param name="game"></param>
-        public CommandView( Antares game )
-            : base( game ) {
+        public CommandView() {
 
         }
 
@@ -24,12 +23,12 @@ namespace Battlestation_Antares.View {
         /// </summary>
         public override void Initialize() {
             // test content
-            HUD2DString testString = new HUD2DString( "Antares Command", this.game );
+            HUD2DString testString = new HUD2DString( "Antares Command");
             testString.abstractPosition = new Vector2( 0.5f, 0.1f );
             testString.positionType = HUDType.RELATIV;
 
             this.allHUD_2D.Add( testString );
-            this.allHUD_2D.Add( this.game.world.miniMap );
+            this.allHUD_2D.Add( Antares.world.miniMap );
         }
 
         /// <summary>
@@ -38,11 +37,11 @@ namespace Battlestation_Antares.View {
         protected override void DrawPreContent() {
 
             // init depth buffer
-            this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() {
+            Antares.graphics.GraphicsDevice.DepthStencilState = new DepthStencilState() {
                 DepthBufferEnable = true,
                 DepthBufferWriteEnable = true
             };
-            this.game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            Antares.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
         }
     }

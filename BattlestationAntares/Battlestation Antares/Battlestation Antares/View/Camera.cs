@@ -12,12 +12,6 @@ namespace Battlestation_Antares.View {
     public class Camera {
 
         /// <summary>
-        /// game graphics device (for aspect ratio)
-        /// </summary>
-        GraphicsDevice device;
-
-
-        /// <summary>
         /// the projection matrix
         /// </summary>
         public Matrix projection;
@@ -45,8 +39,7 @@ namespace Battlestation_Antares.View {
         /// create a new camera
         /// </summary>
         /// <param name="device">game graphics device</param>
-        public Camera( GraphicsDevice device ) {
-            this.device = device;
+        public Camera() {
             Update( Vector3.Zero, Vector3.Forward, Vector3.Up );  // set matrices to standard
         }
 
@@ -58,7 +51,7 @@ namespace Battlestation_Antares.View {
         /// <param name="direction">new direction</param>
         /// <param name="up">new up vector</param>
         public void Update( Vector3 position, Vector3 direction, Vector3 up ) {
-            projection = Matrix.CreatePerspectiveFieldOfView( MathHelper.PiOver4, this.device.Viewport.AspectRatio, this.nearClipping, this.farClipping );
+            projection = Matrix.CreatePerspectiveFieldOfView( MathHelper.PiOver4, Antares.graphics.GraphicsDevice.Viewport.AspectRatio, this.nearClipping, this.farClipping );
             view = Matrix.CreateLookAt( position, Vector3.Add( position, direction ), up );
         }
 

@@ -45,26 +45,26 @@ namespace Battlestation_Antares.Control {
             : base( game, view ) {
             this.currentMode = CommandMode.NORMAL;
 
-            this.toMenuButton = new HUD2DButton( "Menu", new Vector2( 0.1f, 0.9f ), 0.7f, this.game );
+            this.toMenuButton = new HUD2DButton( "Menu", new Vector2( 0.1f, 0.9f ), 0.7f);
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
             this.toMenuButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add( toMenuButton );
 
-            this.toCockpitButton = new HUD2DButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f, this.game );
+            this.toCockpitButton = new HUD2DButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f);
             this.toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
             this.toCockpitButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add( toCockpitButton );
 
-            buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV, this.game );
+            buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV );
             this.view.allHUD_2D.Add( buildMenu );
 
             mouseTextures = new Dictionary<Type, MouseTexture>();
-            mouseTextures.Add( typeof( Battlestation_Antares.Model.Turret ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Turret//turret_2d" ), game ) );
-            mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Radar//radar_2d" ), game ) );
+            mouseTextures.Add( typeof( Battlestation_Antares.Model.Turret ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Turret//turret_2d" ) ) );
+            mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Radar//radar_2d" ) ) );
             this.view.allHUD_2D.AddRange( mouseTextures.Values );
 
             mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.5f ), new Vector2( 0.625f, 1f ), new Vector2( 0.625f, 1f ) );
@@ -73,7 +73,7 @@ namespace Battlestation_Antares.Control {
         }
 
         public override void onEnter() {
-            this.game.world.miniMap.changeConfig( this.mapConfig );
+            Antares.world.miniMap.changeConfig( this.mapConfig );
         }
 
         public override void onExit() {
@@ -95,35 +95,35 @@ namespace Battlestation_Antares.Control {
                 this.mouseTextures[buildingType].update();
             }
 
-            if ( currentMode == CommandMode.BUILD && this.game.inputProvider.isLeftMouseButtonPressed() ) {
+            if ( currentMode == CommandMode.BUILD && Antares.inputProvider.isLeftMouseButtonPressed() ) {
                 createNewStructure();
             }
 
-            if ( currentMode == CommandMode.BUILD && this.game.inputProvider.isRightMouseButtonPressed() ) {
+            if ( currentMode == CommandMode.BUILD && Antares.inputProvider.isRightMouseButtonPressed() ) {
                 Type structureType = buildMenu.getStructureType();
                 this.mouseTextures[structureType].isVisible = false;
                 this.currentMode = CommandMode.NORMAL;
             }
 
-            if ( this.buildMenu.isUpdatedClicked( this.game.inputProvider ) ) {
+            if ( this.buildMenu.isUpdatedClicked( Antares.inputProvider ) ) {
                 if ( this.currentMouseTexture != null ) {
                     this.currentMouseTexture.isVisible = false;
                 }
                 this.currentMode = CommandMode.BUILD;
             }
 
-            if ( this.game.inputProvider.getMouseWheelChange() != 0 ) {
-                this.game.world.miniMap.ZoomOnMouseWheelOver();
+            if ( Antares.inputProvider.getMouseWheelChange() != 0 ) {
+                Antares.world.miniMap.ZoomOnMouseWheelOver();
             }
         }
 
         private void createNewStructure() {
             Type structureType = buildMenu.getStructureType();
-            Vector2 mousePos = this.game.inputProvider.getMousePos();
-            if ( this.game.world.miniMap.Intersects( mousePos ) ) {
+            Vector2 mousePos = Antares.inputProvider.getMousePos();
+            if ( Antares.world.miniMap.Intersects( mousePos ) ) {
                 SpatialObject newStructure = SpatialObjectFactory.buildSpatialObject( structureType );
-                Vector2 miniMapCoord = this.game.world.miniMap.screenToMiniMapCoord( this.game.inputProvider.getMousePos() );
-                newStructure.globalPosition = this.game.world.miniMap.miniMapToWorldCoord( miniMapCoord );
+                Vector2 miniMapCoord = Antares.world.miniMap.screenToMiniMapCoord( Antares.inputProvider.getMousePos() );
+                newStructure.globalPosition = Antares.world.miniMap.miniMapToWorldCoord( miniMapCoord );
             }
         }
 

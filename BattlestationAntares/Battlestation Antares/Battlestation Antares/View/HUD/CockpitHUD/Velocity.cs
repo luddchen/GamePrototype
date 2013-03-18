@@ -9,25 +9,25 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
         private HUD2DValueBar negVel;
 
-        public Velocity( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, Antares game )
-            : base( abstractPosition, positionType, game ) {
+        public Velocity( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
+            : base( abstractPosition, positionType) {
             this.abstractSize = abstractSize;
             this.sizeType = sizeType;
 
             this.posVel = new HUD2DValueBar( new Vector2( 0, -this.abstractSize.Y / 4 ), this.sizeType,
-                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.sizeType, false, game );
+                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.sizeType, false);
             this.posVel.GetValue =
                 delegate() {
-                    return Math.Max( 0, this.game.world.spaceShip.attributes.Engine.CurrentVelocity / this.game.world.spaceShip.attributes.Engine.MaxVelocity );
+                    return Math.Max( 0, Antares.world.spaceShip.attributes.Engine.CurrentVelocity / Antares.world.spaceShip.attributes.Engine.MaxVelocity );
                 };
             this.posVel.SetDiscreteBig();
             this.posVel.SetMaxColor( Color.Yellow );
 
             this.negVel = new HUD2DValueBar( new Vector2( 0, this.abstractSize.Y / 4 ), this.sizeType,
-                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.sizeType, true, game );
+                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.sizeType, true);
             this.negVel.GetValue =
                 delegate() {
-                    return -Math.Min( 0, this.game.world.spaceShip.attributes.Engine.CurrentVelocity / this.game.world.spaceShip.attributes.Engine.MaxVelocity );
+                    return -Math.Min( 0, Antares.world.spaceShip.attributes.Engine.CurrentVelocity / Antares.world.spaceShip.attributes.Engine.MaxVelocity );
                 };
             this.negVel.SetDiscreteBig();
             this.negVel.SetMaxColor(Color.Yellow);

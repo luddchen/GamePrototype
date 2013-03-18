@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using Battlestation_Antares.Model;
 using Battlestation_Antares.View.HUD;
+using Microsoft.Xna.Framework.Content;
 
 namespace Battlestation_Antares {
 
@@ -23,31 +24,33 @@ namespace Battlestation_Antares {
         /// <summary>
         /// game graphics device manager
         /// </summary>
-        public GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
 
+
+        public static ContentManager content;
 
         /// <summary>
         /// game sprite batch
         /// </summary>
-        public SpriteBatch spriteBatch;
+        public static SpriteBatch spriteBatch;
 
 
         /// <summary>
         /// game primitive batch
         /// </summary>
-        public PrimitiveBatch primitiveBatch;
+        public static PrimitiveBatch primitiveBatch;
 
 
         /// <summary>
         /// game input provider
         /// </summary>
-        public InputProvider inputProvider;
+        public static InputProvider inputProvider;
 
 
         /// <summary>
         /// game world model
         /// </summary>
-        public Model.WorldModel world;
+        public static Model.WorldModel world;
 
 
         /// <summary>
@@ -66,13 +69,14 @@ namespace Battlestation_Antares {
         /// creates a new Antares game
         /// </summary>
         public Antares() {
-            graphics = new GraphicsDeviceManager( this );
-            graphics.PreferMultiSampling = true; // antialiasing
-            graphics.PreferredBackBufferWidth = (int)( GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9 );
-            graphics.PreferredBackBufferHeight = (int)( GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9 );
-            graphics.IsFullScreen = false;
-            graphics.SynchronizeWithVerticalRetrace = true;
-            Content.RootDirectory = "Content";
+            Antares.graphics = new GraphicsDeviceManager( this );
+            Antares.graphics.PreferMultiSampling = true; // antialiasing
+            Antares.graphics.PreferredBackBufferWidth = (int)( GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.9 );
+            Antares.graphics.PreferredBackBufferHeight = (int)( GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9 );
+            Antares.graphics.IsFullScreen = false;
+            Antares.graphics.SynchronizeWithVerticalRetrace = true;
+            this.Content.RootDirectory = "Content";
+            Antares.content = Content;
             this.IsFixedTimeStep = true;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += new EventHandler<EventArgs>( Window_ClientSizeChanged );
@@ -89,8 +93,8 @@ namespace Battlestation_Antares {
                 this.activeSituation.view.Window_ClientSizeChanged();
             }
 
-            if ( this.primitiveBatch != null ) {
-                this.primitiveBatch.ClientSizeChanged( this.GraphicsDevice.Viewport );
+            if ( Antares.primitiveBatch != null ) {
+                Antares.primitiveBatch.ClientSizeChanged( this.GraphicsDevice.Viewport );
             }
         }
 
@@ -99,23 +103,23 @@ namespace Battlestation_Antares {
         /// initialize the game
         /// </summary>
         protected override void Initialize() {
-            this.inputProvider = new InputProvider();
+            Antares.inputProvider = new InputProvider();
 
-            Antares.debugViewer = new DebugViewer( this );
+            Antares.debugViewer = new DebugViewer();
 
             // create situations (control and views)
             this.allSituations = new List<SituationController>();
-            this.allSituations.Add( new CockpitController( this, new View.CockpitView( this ) ) );
-            this.allSituations.Add( new CommandController( this, new View.CommandView( this ) ) );
-            this.allSituations.Add( new MenuController( this, new View.MenuView( this ) ) );
-            this.allSituations.Add( new AIController( this, new View.AIView( this ) ) );
+            this.allSituations.Add( new CockpitController( this, new View.CockpitView() ) );
+            this.allSituations.Add( new CommandController( this, new View.CommandView() ) );
+            this.allSituations.Add( new MenuController( this, new View.MenuView() ) );
+            this.allSituations.Add( new AIController( this, new View.AIView() ) );
 
             // create and initialize world model
-            this.world = new Model.WorldModel( this );
+            Antares.world = new Model.WorldModel( this );
 
-            this.world.Initialize( Content );
+            Antares.world.Initialize( this.Content );
 
-            SpatialObjectFactory.initializeFactory( this.Content, this.world );
+            SpatialObjectFactory.initializeFactory( this.Content, Antares.world );
 
             initializeDebug();
 
@@ -135,8 +139,8 @@ namespace Battlestation_Antares {
         /// load the game content and initialize views
         /// </summary>
         protected override void LoadContent() {
-            spriteBatch = new SpriteBatch( GraphicsDevice );
-            primitiveBatch = new PrimitiveBatch( GraphicsDevice );
+            Antares.spriteBatch = new SpriteBatch( GraphicsDevice );
+            Antares.primitiveBatch = new PrimitiveBatch( GraphicsDevice );
 
             foreach ( SituationController situation in this.allSituations ) {
                 situation.view.Initialize();
@@ -174,12 +178,12 @@ namespace Battlestation_Antares {
         /// <param name="gameTime">the game time</param>
         protected override void Update( GameTime gameTime ) {
             // update input
-            this.inputProvider.Update();
+            Antares.inputProvider.Update();
 
             switch ( this.activeSituation.worldUpdate ) {
                 // update world, then update situation 
                 case WorldUpdate.PRE:
-                    this.world.Update( gameTime );
+                    Antares.world.Update( gameTime );
                     this.activeSituation.Update( gameTime );
                     break;
 
@@ -191,7 +195,7 @@ namespace Battlestation_Antares {
                 // update situation, then update world
                 case WorldUpdate.POST:
                     this.activeSituation.Update( gameTime );
-                    this.world.Update( gameTime );
+                    Antares.world.Update( gameTime );
                     break;
             }
 

@@ -28,8 +28,8 @@ namespace Battlestation_Antares.View.HUD {
         private HUD2DTexture background;
 
 
-        public HUD2DArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, Antares game )
-            : base( abstractPosition, positionType, game ) {
+        public HUD2DArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
+            : base( abstractPosition, positionType) {
             this.abstractSize = abstractSize;
             this.sizeType = sizeType;
 
@@ -105,8 +105,8 @@ namespace Battlestation_Antares.View.HUD {
 
             switch ( this.sizeType ) {
                 case HUDType.RELATIV:
-                    this.size = new Vector2( this.game.GraphicsDevice.Viewport.Width * this.abstractSize.X,
-                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractSize.Y );
+                    this.size = new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width * this.abstractSize.X,
+                                             Antares.graphics.GraphicsDevice.Viewport.Height * this.abstractSize.Y );
                     break;
 
                 case HUDType.ABSOLUT:
@@ -116,11 +116,11 @@ namespace Battlestation_Antares.View.HUD {
 
                 case HUDType.ABSOLUT_RELATIV:
                     this.size = new Vector2( this.abstractSize.X,
-                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractSize.Y );
+                                                 Antares.graphics.GraphicsDevice.Viewport.Height * this.abstractSize.Y );
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.size = new Vector2( this.game.GraphicsDevice.Viewport.Width * this.abstractSize.X,
+                    this.size = new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width * this.abstractSize.X,
                                                  this.abstractSize.Y );
                     break;
             }
@@ -135,7 +135,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public void CreateBackground( bool create ) {
             if ( create ) {
-                this.background = new HUD2DTexture( game );
+                this.background = new HUD2DTexture();
                 this.background.sizeType = this.sizeType;
                 this.background.abstractSize = this.abstractSize;
                 this.background.color = HUD2DArray.BACKGROUND_COLOR;

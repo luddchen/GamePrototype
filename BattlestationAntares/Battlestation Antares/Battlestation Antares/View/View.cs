@@ -23,12 +23,6 @@ namespace Battlestation_Antares.View {
 
 
         /// <summary>
-        /// the game
-        /// </summary>
-        public Antares game;
-
-
-        /// <summary>
         /// a list of 2D HUD elements
         /// </summary>
         public List<HUD2D> allHUD_2D;
@@ -44,8 +38,7 @@ namespace Battlestation_Antares.View {
         /// create a new view, 3D disabled
         /// </summary>
         /// <param name="game">the game</param>
-        public View( Antares game ) {
-            this.game = game;
+        public View() {
             this.allHUD_2D = new List<HUD2D>();
             this.allHUD_3D = new List<HUD3D>();
             this.is3D = false;
@@ -64,24 +57,24 @@ namespace Battlestation_Antares.View {
         /// HUD 
         /// </summary>
         public void Draw() {
-            this.game.GraphicsDevice.Clear( this.backgroundColor );
+            Antares.graphics.GraphicsDevice.Clear( this.backgroundColor );
 
             // draw content
             DrawPreContent();
 
             // draw 2D HUD elements
-            this.game.spriteBatch.Begin( SpriteSortMode.BackToFront, BlendState.AlphaBlend );//, SamplerState.AnisotropicClamp, DepthStencilState.DepthRead, null);
+            Antares.spriteBatch.Begin( SpriteSortMode.BackToFront, BlendState.AlphaBlend );//, SamplerState.AnisotropicClamp, DepthStencilState.DepthRead, null);
 
             foreach ( HUD2D element in this.allHUD_2D ) {
-                element.Draw( this.game.spriteBatch );
+                element.Draw( Antares.spriteBatch );
             }
 
-            this.game.spriteBatch.End();
+            Antares.spriteBatch.End();
 
 
             // draw 3D HUD elements if 3D is enabled
             if ( this.is3D ) {
-                this.game.GraphicsDevice.DepthStencilState = new DepthStencilState() {
+                Antares.graphics.GraphicsDevice.DepthStencilState = new DepthStencilState() {
                     DepthBufferEnable = true
                 };
 
@@ -121,7 +114,7 @@ namespace Battlestation_Antares.View {
         private void ButtonUpdate( HUD2D item ) {
             if ( item.isVisible ) {
                 if ( item is HUD2DButton ) {
-                    ( (HUD2DButton)item ).isUpdatedClicked( this.game.inputProvider );
+                    ( (HUD2DButton)item ).isUpdatedClicked( Antares.inputProvider );
                 }
 
                 if ( item is HUD2DContainer ) {

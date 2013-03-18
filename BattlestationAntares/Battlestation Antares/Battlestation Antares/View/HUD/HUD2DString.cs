@@ -47,17 +47,17 @@ namespace Battlestation_Antares.View.HUD {
                             break;
 
                         case HUDType.RELATIV:
-                            backgroundSize.X = this.abstractSize.X * this.game.GraphicsDevice.Viewport.Width;
-                            backgroundSize.Y = this.abstractSize.Y * this.game.GraphicsDevice.Viewport.Height;
+                            backgroundSize.X = this.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
+                            backgroundSize.Y = this.abstractSize.Y * Antares.graphics.GraphicsDevice.Viewport.Height;
                             break;
 
                         case HUDType.ABSOLUT_RELATIV:
                             backgroundSize.X = this.abstractSize.X;
-                            backgroundSize.Y = this.abstractSize.Y * this.game.GraphicsDevice.Viewport.Height;
+                            backgroundSize.Y = this.abstractSize.Y * Antares.graphics.GraphicsDevice.Viewport.Height;
                             break;
 
                         case HUDType.RELATIV_ABSOLUT:
-                            backgroundSize.X = this.abstractSize.X * this.game.GraphicsDevice.Viewport.Width;
+                            backgroundSize.X = this.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
                             backgroundSize.Y = this.abstractSize.Y;
                             break;
                     }
@@ -109,9 +109,8 @@ namespace Battlestation_Antares.View.HUD {
         /// creates a new HUD string
         /// </summary>
         /// <param name="content">game content manager</param>
-        public HUD2DString( Antares game )
-            : base( game ) {
-            this.font = this.game.Content.Load<SpriteFont>( "Fonts\\Font" );
+        public HUD2DString() {
+            this.font = Antares.content.Load<SpriteFont>( "Fonts\\Font" );
             this.String = "HUD2DString";
         }
 
@@ -121,9 +120,8 @@ namespace Battlestation_Antares.View.HUD {
         /// </summary>
         /// <param name="text">text to display</param>
         /// <param name="content">game content manager</param>
-        public HUD2DString( String text, Antares game )
-            : base( game ) {
-            this.font = this.game.Content.Load<SpriteFont>( "Fonts\\Font" );
+        public HUD2DString( String text) {
+            this.font = Antares.content.Load<SpriteFont>( "Fonts\\Font" );
             this.String = text;
         }
 
@@ -139,8 +137,7 @@ namespace Battlestation_Antares.View.HUD {
         /// <param name="scale">scale</param>
         /// <param name="rotation">rotation</param>
         /// <param name="content">game content manager</param>
-        public HUD2DString( String text, SpriteFont font, Vector2? position, Color? color, Color? backgroundColor, float? scale, float? rotation, Antares game )
-            : base( game ) {
+        public HUD2DString( String text, SpriteFont font, Vector2? position, Color? color, Color? backgroundColor, float? scale, float? rotation) {
             if ( text == null ) {
                 this.String = " ";
             }
@@ -149,7 +146,7 @@ namespace Battlestation_Antares.View.HUD {
             }
 
             if ( font == null ) {
-                this.font = this.game.Content.Load<SpriteFont>( "Fonts\\Font" );
+                this.font = Antares.content.Load<SpriteFont>( "Fonts\\Font" );
             }
             if ( font != null ) {
                 this.font = font;
@@ -162,7 +159,7 @@ namespace Battlestation_Antares.View.HUD {
 
             if ( backgroundColor != null ) {
                 this.BackgroundColor = (Color)backgroundColor;
-                this.BackgroundTexture = this.game.Content.Load<Texture2D>( "Sprites\\Square" );
+                this.BackgroundTexture = Antares.content.Load<Texture2D>( "Sprites\\Square" );
                 this.BackgroundTextureOrigin = new Vector2( BackgroundTexture.Width / 2, BackgroundTexture.Height / 2 );
             }
         }

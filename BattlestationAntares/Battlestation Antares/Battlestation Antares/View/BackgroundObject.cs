@@ -20,17 +20,14 @@ namespace Battlestation_Antares.View {
 
         float scale;
 
-        private Antares game;
-
 
         /// <summary>
         /// creates a new background image
         /// </summary>
         /// <param name="game"></param>
-        public BackgroundObject( String name, Matrix rotation, float scale, Color color, Antares game ) {
-            this.game = game;
+        public BackgroundObject( String name, Matrix rotation, float scale, Color color) {
             this.scale = scale;
-            this.bgModel = this.game.Content.Load<Microsoft.Xna.Framework.Graphics.Model>( name );
+            this.bgModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( name );
             this.rotation = rotation;
             boneTransforms = new Matrix[bgModel.Bones.Count];
             this.color = new Vector3( color.R / 256.0f, color.G / 256.0f, color.B / 256.0f );
@@ -45,7 +42,7 @@ namespace Battlestation_Antares.View {
             Matrix world = Matrix.CreateScale( camera.farClipping * scale / 10 )
                             * Matrix.CreateTranslation( Vector3.Forward * ( camera.farClipping * 0.9f - nr ) )
                             * rotation
-                            * Matrix.CreateTranslation( this.game.world.spaceShip.globalPosition );
+                            * Matrix.CreateTranslation( Antares.world.spaceShip.globalPosition );
 
             Tools.Draw3D.Draw( this.bgModel, this.boneTransforms, camera.view, camera.projection, world );
         }

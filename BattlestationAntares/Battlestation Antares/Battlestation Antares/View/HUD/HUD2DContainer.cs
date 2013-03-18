@@ -11,13 +11,9 @@ namespace Battlestation_Antares.View.HUD {
         public List<HUD2D> allChilds;
 
 
-
-        public HUD2DContainer( Vector2 abstractPosition, HUDType positionType, Antares game )
-            : base( game ) {
+        public HUD2DContainer( Vector2 abstractPosition, HUDType positionType) {
             this.abstractPosition = abstractPosition;
-
             this.positionType = positionType;
-
             this.allChilds = new List<HUD2D>();
         }
 

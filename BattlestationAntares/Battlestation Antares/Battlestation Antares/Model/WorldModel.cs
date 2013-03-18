@@ -107,7 +107,7 @@ namespace Battlestation_Antares.Model {
 
             this.removeList = new List<SpatialObject>();
 
-            this.miniMap = new MiniMap( Vector2.Zero, View.HUD.HUDType.RELATIV, game );
+            this.miniMap = new MiniMap( Vector2.Zero, View.HUD.HUDType.RELATIV);
 
             // octree test
             this.treeTest = new Tools.DynamicOctree<SpatialObject>( 3, 1, 10, new BoundingBox( new Vector3( -5000, -5000, -5000 ), new Vector3( 5000, 5000, 5000 ) ) );

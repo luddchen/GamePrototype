@@ -15,8 +15,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private HUD2DSlider slider;
 
-        public AI_Transformer( Vector2 abstractPosition, HUDType positionType, Antares game )
-            : base( abstractPosition, positionType, game ) {
+        public AI_Transformer( Vector2 abstractPosition, HUDType positionType )
+            : base( abstractPosition, positionType ) {
             this.typeString.String = "Transformer";
 
             AddPort( AI_ItemPort.PortType.INPUT );
@@ -32,7 +32,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             if ( (TransformerType)subType == TransformerType.SCALE ) {
                 this.parameters = new float[1];
                 if ( this.slider == null ) {
-                    this.slider = new HUD2DSlider( new Vector2( 0, this.abstractSize.Y / 4 ), new Vector2( this.abstractSize.X, this.abstractSize.Y / 2 ), game );
+                    this.slider = new HUD2DSlider( new Vector2( 0, this.abstractSize.Y / 4 ), new Vector2( this.abstractSize.X, this.abstractSize.Y / 2 ) );
                     this.Add( this.slider );
                 }
                 this.slider.isVisible = true;

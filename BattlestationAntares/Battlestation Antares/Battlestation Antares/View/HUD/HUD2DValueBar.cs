@@ -26,32 +26,32 @@ namespace Battlestation_Antares.View.HUD
 
         private bool flip;
 
-        public HUD2DValueBar( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, bool flip, Antares game )
-            : base( abstractPosition, positionType, game ) {
+        public HUD2DValueBar( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, bool flip)
+            : base( abstractPosition, positionType) {
             this.flip = flip;
             this.abstractSize = abstractSize;
             this.sizeType = sizeType;
 
-            this.background = new HUD2DTexture(game);
+            this.background = new HUD2DTexture();
             this.background.positionType = this.sizeType;
             this.background.abstractSize = abstractSize;
             this.background.sizeType = sizeType;
 
             this.background.color = Color.Black;
-            this.background.Texture = game.Content.Load<Texture2D>( "Sprites//Square" );
+            this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//Square" );
             Add( this.background );
 
-            this.foreground = new HUD2DTexture( game );
+            this.foreground = new HUD2DTexture();
             this.foreground.positionType = this.sizeType;
             this.foreground.abstractSize = abstractSize;
             this.foreground.abstractSize *= 0.95f;
             this.foreground.sizeType = sizeType;
 
             this.foreground.color = Color.White;
-            this.foreground.Texture = game.Content.Load<Texture2D>( "Sprites//Square" );
+            this.foreground.Texture = Antares.content.Load<Texture2D>( "Sprites//Square" );
             Add(this.foreground);
 
-            this.overlay = new HUD2DTexture( game );
+            this.overlay = new HUD2DTexture();
             this.overlay.positionType = this.sizeType;
             this.overlay.abstractSize = abstractSize;
             this.overlay.sizeType = sizeType;
@@ -106,15 +106,15 @@ namespace Battlestation_Antares.View.HUD
 
 
         public void SetDiscrete() {
-            this.overlay.Texture = game.Content.Load<Texture2D>( "Sprites//HUD//ValueBar_Discrete" );
+            this.overlay.Texture = Antares.content.Load<Texture2D>( "Sprites//HUD//ValueBar_Discrete" );
         }
 
         public void SetDiscreteBig() {
-            this.overlay.Texture = game.Content.Load<Texture2D>( "Sprites//HUD//ValueBar_DiscreteBig" );
+            this.overlay.Texture = Antares.content.Load<Texture2D>( "Sprites//HUD//ValueBar_DiscreteBig" );
         }
 
         public void SetNormal() {
-            this.overlay.Texture = game.Content.Load<Texture2D>( "Sprites//HUD//ValueBar" );
+            this.overlay.Texture = Antares.content.Load<Texture2D>( "Sprites//HUD//ValueBar" );
         }
 
     }

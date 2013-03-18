@@ -17,18 +17,17 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private float value;
 
-        public HUD2DSlider( Vector2 abstractPosition, Vector2 abstractSize, Antares game )
-            : base( abstractPosition, HUDType.ABSOLUT, game ) {
-            this.valueString = new HUD2DString( "0.00", game );
+        public HUD2DSlider( Vector2 abstractPosition, Vector2 abstractSize ) : base( abstractPosition, HUDType.ABSOLUT ) {
+            this.valueString = new HUD2DString( "0.00" );
             this.valueString.scale = 0.5f;
             this.valueString.abstractPosition = new Vector2( -abstractSize.X * 0.375f, 0 );
 
-            this.sliderBackground = new HUD2DTexture( game );
+            this.sliderBackground = new HUD2DTexture();
             this.sliderBackground.abstractPosition = new Vector2( abstractSize.X * 0.1f, 0 );
             this.sliderBackground.abstractSize = new Vector2( abstractSize.X * 0.7f, 2 );
             this.sliderBackground.color = Color.Green;
 
-            this.sliderButton = new HUD2DButton( "", Vector2.Zero, 0.5f, game );
+            this.sliderButton = new HUD2DButton( "", Vector2.Zero, 0.5f );
             this.sliderButtonZero = abstractSize.X * 0.1f - this.sliderBackground.abstractSize.X / 2;
             this.sliderButtonOne = abstractSize.X * 0.1f + this.sliderBackground.abstractSize.X / 2;
 
@@ -38,7 +37,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.sliderButton.SetBackgroundTexture( "Sprites//Slider" );
             this.sliderButton.SetDownAction(
                 delegate() {
-                    float newPos = this.game.inputProvider.getMousePos().X - this.position.X;
+                    float newPos = Antares.inputProvider.getMousePos().X - this.position.X;
                     if ( newPos >= this.sliderButtonZero && newPos <= this.sliderButtonOne ) {
                         SetValue( ( newPos - this.sliderButtonZero ) / this.sliderBackground.abstractSize.X );
                     }

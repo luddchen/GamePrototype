@@ -15,12 +15,6 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
     public class Compass3d : HUD3D {
 
         /// <summary>
-        /// the Graphics device, necessary for viewport aspect ratio
-        /// </summary>
-        private GraphicsDevice device;
-
-
-        /// <summary>
         /// the compass 3d model
         /// </summary>
         private Microsoft.Xna.Framework.Graphics.Model model3d;
@@ -54,16 +48,15 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
         /// </summary>
         /// <param name="content">game content manager</param>
         /// <param name="device">game graphics device</param>
-        public Compass3d( ContentManager content, GraphicsDevice device ) {
+        public Compass3d( ContentManager content) {
             // init 3d model and its transformation matrices
             this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models/compass3" );
             this.boneTransforms = new Matrix[model3d.Bones.Count];
 
-            this.device = device;
             this.target = new Vector3();    // target vector = zero
 
             this.view = Matrix.CreateLookAt( Vector3.Zero, Vector3.Forward, Vector3.Up );
-            this.projection = Matrix.CreatePerspectiveFieldOfView( MathHelper.PiOver4 / 2, this.device.Viewport.AspectRatio, 1, 5000 );
+            this.projection = Matrix.CreatePerspectiveFieldOfView( MathHelper.PiOver4 / 2, Antares.graphics.GraphicsDevice.Viewport.AspectRatio, 1, 5000 );
             this.position = Vector3.Add( Vector3.Multiply( Vector3.Forward, 1.8f ), Vector3.Multiply( Vector3.Down, -0.3f ) );
         }
 

@@ -28,14 +28,13 @@ namespace Battlestation_Antares.Control {
             : base( game, view ) {
             mouseVisibleCounter = mouseTimeOut;
 
-            HUD2DContainer buttons = new HUD2DContainer( new Vector2( 0.8f, 0.95f ), HUDType.RELATIV, this.game );
+            HUD2DContainer buttons = new HUD2DContainer( new Vector2( 0.8f, 0.95f ), HUDType.RELATIV );
 
             toCommandButton =
                 new HUD2DButton(
                     "Command",
                     new Vector2( 0, 0 ),
-                    0.5f,
-                    this.game );
+                    0.5f );
 
             this.toCommandButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COMMAND );
@@ -46,8 +45,7 @@ namespace Battlestation_Antares.Control {
                 new HUD2DButton(
                     "Menu",
                     new Vector2( toCommandButton.size.X + 10, 0 ),
-                    0.5f,
-                    this.game );
+                    0.5f );
 
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
@@ -55,14 +53,14 @@ namespace Battlestation_Antares.Control {
             buttons.Add( toMenuButton );
             this.view.allHUD_2D.Add( buttons );
 
-            fpsDisplay = new FpsDisplay( new Vector2( 50, 20 ), this.game );
+            fpsDisplay = new FpsDisplay( new Vector2( 50, 20 ) );
             this.view.allHUD_2D.Add( fpsDisplay );
 
             mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.91f ), new Vector2( 0.25f, 0.18f ), new Vector2( 0.25f, 0.18f ) );
         }
 
         public override void onEnter() {
-            this.game.world.miniMap.changeConfig( this.mapConfig );
+            Antares.world.miniMap.changeConfig( this.mapConfig );
         }
 
 
@@ -75,7 +73,7 @@ namespace Battlestation_Antares.Control {
 
             fpsDisplay.Update( gameTime );
 
-            if ( this.game.inputProvider.isMouseMoved() ) {
+            if ( Antares.inputProvider.isMouseMoved() ) {
                 mouseVisibleCounter = mouseTimeOut;
                 this.game.IsMouseVisible = true;
             } else {
@@ -86,10 +84,10 @@ namespace Battlestation_Antares.Control {
                 }
             }
 
-            this.game.world.miniMap.ZoomOnMouseWheelOver();
+            Antares.world.miniMap.ZoomOnMouseWheelOver();
 
             // redirect input
-            this.game.world.spaceShip.InjectControl( this.game.inputProvider.getInput() );
+            Antares.world.spaceShip.InjectControl( Antares.inputProvider.getInput() );
 
         }
 

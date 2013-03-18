@@ -39,16 +39,14 @@ namespace Battlestation_Antares.View.HUD {
         /// constructs a Head Up Display Element Texture
         /// </summary>
         /// <param name="content"></param>
-        public HUD2DTexture( Antares game )
-            : base( game ) {
-            this.Texture = this.game.Content.Load<Texture2D>( "Sprites//Square" );
+        public HUD2DTexture() {
+            this.Texture = Antares.content.Load<Texture2D>( "Sprites//Square" );
             this.abstractSize = new Vector2( 10, 10 );
         }
 
-        public HUD2DTexture( Texture2D texture, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation, Antares game )
-            : base( game ) {
+        public HUD2DTexture( Texture2D texture, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation) {
             if ( texture == null ) {
-                this.Texture = this.game.Content.Load<Texture2D>( "Sprites//Square" );
+                this.Texture = Antares.content.Load<Texture2D>( "Sprites//Square" );
             }
             if ( texture != null ) {
                 this.Texture = texture;
@@ -107,17 +105,17 @@ namespace Battlestation_Antares.View.HUD {
                     break;
 
                 case HUDType.RELATIV:
-                    this.size.X = this.abstractSize.X * this.game.GraphicsDevice.Viewport.Width;
-                    this.size.Y = this.abstractSize.Y * this.game.GraphicsDevice.Viewport.Height;
+                    this.size.X = this.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
+                    this.size.Y = this.abstractSize.Y * Antares.graphics.GraphicsDevice.Viewport.Height;
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:
                     this.size.X = this.abstractSize.X;
-                    this.size.Y = this.abstractSize.Y * this.game.GraphicsDevice.Viewport.Height;
+                    this.size.Y = this.abstractSize.Y * Antares.graphics.GraphicsDevice.Viewport.Height;
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.size.X = this.abstractSize.X * this.game.GraphicsDevice.Viewport.Width;
+                    this.size.X = this.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
                     this.size.Y = this.abstractSize.Y;
                     break;
             }

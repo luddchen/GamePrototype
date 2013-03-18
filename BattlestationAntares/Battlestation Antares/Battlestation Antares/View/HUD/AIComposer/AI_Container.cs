@@ -20,19 +20,19 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         public List<HUD2D> removeList;
 
 
-        public AI_Container( Antares game )
-            : base( new Vector2( 0, 0 ), HUDType.RELATIV, game ) {
+        public AI_Container()
+            : base( new Vector2( 0, 0 ), HUDType.RELATIV ) {
             this.removeList = new List<HUD2D>();
             this.aiItems = new List<AI_Item>();
             this.aiConnections = new List<AI_Connection>();
 
-            AI_Input ai_Item1 = new AI_Input( new Vector2( 0.4f, 0.3f ), HUDType.RELATIV, this.game );
+            AI_Input ai_Item1 = new AI_Input( new Vector2( 0.4f, 0.3f ), HUDType.RELATIV);
             Add( ai_Item1 );
 
-            AI_Output ai_Item2 = new AI_Output( new Vector2( 0.4f, 0.7f ), HUDType.RELATIV, this.game );
+            AI_Output ai_Item2 = new AI_Output( new Vector2( 0.4f, 0.7f ), HUDType.RELATIV);
             Add( ai_Item2 );
 
-            AI_Connection con1 = new AI_Connection( this.game );
+            AI_Connection con1 = new AI_Connection();
             con1.setSource( ai_Item1.outputs[0] );
             con1.setTarget( ai_Item2.inputs[0] );
 
@@ -64,13 +64,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
 
         public void DrawConnections() {
-            this.game.primitiveBatch.Begin( PrimitiveType.LineList );
+            Antares.primitiveBatch.Begin( PrimitiveType.LineList );
 
             foreach ( AI_Connection connection in this.aiConnections ) {
-                connection.Draw( this.game.primitiveBatch );
+                connection.Draw( Antares.primitiveBatch );
             }
 
-            this.game.primitiveBatch.End();
+            Antares.primitiveBatch.End();
         }
 
         public void Update() {
@@ -85,27 +85,27 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             if ( isMouseInBuildingBox() ) {
                 if ( this.moveItem == null ) {
-                    if ( this.game.inputProvider.isLeftMouseButtonPressed() ) {
+                    if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
                         foreach ( HUD2D item in this.allChilds ) {
                             if ( item is AI_Item ) {
-                                if ( ( (AI_Item)item ).typeString.Intersects( this.game.inputProvider.getMousePos() ) ) {
+                                if ( ( (AI_Item)item ).typeString.Intersects( Antares.inputProvider.getMousePos() ) ) {
                                     this.moveItem = (AI_Item)item;
-                                    this.moveOffset = item.position - this.game.inputProvider.getMousePos();
+                                    this.moveOffset = item.position - Antares.inputProvider.getMousePos();
                                     break;
                                 }
                             }
                         }
                     }
                 } else {
-                    if ( this.game.inputProvider.isLeftMouseButtonDown() ) {
-                        this.moveItem.position = this.game.inputProvider.getMousePos() + this.moveOffset;
+                    if ( Antares.inputProvider.isLeftMouseButtonDown() ) {
+                        this.moveItem.position = Antares.inputProvider.getMousePos() + this.moveOffset;
                         switch ( this.moveItem.positionType ) {
                             case HUDType.ABSOLUT:
                                 this.moveItem.abstractPosition = this.moveItem.position;
                                 break;
                             case HUDType.RELATIV:
-                                this.moveItem.abstractPosition.X = this.moveItem.position.X / this.game.GraphicsDevice.Viewport.Width;
-                                this.moveItem.abstractPosition.Y = this.moveItem.position.Y / this.game.GraphicsDevice.Viewport.Height;
+                                this.moveItem.abstractPosition.X = this.moveItem.position.X / Antares.graphics.GraphicsDevice.Viewport.Width;
+                                this.moveItem.abstractPosition.Y = this.moveItem.position.Y / Antares.graphics.GraphicsDevice.Viewport.Height;
                                 break;
                         }
                         this.moveItem.ClientSizeChanged();
@@ -116,7 +116,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
                 AI_ItemPort port = getMouseOverPort();
                 if ( port != null ) {
-                    if ( this.game.inputProvider.isLeftMouseButtonPressed() ) {
+                    if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
 
                         if ( this.moveConnection != null ) {
                             if ( port.portType == this.movePort.portType ) {
@@ -140,10 +140,10 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                                 this.moveConnection = null;
                             }
                         } else {
-                            this.moveConnection = new AI_Connection( this.game );
+                            this.moveConnection = new AI_Connection();
 
                             AI_ItemPort.PortType portType = ( port.portType == AI_ItemPort.PortType.INPUT ) ? AI_ItemPort.PortType.OUTPUT : AI_ItemPort.PortType.INPUT;
-                            this.movePort = new AI_ItemPort( this.game.inputProvider.getMousePos(), HUDType.ABSOLUT, portType, this.game );
+                            this.movePort = new AI_ItemPort( Antares.inputProvider.getMousePos(), HUDType.ABSOLUT, portType );
 
                             port.Add( this.moveConnection );
                             this.movePort.Add( this.moveConnection );
@@ -155,7 +155,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                     }
                 } else {
                     if ( this.moveConnection != null ) {
-                        if ( this.game.inputProvider.isLeftMouseButtonPressed() ) {
+                        if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
                             this.moveConnection.setTarget( null );
                             this.moveConnection.setSource( null );
 
@@ -169,14 +169,14 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 }
 
                 if ( this.moveConnection != null ) {
-                    this.movePort.position = this.game.inputProvider.getMousePos();
+                    this.movePort.position = Antares.inputProvider.getMousePos();
                 }
 
 
                 foreach ( AI_Connection con in this.aiConnections ) {
-                    if ( con.Intersects( this.game.inputProvider.getMousePos() ) ) {
+                    if ( con.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         con.color = con.colorHighlight;
-                        if ( this.game.inputProvider.isLeftMouseButtonPressed() ) {
+                        if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
                             con.Delete();
                             this.removeList.Add( con );
                         }
@@ -193,7 +193,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             foreach ( AI_Item item in this.aiItems ) {
                 foreach ( AI_ItemPort port in item.inputs ) {
-                    if ( port.Intersects( this.game.inputProvider.getMousePos() ) ) {
+                    if ( port.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         port.color = Color.Green;
                         return port;
                     } else {
@@ -202,7 +202,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 }
 
                 foreach ( AI_ItemPort port in item.outputs ) {
-                    if ( port.Intersects( this.game.inputProvider.getMousePos() ) ) {
+                    if ( port.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         port.color = Color.Green;
                         return port;
                     } else {
@@ -217,11 +217,11 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private bool isMouseInBuildingBox() {
             bool isWithin = true;
-            Vector2 mousePos = this.game.inputProvider.getMousePos();
-            if ( mousePos.X < this.game.GraphicsDevice.Viewport.Width * 0.05f
-                || mousePos.X > this.game.GraphicsDevice.Viewport.Width * 0.8f
-                || mousePos.Y < this.game.GraphicsDevice.Viewport.Height * 0.05f
-                || mousePos.Y > this.game.GraphicsDevice.Viewport.Height * 0.95f ) {
+            Vector2 mousePos = Antares.inputProvider.getMousePos();
+            if ( mousePos.X < Antares.graphics.GraphicsDevice.Viewport.Width * 0.05f
+                || mousePos.X > Antares.graphics.GraphicsDevice.Viewport.Width * 0.8f
+                || mousePos.Y < Antares.graphics.GraphicsDevice.Viewport.Height * 0.05f
+                || mousePos.Y > Antares.graphics.GraphicsDevice.Viewport.Height * 0.95f ) {
                 isWithin = false;
             }
 
