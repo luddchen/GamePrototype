@@ -1,10 +1,8 @@
-﻿namespace Battlestation_Antares.Control
-{
+﻿namespace Battlestation_Antares.Control {
     /// <summary>
     /// enumeration of control requests
     /// </summary>
-    public enum Control
-    {
+    public enum Control {
 
         /// <summary>
         /// control request : pitch down

@@ -3,14 +3,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Battlestation_Antares.View.HUD
-{
+namespace Battlestation_Antares.View.HUD {
 
     /// <summary>
     /// a Head Up Display String
     /// </summary>
-    public class HUD2DString : HUD2D
-    {
+    public class HUD2DString : HUD2D {
 
         /// <summary>
         /// the Font
@@ -36,34 +34,29 @@ namespace Battlestation_Antares.View.HUD
         protected Texture2D BackgroundTexture;
 
 
-        public Vector2 BackgroundSize
-        {
-            get
-            {
+        public Vector2 BackgroundSize {
+            get {
                 Vector2 backgroundSize = new Vector2();
-                if (this.abstractSize == Vector2.Zero)
-                {
+                if ( this.abstractSize == Vector2.Zero ) {
                     backgroundSize = this.size * 1.2f;
-                }
-                else
-                {
-                    switch (this.sizeType) {
+                } else {
+                    switch ( this.sizeType ) {
 
-                        case HUDType.ABSOLUT :
+                        case HUDType.ABSOLUT:
                             backgroundSize = this.abstractSize;
                             break;
 
-                        case HUDType.RELATIV :
+                        case HUDType.RELATIV:
                             backgroundSize.X = this.abstractSize.X * this.game.GraphicsDevice.Viewport.Width;
                             backgroundSize.Y = this.abstractSize.Y * this.game.GraphicsDevice.Viewport.Height;
                             break;
 
-                        case HUDType.ABSOLUT_RELATIV :
+                        case HUDType.ABSOLUT_RELATIV:
                             backgroundSize.X = this.abstractSize.X;
                             backgroundSize.Y = this.abstractSize.Y * this.game.GraphicsDevice.Viewport.Height;
                             break;
 
-                        case HUDType.RELATIV_ABSOLUT :
+                        case HUDType.RELATIV_ABSOLUT:
                             backgroundSize.X = this.abstractSize.X * this.game.GraphicsDevice.Viewport.Width;
                             backgroundSize.Y = this.abstractSize.Y;
                             break;
@@ -85,17 +78,18 @@ namespace Battlestation_Antares.View.HUD
         /// <summary>
         /// the displayed string
         /// </summary>
-        public String String { get; set; }
+        public String String {
+            get;
+            set;
+        }
 
 
         /// <summary>
         /// size of unscaled String
         /// </summary>
-        protected Vector2 MeasureString
-        {
-            get
-            {
-                this.measureString = this.font.MeasureString(this.String);
+        protected Vector2 MeasureString {
+            get {
+                this.measureString = this.font.MeasureString( this.String );
                 return this.measureString;
             }
         }
@@ -104,9 +98,10 @@ namespace Battlestation_Antares.View.HUD
         /// <summary>
         /// size of scaled string
         /// </summary>
-        public new Vector2 size
-        {
-            get { return this.MeasureString * this.scale; }
+        public new Vector2 size {
+            get {
+                return this.MeasureString * this.scale;
+            }
         }
 
 
@@ -114,9 +109,9 @@ namespace Battlestation_Antares.View.HUD
         /// creates a new HUD string
         /// </summary>
         /// <param name="content">game content manager</param>
-        public HUD2DString(Antares game) : base(game)
-        {
-            this.font = this.game.Content.Load<SpriteFont>("Fonts\\Font");
+        public HUD2DString( Antares game )
+            : base( game ) {
+            this.font = this.game.Content.Load<SpriteFont>( "Fonts\\Font" );
             this.String = "HUD2DString";
         }
 
@@ -126,9 +121,9 @@ namespace Battlestation_Antares.View.HUD
         /// </summary>
         /// <param name="text">text to display</param>
         /// <param name="content">game content manager</param>
-        public HUD2DString(String text, Antares game) : base(game)
-        {
-            this.font = this.game.Content.Load<SpriteFont>("Fonts\\Font");
+        public HUD2DString( String text, Antares game )
+            : base( game ) {
+            this.font = this.game.Content.Load<SpriteFont>( "Fonts\\Font" );
             this.String = text;
         }
 
@@ -144,25 +139,31 @@ namespace Battlestation_Antares.View.HUD
         /// <param name="scale">scale</param>
         /// <param name="rotation">rotation</param>
         /// <param name="content">game content manager</param>
-        public HUD2DString(String text, SpriteFont font, Vector2? position, Color? color, Color? backgroundColor, float? scale, float? rotation, Antares game)
-            : base(game)
-        {
-            if (text == null) { this.String = " "; }
-            if (text != null) { this.String = text; }
+        public HUD2DString( String text, SpriteFont font, Vector2? position, Color? color, Color? backgroundColor, float? scale, float? rotation, Antares game )
+            : base( game ) {
+            if ( text == null ) {
+                this.String = " ";
+            }
+            if ( text != null ) {
+                this.String = text;
+            }
 
-            if (font == null) { this.font = this.game.Content.Load<SpriteFont>("Fonts\\Font"); }
-            if (font != null) { this.font = font; }
+            if ( font == null ) {
+                this.font = this.game.Content.Load<SpriteFont>( "Fonts\\Font" );
+            }
+            if ( font != null ) {
+                this.font = font;
+            }
 
             this.abstractPosition = position ?? Vector2.Zero;
             this.color = color ?? Color.Beige;
             this.scale = scale ?? 1.0f;
             this.rotation = rotation ?? 0.0f;
 
-            if (backgroundColor != null)
-            {
+            if ( backgroundColor != null ) {
                 this.BackgroundColor = (Color)backgroundColor;
-                this.BackgroundTexture = this.game.Content.Load<Texture2D>("Sprites\\Square");
-                this.BackgroundTextureOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
+                this.BackgroundTexture = this.game.Content.Load<Texture2D>( "Sprites\\Square" );
+                this.BackgroundTextureOrigin = new Vector2( BackgroundTexture.Width / 2, BackgroundTexture.Height / 2 );
             }
         }
 
@@ -171,25 +172,22 @@ namespace Battlestation_Antares.View.HUD
         /// draw this element
         /// </summary>
         /// <param name="spriteBatch">the spritebatch</param>
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (isVisible)
-            {
-                if (this.BackgroundTexture != null)
-                {
+        public override void Draw( SpriteBatch spriteBatch ) {
+            if ( isVisible ) {
+                if ( this.BackgroundTexture != null ) {
                     Vector2 bgSize = BackgroundSize;
-                    Rectangle dest = 
-                        new Rectangle(  (int)this.position.X, (int)this.position.Y, 
-                                        (int)bgSize.X, (int)bgSize.Y);
+                    Rectangle dest =
+                        new Rectangle( (int)this.position.X, (int)this.position.Y,
+                                        (int)bgSize.X, (int)bgSize.Y );
 
-                    spriteBatch.Draw(   this.BackgroundTexture, dest, null, 
-                                        this.BackgroundColor, -this.rotation, 
-                                        this.BackgroundTextureOrigin, this.effect, this.layerDepth);
+                    spriteBatch.Draw( this.BackgroundTexture, dest, null,
+                                        this.BackgroundColor, -this.rotation,
+                                        this.BackgroundTextureOrigin, this.effect, this.layerDepth );
                 }
 
-                spriteBatch.DrawString( this.font, this.String, this.position, 
-                                        this.color, -this.rotation,  this.MeasureString / 2, 
-                                        this.scale, this.effect, this.layerDepth - 0.01f);
+                spriteBatch.DrawString( this.font, this.String, this.position,
+                                        this.color, -this.rotation, this.MeasureString / 2,
+                                        this.scale, this.effect, this.layerDepth - 0.01f );
             }
         }
 
@@ -199,26 +197,19 @@ namespace Battlestation_Antares.View.HUD
         /// </summary>
         /// <param name="point">the test point</param>
         /// <returns>true if there is an intersetion</returns>
-        public override bool Intersects(Vector2 point)
-        {
-            if (rotation != 0)
-            {
+        public override bool Intersects( Vector2 point ) {
+            if ( rotation != 0 ) {
                 return false;
             }
 
-            if (this.BackgroundTexture == null)
-            {
-                if (point.X < position.X - size.X / 2 || point.X > position.X + size.X / 2 ||
-                    point.Y < position.Y - size.Y / 2 || point.Y > position.Y + size.Y / 2)
-                {
+            if ( this.BackgroundTexture == null ) {
+                if ( point.X < position.X - size.X / 2 || point.X > position.X + size.X / 2 ||
+                    point.Y < position.Y - size.Y / 2 || point.Y > position.Y + size.Y / 2 ) {
                     return false;
                 }
-            }
-            else
-            {
-                if (point.X < position.X - BackgroundSize.X / 2 || point.X > position.X + BackgroundSize.X / 2 ||
-                    point.Y < position.Y - BackgroundSize.Y / 2 || point.Y > position.Y + BackgroundSize.Y / 2)
-                {
+            } else {
+                if ( point.X < position.X - BackgroundSize.X / 2 || point.X > position.X + BackgroundSize.X / 2 ||
+                    point.Y < position.Y - BackgroundSize.Y / 2 || point.Y > position.Y + BackgroundSize.Y / 2 ) {
                     return false;
                 }
             }

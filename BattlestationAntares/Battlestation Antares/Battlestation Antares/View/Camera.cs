@@ -4,14 +4,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.Model;
 
-namespace Battlestation_Antares.View
-{
+namespace Battlestation_Antares.View {
 
     /// <summary>
     /// a class that holds the necessary matrices for 3D projection
     /// </summary>
-    public class Camera
-    {
+    public class Camera {
 
         /// <summary>
         /// game graphics device (for aspect ratio)
@@ -47,10 +45,9 @@ namespace Battlestation_Antares.View
         /// create a new camera
         /// </summary>
         /// <param name="device">game graphics device</param>
-        public Camera(GraphicsDevice device)
-        {
+        public Camera( GraphicsDevice device ) {
             this.device = device;
-            Update(Vector3.Zero, Vector3.Forward, Vector3.Up);  // set matrices to standard
+            Update( Vector3.Zero, Vector3.Forward, Vector3.Up );  // set matrices to standard
         }
 
 
@@ -60,10 +57,9 @@ namespace Battlestation_Antares.View
         /// <param name="position">new position</param>
         /// <param name="direction">new direction</param>
         /// <param name="up">new up vector</param>
-        public void Update(Vector3 position, Vector3 direction, Vector3 up)
-        {
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, this.device.Viewport.AspectRatio, this.nearClipping, this.farClipping);
-            view = Matrix.CreateLookAt(position, Vector3.Add(position, direction), up);
+        public void Update( Vector3 position, Vector3 direction, Vector3 up ) {
+            projection = Matrix.CreatePerspectiveFieldOfView( MathHelper.PiOver4, this.device.Viewport.AspectRatio, this.nearClipping, this.farClipping );
+            view = Matrix.CreateLookAt( position, Vector3.Add( position, direction ), up );
         }
 
 
@@ -71,9 +67,8 @@ namespace Battlestation_Antares.View
         /// creates the camera view from the perspective of a spatial object
         /// </summary>
         /// <param name="obj">a spatial object</param>
-        public void ClampTo(SpatialObject obj)
-        {
-            Update(obj.globalPosition, obj.rotation.Forward, obj.rotation.Up);
+        public void ClampTo( SpatialObject obj ) {
+            Update( obj.globalPosition, obj.rotation.Forward, obj.rotation.Up );
         }
 
     }

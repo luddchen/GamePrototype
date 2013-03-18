@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SpatialObjectAttributesLibrary
-{
+namespace SpatialObjectAttributesLibrary {
 
     /// <summary>
     /// Spatial Object Attributes : Engine
     /// </summary>
-    public class Engine : AttributeItem
-    {
+    public class Engine : AttributeItem {
 
         public float MaxVelocity;
 
@@ -24,8 +22,7 @@ namespace SpatialObjectAttributesLibrary
 
         private bool ZeroRelaxed = true;
 
-        public Engine()
-        {
+        public Engine() {
             this.name = "Engine";
             this.MaxVelocity = 0;
             this.CurrentVelocity = 0;
@@ -33,8 +30,7 @@ namespace SpatialObjectAttributesLibrary
             this.ResetForce = 0;
         }
 
-        public Engine(Engine engine)
-        {
+        public Engine( Engine engine ) {
             this.name = "Engine";
             this.MaxVelocity = engine.MaxVelocity;
             this.CurrentVelocity = engine.CurrentVelocity;
@@ -42,8 +38,7 @@ namespace SpatialObjectAttributesLibrary
             this.ResetForce = engine.ResetForce;
         }
 
-        public Engine(float maxVelocity, float acceleration, float resetForce)
-        {
+        public Engine( float maxVelocity, float acceleration, float resetForce ) {
             this.name = "Engine";
             this.MaxVelocity = maxVelocity;
             this.CurrentVelocity = 0;
@@ -55,77 +50,58 @@ namespace SpatialObjectAttributesLibrary
         /// <summary>
         /// apply the reset force
         /// </summary>
-        public void ApplyResetForce()
-        {
+        public void ApplyResetForce() {
             this.ZeroRelaxed = true;
 
-            if (this.CurrentVelocity >= this.ResetForce)
-            {
+            if ( this.CurrentVelocity >= this.ResetForce ) {
                 this.CurrentVelocity -= this.ResetForce;
-            }
-            else if (this.CurrentVelocity <= -this.ResetForce)
-            {
+            } else if ( this.CurrentVelocity <= -this.ResetForce ) {
                 this.CurrentVelocity += this.ResetForce;
-            }
-            else
-            {
+            } else {
                 this.CurrentVelocity = 0;
             }
         }
 
-        public void Accelerate()
-        {
-            if (this.ZeroRelaxed)
-            {
-                if (this.ZeroBarrier && this.CurrentVelocity < 0 && this.CurrentVelocity >= -this.Acceleration)
-                {
+        public void Accelerate() {
+            if ( this.ZeroRelaxed ) {
+                if ( this.ZeroBarrier && this.CurrentVelocity < 0 && this.CurrentVelocity >= -this.Acceleration ) {
                     this.CurrentVelocity = 0;
                     this.ZeroRelaxed = false;
-                }
-                else
-                {
+                } else {
                     this.CurrentVelocity += this.Acceleration;
-                    this.CurrentVelocity = Math.Min(this.CurrentVelocity, this.MaxVelocity);
+                    this.CurrentVelocity = Math.Min( this.CurrentVelocity, this.MaxVelocity );
                 }
             }
         }
 
-        public void Decelerate()
-        {
-            if (this.ZeroRelaxed)
-            {
-                if (this.ZeroBarrier && this.CurrentVelocity > 0 && this.CurrentVelocity <= this.Acceleration)
-                {
+        public void Decelerate() {
+            if ( this.ZeroRelaxed ) {
+                if ( this.ZeroBarrier && this.CurrentVelocity > 0 && this.CurrentVelocity <= this.Acceleration ) {
                     this.CurrentVelocity = 0;
                     this.ZeroRelaxed = false;
-                }
-                else
-                {
+                } else {
                     this.CurrentVelocity -= this.Acceleration;
-                    this.CurrentVelocity = Math.Max(this.CurrentVelocity, -this.MaxVelocity);
+                    this.CurrentVelocity = Math.Max( this.CurrentVelocity, -this.MaxVelocity );
                 }
             }
         }
 
 
-        public void set(float maxVelocity, float acceleration, float resetForce)
-        {
+        public void set( float maxVelocity, float acceleration, float resetForce ) {
             this.MaxVelocity = maxVelocity;
             this.CurrentVelocity = 0;
             this.Acceleration = acceleration;
             this.ResetForce = resetForce;
         }
 
-        public override void setValues(float[] values, ref int index)
-        {
+        public override void setValues( float[] values, ref int index ) {
             this.MaxVelocity = values[index++];
             this.CurrentVelocity = 0;
             this.Acceleration = values[index++];
             this.ResetForce = values[index++];
         }
 
-        public override float[] getValues()
-        {
+        public override float[] getValues() {
             float[] values = new float[3];
             values[0] = this.MaxVelocity;
             values[1] = this.Acceleration;
@@ -134,13 +110,11 @@ namespace SpatialObjectAttributesLibrary
             return values;
         }
 
-        public override int getNumberOfValues()
-        {
+        public override int getNumberOfValues() {
             return 3;
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             String output = "";
             output += this.name + ":MaxVelocity = " + this.MaxVelocity + "\n";
             output += this.name + ":CurrentVelocity = " + this.CurrentVelocity + "\n";

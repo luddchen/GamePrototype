@@ -1,16 +1,14 @@
-﻿namespace Battlestation_Antares.Control
-{
+﻿namespace Battlestation_Antares.Control {
 
     /// <summary>
     /// enumeration of update orders
     /// </summary>
-    public enum WorldUpdate
-    {
+    public enum WorldUpdate {
 
         /// <summary>
         /// update the world as first
         /// </summary>
-        PRE, 
+        PRE,
 
         /// <summary>
         /// update the world as last

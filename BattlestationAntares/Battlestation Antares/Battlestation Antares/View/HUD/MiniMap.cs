@@ -5,20 +5,16 @@ using Battlestation_Antares.Model;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.Control;
 
-namespace Battlestation_Antares.View.HUD
-{
+namespace Battlestation_Antares.View.HUD {
 
-    public class MiniMap : HUD2DContainer
-    {
-        public class Config
-        {
+    public class MiniMap : HUD2DContainer {
+        public class Config {
             public Vector2 abstractPosition;
             public Vector2 bgAbstractSize;
             public Vector2 fgAbstractSize;
             public float iconPositionScale;
 
-            public Config(Vector2 abstractPosition, Vector2 bgAbstractSize, Vector2 fgAbstractSize)
-            {
+            public Config( Vector2 abstractPosition, Vector2 bgAbstractSize, Vector2 fgAbstractSize ) {
                 this.abstractPosition = abstractPosition;
                 this.bgAbstractSize = bgAbstractSize;
                 this.fgAbstractSize = fgAbstractSize;
@@ -38,71 +34,63 @@ namespace Battlestation_Antares.View.HUD
 
         public static float MAX_SCALE = 0.500f;
 
-        public static Color BACKGROUND_COLOR = new Color(16, 24, 24, 255);
+        public static Color BACKGROUND_COLOR = new Color( 16, 24, 24, 255 );
 
-        public static Color BORDER_COLOR = new Color(16, 16, 16, 8);
+        public static Color BORDER_COLOR = new Color( 16, 16, 16, 8 );
 
-        public static Color BORDER_COLOR_HOVER = new Color(32, 32, 32, 32);
+        public static Color BORDER_COLOR_HOVER = new Color( 32, 32, 32, 32 );
 
         private HUD2DTexture background;
 
         private HUD2DTexture foreground;
 
-        public Vector2 iconSize = new Vector2(15, 15);
+        public Vector2 iconSize = new Vector2( 15, 15 );
 
         public float iconPositionScale = 0.1f;
 
         private MiniMap.Config oldConfig;
 
-        public MiniMap(Vector2 abstractPosition, HUDType positionType, Antares game)
-            : base(abstractPosition, positionType, game)
-        {
-            this.background = new HUD2DTexture(game);
+        public MiniMap( Vector2 abstractPosition, HUDType positionType, Antares game )
+            : base( abstractPosition, positionType, game ) {
+            this.background = new HUD2DTexture( game );
             this.background.color = MiniMap.BACKGROUND_COLOR;
-            this.background.abstractSize = new Vector2(0.25f, 0.4f);
+            this.background.abstractSize = new Vector2( 0.25f, 0.4f );
             this.background.sizeType = HUDType.RELATIV;
-            this.background.Texture = game.Content.Load<Texture2D>("Sprites//Square_Cross");
+            this.background.Texture = game.Content.Load<Texture2D>( "Sprites//Square_Cross" );
 
-            this.foreground = new HUD2DTexture(game);
+            this.foreground = new HUD2DTexture( game );
             this.foreground.color = MiniMap.BORDER_COLOR;
-            this.foreground.abstractSize = new Vector2(0.25f, 0.4f);
+            this.foreground.abstractSize = new Vector2( 0.25f, 0.4f );
             this.foreground.sizeType = HUDType.RELATIV;
-            this.foreground.Texture = game.Content.Load<Texture2D>("Sprites//SquareBorder");
+            this.foreground.Texture = game.Content.Load<Texture2D>( "Sprites//SquareBorder" );
 
-            Add(this.background);
-            Add(this.foreground);
+            Add( this.background );
+            Add( this.foreground );
 
             this.background.layerDepth = this.layerDepth;
             this.foreground.layerDepth = this.layerDepth - 0.01f;
         }
 
 
-        public override void setLayerDepth(float layerDepth)
-        {
-            base.setLayerDepth(layerDepth);
+        public override void setLayerDepth( float layerDepth ) {
+            base.setLayerDepth( layerDepth );
             this.background.layerDepth = this.layerDepth;
         }
 
 
-        public override void Draw(SpriteBatch spritBatch)
-        {
-            Vector2 backgroundSize = (this.background.size - this.iconSize) / 2;
+        public override void Draw( SpriteBatch spritBatch ) {
+            Vector2 backgroundSize = ( this.background.size - this.iconSize ) / 2;
 
-            foreach (HUD2D element in this.allChilds) 
-            {
-                if (element is MiniMapIcon)
-                {
-                    MiniMapIcon icon = ((MiniMapIcon)element);
+            foreach ( HUD2D element in this.allChilds ) {
+                if ( element is MiniMapIcon ) {
+                    MiniMapIcon icon = ( (MiniMapIcon)element );
                     icon.Update();
 
-                    if (Math.Abs(icon.abstractPosition.X) < backgroundSize.X &&
-                        Math.Abs(icon.abstractPosition.Y) < backgroundSize.Y &&
-                        icon.spatialObject.isVisible)
-                    {
+                    if ( Math.Abs( icon.abstractPosition.X ) < backgroundSize.X &&
+                        Math.Abs( icon.abstractPosition.Y ) < backgroundSize.Y &&
+                        icon.spatialObject.isVisible ) {
                         icon.isVisible = true;
-                    }
-                    else
-                    {
+                    } else {
                         icon.isVisible = false;
                     }
                 }
@@ -110,48 +98,36 @@ namespace Battlestation_Antares.View.HUD
 
             ClientSizeChanged();
 
-            base.Draw(spritBatch);
+            base.Draw( spritBatch );
         }
 
 
-        public void ZoomOnMouseWheelOver()
-        {
-            if (this.background.Intersects(this.game.inputProvider.getMousePos()))
-            {
+        public void ZoomOnMouseWheelOver() {
+            if ( this.background.Intersects( this.game.inputProvider.getMousePos() ) ) {
                 this.foreground.color = MiniMap.BORDER_COLOR_HOVER;
 
                 int wheelChange = this.game.inputProvider.getMouseWheelChange();
 
-                if (wheelChange != 0)
-                {
-                    if (wheelChange > 0)
-                    {
+                if ( wheelChange != 0 ) {
+                    if ( wheelChange > 0 ) {
                         this.iconPositionScale *= 1.2f;
-                        if (this.iconPositionScale > MiniMap.MAX_SCALE)
-                        {
+                        if ( this.iconPositionScale > MiniMap.MAX_SCALE ) {
                             this.iconPositionScale = MiniMap.MAX_SCALE;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         this.iconPositionScale /= 1.2f;
-                        if (this.iconPositionScale < MiniMap.MIN_SCALE)
-                        {
+                        if ( this.iconPositionScale < MiniMap.MIN_SCALE ) {
                             this.iconPositionScale = MiniMap.MIN_SCALE;
                         }
                     }
                 }
-            }
-            else
-            {
+            } else {
                 this.foreground.color = MiniMap.BORDER_COLOR;
             }
         }
 
-        public void changeConfig(MiniMap.Config config)
-        {
-            if (oldConfig != null)
-            {
+        public void changeConfig( MiniMap.Config config ) {
+            if ( oldConfig != null ) {
                 oldConfig.iconPositionScale = this.iconPositionScale;
             }
             oldConfig = config;
@@ -161,13 +137,11 @@ namespace Battlestation_Antares.View.HUD
             this.iconPositionScale = config.iconPositionScale;
         }
 
-        public Vector2 screenToMiniMapCoord(Vector2 screenCoord)
-        {
+        public Vector2 screenToMiniMapCoord( Vector2 screenCoord ) {
             return screenCoord - this.position;
         }
 
-        public Vector3 miniMapToWorldCoord(Vector2 miniMapCoord)
-        {
+        public Vector3 miniMapToWorldCoord( Vector2 miniMapCoord ) {
             Vector3 worldCoord = new Vector3();
             worldCoord.X = miniMapCoord.X / this.iconPositionScale;
             worldCoord.Y = 0f;

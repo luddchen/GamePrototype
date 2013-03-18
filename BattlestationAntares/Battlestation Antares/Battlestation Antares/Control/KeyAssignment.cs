@@ -1,13 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace Battlestation_Antares.Control
-{
+namespace Battlestation_Antares.Control {
 
     /// <summary>
     /// an assignment of a key to a control request 
     /// </summary>
-    public class KeyAssignment
-    {
+    public class KeyAssignment {
 
         /// <summary>
         /// the control request
@@ -26,8 +24,7 @@ namespace Battlestation_Antares.Control
         /// </summary>
         /// <param name="control">the control request</param>
         /// <param name="key">the assigned key</param>
-        public KeyAssignment(Control control, Keys key)
-        {
+        public KeyAssignment( Control control, Keys key ) {
             this.control = control;
             this.key = key;
         }

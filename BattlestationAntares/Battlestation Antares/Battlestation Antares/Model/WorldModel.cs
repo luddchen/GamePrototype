@@ -6,14 +6,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
 using Battlestation_Antares.View;
 
-namespace Battlestation_Antares.Model
-{
+namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// represents a model of the game world
     /// </summary>
-    public class WorldModel
-    {
+    public class WorldModel {
 
         /// <summary>
         /// the game
@@ -85,8 +83,7 @@ namespace Battlestation_Antares.Model
         /// creates the world
         /// </summary>
         /// <param name="game">the game</param>
-        public WorldModel(Antares game)
-        {
+        public WorldModel( Antares game ) {
             this.game = game;
             this.allObjects = new List<SpatialObject>();
             this.allRadars = new List<SpatialObject>();
@@ -95,27 +92,27 @@ namespace Battlestation_Antares.Model
             this.allWeapons = new List<SpatialObject>();
 
             this.allDrawable = new List<List<SpatialObject>>();
-            this.allDrawable.Add(this.allObjects);
-            this.allDrawable.Add(this.allRadars);
-            this.allDrawable.Add(this.allTurrets);
-            this.allDrawable.Add(this.allDust);
-            this.allDrawable.Add(this.allWeapons);
+            this.allDrawable.Add( this.allObjects );
+            this.allDrawable.Add( this.allRadars );
+            this.allDrawable.Add( this.allTurrets );
+            this.allDrawable.Add( this.allDust );
+            this.allDrawable.Add( this.allWeapons );
 
             this.allUpdatable = new List<List<SpatialObject>>();
-            this.allUpdatable.Add(this.allObjects);
-            this.allUpdatable.Add(this.allRadars);
-            this.allUpdatable.Add(this.allTurrets);
-            this.allUpdatable.Add(this.allDust);
-            this.allUpdatable.Add(this.allWeapons);
+            this.allUpdatable.Add( this.allObjects );
+            this.allUpdatable.Add( this.allRadars );
+            this.allUpdatable.Add( this.allTurrets );
+            this.allUpdatable.Add( this.allDust );
+            this.allUpdatable.Add( this.allWeapons );
 
             this.removeList = new List<SpatialObject>();
 
-            this.miniMap = new MiniMap(Vector2.Zero, View.HUD.HUDType.RELATIV, game);
+            this.miniMap = new MiniMap( Vector2.Zero, View.HUD.HUDType.RELATIV, game );
 
             // octree test
-            this.treeTest = new Tools.DynamicOctree<SpatialObject>(3, 1, 10, new BoundingBox(new Vector3(-5000, -5000, -5000), new Vector3(5000,5000,5000)));
+            this.treeTest = new Tools.DynamicOctree<SpatialObject>( 3, 1, 10, new BoundingBox( new Vector3( -5000, -5000, -5000 ), new Vector3( 5000, 5000, 5000 ) ) );
 
-            this.RayCastPool = new Tools.RayCastThreadPool(this);
+            this.RayCastPool = new Tools.RayCastThreadPool( this );
         }
 
 
@@ -123,51 +120,43 @@ namespace Battlestation_Antares.Model
         /// initialize the world content
         /// </summary>
         /// <param name="content">the game content manager</param>
-        public void Initialize(ContentManager content)
-        {
+        public void Initialize( ContentManager content ) {
 
             // create 500 random objects to fill the space for testing
             Random random = new Random();
 
-            for (int i = 0; i < 10; i++)
-            {
-                if (random.Next(2) == 0)
-                {
-                    SpatialObject obj = 
-                        new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models//TargetShip//targetship_2", content, this);
-                    obj.isEnemy = true;
-                    obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
-                }
-                else
-                {
+            for ( int i = 0; i < 10; i++ ) {
+                if ( random.Next( 2 ) == 0 ) {
                     SpatialObject obj =
-                        new SpatialObject(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), "Models//Cubus//Cubus_0", content, this);
+                        new SpatialObject( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ), "Models//TargetShip//targetship_2", content, this );
+                    obj.isEnemy = true;
+                    obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
+                } else {
+                    SpatialObject obj =
+                        new SpatialObject( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ), "Models//Cubus//Cubus_0", content, this );
                     obj.isEnemy = true;
                     obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
                 }
             }
 
-            for (int i = 0; i < 12; i++)
-            {
-                Turret turret = new Turret(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), content, this);
+            for ( int i = 0; i < 12; i++ ) {
+                Turret turret = new Turret( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ), content, this );
             }
 
-            for (int i = 0; i < 6; i++)
-            {
-                Radar radar = new Radar(new Vector3(random.Next(2400) - 1200, 0, random.Next(2400) - 1200), content, this);
+            for ( int i = 0; i < 6; i++ ) {
+                Radar radar = new Radar( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ), content, this );
             }
 
             // create the player space ship
-            this.spaceShip = new SpaceShip(new Vector3(0,30,500), "Models//compass3", content, this);
+            this.spaceShip = new SpaceShip( new Vector3( 0, 30, 500 ), "Models//compass3", content, this );
             this.spaceShip.isVisible = true;
 
             // create the player space station
-            this.spaceStation = new SpaceStation(Vector3.Zero, "Models//SpaceStation/spacestation", content, this);
+            this.spaceStation = new SpaceStation( Vector3.Zero, "Models//SpaceStation/spacestation", content, this );
 
             // add dust near the players ship
-            for (int i = 0; i < 200; i++)
-            {
-                Dust dust = new Dust(spaceShip, content, this);
+            for ( int i = 0; i < 200; i++ ) {
+                Dust dust = new Dust( spaceShip, content, this );
             }
 
         }
@@ -177,14 +166,11 @@ namespace Battlestation_Antares.Model
         /// update the world
         /// </summary>
         /// <param name="gameTime">the game time</param>
-        public void Update(Microsoft.Xna.Framework.GameTime gameTime)
-        {
+        public void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             // update all spatial objects
-            foreach (List<SpatialObject> list in this.allUpdatable)
-            {
-                foreach (SpatialObject obj in list)
-                {
-                    obj.Update(gameTime);
+            foreach ( List<SpatialObject> list in this.allUpdatable ) {
+                foreach ( SpatialObject obj in list ) {
+                    obj.Update( gameTime );
                 }
             }
 
@@ -195,14 +181,11 @@ namespace Battlestation_Antares.Model
             bool shipVisible = this.spaceShip.isVisible;
             this.spaceShip.isVisible = false;
 
-            foreach (SpatialObject obj in this.allObjects)
-            {
-                if (obj.isVisible)
-                {
-                    BoundingSphere itemSphere = new BoundingSphere(obj.bounding.Center + obj.globalPosition, obj.bounding.Radius);
-                    if (!treeTest.Add(obj, itemSphere))
-                    {
-                        treeTest.AddItem(obj, itemSphere);
+            foreach ( SpatialObject obj in this.allObjects ) {
+                if ( obj.isVisible ) {
+                    BoundingSphere itemSphere = new BoundingSphere( obj.bounding.Center + obj.globalPosition, obj.bounding.Radius );
+                    if ( !treeTest.Add( obj, itemSphere ) ) {
+                        treeTest.AddItem( obj, itemSphere );
                     }
                 }
             }
@@ -216,16 +199,13 @@ namespace Battlestation_Antares.Model
 
             List<Tuple<SpatialObject, SpatialObject>> collList =
                 this.treeTest.CheckCollisions(
-                    new Tuple<SpatialObject, BoundingSphere>(this.spaceShip, shipSphere));
+                    new Tuple<SpatialObject, BoundingSphere>( this.spaceShip, shipSphere ) );
 
             //Console.Out.WriteLine("Collisions : " + collList.Count);
 
-            if (collList.Count > 0)
-            {
+            if ( collList.Count > 0 ) {
                 this.game.activeSituation.view.backgroundColor = Color.Red;
-            }
-            else
-            {
+            } else {
                 this.game.activeSituation.view.backgroundColor = Color.White;
             }
 
@@ -239,55 +219,34 @@ namespace Battlestation_Antares.Model
         /// add a spatial object to this world
         /// </summary>
         /// <param name="obj">a spatial object</param>
-        public void addObject(SpatialObject obj)
-        {
-            if ((obj is Laser) || (obj is Missile))
-            {
-                this.allWeapons.Add(obj);
+        public void addObject( SpatialObject obj ) {
+            if ( ( obj is Laser ) || ( obj is Missile ) ) {
+                this.allWeapons.Add( obj );
+            } else if ( obj is Dust ) {
+                this.allDust.Add( obj );
+            } else if ( obj is Radar ) {
+                this.allRadars.Add( obj );
+            } else if ( obj is Turret ) {
+                this.allTurrets.Add( obj );
+            } else {
+                this.allObjects.Add( obj );
             }
-            else if (obj is Dust)
-            {
-                this.allDust.Add(obj);
-            }
-            else if (obj is Radar)
-            {
-                this.allRadars.Add(obj);
-            }
-            else if (obj is Turret)
-            {
-                this.allTurrets.Add(obj);
-            }
-            else
-            {
-                this.allObjects.Add(obj);
-            } 
         }
 
 
-        private void RemoveNow()
-        {
-            foreach (SpatialObject obj in this.removeList)
-            {
-                if ((obj is Laser) || (obj is Missile))
-                {
-                    this.allWeapons.Remove(obj);
+        private void RemoveNow() {
+            foreach ( SpatialObject obj in this.removeList ) {
+                if ( ( obj is Laser ) || ( obj is Missile ) ) {
+                    this.allWeapons.Remove( obj );
+                } else if ( obj is Dust ) {
+                    this.allDust.Remove( obj );
+                } else if ( obj is Radar ) {
+                    this.allRadars.Remove( obj );
+                } else if ( obj is Turret ) {
+                    this.allTurrets.Remove( obj );
+                } else {
+                    this.allObjects.Remove( obj );
                 }
-                else if (obj is Dust)
-                {
-                    this.allDust.Remove(obj);
-                }
-                else if (obj is Radar)
-                {
-                    this.allRadars.Remove(obj);
-                }
-                else if (obj is Turret)
-                {
-                    this.allTurrets.Remove(obj);
-                }
-                else
-                {
-                    this.allObjects.Remove(obj);
-                } 
             }
             this.removeList.Clear();
         }
@@ -297,9 +256,8 @@ namespace Battlestation_Antares.Model
         /// trigger object remove
         /// </summary>
         /// <param name="laser">laser to remove</param>
-        public void Remove(SpatialObject obj)
-        {
-            this.removeList.Add(obj);
+        public void Remove( SpatialObject obj ) {
+            this.removeList.Add( obj );
         }
 
     }

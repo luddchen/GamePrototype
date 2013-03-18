@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SpatialObjectAttributesLibrary
-{
+namespace SpatialObjectAttributesLibrary {
 
     /// <summary>
     /// Spatial Object Attributes : Laser
     /// </summary>
-    public class Laser : Weapon
-    {
+    public class Laser : Weapon {
 
         public float HeatProduction;
 
@@ -21,8 +19,8 @@ namespace SpatialObjectAttributesLibrary
         public float HeatRegeneration;
 
 
-        public Laser() : base()
-        {
+        public Laser()
+            : base() {
             this.name = "Laser";
             this.HeatProduction = 0;
             this.HeatUntilCooldown = 0;
@@ -30,9 +28,8 @@ namespace SpatialObjectAttributesLibrary
             this.HeatRegeneration = 0;
         }
 
-        public Laser(Laser laser)
-            : base(laser)
-        {
+        public Laser( Laser laser )
+            : base( laser ) {
             this.name = "Laser";
             this.HeatProduction = laser.HeatProduction;
             this.HeatUntilCooldown = laser.HeatUntilCooldown;
@@ -40,9 +37,8 @@ namespace SpatialObjectAttributesLibrary
             this.HeatRegeneration = laser.HeatRegeneration;
         }
 
-        public Laser(float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration, float reloadTime)
-            : base(damage, range, projectileVelocity, reloadTime)
-        {
+        public Laser( float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration, float reloadTime )
+            : base( damage, range, projectileVelocity, reloadTime ) {
             this.name = "Laser";
             this.HeatProduction = heatProduction;
             this.HeatUntilCooldown = heatUntilCooldown;
@@ -51,9 +47,8 @@ namespace SpatialObjectAttributesLibrary
         }
 
 
-        public void set(float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration, float reloadTime)
-        {
-            base.set(damage, range, projectileVelocity, reloadTime);
+        public void set( float damage, float range, float projectileVelocity, float heatProduction, float heatUntilCooldown, float heatRegeneration, float reloadTime ) {
+            base.set( damage, range, projectileVelocity, reloadTime );
 
             this.HeatProduction = heatProduction;
             this.HeatUntilCooldown = heatUntilCooldown;
@@ -61,9 +56,8 @@ namespace SpatialObjectAttributesLibrary
             this.HeatRegeneration = heatRegeneration;
         }
 
-        public override void setValues(float[] values, ref int index)
-        {
-            base.setValues(values, ref index);
+        public override void setValues( float[] values, ref int index ) {
+            base.setValues( values, ref index );
 
             this.HeatProduction = values[index++];
             this.HeatUntilCooldown = values[index++];
@@ -71,27 +65,24 @@ namespace SpatialObjectAttributesLibrary
             this.HeatRegeneration = values[index++];
         }
 
-        public override float[] getValues()
-        {
+        public override float[] getValues() {
             float[] values1 = base.getValues();
             float[] values2 = new float[getNumberOfValues()];
-            Array.Copy(values1, 0, values2, 0, base.getNumberOfValues());
+            Array.Copy( values1, 0, values2, 0, base.getNumberOfValues() );
 
             values2[base.getNumberOfValues()] = this.HeatProduction;
-            values2[base.getNumberOfValues()+1] = this.HeatUntilCooldown;
-            values2[base.getNumberOfValues()+2] = this.HeatRegeneration;
+            values2[base.getNumberOfValues() + 1] = this.HeatUntilCooldown;
+            values2[base.getNumberOfValues() + 2] = this.HeatRegeneration;
 
             return values2;
         }
 
-        public override int getNumberOfValues()
-        {
+        public override int getNumberOfValues() {
             return base.getNumberOfValues() + 3;
         }
 
 
-        public override string ToString()
-        {
+        public override string ToString() {
             String output = base.ToString();
             output += this.name + ":HeatProduction = " + this.HeatProduction + "\n";
             output += this.name + ":HeatUntilCooldown = " + this.HeatUntilCooldown + "\n";

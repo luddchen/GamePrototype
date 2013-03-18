@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SpatialObjectAttributesLibrary
-{
+namespace SpatialObjectAttributesLibrary {
 
-    public abstract class AttributeItem
-    {
+    public abstract class AttributeItem {
         public String name;
 
-        public abstract void setValues(float[] values, ref int index);
+        public abstract void setValues( float[] values, ref int index );
 
         public abstract float[] getValues();
 

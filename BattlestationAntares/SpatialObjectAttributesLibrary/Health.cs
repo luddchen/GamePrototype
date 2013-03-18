@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SpatialObjectAttributesLibrary
-{
+namespace SpatialObjectAttributesLibrary {
 
     /// <summary>
     /// Spatial Object Attributes : Health
     /// </summary>
-    public class Health : AttributeItem
-    {
+    public class Health : AttributeItem {
 
         public float MaxHealthPoints;
 
@@ -21,8 +19,7 @@ namespace SpatialObjectAttributesLibrary
         public float RepairCost;
 
 
-        public Health()
-        {
+        public Health() {
             this.name = "Health";
             this.MaxHealthPoints = 0;
             this.CurrentHealthPoints = 0;
@@ -30,8 +27,7 @@ namespace SpatialObjectAttributesLibrary
             this.RepairCost = 0;
         }
 
-        public Health(Health health)
-        {
+        public Health( Health health ) {
             this.name = "Health";
             this.MaxHealthPoints = health.MaxHealthPoints;
             this.CurrentHealthPoints = health.CurrentHealthPoints;
@@ -39,8 +35,7 @@ namespace SpatialObjectAttributesLibrary
             this.RepairCost = health.RepairCost;
         }
 
-        public Health(float maxHealthPoints, float regenarationRate, float repairCost)
-        {
+        public Health( float maxHealthPoints, float regenarationRate, float repairCost ) {
             this.name = "Health";
             this.MaxHealthPoints = maxHealthPoints;
             this.CurrentHealthPoints = maxHealthPoints;
@@ -48,24 +43,21 @@ namespace SpatialObjectAttributesLibrary
             this.RepairCost = repairCost;
         }
 
-        public void set(float maxHealthPoints, float regenarationRate, float repairCost)
-        {
+        public void set( float maxHealthPoints, float regenarationRate, float repairCost ) {
             this.MaxHealthPoints = maxHealthPoints;
             this.CurrentHealthPoints = maxHealthPoints;
             this.RegenerationRate = regenarationRate;
             this.RepairCost = repairCost;
         }
 
-        public override void setValues(float[] values, ref int index)
-        {
+        public override void setValues( float[] values, ref int index ) {
             this.MaxHealthPoints = values[index++];
             this.CurrentHealthPoints = this.MaxHealthPoints;
             this.RegenerationRate = values[index++];
             this.RepairCost = values[index++];
         }
 
-        public override float[] getValues()
-        {
+        public override float[] getValues() {
             float[] values = new float[3];
             values[0] = this.MaxHealthPoints;
             values[1] = this.RegenerationRate;
@@ -74,8 +66,7 @@ namespace SpatialObjectAttributesLibrary
             return values;
         }
 
-        public override int getNumberOfValues() 
-        {
+        public override int getNumberOfValues() {
             return 3;
         }
 
@@ -85,10 +76,8 @@ namespace SpatialObjectAttributesLibrary
         /// <summary>
         /// trigger regeneration
         /// </summary>
-        public void Regenerate()
-        {
-            if (this.CurrentHealthPoints < this.MaxHealthPoints)
-            {
+        public void Regenerate() {
+            if ( this.CurrentHealthPoints < this.MaxHealthPoints ) {
                 this.CurrentHealthPoints += this.RegenerationRate;
             }
         }
@@ -96,8 +85,7 @@ namespace SpatialObjectAttributesLibrary
         /// <summary>
         /// repair to max health
         /// </summary>
-        public void Repair()
-        {
+        public void Repair() {
             this.CurrentHealthPoints = this.MaxHealthPoints;
         }
 
@@ -106,15 +94,13 @@ namespace SpatialObjectAttributesLibrary
         /// </summary>
         /// <param name="damage">the recieved damage</param>
         /// <returns>true : if out of health</returns>
-        public bool ApplyDamage(float damage)
-        {
+        public bool ApplyDamage( float damage ) {
             this.CurrentHealthPoints -= damage;
 
-            return (this.CurrentHealthPoints <= 0);
+            return ( this.CurrentHealthPoints <= 0 );
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             String output = "";
             output += this.name + ":MaxHealthPoints = " + this.MaxHealthPoints + "\n";
             output += this.name + ":CurrentHealthPoints = " + this.CurrentHealthPoints + "\n";

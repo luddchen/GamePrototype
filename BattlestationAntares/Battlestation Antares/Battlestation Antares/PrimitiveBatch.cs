@@ -17,15 +17,13 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 #endregion
 
-namespace Battlestation_Antares
-{
+namespace Battlestation_Antares {
 
     // PrimitiveBatch is a class that handles efficient rendering automatically for its
     // users, in a similar way to SpriteBatch. PrimitiveBatch can render lines, points,
     // and triangles to the screen. In this sample, it is used to draw a spacewars
     // retro scene.
-    public class PrimitiveBatch : IDisposable
-    {
+    public class PrimitiveBatch : IDisposable {
         #region Constants and Fields
 
         // this constant controls how large the vertices buffer is. Larger buffers will
@@ -68,42 +66,36 @@ namespace Battlestation_Antares
 
         // the constructor creates a new PrimitiveBatch and sets up all of the internals
         // that PrimitiveBatch will need.
-        public PrimitiveBatch(GraphicsDevice graphicsDevice)
-        {
-            if (graphicsDevice == null)
-            {
-                throw new ArgumentNullException("graphicsDevice");
+        public PrimitiveBatch( GraphicsDevice graphicsDevice ) {
+            if ( graphicsDevice == null ) {
+                throw new ArgumentNullException( "graphicsDevice" );
             }
             device = graphicsDevice;
 
             // set up a new basic effect, and enable vertex colors.
-            basicEffect = new BasicEffect(graphicsDevice);
+            basicEffect = new BasicEffect( graphicsDevice );
             basicEffect.VertexColorEnabled = true;
 
             // projection uses CreateOrthographicOffCenter to create 2d projection
             // matrix with 0,0 in the upper left.
             basicEffect.Projection = Matrix.CreateOrthographicOffCenter
-                (0, graphicsDevice.Viewport.Width,
+                ( 0, graphicsDevice.Viewport.Width,
                 graphicsDevice.Viewport.Height, 0,
-                0, 1);
+                0, 1 );
         }
 
-        public void ClientSizeChanged(Viewport viewport)
-        {
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
+        public void ClientSizeChanged( Viewport viewport ) {
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, viewport.Width, viewport.Height, 0, 0, 1 );
         }
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
+        public void Dispose() {
+            this.Dispose( true );
+            GC.SuppressFinalize( this );
         }
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing && !isDisposed)
-            {
-                if (basicEffect != null)
+        protected virtual void Dispose( bool disposing ) {
+            if ( disposing && !isDisposed ) {
+                if ( basicEffect != null )
                     basicEffect.Dispose();
 
                 isDisposed = true;
@@ -112,28 +104,25 @@ namespace Battlestation_Antares
 
         // Begin is called to tell the PrimitiveBatch what kind of primitives will be
         // drawn, and to prepare the graphics card to render those primitives.
-        public void Begin(PrimitiveType primitiveType)
-        {
-            if (hasBegun)
-            {
+        public void Begin( PrimitiveType primitiveType ) {
+            if ( hasBegun ) {
                 throw new InvalidOperationException
-                    ("End must be called before Begin can be called again.");
+                    ( "End must be called before Begin can be called again." );
             }
 
             // these three types reuse vertices, so we can't flush properly without more
             // complex logic. Since that's a bit too complicated for this sample, we'll
             // simply disallow them.
-            if (primitiveType == PrimitiveType.LineStrip ||
-                primitiveType == PrimitiveType.TriangleStrip)
-            {
+            if ( primitiveType == PrimitiveType.LineStrip ||
+                primitiveType == PrimitiveType.TriangleStrip ) {
                 throw new NotSupportedException
-                    ("The specified primitiveType is not supported by PrimitiveBatch.");
+                    ( "The specified primitiveType is not supported by PrimitiveBatch." );
             }
 
             this.primitiveType = primitiveType;
 
             // how many verts will each of these primitives require?
-            this.numVertsPerPrimitive = NumVertsPerPrimitive(primitiveType);
+            this.numVertsPerPrimitive = NumVertsPerPrimitive( primitiveType );
 
             //tell our basic effect to begin.
             basicEffect.CurrentTechnique.Passes[0].Apply();
@@ -148,27 +137,24 @@ namespace Battlestation_Antares
         // this function can only be called once begin has been called.
         // if there is not enough room in the vertices buffer, Flush is called
         // automatically.
-        public void AddVertex(Vector2 vertex, Color color)
-        {
-            if (!hasBegun)
-            {
+        public void AddVertex( Vector2 vertex, Color color ) {
+            if ( !hasBegun ) {
                 throw new InvalidOperationException
-                    ("Begin must be called before AddVertex can be called.");
+                    ( "Begin must be called before AddVertex can be called." );
             }
 
             // are we starting a new primitive? if so, and there will not be enough room
             // for a whole primitive, flush.
-            bool newPrimitive = ((positionInBuffer % numVertsPerPrimitive) == 0);
+            bool newPrimitive = ( ( positionInBuffer % numVertsPerPrimitive ) == 0 );
 
-            if (newPrimitive &&
-                (positionInBuffer + numVertsPerPrimitive) >= vertices.Length)
-            {
+            if ( newPrimitive &&
+                ( positionInBuffer + numVertsPerPrimitive ) >= vertices.Length ) {
                 Flush();
             }
 
             // once we know there's enough room, set the vertex in the buffer,
             // and increase position.
-            vertices[positionInBuffer].Position = new Vector3(vertex, 0);
+            vertices[positionInBuffer].Position = new Vector3( vertex, 0 );
             vertices[positionInBuffer].Color = color;
 
             positionInBuffer++;
@@ -177,12 +163,10 @@ namespace Battlestation_Antares
         // End is called once all the primitives have been drawn using AddVertex.
         // it will call Flush to actually submit the draw call to the graphics card, and
         // then tell the basic effect to end.
-        public void End()
-        {
-            if (!hasBegun)
-            {
+        public void End() {
+            if ( !hasBegun ) {
                 throw new InvalidOperationException
-                    ("Begin must be called before End can be called.");
+                    ( "Begin must be called before End can be called." );
             }
 
             // Draw whatever the user wanted us to draw
@@ -196,17 +180,14 @@ namespace Battlestation_Antares
         // at the beginning. End will call this to draw the primitives that the user
         // requested, and AddVertex will call this if there is not enough room in the
         // buffer.
-        private void Flush()
-        {
-            if (!hasBegun)
-            {
+        private void Flush() {
+            if ( !hasBegun ) {
                 throw new InvalidOperationException
-                    ("Begin must be called before Flush can be called.");
+                    ( "Begin must be called before Flush can be called." );
             }
 
             // no work to do
-            if (positionInBuffer == 0)
-            {
+            if ( positionInBuffer == 0 ) {
                 return;
             }
 
@@ -214,8 +195,8 @@ namespace Battlestation_Antares
             int primitiveCount = positionInBuffer / numVertsPerPrimitive;
 
             // submit the draw call to the graphics card
-            device.DrawUserPrimitives<VertexPositionColor>(primitiveType, vertices, 0,
-                primitiveCount);
+            device.DrawUserPrimitives<VertexPositionColor>( primitiveType, vertices, 0,
+                primitiveCount );
 
             // now that we've drawn, it's ok to reset positionInBuffer back to zero,
             // and write over any vertices that may have been set previously.
@@ -226,11 +207,9 @@ namespace Battlestation_Antares
 
         // NumVertsPerPrimitive is a boring helper function that tells how many vertices
         // it will take to draw each kind of primitive.
-        static private int NumVertsPerPrimitive(PrimitiveType primitive)
-        {
+        static private int NumVertsPerPrimitive( PrimitiveType primitive ) {
             int numVertsPerPrimitive;
-            switch (primitive)
-            {
+            switch ( primitive ) {
                 case PrimitiveType.LineList:
                     numVertsPerPrimitive = 2;
                     break;
@@ -238,7 +217,7 @@ namespace Battlestation_Antares
                     numVertsPerPrimitive = 3;
                     break;
                 default:
-                    throw new InvalidOperationException("primitive is not valid");
+                    throw new InvalidOperationException( "primitive is not valid" );
             }
             return numVertsPerPrimitive;
         }

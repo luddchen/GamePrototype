@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Battlestation_Antares.Tools
-{
+namespace Battlestation_Antares.Tools {
 
     /// <summary>
     /// a class with static methods for Matrix and Vector manipulation
     /// </summary>
-    public class Tools
-    {
+    public class Tools {
 
         /// <summary>
         /// rotates an input matrix on the local matrix right-axis
@@ -17,10 +15,9 @@ namespace Battlestation_Antares.Tools
         /// <param name="input">the input matrix</param>
         /// <param name="angle">the rotation angle</param>
         /// <returns>the rotated matrix</returns>
-        public static Matrix Pitch(Matrix input, float angle)
-        {
+        public static Matrix Pitch( Matrix input, float angle ) {
             // get local right-axis
-            Matrix axisRotation = Matrix.CreateFromAxisAngle(input.Right, angle);
+            Matrix axisRotation = Matrix.CreateFromAxisAngle( input.Right, angle );
 
             // compute rotation
             return input * axisRotation;
@@ -33,10 +30,9 @@ namespace Battlestation_Antares.Tools
         /// <param name="input">the input matrix</param>
         /// <param name="angle">the rotation angle</param>
         /// <returns>the rotated matrix</returns>
-        public static Matrix Roll(Matrix input, float angle)
-        {
+        public static Matrix Roll( Matrix input, float angle ) {
             // get local forward-axis
-            Matrix axisRotation = Matrix.CreateFromAxisAngle(input.Forward, angle);
+            Matrix axisRotation = Matrix.CreateFromAxisAngle( input.Forward, angle );
 
             // compute rotation
             return input * axisRotation;
@@ -49,10 +45,9 @@ namespace Battlestation_Antares.Tools
         /// <param name="input">the input matrix</param>
         /// <param name="angle">the rotation angle</param>
         /// <returns>the rotated matrix</returns>
-        public static Matrix Yaw(Matrix input, float angle)
-        {
+        public static Matrix Yaw( Matrix input, float angle ) {
             // get local up-axis
-            Matrix axisRotation = Matrix.CreateFromAxisAngle(input.Up, angle);
+            Matrix axisRotation = Matrix.CreateFromAxisAngle( input.Up, angle );
 
             // compute rotation
             return input * axisRotation;
@@ -68,9 +63,8 @@ namespace Battlestation_Antares.Tools
         /// <param name="pitch">the rotation angle on right-axis</param>
         /// <param name="roll">the rotation angle on forward-axis</param>
         /// <returns>the rotated matrix</returns>
-        public static Matrix YawPitchRoll(Matrix input, float yaw, float pitch, float roll)
-        {
-            return Yaw(Pitch(Roll(input, roll), pitch), yaw);
+        public static Matrix YawPitchRoll( Matrix input, float yaw, float pitch, float roll ) {
+            return Yaw( Pitch( Roll( input, roll ), pitch ), yaw );
         }
 
 
@@ -80,14 +74,13 @@ namespace Battlestation_Antares.Tools
         /// <param name="targetVector">the target vector</param>
         /// <param name="globalRotation">the global rotation matrix</param>
         /// <returns>the rotation on up-axis</returns>
-        public static float GetUpAxisRotation(Vector3 targetVector, Matrix globalRotation)
-        {
+        public static float GetUpAxisRotation( Vector3 targetVector, Matrix globalRotation ) {
             // project local target vector into global target vector
-            double forward = Vector3.Dot(targetVector, globalRotation.Forward);
-            double right = Vector3.Dot(targetVector, globalRotation.Right);
+            double forward = Vector3.Dot( targetVector, globalRotation.Forward );
+            double right = Vector3.Dot( targetVector, globalRotation.Right );
 
             // compute rotation on up-axis
-            return -(float)Math.Atan2(right, forward);
+            return -(float)Math.Atan2( right, forward );
         }
 
 
@@ -97,23 +90,22 @@ namespace Battlestation_Antares.Tools
         /// <param name="targetVector">the target vector</param>
         /// <param name="globalRotation">the global rotation matrix</param>
         /// <returns>the rotation on up-axis (Vector3.Z) and on right-axis (Vector3.X)</returns>
-        public static Vector3 GetRotation(Vector3 targetVector, Matrix globalRotation)
-        {
+        public static Vector3 GetRotation( Vector3 targetVector, Matrix globalRotation ) {
             Vector3 rotation = new Vector3();
 
             // project local target vector into global target vector
-            double forward = Vector3.Dot(targetVector, globalRotation.Forward);
-            double right = Vector3.Dot(targetVector, globalRotation.Right);
-            double up = Vector3.Dot(targetVector, globalRotation.Up);
+            double forward = Vector3.Dot( targetVector, globalRotation.Forward );
+            double right = Vector3.Dot( targetVector, globalRotation.Right );
+            double up = Vector3.Dot( targetVector, globalRotation.Up );
 
             // compute rotation on up-axis
-            rotation.Z = -(float)Math.Atan2(right, forward);
+            rotation.Z = -(float)Math.Atan2( right, forward );
 
             // compute length of local target vector after projection on forward-right-plane 
-            double planeDist = Math.Sqrt(forward * forward + right * right);
+            double planeDist = Math.Sqrt( forward * forward + right * right );
 
             // compute rotation on right-axis
-            rotation.X = (float)Math.Atan2(up, planeDist);
+            rotation.X = (float)Math.Atan2( up, planeDist );
 
             return rotation;
         }
@@ -125,37 +117,35 @@ namespace Battlestation_Antares.Tools
         /// <param name="targetRotation"></param>
         /// <param name="globalRotation"></param>
         /// <returns></returns>
-        public static Vector3 GetYawPitchRoll(Matrix targetRotation, Matrix globalRotation)
-        {
+        public static Vector3 GetYawPitchRoll( Matrix targetRotation, Matrix globalRotation ) {
             Vector3 rotation = new Vector3();
 
             // project local target vector into global target vector
-            double forward = Vector3.Dot(targetRotation.Forward, globalRotation.Forward);
-            double right = Vector3.Dot(targetRotation.Forward, globalRotation.Right);
-            double up = Vector3.Dot(targetRotation.Forward, globalRotation.Up);
+            double forward = Vector3.Dot( targetRotation.Forward, globalRotation.Forward );
+            double right = Vector3.Dot( targetRotation.Forward, globalRotation.Right );
+            double up = Vector3.Dot( targetRotation.Forward, globalRotation.Up );
 
             // compute rotation on up-axis
-            rotation.Z = (float)Math.Atan2(forward, right);
+            rotation.Z = (float)Math.Atan2( forward, right );
 
             // compute length of local target vector after projection on forward-right-plane 
-            double planeDist = Math.Sqrt(forward * forward + right * right);
+            double planeDist = Math.Sqrt( forward * forward + right * right );
 
             // compute rotation on right-axis
-            rotation.X = (float)Math.Atan2(planeDist, up);
+            rotation.X = (float)Math.Atan2( planeDist, up );
 
 
             // experimental roll computation
-            Matrix targetCorrected = targetRotation * Matrix.Invert(globalRotation);
+            Matrix targetCorrected = targetRotation * Matrix.Invert( globalRotation );
 
-            rotation.Y = (float)Math.Atan2(targetCorrected.Up.Y, targetCorrected.Up.X);
+            rotation.Y = (float)Math.Atan2( targetCorrected.Up.Y, targetCorrected.Up.X );
 
 
             return rotation;
         }
 
 
-        public static void Repair(ref Matrix matrix)
-        {
+        public static void Repair( ref Matrix matrix ) {
             Vector3 fwd = matrix.Forward;
             Vector3 up = matrix.Up;
             Vector3 right = matrix.Right;

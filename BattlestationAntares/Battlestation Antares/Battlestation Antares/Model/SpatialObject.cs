@@ -6,14 +6,12 @@ using Microsoft.Xna.Framework.Graphics;
 using SpatialObjectAttributesLibrary;
 using Battlestation_Antares.View.HUD;
 
-namespace Battlestation_Antares.Model
-{
+namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// the basis class for spatial objects
     /// </summary>
-    public class SpatialObject
-    {
+    public class SpatialObject {
 
         /// <summary>
         /// the number of rotations until the rotation matrix should be repaired
@@ -114,19 +112,16 @@ namespace Battlestation_Antares.Model
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public SpatialObject(Vector3 position, String modelName, ContentManager content, WorldModel world)
-        {
+        public SpatialObject( Vector3 position, String modelName, ContentManager content, WorldModel world ) {
             this.world = world;
             this.isVisible = true;
             this.globalPosition = position;
             this.rotation = Matrix.Identity;
             this.scale = Vector3.One;
-            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>(modelName);
-            foreach (ModelMesh mesh in model3d.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    Tools.Draw3D.Lighting1(effect);
+            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>( modelName );
+            foreach ( ModelMesh mesh in model3d.Meshes ) {
+                foreach ( BasicEffect effect in mesh.Effects ) {
+                    Tools.Draw3D.Lighting1( effect );
                 }
             }
             this.boneTransforms = new Matrix[model3d.Bones.Count];
@@ -135,23 +130,21 @@ namespace Battlestation_Antares.Model
             this.isEnemy = false;
 
             // dirty hack
-            if (!(this is Dust))
-            {
-                this.miniMapIcon = new MiniMapIcon(null, this, this.world.game);
-                this.miniMapIcon.Texture = content.Load<Texture2D>("Models//SpaceShip//spaceship_2d");
+            if ( !( this is Dust ) ) {
+                this.miniMapIcon = new MiniMapIcon( null, this, this.world.game );
+                this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//SpaceShip//spaceship_2d" );
                 this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
                 this.miniMapIcon.AddToWorld();
             }
 
             // compute the bounding sphere of the whole 3D model
             this.bounding = new BoundingSphere();
-            this.model3d.CopyAbsoluteBoneTransformsTo(this.boneTransforms);
-            foreach (ModelMesh mesh in model3d.Meshes)
-            {
-                this.bounding = BoundingSphere.CreateMerged(mesh.BoundingSphere.Transform(this.boneTransforms[mesh.ParentBone.Index]), this.bounding);
+            this.model3d.CopyAbsoluteBoneTransformsTo( this.boneTransforms );
+            foreach ( ModelMesh mesh in model3d.Meshes ) {
+                this.bounding = BoundingSphere.CreateMerged( mesh.BoundingSphere.Transform( this.boneTransforms[mesh.ParentBone.Index] ), this.bounding );
             }
 
-            this.world.addObject(this);
+            this.world.addObject( this );
             this.addDebugOutput();
         }
 
@@ -160,10 +153,9 @@ namespace Battlestation_Antares.Model
         /// update the spatial object
         /// </summary>
         /// <param name="gameTime">the game time</param>
-        public virtual void Update(GameTime gameTime)
-        {
-            ApplyMovement(gameTime);
-            ApplyRotation(gameTime);
+        public virtual void Update( GameTime gameTime ) {
+            ApplyMovement( gameTime );
+            ApplyRotation( gameTime );
         }
 
 
@@ -171,12 +163,10 @@ namespace Battlestation_Antares.Model
         /// apply object movement
         /// </summary>
         /// <param name="gameTime">the game time</param>
-        protected void ApplyMovement(GameTime gameTime)
-        {
-            this.globalPosition += Vector3.Multiply(rotation.Forward, this.attributes.Engine.CurrentVelocity);
+        protected void ApplyMovement( GameTime gameTime ) {
+            this.globalPosition += Vector3.Multiply( rotation.Forward, this.attributes.Engine.CurrentVelocity );
 
-            if (resetEngine)
-            {
+            if ( resetEngine ) {
                 this.attributes.Engine.ApplyResetForce();
             }
 
@@ -188,50 +178,42 @@ namespace Battlestation_Antares.Model
         /// apply engines rotation
         /// </summary>
         /// <param name="gameTime">the game time</param>
-        protected void ApplyRotation(GameTime gameTime) 
-        {
+        protected void ApplyRotation( GameTime gameTime ) {
 
             // rotate
-            if (this.attributes.EngineYaw.CurrentVelocity != 0)
-            {
-                this.rotation = Tools.Tools.Yaw(this.rotation, this.attributes.EngineYaw.CurrentVelocity);
+            if ( this.attributes.EngineYaw.CurrentVelocity != 0 ) {
+                this.rotation = Tools.Tools.Yaw( this.rotation, this.attributes.EngineYaw.CurrentVelocity );
                 this.rotationRepairCountdown--;
             }
 
-            if (this.attributes.EnginePitch.CurrentVelocity != 0)
-            {
-                this.rotation = Tools.Tools.Pitch(this.rotation, this.attributes.EnginePitch.CurrentVelocity);
+            if ( this.attributes.EnginePitch.CurrentVelocity != 0 ) {
+                this.rotation = Tools.Tools.Pitch( this.rotation, this.attributes.EnginePitch.CurrentVelocity );
                 this.rotationRepairCountdown--;
             }
 
-            if (this.attributes.EngineRoll.CurrentVelocity != 0)
-            {
-                this.rotation = Tools.Tools.Roll(this.rotation, this.attributes.EngineRoll.CurrentVelocity);
+            if ( this.attributes.EngineRoll.CurrentVelocity != 0 ) {
+                this.rotation = Tools.Tools.Roll( this.rotation, this.attributes.EngineRoll.CurrentVelocity );
                 this.rotationRepairCountdown--;
             }
 
 
             // repair rotation matrix if necessary
-            if (this.rotationRepairCountdown < 0)
-            {
-                Tools.Tools.Repair(ref this.rotation);
+            if ( this.rotationRepairCountdown < 0 ) {
+                Tools.Tools.Repair( ref this.rotation );
                 this.rotationRepairCountdown = SpatialObject.MAX_ROTATION_UNTIL_REPAIR;
             }
 
 
             // apply reset forces if no active control
-            if (resetPitch)
-            {
+            if ( resetPitch ) {
                 this.attributes.EnginePitch.ApplyResetForce();
             }
 
-            if (resetYaw)
-            {
+            if ( resetYaw ) {
                 this.attributes.EngineYaw.ApplyResetForce();
             }
 
-            if (resetRoll)
-            {
+            if ( resetRoll ) {
                 this.attributes.EngineRoll.ApplyResetForce();
             }
 
@@ -245,11 +227,9 @@ namespace Battlestation_Antares.Model
         /// inject multiple control requests to this object
         /// </summary>
         /// <param name="controlSequence"></param>
-        public virtual void InjectControl(List<Control.Control> controlSequence) 
-        {
-            foreach (Control.Control control in controlSequence)
-            {
-                InjectControl(control);
+        public virtual void InjectControl( List<Control.Control> controlSequence ) {
+            foreach ( Control.Control control in controlSequence ) {
+                InjectControl( control );
             }
         }
 
@@ -258,12 +238,10 @@ namespace Battlestation_Antares.Model
         /// inject a single control request to this object
         /// </summary>
         /// <param name="control"></param>
-        public virtual void InjectControl(Control.Control control)
-        {
+        public virtual void InjectControl( Control.Control control ) {
             // experimental control stuff
 
-            switch (control)
-            {
+            switch ( control ) {
                 case Control.Control.PITCH_UP:
                     this.attributes.EnginePitch.Accelerate();
                     resetPitch = false;
@@ -312,10 +290,10 @@ namespace Battlestation_Antares.Model
 
         }
 
-        public virtual void addDebugOutput() { }
+        public virtual void addDebugOutput() {
+        }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return "SpatialObject";
         }
 

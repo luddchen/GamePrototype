@@ -7,14 +7,12 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
 
-namespace Battlestation_Antares.Model
-{
+namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// the Antares space station
     /// </summary>
-    public class SpaceStation : SpatialObject
-    {
+    public class SpaceStation : SpatialObject {
 
         /// <summary>
         /// model bone of the rotating part of the station
@@ -41,10 +39,10 @@ namespace Battlestation_Antares.Model
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public SpaceStation(Vector3 position, String modelName, ContentManager content, WorldModel world) : base(position, modelName, content, world) 
-        {
+        public SpaceStation( Vector3 position, String modelName, ContentManager content, WorldModel world )
+            : base( position, modelName, content, world ) {
             init();
-            this.miniMapIcon.Texture = content.Load<Texture2D>("Models//SpaceStation//station_2d");
+            this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//SpaceStation//station_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
             this.miniMapIcon.scale = 2.0f;
         }
@@ -53,8 +51,7 @@ namespace Battlestation_Antares.Model
         /// <summary>
         /// init the space station
         /// </summary>
-        private void init()
-        {
+        private void init() {
             // test output of bounding sphere
             // Console.Out.WriteLine("Station Bounding Sphere : " + this.bounding + " (" + this.model3d.Meshes.Count + " meshes)");
 
@@ -62,7 +59,7 @@ namespace Battlestation_Antares.Model
             StationAxisTransform = StationAxis.Transform;
 
             // initial rotation of full station, dont know why this is necessary
-            this.rotation = Tools.Tools.Pitch(this.rotation, (float)(-Math.PI/2));
+            this.rotation = Tools.Tools.Pitch( this.rotation, (float)( -Math.PI / 2 ) );
         }
 
 
@@ -70,19 +67,17 @@ namespace Battlestation_Antares.Model
         /// update the space station
         /// </summary>
         /// <param name="gameTime"></param>
-        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
-        {
-            base.Update(gameTime);
+        public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
+            base.Update( gameTime );
 
             // update rotation of the rotating part
-            AxisRot += (float)(Math.PI / 1440);
+            AxisRot += (float)( Math.PI / 1440 );
 
-            StationAxis.Transform = Matrix.CreateRotationZ(AxisRot) * StationAxisTransform;
+            StationAxis.Transform = Matrix.CreateRotationZ( AxisRot ) * StationAxisTransform;
         }
 
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return "SpaceStation";
         }
 

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
 
-namespace Battlestation_Antares.View.HUD.CockpitHUD
-{
-    public class TargetInfo : HUD2DArray
-    {
+namespace Battlestation_Antares.View.HUD.CockpitHUD {
+    public class TargetInfo : HUD2DArray {
 
         private HUD2DString targetObject;
 
@@ -17,42 +15,37 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD
         public SpatialObject target;
 
 
-        public TargetInfo(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType , Antares game)
-            : base(abstractPosition, positionType, abstractSize, sizeType , game)
-        {
+        public TargetInfo( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, Antares game )
+            : base( abstractPosition, positionType, abstractSize, sizeType, game ) {
             this.world = this.game.world;
 
-            targetObject = new HUD2DString("", game);
+            targetObject = new HUD2DString( "", game );
             targetObject.scale = 0.5f;
-            targetDistance = new HUD2DString("", game);
+            targetDistance = new HUD2DString( "", game );
             targetDistance.scale = 0.5f;
 
-            Add(targetObject);
-            Add(targetDistance);
+            Add( targetObject );
+            Add( targetDistance );
 
-            CreateBackground(true);
+            CreateBackground( true );
 
             this.isVisible = false;
         }
 
-        public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spritBatch)
-        {
+        public override void Draw( Microsoft.Xna.Framework.Graphics.SpriteBatch spritBatch ) {
             this.target = this.world.spaceShip.target;
 
-            if (target != null)
-            {
+            if ( target != null ) {
                 this.targetObject.String = target.ToString();
                 //this.targetDistance.String = String.Format("{0:F0} m", testDist);
                 this.isVisible = true;
-            }
-            else
-            {
+            } else {
                 this.targetObject.String = "";
                 this.targetDistance.String = "";
                 this.isVisible = false;
             }
 
-            base.Draw(spritBatch);
+            base.Draw( spritBatch );
         }
 
     }

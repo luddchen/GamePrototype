@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Battlestation_Antares.View.HUD.AIComposer
-{
+namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Input : AI_Item
-    {
+    public class AI_Input : AI_Item {
 
-        public enum InputType
-        {
+        public enum InputType {
             DISTANCE,
             ORTHOGONAL_VELOCITY,
             ROTATION,
@@ -17,14 +14,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer
             HULL_HEALTH
         }
 
-        public AI_Input(Vector2 abstractPosition, HUDType positionType, Antares game) 
-            : base(abstractPosition, positionType, game)
-        {
+        public AI_Input( Vector2 abstractPosition, HUDType positionType, Antares game )
+            : base( abstractPosition, positionType, game ) {
             this.typeString.String = "Input";
 
-            AddPort(AI_ItemPort.PortType.OUTPUT);
+            AddPort( AI_ItemPort.PortType.OUTPUT );
 
-            SetSubType(InputType.DISTANCE);
+            SetSubType( InputType.DISTANCE );
         }
 
     }

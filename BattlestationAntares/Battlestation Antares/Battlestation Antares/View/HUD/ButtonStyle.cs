@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace Battlestation_Antares.View.HUD
-{
-    public class ButtonStyle
-    {
+namespace Battlestation_Antares.View.HUD {
+    public class ButtonStyle {
         public Color backgroundColorNormal;
 
         public Color backgroundColorHover;
@@ -25,17 +23,16 @@ namespace Battlestation_Antares.View.HUD
         public float scalePressed;
 
 
-        public static ButtonStyle DefaultButtonStyle()
-        {
+        public static ButtonStyle DefaultButtonStyle() {
             ButtonStyle newStyle = new ButtonStyle();
 
-            newStyle.backgroundColorNormal = new Color(32, 48, 48, 160);
-            newStyle.backgroundColorHover = new Color(40, 64, 64, 192);
-            newStyle.backgroundColorPressed = new Color(32, 48, 48, 255);
+            newStyle.backgroundColorNormal = new Color( 32, 48, 48, 160 );
+            newStyle.backgroundColorHover = new Color( 40, 64, 64, 192 );
+            newStyle.backgroundColorPressed = new Color( 32, 48, 48, 255 );
 
             newStyle.foregroundColorNormal = Color.White;
-            newStyle.foregroundColorHover = new Color(255, 255, 128);
-            newStyle.foregroundColorPressed = new Color(128, 255, 128);
+            newStyle.foregroundColorHover = new Color( 255, 255, 128 );
+            newStyle.foregroundColorPressed = new Color( 128, 255, 128 );
 
             newStyle.scaleNormal = 1.0f;
             newStyle.scaleHover = 0.99f;
@@ -43,14 +40,13 @@ namespace Battlestation_Antares.View.HUD
 
             return newStyle;
         }
-        
-        public static ButtonStyle RemoveButtonStyle()
-        {
+
+        public static ButtonStyle RemoveButtonStyle() {
             ButtonStyle newStyle = new ButtonStyle();
 
-            newStyle.backgroundColorNormal = new Color(0, 0, 0, 0);
-            newStyle.backgroundColorHover = new Color(0, 0, 0, 0);
-            newStyle.backgroundColorPressed = new Color(0, 0, 0, 0);
+            newStyle.backgroundColorNormal = new Color( 0, 0, 0, 0 );
+            newStyle.backgroundColorHover = new Color( 0, 0, 0, 0 );
+            newStyle.backgroundColorPressed = new Color( 0, 0, 0, 0 );
 
             newStyle.foregroundColorNormal = Color.Red;
             newStyle.foregroundColorHover = Color.White;
@@ -63,13 +59,12 @@ namespace Battlestation_Antares.View.HUD
             return newStyle;
         }
 
-        public static ButtonStyle SliderButtonStyle()
-        {
+        public static ButtonStyle SliderButtonStyle() {
             ButtonStyle newStyle = new ButtonStyle();
 
             newStyle.backgroundColorNormal = Color.White;
-            newStyle.backgroundColorHover = new Color(128, 255, 128);
-            newStyle.backgroundColorPressed = new Color(128, 255, 128);
+            newStyle.backgroundColorHover = new Color( 128, 255, 128 );
+            newStyle.backgroundColorPressed = new Color( 128, 255, 128 );
 
             newStyle.foregroundColorNormal = Color.White;
             newStyle.foregroundColorHover = Color.White;

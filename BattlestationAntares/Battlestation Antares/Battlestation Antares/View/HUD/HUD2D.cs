@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace Battlestation_Antares.View.HUD
-{
+namespace Battlestation_Antares.View.HUD {
 
-    public enum HUDType
-    {
+    public enum HUDType {
         /// <summary>
         /// x and y absolut
         /// </summary>
@@ -33,8 +31,7 @@ namespace Battlestation_Antares.View.HUD
     /// <summary>
     /// abstract basis class for 2D HUD elements
     /// </summary>
-    public abstract class HUD2D
-    {
+    public abstract class HUD2D {
         protected Antares game;
 
         public HUDType positionType;
@@ -61,8 +58,7 @@ namespace Battlestation_Antares.View.HUD
         public HUD2D parent;
 
 
-        public HUD2D(Antares game)
-        {
+        public HUD2D( Antares game ) {
             this.game = game;
 
             this.positionType = HUDType.ABSOLUT;
@@ -81,8 +77,7 @@ namespace Battlestation_Antares.View.HUD
         }
 
 
-        public virtual void setLayerDepth(float layerDepth)
-        {
+        public virtual void setLayerDepth( float layerDepth ) {
             this.layerDepth = layerDepth;
         }
 
@@ -91,7 +86,7 @@ namespace Battlestation_Antares.View.HUD
         /// draw this element
         /// </summary>
         /// <param name="spritBatch">the spritebatch</param>
-        public abstract void Draw(SpriteBatch spritBatch);
+        public abstract void Draw( SpriteBatch spritBatch );
 
 
         /// <summary>
@@ -99,7 +94,7 @@ namespace Battlestation_Antares.View.HUD
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public abstract bool Intersects(Vector2 point);
+        public abstract bool Intersects( Vector2 point );
 
 
 
@@ -107,44 +102,38 @@ namespace Battlestation_Antares.View.HUD
         /// callback if the game window size change
         /// </summary>
         /// <param name="offset"></param>
-        public virtual void ClientSizeChanged()
-        {
-            if (this.parent != null)
-            {
+        public virtual void ClientSizeChanged() {
+            if ( this.parent != null ) {
                 this.position = this.parent.position;
-            }
-            else
-            {
+            } else {
                 this.position = Vector2.Zero;
             }
 
-            switch (this.positionType)
-            {
+            switch ( this.positionType ) {
                 case HUDType.RELATIV:
-                    this.position += new Vector2(this.game.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
-                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractPosition.Y);
+                    this.position += new Vector2( this.game.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
+                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractPosition.Y );
                     break;
 
                 case HUDType.ABSOLUT:
-                    this.position += new Vector2(this.abstractPosition.X, 
-                                                 this.abstractPosition.Y);
+                    this.position += new Vector2( this.abstractPosition.X,
+                                                 this.abstractPosition.Y );
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:
-                    this.position += new Vector2(this.abstractPosition.X,
-                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractPosition.Y);
+                    this.position += new Vector2( this.abstractPosition.X,
+                                                 this.game.GraphicsDevice.Viewport.Height * this.abstractPosition.Y );
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.position += new Vector2(this.game.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
-                                                 this.abstractPosition.Y);
+                    this.position += new Vector2( this.game.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
+                                                 this.abstractPosition.Y );
                     break;
             }
         }
 
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return "HUD2DItem : pos = " + this.position + " , size = " + this.size + " , scale = " + this.scale + " , layer = " + this.layerDepth;
         }
 

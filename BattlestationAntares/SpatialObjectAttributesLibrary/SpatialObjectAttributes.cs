@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SpatialObjectAttributesLibrary
-{
+namespace SpatialObjectAttributesLibrary {
 
     /// <summary>
     /// Spatial Object Attributes
     /// </summary>
-    public class SpatialObjectAttributes
-    {
+    public class SpatialObjectAttributes {
 
         // Shield
         public Health Shield;
@@ -32,7 +30,7 @@ namespace SpatialObjectAttributesLibrary
         public Engine EnginePitch;
 
         public Engine EngineRoll;
-        
+
 
         // Laser
         public Laser Laser;
@@ -42,8 +40,7 @@ namespace SpatialObjectAttributesLibrary
         public Missile Missile;
 
 
-        public SpatialObjectAttributes()
-        {
+        public SpatialObjectAttributes() {
             this.Shield = new Health();
             this.Hull = new Health();
 
@@ -61,46 +58,42 @@ namespace SpatialObjectAttributesLibrary
             setNames();
         }
 
-        public SpatialObjectAttributes(SpatialObjectAttributes soa)
-        {
-            this.Shield = new Health(soa.Shield);
-            this.Hull = new Health(soa.Hull);
+        public SpatialObjectAttributes( SpatialObjectAttributes soa ) {
+            this.Shield = new Health( soa.Shield );
+            this.Hull = new Health( soa.Hull );
 
-            this.Radar = new Radar(soa.Radar);
+            this.Radar = new Radar( soa.Radar );
 
-            this.Engine = new Engine(soa.Engine);
+            this.Engine = new Engine( soa.Engine );
 
-            this.EngineYaw = new Engine(soa.EngineYaw);
-            this.EnginePitch = new Engine(soa.EnginePitch);
-            this.EngineRoll = new Engine(soa.EngineRoll);
+            this.EngineYaw = new Engine( soa.EngineYaw );
+            this.EnginePitch = new Engine( soa.EnginePitch );
+            this.EngineRoll = new Engine( soa.EngineRoll );
 
-            this.Laser = new Laser(soa.Laser);
-            this.Missile = new Missile(soa.Missile);
+            this.Laser = new Laser( soa.Laser );
+            this.Missile = new Missile( soa.Missile );
 
             setNames();
         }
 
-        public List<AttributeItem> getItems()
-        {
+        public List<AttributeItem> getItems() {
             List<AttributeItem> items = new List<AttributeItem>();
-            items.Add(this.Shield);
-            items.Add(this.Hull);
-            items.Add(this.Radar);
-            items.Add(this.Engine);
-            items.Add(this.EngineYaw);
-            items.Add(this.EnginePitch);
-            items.Add(this.EngineRoll);
-            items.Add(this.Laser);
-            items.Add(this.Missile);
+            items.Add( this.Shield );
+            items.Add( this.Hull );
+            items.Add( this.Radar );
+            items.Add( this.Engine );
+            items.Add( this.EngineYaw );
+            items.Add( this.EnginePitch );
+            items.Add( this.EngineRoll );
+            items.Add( this.Laser );
+            items.Add( this.Missile );
 
             return items;
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             String output = "SpatialObjectAttributes\n=======================\n";
-            foreach (AttributeItem item in getItems())
-            {
+            foreach ( AttributeItem item in getItems() ) {
                 output += item.ToString();
             }
             output += "\n";
@@ -108,8 +101,7 @@ namespace SpatialObjectAttributesLibrary
             return output;
         }
 
-        private void setNames()
-        {
+        private void setNames() {
             this.Shield.name = "Shield";
             this.Hull.name = "Hull";
             this.EngineYaw.name += "(Yaw)";

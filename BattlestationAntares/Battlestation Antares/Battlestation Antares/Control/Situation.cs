@@ -1,21 +1,19 @@
-﻿namespace Battlestation_Antares.Control
-{
+﻿namespace Battlestation_Antares.Control {
 
     /// <summary>
     /// enumeration of game situations
     /// </summary>
-    public enum Situation
-    {
+    public enum Situation {
 
         /// <summary>
         /// the cockpit sitation
         /// </summary>
         COCKPIT = 0,
- 
+
         /// <summary>
         /// the command situation
         /// </summary>
-        COMMAND = 1, 
+        COMMAND = 1,
 
         /// <summary>
         /// the menu situation
