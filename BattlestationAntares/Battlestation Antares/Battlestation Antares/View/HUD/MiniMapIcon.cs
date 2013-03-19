@@ -13,8 +13,8 @@ namespace Battlestation_Antares.View.HUD {
         public bool updateRotation;
 
 
-        public MiniMapIcon( Texture2D texture, SpatialObject spatialObject)
-            : base( texture, null, null, null, null, null) {
+        public MiniMapIcon( Texture2D texture, SpatialObject spatialObject )
+            : base( texture, null, null, null, null, null ) {
             this.spatialObject = spatialObject;
             this.updateRotation = true;
         }
@@ -42,9 +42,16 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public void Update() {
-            this.abstractPosition.X = this.spatialObject.globalPosition.X * miniMap.iconPositionScale;
-            this.abstractPosition.Y = this.spatialObject.globalPosition.Z * miniMap.iconPositionScale;
+        public void Update( SpatialObject centerObject ) {
+            Vector3 center = Vector3.Zero;
+            if ( centerObject != null ) {
+                center.X = centerObject.globalPosition.X;
+                center.Y = centerObject.globalPosition.Y;
+                center.Z = centerObject.globalPosition.Z;
+            }
+
+            this.abstractPosition.X = ( this.spatialObject.globalPosition.X - center.X ) * miniMap.iconPositionScale;
+            this.abstractPosition.Y = ( this.spatialObject.globalPosition.Z - center.Z ) * miniMap.iconPositionScale;
 
             if ( this.updateRotation ) {
                 this.rotation = Tools.Tools.GetUpAxisRotation( this.spatialObject.rotation.Forward, Matrix.Identity );

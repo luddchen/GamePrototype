@@ -45,14 +45,14 @@ namespace Battlestation_Antares.Control {
             : base( game, view ) {
             this.currentMode = CommandMode.NORMAL;
 
-            this.toMenuButton = new HUD2DButton( "Menu", new Vector2( 0.1f, 0.9f ), 0.7f);
+            this.toMenuButton = new HUD2DButton( "Menu", new Vector2( 0.1f, 0.9f ), 0.7f );
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
             this.toMenuButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add( toMenuButton );
 
-            this.toCockpitButton = new HUD2DButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f);
+            this.toCockpitButton = new HUD2DButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f );
             this.toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
@@ -67,7 +67,7 @@ namespace Battlestation_Antares.Control {
             mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Radar//radar_2d" ) ) );
             this.view.allHUD_2D.AddRange( mouseTextures.Values );
 
-            mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.5f ), new Vector2( 0.625f, 1f ), new Vector2( 0.625f, 1f ) );
+            mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.5f ), new Vector2( 0.625f, 1f ), new Vector2( 0.625f, 1f ), Antares.world.spaceStation );
             mapConfig.iconPositionScale = 0.25f;
 
         }

@@ -74,5 +74,13 @@ Content\Models\Cubus\cubus_1.xnb
 Content\Models\Skybox\skybox1_0.xnb
 Content\Models\Skysphere\skysphere1_0.xnb
 Content\Models\Grid\grid1_0.xnb
+Content\Sprites\HUD\Lamp.xnb
+Content\Sprites\HUD\ValueBar.xnb
+Content\Sprites\HUD\ValueBar_Discrete.xnb
+Content\Sprites\HUD\ValueBar_DiscreteBig.xnb
+Content\Sprites\HUD\ValueCircle.xnb
+Content\Sprites\HUD\ValueCircle_2.xnb
+Content\Sprites\Circle.xnb
+Content\Fonts\font1.xnb
 Content\Attributes\SpaceShip.soa
 Content\Attributes\Turret.soa

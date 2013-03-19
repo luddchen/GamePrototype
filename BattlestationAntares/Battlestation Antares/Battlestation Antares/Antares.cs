@@ -107,17 +107,17 @@ namespace Battlestation_Antares {
 
             Antares.debugViewer = new DebugViewer();
 
+            // create and initialize world model
+            Antares.world = new Model.WorldModel( this );
+
+            Antares.world.Initialize( this.Content );
+
             // create situations (control and views)
             this.allSituations = new List<SituationController>();
             this.allSituations.Add( new CockpitController( this, new View.CockpitView() ) );
             this.allSituations.Add( new CommandController( this, new View.CommandView() ) );
             this.allSituations.Add( new MenuController( this, new View.MenuView() ) );
             this.allSituations.Add( new AIController( this, new View.AIView() ) );
-
-            // create and initialize world model
-            Antares.world = new Model.WorldModel( this );
-
-            Antares.world.Initialize( this.Content );
 
             SpatialObjectFactory.initializeFactory( this.Content, Antares.world );
 

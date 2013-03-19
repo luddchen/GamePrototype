@@ -9,16 +9,18 @@ namespace Battlestation_Antares.View.HUD {
 
     public class MiniMap : HUD2DContainer {
         public class Config {
+            public SpatialObject centeredObject;
             public Vector2 abstractPosition;
             public Vector2 bgAbstractSize;
             public Vector2 fgAbstractSize;
             public float iconPositionScale;
 
-            public Config( Vector2 abstractPosition, Vector2 bgAbstractSize, Vector2 fgAbstractSize ) {
+            public Config( Vector2 abstractPosition, Vector2 bgAbstractSize, Vector2 fgAbstractSize, SpatialObject centeredObject ) {
                 this.abstractPosition = abstractPosition;
                 this.bgAbstractSize = bgAbstractSize;
                 this.fgAbstractSize = fgAbstractSize;
                 iconPositionScale = 0.08f;
+                this.centeredObject = centeredObject;
             }
         }
 
@@ -44,14 +46,16 @@ namespace Battlestation_Antares.View.HUD {
 
         private HUD2DTexture foreground;
 
+        private SpatialObject centeredObject;
+
         public Vector2 iconSize = new Vector2( 15, 15 );
 
         public float iconPositionScale = 0.1f;
 
         private MiniMap.Config oldConfig;
 
-        public MiniMap( Vector2 abstractPosition, HUDType positionType)
-            : base( abstractPosition, positionType) {
+        public MiniMap( Vector2 abstractPosition, HUDType positionType )
+            : base( abstractPosition, positionType ) {
             this.background = new HUD2DTexture();
             this.background.color = MiniMap.BACKGROUND_COLOR;
             this.background.abstractSize = new Vector2( 0.25f, 0.4f );
@@ -84,7 +88,7 @@ namespace Battlestation_Antares.View.HUD {
             foreach ( HUD2D element in this.allChilds ) {
                 if ( element is MiniMapIcon ) {
                     MiniMapIcon icon = ( (MiniMapIcon)element );
-                    icon.Update();
+                    icon.Update( centeredObject );
 
                     if ( Math.Abs( icon.abstractPosition.X ) < backgroundSize.X &&
                         Math.Abs( icon.abstractPosition.Y ) < backgroundSize.Y &&
@@ -135,6 +139,8 @@ namespace Battlestation_Antares.View.HUD {
             this.background.abstractSize = config.bgAbstractSize;
             this.foreground.abstractSize = config.fgAbstractSize;
             this.iconPositionScale = config.iconPositionScale;
+            this.centeredObject = config.centeredObject;
+
         }
 
         public Vector2 screenToMiniMapCoord( Vector2 screenCoord ) {

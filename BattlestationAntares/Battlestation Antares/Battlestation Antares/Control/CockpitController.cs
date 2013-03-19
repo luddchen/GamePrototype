@@ -56,7 +56,7 @@ namespace Battlestation_Antares.Control {
             fpsDisplay = new FpsDisplay( new Vector2( 50, 20 ) );
             this.view.allHUD_2D.Add( fpsDisplay );
 
-            mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.91f ), new Vector2( 0.25f, 0.18f ), new Vector2( 0.25f, 0.18f ) );
+            mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.91f ), new Vector2( 0.25f, 0.18f ), new Vector2( 0.25f, 0.18f ), Antares.world.spaceShip );
         }
 
         public override void onEnter() {
