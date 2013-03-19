@@ -126,6 +126,7 @@
     <Compile Include="View\HUD\AIComposer\HUD2DSlider.cs" />
     <Compile Include="View\HUD\ButtonStyle.cs" />
     <Compile Include="View\HUD\CockpitHUD\LaserHeat.cs" />
+    <Compile Include="View\HUD\CockpitHUD\ObjectHealth.cs" />
     <Compile Include="View\HUD\CockpitHUD\TargetInfo.cs" />
     <Compile Include="View\HUD\CockpitHUD\Velocity.cs" />
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />

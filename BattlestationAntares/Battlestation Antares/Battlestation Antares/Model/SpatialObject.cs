@@ -290,6 +290,9 @@ namespace Battlestation_Antares.Model {
 
         }
 
+        public virtual void onHit( SpatialObject o ) {
+        }
+
         public virtual void addDebugOutput() {
         }
 

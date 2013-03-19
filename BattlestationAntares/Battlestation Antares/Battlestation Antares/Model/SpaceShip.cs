@@ -45,6 +45,7 @@ namespace Battlestation_Antares.Model {
         /// <param name="gameTime"></param>
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
+            this.attributes.Shield.Regenerate();
 
             this.attributes.Laser.CurrentHeat -= this.attributes.Laser.HeatRegeneration;
             if ( this.attributes.Laser.CurrentHeat < 0 ) {
@@ -119,6 +120,12 @@ namespace Battlestation_Antares.Model {
             } ) );
         }
 
+
+        public override void onHit( SpatialObject o ) {
+            if ( this.attributes.Shield.ApplyDamage( 20 ) ) {
+                this.attributes.Hull.ApplyDamage( 20 );
+            }
+        }
 
         public override string ToString() {
             return "SpaceShip";

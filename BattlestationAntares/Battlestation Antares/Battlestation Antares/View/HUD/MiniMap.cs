@@ -92,7 +92,7 @@ namespace Battlestation_Antares.View.HUD {
 
                     if ( Math.Abs( icon.abstractPosition.X ) < backgroundSize.X &&
                         Math.Abs( icon.abstractPosition.Y ) < backgroundSize.Y &&
-                        icon.spatialObject.isVisible ) {
+                        (icon.spatialObject.isVisible || icon.spatialObject is SpaceShip) ) {
                         icon.isVisible = true;
                     } else {
                         icon.isVisible = false;

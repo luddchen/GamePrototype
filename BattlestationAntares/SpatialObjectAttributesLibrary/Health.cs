@@ -96,8 +96,10 @@ namespace SpatialObjectAttributesLibrary {
         /// <returns>true : if out of health</returns>
         public bool ApplyDamage( float damage ) {
             this.CurrentHealthPoints -= damage;
-
-            return ( this.CurrentHealthPoints <= 0 );
+            if ( this.CurrentHealthPoints < 0 ) {
+                this.CurrentHealthPoints = 0;
+            }
+            return ( this.CurrentHealthPoints == 0 );
         }
 
         public override string ToString() {

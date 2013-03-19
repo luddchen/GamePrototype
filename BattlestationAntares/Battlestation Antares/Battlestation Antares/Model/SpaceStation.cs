@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
+using SpatialObjectAttributesLibrary;
 
 namespace Battlestation_Antares.Model {
 
@@ -42,6 +43,7 @@ namespace Battlestation_Antares.Model {
         public SpaceStation( Vector3 position, String modelName, ContentManager content, WorldModel world )
             : base( position, modelName, content, world ) {
             init();
+            this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>( "Attributes//SpaceShip" ) );
             this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//SpaceStation//station_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
             this.miniMapIcon.scale = 2.0f;
@@ -69,11 +71,19 @@ namespace Battlestation_Antares.Model {
         /// <param name="gameTime"></param>
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
+            this.attributes.Shield.Regenerate();
 
             // update rotation of the rotating part
             AxisRot += (float)( Math.PI / 1440 );
 
             StationAxis.Transform = Matrix.CreateRotationZ( AxisRot ) * StationAxisTransform;
+        }
+
+
+        public override void onHit( SpatialObject o ) {
+            if ( this.attributes.Shield.ApplyDamage( 20 ) ) {
+                this.attributes.Hull.ApplyDamage( 20 );
+            }
         }
 
 

@@ -55,9 +55,12 @@ namespace Battlestation_Antares.Model {
 
             if ( this.timeout == 0 ) {
                 this.world.Remove( this );
-                this.miniMapIcon.RemoveFromWorld();
-                this.miniMapIcon = null;
             }
+        }
+
+
+        public override void onHit( SpatialObject o ) {
+            this.world.Remove( this );
         }
 
 

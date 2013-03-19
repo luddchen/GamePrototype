@@ -139,7 +139,7 @@ namespace Battlestation_Antares.Model {
                 }
             }
 
-            for ( int i = 0; i < 12; i++ ) {
+            for ( int i = 0; i < 1; i++ ) {
                 Turret turret = new Turret( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ), content, this );
             }
 
@@ -148,8 +148,8 @@ namespace Battlestation_Antares.Model {
             }
 
             // create the player space ship
-            this.spaceShip = new SpaceShip( new Vector3( 0, 30, 500 ), "Models//compass3", content, this );
-            this.spaceShip.isVisible = true;
+            this.spaceShip = new SpaceShip( new Vector3( 0, 30, 500 ), "Models//SpaceShip//spaceship1_2", content, this );
+            this.spaceShip.isVisible = false;
 
             // create the player space station
             this.spaceStation = new SpaceStation( Vector3.Zero, "Models//SpaceStation/spacestation", content, this );
@@ -179,7 +179,7 @@ namespace Battlestation_Antares.Model {
             treeTest.Clear();
 
             bool shipVisible = this.spaceShip.isVisible;
-            this.spaceShip.isVisible = false;
+            this.spaceShip.isVisible = true;
 
             foreach ( SpatialObject obj in this.allObjects ) {
                 if ( obj.isVisible ) {
@@ -194,20 +194,32 @@ namespace Battlestation_Antares.Model {
 
             this.treeTest.BuildTree();
 
-            BoundingSphere shipSphere = this.spaceShip.bounding;
-            shipSphere.Center += this.spaceShip.globalPosition;
+            foreach ( SpatialObject o in this.allWeapons ) {
+                if ( o is Laser ) {
+                    float dist = float.MaxValue;
+                    SpatialObject hit = treeTest.CastRay( new Ray( o.globalPosition - Math.Abs( o.scale.Z ) * o.rotation.Forward, o.rotation.Forward ), 0, ref dist );
+                    if ( hit != null && dist < Math.Abs( o.scale.Z * 2 ) ) {
+                        hit.onHit( o );
+                        o.onHit( hit );
+                        Console.Out.WriteLine( o + " -> " + hit );
+                    }
+                }
+            }
 
-            List<Tuple<SpatialObject, SpatialObject>> collList =
-                this.treeTest.CheckCollisions(
-                    new Tuple<SpatialObject, BoundingSphere>( this.spaceShip, shipSphere ) );
+            //BoundingSphere shipSphere = this.spaceShip.bounding;
+            //shipSphere.Center += this.spaceShip.globalPosition;
+
+            //List<Tuple<SpatialObject, SpatialObject>> collList =
+            //    this.treeTest.CheckCollisions(
+            //        new Tuple<SpatialObject, BoundingSphere>( this.spaceShip, shipSphere ) );
 
             //Console.Out.WriteLine("Collisions : " + collList.Count);
 
-            if ( collList.Count > 0 ) {
-                this.game.activeSituation.view.backgroundColor = Color.Red;
-            } else {
-                this.game.activeSituation.view.backgroundColor = Color.White;
-            }
+            //if ( collList.Count > 0 ) {
+            //    this.game.activeSituation.view.backgroundColor = Color.Red;
+            //} else {
+            //    this.game.activeSituation.view.backgroundColor = Color.White;
+            //}
 
             // test for threaded raycasting of all turrets
             //this.RayCastPool.StartRayCasting();
@@ -246,6 +258,11 @@ namespace Battlestation_Antares.Model {
                     this.allTurrets.Remove( obj );
                 } else {
                     this.allObjects.Remove( obj );
+                }
+
+                if ( obj.miniMapIcon != null ) {
+                    obj.miniMapIcon.RemoveFromWorld();
+                    obj.miniMapIcon = null;
                 }
             }
             this.removeList.Clear();

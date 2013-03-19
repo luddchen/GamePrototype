@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
 using Battlestation_Antares.View.HUD.CockpitHUD;
 using Battlestation_Antares.Tools;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
+using Battlestation_Antares.Model;
 
 namespace Battlestation_Antares.View {
 
@@ -88,23 +90,16 @@ namespace Battlestation_Antares.View {
             this.allHUD_2D.Add( new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
             this.allHUD_2D.Add( new LaserHeat( new Vector2( 0.35f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
 
-            HUD2DValueCircle circle = new HUD2DValueCircle( new Vector2( 0.25f, 0.95f ), HUDType.RELATIV, new Vector2( 0.06f, 0.1f ), HUDType.RELATIV );
-            circle.GetValue =
-                delegate() {
-                    return 1.0f - Math.Abs( Antares.world.spaceShip.attributes.EnginePitch.CurrentVelocity / Antares.world.spaceShip.attributes.EnginePitch.MaxVelocity );
-                };
-            circle.SetMaxColor( Color.Blue );
-            circle.SetMinColor( Color.DarkRed );
-            this.allHUD_2D.Add( circle );
+            ObjectHealth shipHealth = new ObjectHealth( new Vector2( 0.05f, 0.92f ), HUDType.RELATIV );
+            shipHealth.setObject( Antares.world.spaceShip, Antares.content.Load<Texture2D>( "Sprites//HUD//Ship" ), 0.75f);
+            this.allHUD_2D.Add( shipHealth );
+            shipHealth.setLayerDepth( 0.3f );
 
-            HUD2DValueCircle circle2 = new HUD2DValueCircle( new Vector2( 0.19f, 0.95f ), HUDType.RELATIV, new Vector2( 0.06f, 0.1f ), HUDType.RELATIV );
-            circle2.GetValue =
-                delegate() {
-                    return 1.0f - Math.Abs( Antares.world.spaceShip.attributes.EngineYaw.CurrentVelocity / Antares.world.spaceShip.attributes.EngineYaw.MaxVelocity );
-                };
-            circle2.SetMaxColor( Color.Green );
-            circle2.SetMinColor( Color.Red );
-            this.allHUD_2D.Add( circle2 );
+            ObjectHealth stationHealth = new ObjectHealth( new Vector2( 0.15f, 0.92f ), HUDType.RELATIV );
+            stationHealth.setObject( Antares.world.spaceStation, Antares.content.Load<Texture2D>( "Sprites//HUD//Station" ), 0.75f );
+            this.allHUD_2D.Add( stationHealth );
+            stationHealth.setLayerDepth( 0.3f );
+
 
             HUD2DValueLamp lamp = new HUD2DValueLamp( new Vector2( 0.5f, 0.03f ), HUDType.RELATIV, new Vector2( 0.02f, 0.03f ), HUDType.RELATIV );
             lamp.GetValue =
