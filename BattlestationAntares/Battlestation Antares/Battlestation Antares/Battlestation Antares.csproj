@@ -114,6 +114,7 @@
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />
     <Compile Include="View\Grid.cs" />
+    <Compile Include="View\HUD\AIComposer\AI_Bank.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Connection.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Container.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Input.cs" />

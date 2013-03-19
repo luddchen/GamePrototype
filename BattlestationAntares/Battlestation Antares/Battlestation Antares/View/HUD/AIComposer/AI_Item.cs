@@ -116,12 +116,6 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public override void setLayerDepth( float layerDepth ) {
             base.setLayerDepth( layerDepth );
-            foreach ( AI_ItemPort port in this.inputs ) {
-                port.setLayerDepth( this.layerDepth + 0.01f );
-            }
-            foreach ( AI_ItemPort port in this.outputs ) {
-                port.setLayerDepth( this.layerDepth + 0.01f );
-            }
             this.background.setLayerDepth( this.layerDepth );
         }
 
