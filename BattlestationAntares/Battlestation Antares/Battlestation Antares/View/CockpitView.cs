@@ -88,12 +88,23 @@ namespace Battlestation_Antares.View {
             this.allHUD_2D.Add( new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
             this.allHUD_2D.Add( new LaserHeat( new Vector2( 0.35f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
 
-            HUD2DValueCircle circle = new HUD2DValueCircle( new Vector2( 0.25f, 0.925f ), HUDType.RELATIV, new Vector2( 0.06f, 0.1f ), HUDType.RELATIV );
+            HUD2DValueCircle circle = new HUD2DValueCircle( new Vector2( 0.25f, 0.95f ), HUDType.RELATIV, new Vector2( 0.06f, 0.1f ), HUDType.RELATIV );
             circle.GetValue =
                 delegate() {
-                    return Math.Abs( Antares.world.spaceShip.attributes.Engine.CurrentVelocity / Antares.world.spaceShip.attributes.Engine.MaxVelocity );
+                    return 1.0f - Math.Abs( Antares.world.spaceShip.attributes.EnginePitch.CurrentVelocity / Antares.world.spaceShip.attributes.EnginePitch.MaxVelocity );
                 };
+            circle.SetMaxColor( Color.Blue );
+            circle.SetMinColor( Color.DarkRed );
             this.allHUD_2D.Add( circle );
+
+            HUD2DValueCircle circle2 = new HUD2DValueCircle( new Vector2( 0.19f, 0.95f ), HUDType.RELATIV, new Vector2( 0.06f, 0.1f ), HUDType.RELATIV );
+            circle2.GetValue =
+                delegate() {
+                    return 1.0f - Math.Abs( Antares.world.spaceShip.attributes.EngineYaw.CurrentVelocity / Antares.world.spaceShip.attributes.EngineYaw.MaxVelocity );
+                };
+            circle2.SetMaxColor( Color.Green );
+            circle2.SetMinColor( Color.Red );
+            this.allHUD_2D.Add( circle2 );
 
             this.targetCrossModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//TargetCross" );
             this.targetCrossBoneTransforms = new Matrix[this.targetCrossModel.Bones.Count];

@@ -12,15 +12,22 @@ namespace Battlestation_Antares.View.HUD
                 return 0;
             };
 
+        public delegate float ColorMixValue( float input );
+
+        public ColorMixValue GetColorMixValue =
+            delegate( float input ) {
+                return input;
+            };
+
         private HUD2DTexture background;
 
         private HUD2DTexture foreground;
 
         private HUD2DTexture overlay;
 
-        private Vector3 zeroColor = new Vector3(0, 255, 0);
+        private Color zeroColor = new Color(0, 255, 0);
 
-        private Vector3 oneColor = new Vector3(255, 32, 0);
+        private Color oneColor = new Color(255, 32, 0);
 
         private float maxHeight;
 
@@ -84,11 +91,7 @@ namespace Battlestation_Antares.View.HUD
                 this.foreground.abstractPosition.Y = ( this.maxHeight * ( 1.0f - value ) ) / 2.0f;
             }
 
-            Vector3 col = (float)( 1.0f - value ) * this.zeroColor + (float)( value ) * this.oneColor;
-
-            this.foreground.color.R = (byte)col.X;
-            this.foreground.color.G = (byte)col.Y;
-            this.foreground.color.B = (byte)col.Z;
+            this.foreground.color = Color.Lerp( this.zeroColor, this.oneColor, this.GetColorMixValue( value ) );
 
             this.foreground.ClientSizeChanged();
 
@@ -97,11 +100,11 @@ namespace Battlestation_Antares.View.HUD
 
 
         public void SetMinColor( Color minCol ) {
-            this.zeroColor = new Vector3( minCol.R, minCol.G, minCol.B );
+            this.zeroColor = minCol;
         }
 
         public void SetMaxColor( Color maxCol ) {
-            this.oneColor = new Vector3( maxCol.R, maxCol.G, maxCol.B );
+            this.oneColor = maxCol;
         }
 
 
