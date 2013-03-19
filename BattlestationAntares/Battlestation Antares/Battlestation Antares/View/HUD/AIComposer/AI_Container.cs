@@ -17,7 +17,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private AI_Connection moveConnection;
         private AI_ItemPort movePort;
 
-        private List<AI_Bank> aiBanks;
+        public List<AI_Bank> aiBanks;
 
         private HUD2DTexture mouseItemTex;
 
@@ -34,12 +34,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.aiItems = new List<AI_Item>();
             this.aiConnections = new List<AI_Connection>();
 
-            this.insertBank = new AI_Bank( new Vector2( 0.9f, 0.1f ), HUDType.RELATIV, new Vector2( 220, 120 ), HUDType.ABSOLUT );
+            this.insertBank = new AI_Bank( new Vector2( 0.9f, 0.1f ), HUDType.RELATIV, new Vector2( 210, 110 ), HUDType.ABSOLUT );
             this.Add( this.insertBank );
 
             this.aiBanks = new List<AI_Bank>();
             for ( int i = 0; i < 5; i++ ) {
-                this.aiBanks.Add( new AI_Bank( new Vector2( 0.41f, 0.1f + 0.2f * i ), HUDType.RELATIV, new Vector2( 0.8f, 120 ), HUDType.RELATIV_ABSOLUT ) );
+                this.aiBanks.Add( new AI_Bank( new Vector2( 0.41f, 0.1f + 0.2f * i ), HUDType.RELATIV, new Vector2( 0.8f, 110 ), HUDType.RELATIV_ABSOLUT ) );
             }
             foreach ( AI_Bank bank in this.aiBanks ) {
                 this.Add( bank );
@@ -127,28 +127,48 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 foreach ( AI_Bank bank in this.aiBanks ) {
                     if ( bank.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         if ( bank.hasFreePlace( this.moveItem ) ) {
-                            bank.background.color = new Color( 32, 64, 32, 32 );
                             targetBank = bank;
-                        } else {
-                            bank.background.color = new Color( 64, 32, 32, 32 );
                         }
                     }
                 }
 
-                if ( targetBank != null ) { //&& ((AI_Bank)this.moveItem.parent) != targetBank) {
+                if ( targetBank != null ) {
+                    bool insert = true;
                     if ( ( (AI_Bank)this.moveItem.parent ) == this.insertBank ) {
                         this.insertItem = null;
+                    } else {
+                        int targetBankIndex = this.aiBanks.IndexOf( targetBank );
+                        foreach ( AI_ItemPort itemPort in this.moveItem.inputs ) {
+                            foreach ( AI_Connection con in itemPort.connections ) {
+                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getSource().item.parent ) >= targetBankIndex ) {
+                                    insert = false;
+                                }
+                            }
+                        }
+                        foreach ( AI_ItemPort itemPort in this.moveItem.outputs ) {
+                            foreach ( AI_Connection con in itemPort.connections ) {
+                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getTarget().item.parent ) <= targetBankIndex ) {
+                                    insert = false;
+                                }
+                            }
+                        }
                     }
-                    ( (AI_Bank)this.moveItem.parent ).Remove( this.moveItem );
+                    if ( insert ) {
+                        ( (AI_Bank)this.moveItem.parent ).Remove( this.moveItem );
 
-                    float targetXSize = targetBank.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
-                    float bankPos = ( Antares.inputProvider.getMousePos().X - ( targetBank.position.X - targetXSize / 2 ) ) / targetXSize;
-                    targetBank.InsertAt( this.moveItem, bankPos );
+                        float targetXSize = targetBank.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
+                        float bankPos = ( Antares.inputProvider.getMousePos().X - ( targetBank.position.X - targetXSize / 2 ) ) / targetXSize;
+                        targetBank.InsertAt( this.moveItem, bankPos );
+
+                        targetBank.background.color = new Color( 32, 64, 32, 32 );
+                    } else {
+
+                        targetBank.background.color = new Color( 64, 32, 32, 32 );
+                    }
                 }
 
                 if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
                     this.moveItem = null;
-                    //Console.WriteLine( "AI Items : " + this.aiItems.Count );
                 }
 
             }
@@ -159,24 +179,41 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
                     if ( this.moveConnection != null ) {
                         if ( port.portType == this.movePort.portType ) {
-                            if ( port.portType == AI_ItemPort.PortType.INPUT && port.connections.Count > 0 ) {
-                                AI_Connection old = port.connections[0];
-                                old.setSource( null );
-                                old.setTarget( null );
-                                this.aiConnections.Remove( old );
+                            bool doIt = true;
+                            int portItemBank = this.aiBanks.IndexOf( (AI_Bank)port.item.parent );
+                            int endPortItemBank = 0;
+                            if ( port.portType == AI_ItemPort.PortType.INPUT ) {
+                                endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getSource().item.parent );
+                                if ( portItemBank <= endPortItemBank ) {
+                                    doIt = false;
+                                }
+                            } else {
+                                endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getTarget().item.parent );
+                                if ( portItemBank >= endPortItemBank ) {
+                                    doIt = false;
+                                }
                             }
 
-                            port.Add( this.moveConnection );
-                            if ( this.moveConnection.getTarget() != null
-                                && this.moveConnection.getSource() != null
-                                && this.moveConnection.getTarget().item == this.moveConnection.getSource().item ) {
-                                this.moveConnection.setTarget( null );
-                                this.moveConnection.setSource( null );
-                                this.aiConnections.Remove( this.moveConnection );
+                            if ( doIt ) {
+                                if ( port.portType == AI_ItemPort.PortType.INPUT && port.connections.Count > 0 ) {
+                                    AI_Connection old = port.connections[0];
+                                    old.setSource( null );
+                                    old.setTarget( null );
+                                    this.aiConnections.Remove( old );
+                                }
+
+                                port.Add( this.moveConnection );
+                                if ( this.moveConnection.getTarget() != null
+                                    && this.moveConnection.getSource() != null
+                                    && this.moveConnection.getTarget().item == this.moveConnection.getSource().item ) {
+                                    this.moveConnection.setTarget( null );
+                                    this.moveConnection.setSource( null );
+                                    this.aiConnections.Remove( this.moveConnection );
+                                }
+                                Remove( this.movePort );
+                                this.movePort = null;
+                                this.moveConnection = null;
                             }
-                            Remove( this.movePort );
-                            this.movePort = null;
-                            this.moveConnection = null;
                         }
                     } else {
                         this.moveConnection = new AI_Connection();
@@ -260,6 +297,10 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             foreach ( AI_Item i in this.aiItems ) {
                 this.allChilds.Remove( i );
+                foreach ( AI_Bank bank in this.aiBanks ) {
+                    bank.Remove( i );
+                }
+                this.insertBank.Remove( i );
             }
             this.aiItems.Clear();
         }

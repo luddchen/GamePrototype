@@ -173,6 +173,20 @@ namespace Battlestation_Antares.Control.AI {
                             case AI_Transformer.TransformerType.SQRT:
                                 values[tuple.Item2[0]] = (float)Math.Sqrt( values[tuple.Item1[0]] );
                                 break;
+                            case AI_Transformer.TransformerType.LESS_TO_ZERO:
+                                float val1 = values[tuple.Item1[0]];
+                                if ( val1 < item.GetParameter( 0 ) ) {
+                                    val1 = 0;
+                                }
+                                values[tuple.Item2[0]] = val1;
+                                break;
+                            case AI_Transformer.TransformerType.MORE_TO_ONE:
+                                float val2 = values[tuple.Item1[0]];
+                                if ( val2 > item.GetParameter( 0 ) ) {
+                                    val2 = 0;
+                                }
+                                values[tuple.Item2[0]] = val2;
+                                break;
                         }
                         continue;
                     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Battlestation_Antares.View.HUD.AIComposer;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.View.HUD;
+using Battlestation_Antaris.View.HUD.AIComposer;
 
 namespace Battlestation_Antares.Control.AI {
 
@@ -28,6 +29,10 @@ namespace Battlestation_Antares.Control.AI {
                 writer.WriteStartElement( "Position" );
                 writer.WriteAttributeString( "x", item.abstractPosition.X.ToString() );
                 writer.WriteAttributeString( "y", item.abstractPosition.Y.ToString() );
+                writer.WriteEndElement();
+
+                writer.WriteStartElement( "Bank" );
+                writer.WriteAttributeString("nr", aiContainer.aiBanks.IndexOf( (AI_Bank)item.parent ).ToString() );
                 writer.WriteEndElement();
 
                 int paramCount = 0;
@@ -96,6 +101,9 @@ namespace Battlestation_Antares.Control.AI {
                             item.abstractPosition.X = float.Parse( reader.GetAttribute( 0 ) );
                             item.abstractPosition.Y = float.Parse( reader.GetAttribute( 1 ) );
 
+                            ContinueToNode( reader, "Bank" );
+                            int bankNr = int.Parse( reader.GetAttribute( 0 ) );
+
                             ContinueToNode( reader, "Parameters" );
                             int count = int.Parse( reader.GetAttribute( 0 ) );
                             item.SetParameterCount( count );
@@ -105,6 +113,7 @@ namespace Battlestation_Antares.Control.AI {
                             }
 
                             aiContainer.Add( item );
+                            aiContainer.aiBanks[bankNr].Add( item );
 
                         }
 

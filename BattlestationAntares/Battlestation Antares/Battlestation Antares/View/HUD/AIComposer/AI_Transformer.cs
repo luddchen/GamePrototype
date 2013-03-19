@@ -10,7 +10,9 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             SCALE,
             SQR,
             SQRT,
-            INVERSE
+            INVERSE,
+            LESS_TO_ZERO,
+            MORE_TO_ONE
         }
 
         private HUD2DSlider slider;
@@ -29,7 +31,9 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         public override void SetSubType( object subType ) {
             base.SetSubType( subType );
 
-            if ( (TransformerType)subType == TransformerType.SCALE ) {
+            if ( (TransformerType)subType == TransformerType.SCALE 
+                || (TransformerType)subType == TransformerType.LESS_TO_ZERO 
+                || (TransformerType)subType == TransformerType.MORE_TO_ONE ) {
                 this.parameters = new float[1];
                 if ( this.slider == null ) {
                     this.slider = new HUD2DSlider( new Vector2( 0, this.abstractSize.Y / 4 ), new Vector2( this.abstractSize.X, this.abstractSize.Y / 2 ) );
