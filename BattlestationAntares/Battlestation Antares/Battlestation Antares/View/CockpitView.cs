@@ -106,6 +106,17 @@ namespace Battlestation_Antares.View {
             circle2.SetMinColor( Color.Red );
             this.allHUD_2D.Add( circle2 );
 
+            HUD2DValueLamp lamp = new HUD2DValueLamp( new Vector2( 0.5f, 0.03f ), HUDType.RELATIV, new Vector2( 0.02f, 0.03f ), HUDType.RELATIV );
+            lamp.GetValue =
+                delegate() {
+                    if ( Antares.world.spaceShip.target == null ) {
+                        return new Color( 64, 64, 64 );
+                    }
+                    return Color.Green;
+                    ;
+                };
+            this.allHUD_2D.Add( lamp );
+
             this.targetCrossModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//TargetCross" );
             this.targetCrossBoneTransforms = new Matrix[this.targetCrossModel.Bones.Count];
 
