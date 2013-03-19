@@ -77,56 +77,60 @@ namespace Battlestation_Antares.Control.AI {
 
             XmlTextReader reader = new XmlTextReader( fileName );
 
-            while ( reader.Read() ) {
-                if ( reader.NodeType == XmlNodeType.Element ) {
-                    if ( reader.Name == "Item" ) {
-                        AI_Item item = null;
+            try {
+                while ( reader.Read() ) {
+                    if ( reader.NodeType == XmlNodeType.Element ) {
+                        if ( reader.Name == "Item" ) {
+                            AI_Item item = null;
 
-                        Type type = Type.GetType( reader.GetAttribute( 0 ) );
-                        Object[] parameters = new Object[2];
-                        parameters[0] = new Vector2( 0.5f, 0.5f );
-                        parameters[1] = HUDType.RELATIV;
-                        item = (AI_Item)Activator.CreateInstance( type, parameters );
+                            Type type = Type.GetType( reader.GetAttribute( 0 ) );
+                            Object[] parameters = new Object[2];
+                            parameters[0] = new Vector2( 0.5f, 0.5f );
+                            parameters[1] = HUDType.RELATIV;
+                            item = (AI_Item)Activator.CreateInstance( type, parameters );
 
-                        ContinueToNode( reader, "SubType" );
-                        item.SetSubType( Enum.Parse( item.GetSubType().GetType(), reader.ReadString() ) );
+                            ContinueToNode( reader, "SubType" );
+                            item.SetSubType( Enum.Parse( item.GetSubType().GetType(), reader.ReadString() ) );
 
-                        ContinueToNode( reader, "Position" );
-                        item.abstractPosition.X = float.Parse( reader.GetAttribute( 0 ) );
-                        item.abstractPosition.Y = float.Parse( reader.GetAttribute( 1 ) );
+                            ContinueToNode( reader, "Position" );
+                            item.abstractPosition.X = float.Parse( reader.GetAttribute( 0 ) );
+                            item.abstractPosition.Y = float.Parse( reader.GetAttribute( 1 ) );
 
-                        ContinueToNode( reader, "Parameters" );
-                        int count = int.Parse( reader.GetAttribute( 0 ) );
-                        item.SetParameterCount( count );
-                        for ( int index = 0; index < count; index++ ) {
-                            ContinueToNode( reader, "Param" );
-                            item.SetParameter( index, float.Parse( reader.GetAttribute( 0 ) ) );
+                            ContinueToNode( reader, "Parameters" );
+                            int count = int.Parse( reader.GetAttribute( 0 ) );
+                            item.SetParameterCount( count );
+                            for ( int index = 0; index < count; index++ ) {
+                                ContinueToNode( reader, "Param" );
+                                item.SetParameter( index, float.Parse( reader.GetAttribute( 0 ) ) );
+                            }
+
+                            aiContainer.Add( item );
+
                         }
 
-                        aiContainer.Add( item );
+                        if ( reader.Name == "Connection" ) {
+                            AI_Connection connection = new AI_Connection();
 
-                    }
+                            ContinueToNode( reader, "Source" );
+                            int sourceItemIndex = int.Parse( reader.GetAttribute( 0 ) );
+                            int sourcePortIndex = int.Parse( reader.GetAttribute( 1 ) );
 
-                    if ( reader.Name == "Connection" ) {
-                        AI_Connection connection = new AI_Connection();
+                            ContinueToNode( reader, "Target" );
+                            int targetItemIndex = int.Parse( reader.GetAttribute( 0 ) );
+                            int targetPortIndex = int.Parse( reader.GetAttribute( 1 ) );
 
-                        ContinueToNode( reader, "Source" );
-                        int sourceItemIndex = int.Parse( reader.GetAttribute( 0 ) );
-                        int sourcePortIndex = int.Parse( reader.GetAttribute( 1 ) );
+                            connection.setSource( aiContainer.aiItems[sourceItemIndex].outputs[sourcePortIndex] );
+                            connection.setTarget( aiContainer.aiItems[targetItemIndex].inputs[targetPortIndex] );
 
-                        ContinueToNode( reader, "Target" );
-                        int targetItemIndex = int.Parse( reader.GetAttribute( 0 ) );
-                        int targetPortIndex = int.Parse( reader.GetAttribute( 1 ) );
-
-                        connection.setSource( aiContainer.aiItems[sourceItemIndex].outputs[sourcePortIndex] );
-                        connection.setTarget( aiContainer.aiItems[targetItemIndex].inputs[targetPortIndex] );
-
-                        aiContainer.aiConnections.Add( connection );
+                            aiContainer.aiConnections.Add( connection );
+                        }
                     }
                 }
-            }
 
-            reader.Close();
+                reader.Close();
+            } catch ( Exception e ) {
+                Console.WriteLine( e );
+            }
         }
 
 

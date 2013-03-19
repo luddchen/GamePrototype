@@ -30,6 +30,19 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
         }
 
 
+        public void InsertAt( AI_Item item, float pos ) {
+            if (hasFreePlace(item)) {
+                int index = (int)(0.5f + (this.allChilds.Count - 1.0f) * pos);
+                this.allChilds.Insert( index, item );
+
+                item.parent = this;
+                item.setLayerDepth( this.layerDepth - 0.01f );
+                item.ClientSizeChanged();
+                arrangeItems();
+            }
+        }
+
+
         public override void Remove( HUD2D element ) {
             base.Remove( element );
             if ( element is AI_Item ) {

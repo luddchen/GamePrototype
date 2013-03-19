@@ -52,41 +52,6 @@ namespace Battlestation_Antares.Control {
             loadButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add( loadButton );
 
-
-            HUD2DArray addButtonArray = new HUD2DArray( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV, new Vector2( 250, 300 ), HUDType.ABSOLUT );
-            addButtonArray.direction = LayoutDirection.VERTICAL;
-            this.view.allHUD_2D.Add( addButtonArray );
-
-            HUD2DButton addInputButton = new HUD2DButton( "Input", new Vector2( 0.9f, 0.3f ), 0.7f );
-            addInputButton.SetPressedAction( delegate() {
-                ( (AIView)this.view ).aiContainer.Add( new AI_Input( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
-            } );
-            addInputButton.positionType = HUDType.RELATIV;
-            addButtonArray.Add( addInputButton );
-
-
-            HUD2DButton addTransformerButton = new HUD2DButton( "Transformer", new Vector2( 0.9f, 0.4f ), 0.7f );
-            addTransformerButton.SetPressedAction( delegate() {
-                ( (AIView)this.view ).aiContainer.Add( new AI_Transformer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
-            } );
-            addTransformerButton.positionType = HUDType.RELATIV;
-            addButtonArray.Add( addTransformerButton );
-
-
-            HUD2DButton addMixerButton = new HUD2DButton( "Mixer", new Vector2( 0.9f, 0.5f ), 0.7f );
-            addMixerButton.SetPressedAction( delegate() {
-                ( (AIView)this.view ).aiContainer.Add( new AI_Mixer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
-            } );
-            addMixerButton.positionType = HUDType.RELATIV;
-            addButtonArray.Add( addMixerButton );
-
-
-            HUD2DButton addOutputButton = new HUD2DButton( "Output", new Vector2( 0.9f, 0.6f ), 0.7f );
-            addOutputButton.SetPressedAction( delegate() {
-                ( (AIView)this.view ).aiContainer.Add( new AI_Output( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
-            } );
-            addOutputButton.positionType = HUDType.RELATIV;
-            addButtonArray.Add( addOutputButton );
         }
 
     }
