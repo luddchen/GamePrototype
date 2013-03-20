@@ -41,6 +41,42 @@ namespace Battlestation_Antares.View.HUD {
             return newStyle;
         }
 
+        public static ButtonStyle BuilderButtonStyle() {
+            ButtonStyle newStyle = new ButtonStyle();
+
+            newStyle.backgroundColorNormal = new Color( 56, 64, 32, 128);
+            newStyle.backgroundColorHover = new Color( 80, 96, 64, 128);
+            newStyle.backgroundColorPressed = new Color( 32, 48, 48);
+
+            newStyle.foregroundColorNormal = Color.White;
+            newStyle.foregroundColorHover = new Color( 255, 255, 128 );
+            newStyle.foregroundColorPressed = new Color( 128, 255, 128 );
+
+            newStyle.scaleNormal = 1.0f;
+            newStyle.scaleHover = 1.0f;
+            newStyle.scalePressed = 0.96f;
+
+            return newStyle;
+        }
+
+        public static ButtonStyle NoBackgroundButtonStyle() {
+            ButtonStyle newStyle = new ButtonStyle();
+
+            newStyle.backgroundColorNormal = new Color( 0, 0, 0, 0 );
+            newStyle.backgroundColorHover = new Color( 64, 64, 64, 32 );
+            newStyle.backgroundColorPressed = new Color( 32, 48, 48, 255 );
+
+            newStyle.foregroundColorNormal = Color.White;
+            newStyle.foregroundColorHover = new Color( 255, 255, 64 );
+            newStyle.foregroundColorPressed = new Color( 128, 255, 128 );
+
+            newStyle.scaleNormal = 1.0f;
+            newStyle.scaleHover = 0.99f;
+            newStyle.scalePressed = 0.96f;
+
+            return newStyle;
+        }
+
         public static ButtonStyle RemoveButtonStyle() {
             ButtonStyle newStyle = new ButtonStyle();
 

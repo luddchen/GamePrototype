@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
@@ -39,9 +40,10 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.outputs = new List<AI_ItemPort>();
 
             this.background = new HUD2DTexture();
-            this.background.color = new Color( 0, 48, 0 );
+            this.background.color = new Color( 64, 96, 64 );
             this.background.sizeType = this.sizeType;
             this.background.abstractSize = this.abstractSize;
+            this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//builder_bg_temp" );
             Add( this.background );
 
             this.typeString = new HUD2DString( "X");
@@ -67,6 +69,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             this.nextSubType = new HUD2DButton( ">", Vector2.Zero, 0.8f);
             this.nextSubType.positionType = this.sizeType;
+            this.nextSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.nextSubType.abstractPosition = new Vector2( ( this.abstractSize.X - this.nextSubType.size.X ) / 2 - 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
             this.nextSubType.SetPressedAction( delegate() {
                 switchToNextSubType();
@@ -75,6 +78,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             this.previousSubType = new HUD2DButton( "<", Vector2.Zero, 0.8f);
             this.previousSubType.positionType = this.sizeType;
+            this.previousSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.previousSubType.abstractPosition = new Vector2( -( this.abstractSize.X - this.nextSubType.size.X ) / 2 + 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
             this.previousSubType.SetPressedAction( delegate() {
                 switchToPreviousSubType();

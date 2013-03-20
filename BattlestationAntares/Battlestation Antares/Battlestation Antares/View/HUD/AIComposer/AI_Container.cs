@@ -35,6 +35,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.aiConnections = new List<AI_Connection>();
 
             this.insertBank = new AI_Bank( new Vector2( 0.9f, 0.1f ), HUDType.RELATIV, new Vector2( 210, 110 ), HUDType.ABSOLUT );
+            this.insertBank.background.Texture = Antares.content.Load<Texture2D>( "Sprites//builder_bg_temp" );
+            this.insertBank.background.color = new Color( 120, 128, 112);
             this.Add( this.insertBank );
 
             this.aiBanks = new List<AI_Bank>();
@@ -50,7 +52,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.mouseItemTex.positionType = HUDType.ABSOLUT;
             this.mouseItemTex.abstractSize = new Vector2( 200, 100 );
             this.mouseItemTex.sizeType = HUDType.ABSOLUT;
-            this.mouseItemTex.color = new Color( 32, 32, 32, 32 );
+            this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
             this.Add( this.mouseItemTex );
             this.mouseItemTex.layerDepth = 0;
             this.mouseItemTex.isVisible = false;
@@ -104,7 +106,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             // reset bank background color
             foreach ( AI_Bank bank in this.aiBanks ) {
-                bank.background.color = new Color( 32, 32, 32, 32 );
+                bank.background.color = AI_Bank.NORMAL_COLOR;
             }
 
 
@@ -160,10 +162,10 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                         float bankPos = ( Antares.inputProvider.getMousePos().X - ( targetBank.position.X - targetXSize / 2 ) ) / targetXSize;
                         targetBank.InsertAt( this.moveItem, bankPos );
 
-                        targetBank.background.color = new Color( 32, 64, 32, 32 );
+                        targetBank.background.color = AI_Bank.ENABLED_COLOR;
                     } else {
 
-                        targetBank.background.color = new Color( 64, 32, 32, 32 );
+                        targetBank.background.color = AI_Bank.DISABLED_COLOR;
                     }
                 }
 
@@ -307,40 +309,44 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
 
         private void initButtons() {
-            HUD2DArray addButtonArray = new HUD2DArray( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV, new Vector2( 250, 300 ), HUDType.ABSOLUT );
+            HUD2DArray addButtonArray = new HUD2DArray( new Vector2( 0.9f, 0.35f ), HUDType.RELATIV, new Vector2( 0.15f, 0.25f ), HUDType.RELATIV );
             addButtonArray.direction = LayoutDirection.VERTICAL;
             this.Add( addButtonArray );
 
 
-            HUD2DButton addInputButton = new HUD2DButton( "Input", new Vector2( 0.9f, 0.3f ), 0.7f );
+            HUD2DButton addInputButton = new HUD2DButton( "Input", new Vector2(), 0.7f );
             addInputButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Input( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
             } );
-            addInputButton.positionType = HUDType.RELATIV;
+            addInputButton.style = ButtonStyle.BuilderButtonStyle();
+            addInputButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addInputButton );
 
 
-            HUD2DButton addTransformerButton = new HUD2DButton( "Transformer", new Vector2( 0.9f, 0.4f ), 0.7f );
+            HUD2DButton addTransformerButton = new HUD2DButton( "Transformer", new Vector2(), 0.7f );
             addTransformerButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Transformer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
             } );
-            addTransformerButton.positionType = HUDType.RELATIV;
+            addTransformerButton.style = ButtonStyle.BuilderButtonStyle();
+            addTransformerButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addTransformerButton );
 
 
-            HUD2DButton addMixerButton = new HUD2DButton( "Mixer", new Vector2( 0.9f, 0.5f ), 0.7f );
+            HUD2DButton addMixerButton = new HUD2DButton( "Mixer", new Vector2(), 0.7f );
             addMixerButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Mixer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
             } );
-            addMixerButton.positionType = HUDType.RELATIV;
+            addMixerButton.style = ButtonStyle.BuilderButtonStyle();
+            addMixerButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addMixerButton );
 
 
-            HUD2DButton addOutputButton = new HUD2DButton( "Output", new Vector2( 0.9f, 0.6f ), 0.7f );
+            HUD2DButton addOutputButton = new HUD2DButton( "Output", new Vector2(), 0.7f );
             addOutputButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Output( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
             } );
-            addOutputButton.positionType = HUDType.RELATIV;
+            addOutputButton.style = ButtonStyle.BuilderButtonStyle();
+            addOutputButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addOutputButton );
         }
 

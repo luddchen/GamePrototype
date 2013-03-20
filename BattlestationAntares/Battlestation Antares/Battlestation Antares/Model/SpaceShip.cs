@@ -86,7 +86,7 @@ namespace Battlestation_Antares.Model {
             if ( control == Control.Control.TARGET_NEXT_ENEMY ) {
                 //Console.WriteLine("Blubb!");
                 float testDist = float.MaxValue;
-                this.target = this.world.treeTest.CastRay( new Ray( this.globalPosition, this.rotation.Forward ), 1, ref testDist );
+                this.target = this.world.octree.CastRay( new Ray( this.globalPosition, this.rotation.Forward ), 1, ref testDist );
             }
 
         }

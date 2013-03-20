@@ -7,6 +7,13 @@ using Battlestation_Antares;
 
 namespace Battlestation_Antaris.View.HUD.AIComposer {
     public class AI_Bank : HUD2DContainer {
+
+        public static Color NORMAL_COLOR = new Color( 28, 32, 24, 16 );
+
+        public static Color ENABLED_COLOR = new Color( 20, 32, 20, 16 );
+
+        public static Color DISABLED_COLOR = new Color( 32, 20, 20, 16 );
+
         public HUD2DTexture background;
 
         public AI_Bank(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType ) {

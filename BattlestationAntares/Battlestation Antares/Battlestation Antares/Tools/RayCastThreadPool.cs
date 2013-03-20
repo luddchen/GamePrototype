@@ -69,7 +69,7 @@ namespace Battlestation_Antares.Tools {
             int counter = 0;
 
             foreach ( SpatialObject item in this.world.allTurrets ) {
-                RayCaster rayCaster = new RayCaster( item, this.world.treeTest, this );
+                RayCaster rayCaster = new RayCaster( item, this.world.octree, this );
                 caster[counter] = rayCaster;
                 ThreadPool.QueueUserWorkItem( rayCaster.ThreadPoolCallback, null );
                 counter++;

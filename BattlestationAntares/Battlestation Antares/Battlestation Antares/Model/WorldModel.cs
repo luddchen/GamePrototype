@@ -74,7 +74,7 @@ namespace Battlestation_Antares.Model {
         private List<SpatialObject> removeList;
 
 
-        public Tools.DynamicOctree<SpatialObject> treeTest;
+        public Tools.DynamicOctree<SpatialObject> octree;
 
         private Tools.RayCastThreadPool RayCastPool;
 
@@ -110,7 +110,7 @@ namespace Battlestation_Antares.Model {
             this.miniMap = new MiniMap( Vector2.Zero, View.HUD.HUDType.RELATIV);
 
             // octree test
-            this.treeTest = new Tools.DynamicOctree<SpatialObject>( 3, 1, 10, new BoundingBox( new Vector3( -5000, -5000, -5000 ), new Vector3( 5000, 5000, 5000 ) ) );
+            this.octree = new Tools.DynamicOctree<SpatialObject>( 3, 1, 10, new BoundingBox( new Vector3( -5000, -5000, -5000 ), new Vector3( 5000, 5000, 5000 ) ) );
 
             this.RayCastPool = new Tools.RayCastThreadPool( this );
         }
@@ -180,7 +180,7 @@ namespace Battlestation_Antares.Model {
 
 
             // octree test
-            treeTest.Clear();
+            octree.Clear();
 
             bool shipVisible = this.spaceShip.isVisible;
             this.spaceShip.isVisible = true;
@@ -188,24 +188,25 @@ namespace Battlestation_Antares.Model {
             foreach ( SpatialObject obj in this.allObjects ) {
                 if ( obj.isVisible ) {
                     BoundingSphere itemSphere = new BoundingSphere( obj.bounding.Center + obj.globalPosition, obj.bounding.Radius );
-                    if ( !treeTest.Add( obj, itemSphere ) ) {
-                        treeTest.AddItem( obj, itemSphere );
+                    if ( !octree.Add( obj, itemSphere ) ) {
+                        octree.AddItem( obj, itemSphere );
                     }
                 }
             }
 
             this.spaceShip.isVisible = shipVisible;
 
-            this.treeTest.BuildTree();
+            this.octree.BuildTree();
 
             foreach ( SpatialObject o in this.allWeapons ) {
                 if ( o is Laser ) {
                     SpatialObject parent = ( (Laser)o ).parent;
 
-                    Vector3 minPos = o.globalPosition - Math.Abs( o.scale.Z ) * o.rotation.Forward;
-                    float dist = Math.Abs( o.scale.Z ) * 2.0f;
+                    float size = ( Math.Abs( o.scale.Z ) + o.attributes.Engine.CurrentVelocity / 2.0f );
+                    Vector3 minPos = o.globalPosition - size * o.rotation.Forward;
+                    float dist = size * 2.0f;
 
-                    SpatialObject hit = treeTest.CastRay( new Ray( minPos, o.rotation.Forward ), 0, ref dist );
+                    SpatialObject hit = octree.CastRay( new Ray( minPos, o.rotation.Forward ), 0, ref dist );
 
                     if ( hit != null && hit != parent ) {
                         hit.onHit( parent.attributes.Laser.Damage );

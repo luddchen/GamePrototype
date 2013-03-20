@@ -24,8 +24,9 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             this.sliderBackground = new HUD2DTexture();
             this.sliderBackground.abstractPosition = new Vector2( abstractSize.X * 0.1f, 0 );
-            this.sliderBackground.abstractSize = new Vector2( abstractSize.X * 0.7f, 2 );
-            this.sliderBackground.color = Color.Green;
+            this.sliderBackground.abstractSize = new Vector2( abstractSize.X * 0.7f, 6 );
+            this.sliderBackground.color = new Color( 60, 64, 56, 64 );
+            this.sliderBackground.Texture = Antares.content.Load<Texture2D>( "Sprites//SliderBG" );
 
             this.sliderButton = new HUD2DButton( "", Vector2.Zero, 0.5f );
             this.sliderButtonZero = abstractSize.X * 0.1f - this.sliderBackground.abstractSize.X / 2;

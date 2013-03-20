@@ -16,9 +16,9 @@ namespace Battlestation_Antares.View.HUD {
 
         public static Color BACKGROUND_COLOR_HOVER = new Color( 28, 36, 36, 192 );
 
-        public static float ABSOLUT_BORDER = 10;
+        public static float ABSOLUT_BORDER = 2;
 
-        public static float RELATIV_BORDER = 0.005f;
+        public static float RELATIV_BORDER = 0.001f;
 
 
         public Vector2 borderSize;

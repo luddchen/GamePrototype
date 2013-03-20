@@ -26,6 +26,7 @@ namespace Battlestation_Antares.Model {
             this.rotation = parent.rotation;
             this.upOffset = upOffset;
             this.rightOffset = rightOffset;
+            this.attributes.Engine.CurrentVelocity = this.parent.attributes.Laser.ProjectileVelocity;
 
 
             this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//Weapon//laser_2d" );
@@ -38,7 +39,7 @@ namespace Battlestation_Antares.Model {
 
             this.rotation = this.parent.rotation;
 
-            this.forwardOffset += this.parent.attributes.Laser.ProjectileVelocity;
+            this.forwardOffset += this.attributes.Engine.CurrentVelocity;
 
             this.globalPosition = this.parent.globalPosition
                                 + this.rotation.Forward * this.forwardOffset

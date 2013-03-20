@@ -25,7 +25,7 @@ namespace Battlestation_Antares.View.HUD {
 
             this.color = this.style.foregroundColorNormal;
             this.BackgroundColor = this.style.backgroundColorNormal;
-            SetBackgroundTexture( "Sprites\\Button2" );
+            SetBackgroundTexture( "Sprites//builder_button" );//"Sprites\\Button2" );
         }
 
         public void SetBackgroundTexture( String background ) {
