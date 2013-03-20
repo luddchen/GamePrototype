@@ -167,6 +167,10 @@ namespace Battlestation_Antares.Model {
         /// </summary>
         /// <param name="gameTime">the game time</param>
         public void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
+
+            // remove all deleted objects
+            this.RemoveNow();
+
             // update all spatial objects
             foreach ( List<SpatialObject> list in this.allUpdatable ) {
                 foreach ( SpatialObject obj in list ) {
@@ -196,15 +200,22 @@ namespace Battlestation_Antares.Model {
 
             foreach ( SpatialObject o in this.allWeapons ) {
                 if ( o is Laser ) {
-                    float dist = float.MaxValue;
-                    SpatialObject hit = treeTest.CastRay( new Ray( o.globalPosition - Math.Abs( o.scale.Z ) * o.rotation.Forward, o.rotation.Forward ), 0, ref dist );
-                    if ( hit != null && dist < Math.Abs( o.scale.Z * 2 ) ) {
-                        hit.onHit( o );
-                        o.onHit( hit );
-                        Console.Out.WriteLine( o + " -> " + hit );
+                    SpatialObject parent = ( (Laser)o ).parent;
+
+                    Vector3 minPos = o.globalPosition - Math.Abs( o.scale.Z ) * o.rotation.Forward;
+                    float dist = Math.Abs( o.scale.Z ) * 2.0f;
+
+                    SpatialObject hit = treeTest.CastRay( new Ray( minPos, o.rotation.Forward ), 0, ref dist );
+
+                    if ( hit != null && hit != parent ) {
+                        hit.onHit( parent.attributes.Laser.Damage );
+                        Remove( o );
                     }
+                } else {
+                    // Missile
                 }
             }
+            //Console.WriteLine();
 
             //BoundingSphere shipSphere = this.spaceShip.bounding;
             //shipSphere.Center += this.spaceShip.globalPosition;
@@ -248,6 +259,8 @@ namespace Battlestation_Antares.Model {
 
         private void RemoveNow() {
             foreach ( SpatialObject obj in this.removeList ) {
+                Console.WriteLine( "remove " + obj + " from world" );
+
                 if ( ( obj is Laser ) || ( obj is Missile ) ) {
                     this.allWeapons.Remove( obj );
                 } else if ( obj is Dust ) {

@@ -2,18 +2,13 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
+using System;
 
 namespace Battlestation_Antares.Model {
 
     public class Laser : SpatialObject {
 
-        private int timeout;
-
-        private SpatialObject parent;
-
-        private float length = 0.0f;
-
-        private float maxLength = 250.0f;
+        public SpatialObject parent;
 
         private float upOffset;
 
@@ -21,15 +16,17 @@ namespace Battlestation_Antares.Model {
 
         private float forwardOffset = 0;
 
+        // only for test the visual illusion
+        private static float FUN_FACTOR = 1.0f;
+
         public Laser( SpatialObject parent, float upOffset, float rightOffset, ContentManager content, WorldModel world )
             : base( parent.globalPosition, "Models//Weapon//laser", content, world ) {
+
             this.parent = parent;
             this.rotation = parent.rotation;
-            this.attributes.Engine.CurrentVelocity = 30.0f;
             this.upOffset = upOffset;
             this.rightOffset = rightOffset;
 
-            this.timeout = 60;
 
             this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//Weapon//laser_2d" );
             this.miniMapIcon.color = MiniMap.WEAPON_COLOR;
@@ -38,29 +35,26 @@ namespace Battlestation_Antares.Model {
 
 
         public override void Update( GameTime gameTime ) {
+
             this.rotation = this.parent.rotation;
-            this.scale.Z = -this.length;
+
+            this.forwardOffset += this.parent.attributes.Laser.ProjectileVelocity;
+
             this.globalPosition = this.parent.globalPosition
-                                + this.rotation.Forward * ( this.length / 2 + this.forwardOffset )
+                                + this.rotation.Forward * this.forwardOffset
                                 + this.rotation.Up * this.upOffset
                                 + this.rotation.Right * this.rightOffset;
 
-
-            this.timeout--;
-            if ( this.length < this.maxLength ) {
-                this.length += 50.0f;
+            if ( this.forwardOffset < this.parent.attributes.Laser.Range / 2.0f ) {
+                this.scale.Z = this.forwardOffset * FUN_FACTOR;
             } else {
-                this.forwardOffset += this.attributes.Engine.CurrentVelocity;
+                this.scale.Z = (this.parent.attributes.Laser.Range - this.forwardOffset) * FUN_FACTOR;
+
+                // remove if out of range
+                if ( this.forwardOffset > this.parent.attributes.Laser.Range ) {
+                    Antares.world.Remove( this );
+                }
             }
-
-            if ( this.timeout == 0 ) {
-                this.world.Remove( this );
-            }
-        }
-
-
-        public override void onHit( SpatialObject o ) {
-            this.world.Remove( this );
         }
 
 

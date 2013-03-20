@@ -43,7 +43,7 @@ namespace Battlestation_Antares.Model {
         public SpaceStation( Vector3 position, String modelName, ContentManager content, WorldModel world )
             : base( position, modelName, content, world ) {
             init();
-            this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>( "Attributes//SpaceShip" ) );
+            this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>( "Attributes//SpaceStation" ) );
             this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//SpaceStation//station_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
             this.miniMapIcon.scale = 2.0f;
@@ -80,9 +80,9 @@ namespace Battlestation_Antares.Model {
         }
 
 
-        public override void onHit( SpatialObject o ) {
-            if ( this.attributes.Shield.ApplyDamage( 20 ) ) {
-                this.attributes.Hull.ApplyDamage( 20 );
+        public override void onHit( float damage ) {
+            if ( this.attributes.Shield.ApplyDamage( damage ) ) {
+                this.attributes.Hull.ApplyDamage( damage );
             }
         }
 

@@ -290,7 +290,10 @@ namespace Battlestation_Antares.Model {
 
         }
 
-        public virtual void onHit( SpatialObject o ) {
+        public virtual void onHit( float damage ) {
+        }
+
+        public virtual void onCollision( SpatialObject o ) {
         }
 
         public virtual void addDebugOutput() {

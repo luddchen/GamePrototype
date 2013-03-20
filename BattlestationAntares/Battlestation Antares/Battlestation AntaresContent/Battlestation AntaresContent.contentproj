@@ -127,14 +127,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\Turret.soa">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>Turret</Name>
-      <Importer>SOAImporter</Importer>
-      <Processor>SOAProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Models\Weapon\laser.fbx">
       <Name>laser</Name>
       <Importer>FbxImporter</Importer>
@@ -522,6 +514,30 @@
       <Name>Station</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\Template.soa">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>Template</Name>
+      <Importer>SOAImporter</Importer>
+      <Processor>SOAProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\SpaceStation.soa">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>SpaceStation</Name>
+      <Importer>SOAImporter</Importer>
+      <Processor>SOAProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\Turret.soa">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>Turret</Name>
+      <Importer>SOAImporter</Importer>
+      <Processor>SOAProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

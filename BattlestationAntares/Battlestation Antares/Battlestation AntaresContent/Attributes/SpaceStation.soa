@@ -1,0 +1,17 @@
+#Shield: #MaxHealth: 1000.0 #RegenerationRate: 5.0 #RepairCost: 0.0
+#
+#Hull: #MaxHealth: 10000.0 #RegenerationRate: 0.0 #RepairCost: 0.0
+#
+#Radar: #Range: 0.0
+#
+#Engine: #MaxVelocity: 0.0 #Acceleration: 0.0 #ResetForce: 0.0
+#
+#EngineYaw: #MaxVelocity: 0.0 #Acceleration: 0.0 #ResetForce: 0.0
+#
+#EnginePitch: #MaxVelocity: 0.0 #Acceleration: 0.0 #ResetForce: 0.0
+#
+#EngineRoll: #MaxVelocity: 0.0 #Acceleration: 0.0 #ResetForce: 0.0
+#
+#Laser: #Damage: 0.0 #Range: 0.0 #Velocity: 0.0 #ReloadTime: 0.0 #HeatProduction: 0.0 #HeatUntilCooldown: 0.0 #HeatRegeneration 0.0
+#
+#Missile: #Damage: 0.0 #Range: 0.0 #Velocity: 0.0 #ReloadTime: 0.0 #MaxAmount: 0.0
