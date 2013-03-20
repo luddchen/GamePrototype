@@ -260,8 +260,6 @@ namespace Battlestation_Antares.Model {
 
         private void RemoveNow() {
             foreach ( SpatialObject obj in this.removeList ) {
-                Console.WriteLine( "remove " + obj + " from world" );
-
                 if ( ( obj is Laser ) || ( obj is Missile ) ) {
                     this.allWeapons.Remove( obj );
                 } else if ( obj is Dust ) {

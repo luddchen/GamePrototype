@@ -47,17 +47,17 @@ namespace Battlestation_Antares.View.HUD {
                             break;
 
                         case HUDType.RELATIV:
-                            backgroundSize.X = this.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
-                            backgroundSize.Y = this.abstractSize.Y * Antares.graphics.GraphicsDevice.Viewport.Height;
+                            backgroundSize.X = this.abstractSize.X * Antares.renderSize.X;
+                            backgroundSize.Y = this.abstractSize.Y * Antares.renderSize.Y;
                             break;
 
                         case HUDType.ABSOLUT_RELATIV:
                             backgroundSize.X = this.abstractSize.X;
-                            backgroundSize.Y = this.abstractSize.Y * Antares.graphics.GraphicsDevice.Viewport.Height;
+                            backgroundSize.Y = this.abstractSize.Y * Antares.renderSize.Y;
                             break;
 
                         case HUDType.RELATIV_ABSOLUT:
-                            backgroundSize.X = this.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
+                            backgroundSize.X = this.abstractSize.X * Antares.renderSize.X;
                             backgroundSize.Y = this.abstractSize.Y;
                             break;
                     }

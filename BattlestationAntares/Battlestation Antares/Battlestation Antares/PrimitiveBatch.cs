@@ -78,14 +78,11 @@ namespace Battlestation_Antares {
 
             // projection uses CreateOrthographicOffCenter to create 2d projection
             // matrix with 0,0 in the upper left.
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter
-                ( 0, graphicsDevice.Viewport.Width,
-                graphicsDevice.Viewport.Height, 0,
-                0, 1 );
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, Antares.renderSize.X, Antares.renderSize.Y, 0, 0, 1 );
         }
 
-        public void ClientSizeChanged( Viewport viewport ) {
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, viewport.Width, viewport.Height, 0, 0, 1 );
+        public void ClientSizeChanged( ) {
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, Antares.renderSize.X, Antares.renderSize.Y, 0, 0, 1 );
         }
 
         public void Dispose() {

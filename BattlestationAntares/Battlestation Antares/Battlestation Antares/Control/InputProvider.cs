@@ -65,6 +65,11 @@ namespace Battlestation_Antares.Control {
         private MouseState newMouseState;
 
 
+        private Vector2 screenSizeHalf;
+        private Vector2 renderSizeHalf;
+        private float renderScale;
+
+
         /// <summary>
         /// create a new input provider
         /// </summary>
@@ -133,7 +138,7 @@ namespace Battlestation_Antares.Control {
         }
 
         public Vector2 getMousePos() {
-            return new Vector2( newMouseState.X, newMouseState.Y );
+            return transformMouseCoords( new Vector2( newMouseState.X, newMouseState.Y ) );
         }
 
 
@@ -141,11 +146,16 @@ namespace Battlestation_Antares.Control {
             return ( oldMouseState.X == newMouseState.X && oldMouseState.Y == newMouseState.Y ) ? false : true;
         }
 
-        public Vector2 getMousePosChange() {
-            int XChange = oldMouseState.X - newMouseState.X;
-            int YChange = oldMouseState.Y - newMouseState.Y;
-            return new Vector2( XChange, YChange );
-        }
+
+        // depricated -> need adjustment for render coord transform
+        // ----------------------------------------------------------
+        //public Vector2 getMousePosChange() {
+        //    int XChange = oldMouseState.X - newMouseState.X;
+        //    int YChange = oldMouseState.Y - newMouseState.Y;
+        //    return new Vector2( XChange, YChange );
+        //}
+        // ---------------------------------------------------------
+
         public int getMouseWheelChange() {
             return ( newMouseState.ScrollWheelValue - oldMouseState.ScrollWheelValue );
         }
@@ -164,6 +174,22 @@ namespace Battlestation_Antares.Control {
             }
 
             return controlSequence;
+        }
+
+
+        public void setMouseTransform( Vector2 screenSizeHalf, Vector2 renderSizeHalf, float renderScale ) {
+            this.screenSizeHalf = screenSizeHalf;
+            this.renderSizeHalf = renderSizeHalf;
+            this.renderScale = renderScale;
+        }
+
+        public Vector2 transformMouseCoords( Vector2 input ) {
+            Vector2 newVec = input;
+            newVec -= screenSizeHalf;
+            newVec /= renderScale;
+            newVec += renderSizeHalf;
+
+            return newVec;
         }
 
     }

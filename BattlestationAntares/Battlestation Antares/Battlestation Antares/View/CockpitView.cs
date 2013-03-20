@@ -53,8 +53,7 @@ namespace Battlestation_Antares.View {
             this.compass = new Compass3d( Antares.content );
             this.allHUD_3D.Add( this.compass );
             this.is3D = true;
-
-            this.backgroundColor = Color.White;
+;
             this.backgroundObjects = new List<BackgroundObject>();
         }
 
@@ -147,7 +146,6 @@ namespace Battlestation_Antares.View {
         /// draw cockpit view content
         /// </summary>
         protected override void DrawPreContent() {
-            this.cockpitTexture.color = this.backgroundColor;
 
             // init depth buffer
             Antares.graphics.GraphicsDevice.DepthStencilState = new DepthStencilState() {

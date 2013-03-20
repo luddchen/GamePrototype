@@ -60,7 +60,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public bool hasFreePlace(HUD2D element) {
             bool freePlace = false;
-            float freeWidth = this.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
+            float freeWidth = this.abstractSize.X * Antares.renderSize.X;
             foreach ( HUD2D item in this.allChilds ) {
                 if ( item is AI_Item ) {
                     freeWidth -= item.abstractSize.X;

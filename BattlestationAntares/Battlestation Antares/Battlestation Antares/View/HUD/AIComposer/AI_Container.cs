@@ -8,6 +8,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
     public class AI_Container : HUD2DContainer {
 
+        public const int maxBanks = 6;
+
         public List<AI_Item> aiItems;
 
         public List<AI_Connection> aiConnections;
@@ -40,12 +42,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.Add( this.insertBank );
 
             this.aiBanks = new List<AI_Bank>();
-            for ( int i = 0; i < 5; i++ ) {
-                this.aiBanks.Add( new AI_Bank( new Vector2( 0.41f, 0.1f + 0.2f * i ), HUDType.RELATIV, new Vector2( 0.8f, 110 ), HUDType.RELATIV_ABSOLUT ) );
-            }
-            foreach ( AI_Bank bank in this.aiBanks ) {
-                this.Add( bank );
-                bank.setLayerDepth( this.layerDepth );
+            for ( int i = 0; i < maxBanks; i++ ) {
+                addBank();
             }
 
             this.mouseItemTex = new HUD2DTexture();
@@ -158,7 +156,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                     if ( insert ) {
                         ( (AI_Bank)this.moveItem.parent ).Remove( this.moveItem );
 
-                        float targetXSize = targetBank.abstractSize.X * Antares.graphics.GraphicsDevice.Viewport.Width;
+                        float targetXSize = targetBank.abstractSize.X * Antares.renderSize.X;
                         float bankPos = ( Antares.inputProvider.getMousePos().X - ( targetBank.position.X - targetXSize / 2 ) ) / targetXSize;
                         targetBank.InsertAt( this.moveItem, bankPos );
 
@@ -357,6 +355,22 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.insertItem = item;
             this.Add( item );
             this.insertBank.Add( this.insertItem );
+        }
+
+
+        public void addBank() {
+            if ( this.aiBanks.Count < maxBanks ) {
+                AI_Bank newBank = new AI_Bank( new Vector2( 0.41f, 0.5f), HUDType.RELATIV, new Vector2( 0.8f, 110 ), HUDType.RELATIV_ABSOLUT );
+
+                this.aiBanks.Add( newBank );
+                this.Add( newBank );
+                newBank.setLayerDepth( this.layerDepth );
+
+                foreach ( AI_Bank bank in this.aiBanks ) {
+                    bank.abstractPosition.Y = this.aiBanks.IndexOf( bank ) * ( 1.0f / this.aiBanks.Count ) + ( 0.5f / this.aiBanks.Count );
+                    bank.ClientSizeChanged();
+                }
+            }
         }
 
     }

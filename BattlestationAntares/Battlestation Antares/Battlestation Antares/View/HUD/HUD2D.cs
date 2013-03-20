@@ -108,8 +108,7 @@ namespace Battlestation_Antares.View.HUD {
 
             switch ( this.positionType ) {
                 case HUDType.RELATIV:
-                    this.position += new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
-                                                 Antares.graphics.GraphicsDevice.Viewport.Height * this.abstractPosition.Y );
+                    this.position += new Vector2( Antares.renderSize.X * this.abstractPosition.X, Antares.renderSize.Y * this.abstractPosition.Y );
                     break;
 
                 case HUDType.ABSOLUT:
@@ -118,13 +117,11 @@ namespace Battlestation_Antares.View.HUD {
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:
-                    this.position += new Vector2( this.abstractPosition.X,
-                                                 Antares.graphics.GraphicsDevice.Viewport.Height * this.abstractPosition.Y );
+                    this.position += new Vector2( this.abstractPosition.X, Antares.renderSize.Y * this.abstractPosition.Y );
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.position += new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width * this.abstractPosition.X,
-                                                 this.abstractPosition.Y );
+                    this.position += new Vector2( Antares.renderSize.X * this.abstractPosition.X, this.abstractPosition.Y );
                     break;
             }
         }

@@ -27,6 +27,9 @@ namespace Battlestation_Antares {
         public static GraphicsDeviceManager graphics;
 
 
+        public static Vector2 renderSize;
+
+
         public static ContentManager content;
 
         /// <summary>
@@ -65,6 +68,17 @@ namespace Battlestation_Antares {
         List<SituationController> allSituations;
 
 
+        private RenderTarget2D renderTarget;
+
+        private Texture2D renderTexture;
+        private Vector2 renderTextureOrigin;
+        private Vector2 renderTexturePos;
+        private float renderTextureScale;
+
+        private int renderWidth = 1920;
+        private int renderHeight = 1080;
+
+
         /// <summary>
         /// creates a new Antares game
         /// </summary>
@@ -94,8 +108,10 @@ namespace Battlestation_Antares {
             }
 
             if ( Antares.primitiveBatch != null ) {
-                Antares.primitiveBatch.ClientSizeChanged( this.GraphicsDevice.Viewport );
+                Antares.primitiveBatch.ClientSizeChanged();
             }
+
+            _calculateRenderTextureParameter();
         }
 
 
@@ -141,6 +157,8 @@ namespace Battlestation_Antares {
         protected override void LoadContent() {
             Antares.spriteBatch = new SpriteBatch( GraphicsDevice );
             Antares.primitiveBatch = new PrimitiveBatch( GraphicsDevice );
+
+            _calculateRenderTextureParameter();
 
             foreach ( SituationController situation in this.allSituations ) {
                 situation.view.Initialize();
@@ -208,8 +226,47 @@ namespace Battlestation_Antares {
         /// </summary>
         /// <param name="gameTime">the game time</param>
         protected override void Draw( GameTime gameTime ) {
+            Antares.graphics.GraphicsDevice.SetRenderTarget( this.renderTarget );
+
             this.activeSituation.view.Draw();
-            base.Draw( gameTime );
+
+            Antares.graphics.GraphicsDevice.SetRenderTarget( null );
+
+            this.renderTexture = (Texture2D)this.renderTarget;
+
+            Antares.graphics.GraphicsDevice.Clear( this.activeSituation.view.backgroundColor );
+
+            Antares.spriteBatch.Begin();
+            Antares.spriteBatch.Draw( this.renderTexture, this.renderTexturePos, null, Color.White, 0.0f, 
+                                        this.renderTextureOrigin, this.renderTextureScale, SpriteEffects.None, 0.0f );
+            Antares.spriteBatch.End();
+        }
+
+
+        public void setRenderSize( int width, int height ) {
+            this.renderWidth = width;
+            this.renderHeight = height;
+            this.renderTarget = null;
+            _calculateRenderTextureParameter();
+        }
+
+
+        private void _calculateRenderTextureParameter() {
+            if ( this.renderTarget == null ) {
+                this.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, this.renderWidth, this.renderHeight, true, 
+                                                        Antares.graphics.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
+                this.renderTextureOrigin = new Vector2( this.renderTarget.Width / 2.0f, this.renderTarget.Height / 2.0f );
+                Antares.renderSize = new Vector2( this.renderTarget.Width, this.renderTarget.Height);
+            }
+
+            this.renderTexturePos = new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width / 2.0f, Antares.graphics.GraphicsDevice.Viewport.Height / 2.0f );
+
+            float xScale = (float)Antares.graphics.GraphicsDevice.Viewport.Width / (float)this.renderTarget.Width;
+            float yScale = (float)Antares.graphics.GraphicsDevice.Viewport.Height / (float)this.renderTarget.Height;
+
+            this.renderTextureScale = Math.Min( xScale, yScale );
+            Antares.inputProvider.setMouseTransform( this.renderTexturePos, this.renderTextureOrigin, this.renderTextureScale );
         }
     }
+
 }
