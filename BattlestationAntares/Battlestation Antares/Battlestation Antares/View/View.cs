@@ -10,6 +10,10 @@ namespace Battlestation_Antares.View {
     /// </summary>
     public abstract class View {
 
+
+        public RenderTarget2D renderTarget;
+
+
         /// <summary>
         /// if the view contains 3D elements
         /// </summary>

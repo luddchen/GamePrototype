@@ -68,9 +68,9 @@ namespace Battlestation_Antares {
         List<SituationController> allSituations;
 
 
-        private RenderTarget2D renderTarget;
+        //private RenderTarget2D renderTarget;
 
-        private Texture2D renderTexture;
+        //private Texture2D renderTexture;
         private Vector2 renderTextureOrigin;
         private Vector2 renderTexturePos;
         private float renderTextureScale;
@@ -78,6 +78,8 @@ namespace Battlestation_Antares {
         private int renderWidth = 1920;
         private int renderHeight = 1080;
 
+        private View.View lastView;
+        private int blendValue;
 
         /// <summary>
         /// creates a new Antares game
@@ -103,6 +105,9 @@ namespace Battlestation_Antares {
         /// <param name="sender">sender</param>
         /// <param name="e">event</param>
         void Window_ClientSizeChanged( object sender, EventArgs e ) {
+
+            _calculateRenderTextureParameter();
+
             if ( this.activeSituation != null ) {
                 this.activeSituation.view.Window_ClientSizeChanged();
             }
@@ -110,8 +115,6 @@ namespace Battlestation_Antares {
             if ( Antares.primitiveBatch != null ) {
                 Antares.primitiveBatch.ClientSizeChanged();
             }
-
-            _calculateRenderTextureParameter();
         }
 
 
@@ -182,6 +185,8 @@ namespace Battlestation_Antares {
         public void switchTo( Situation situation ) {
             if ( this.activeSituation != null ) {
                 this.activeSituation.onExit();
+                this.lastView = this.activeSituation.view;
+                this.blendValue = 0;
             }
             this.activeSituation = this.allSituations[(int)situation];
             this.activeSituation.onEnter();
@@ -226,19 +231,37 @@ namespace Battlestation_Antares {
         /// </summary>
         /// <param name="gameTime">the game time</param>
         protected override void Draw( GameTime gameTime ) {
-            Antares.graphics.GraphicsDevice.SetRenderTarget( this.renderTarget );
+            this._initRenderTarget( this.activeSituation.view );
+
+            Antares.graphics.GraphicsDevice.SetRenderTarget( this.activeSituation.view.renderTarget );
 
             this.activeSituation.view.Draw();
 
             Antares.graphics.GraphicsDevice.SetRenderTarget( null );
 
-            this.renderTexture = (Texture2D)this.renderTarget;
+            Antares.graphics.GraphicsDevice.Clear( new Color(16,0,0 ) );
 
-            Antares.graphics.GraphicsDevice.Clear( this.activeSituation.view.backgroundColor );
+            Antares.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-            Antares.spriteBatch.Begin();
-            Antares.spriteBatch.Draw( this.renderTexture, this.renderTexturePos, null, Color.White, 0.0f, 
-                                        this.renderTextureOrigin, this.renderTextureScale, SpriteEffects.None, 0.0f );
+            if ( this.lastView != null ) {
+                Antares.spriteBatch.Draw( this.activeSituation.view.renderTarget, this.renderTexturePos, null, 
+                            new Color(this.blendValue, this.blendValue, this.blendValue, this.blendValue), 0.0f,
+                            this.renderTextureOrigin, this.renderTextureScale, SpriteEffects.None, 0.5f );
+
+                Antares.spriteBatch.Draw( this.lastView.renderTarget, this.renderTexturePos, null, 
+                            new Color( 255 - this.blendValue, 255 - this.blendValue, 255 - this.blendValue, 255 - this.blendValue ), 0.0f,
+                            this.renderTextureOrigin, this.renderTextureScale, SpriteEffects.None, 0.4f );
+
+                if ( this.blendValue < 248 ) {
+                    this.blendValue += 8;
+                } else {
+                    this.lastView = null;
+                }
+            } else {
+                Antares.spriteBatch.Draw( this.activeSituation.view.renderTarget, this.renderTexturePos, null, Color.White, 0.0f,
+                                            this.renderTextureOrigin, this.renderTextureScale, SpriteEffects.None, 0.5f );
+            }
+
             Antares.spriteBatch.End();
         }
 
@@ -246,26 +269,36 @@ namespace Battlestation_Antares {
         public void setRenderSize( int width, int height ) {
             this.renderWidth = width;
             this.renderHeight = height;
-            this.renderTarget = null;
             _calculateRenderTextureParameter();
         }
 
 
         private void _calculateRenderTextureParameter() {
-            if ( this.renderTarget == null ) {
-                this.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, this.renderWidth, this.renderHeight, true, 
-                                                        Antares.graphics.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
-                this.renderTextureOrigin = new Vector2( this.renderTarget.Width / 2.0f, this.renderTarget.Height / 2.0f );
-                Antares.renderSize = new Vector2( this.renderTarget.Width, this.renderTarget.Height);
-            }
+            //if ( this.renderTarget == null ) {
+            //    this.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, this.renderWidth, this.renderHeight, true, 
+            //                                            Antares.graphics.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
+            //    this.renderTextureOrigin = new Vector2( this.renderTarget.Width / 2.0f, this.renderTarget.Height / 2.0f );
+            //    Antares.renderSize = new Vector2( this.renderTarget.Width, this.renderTarget.Height);
+            //}
 
             this.renderTexturePos = new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width / 2.0f, Antares.graphics.GraphicsDevice.Viewport.Height / 2.0f );
 
-            float xScale = (float)Antares.graphics.GraphicsDevice.Viewport.Width / (float)this.renderTarget.Width;
-            float yScale = (float)Antares.graphics.GraphicsDevice.Viewport.Height / (float)this.renderTarget.Height;
+            this.renderTextureOrigin = new Vector2( this.renderWidth / 2.0f, this.renderHeight / 2.0f );
+            Antares.renderSize = new Vector2( this.renderWidth, this.renderHeight );
+
+            float xScale = (float)Antares.graphics.GraphicsDevice.Viewport.Width / (float)this.renderWidth;
+            float yScale = (float)Antares.graphics.GraphicsDevice.Viewport.Height / (float)this.renderHeight;
 
             this.renderTextureScale = Math.Min( xScale, yScale );
             Antares.inputProvider.setMouseTransform( this.renderTexturePos, this.renderTextureOrigin, this.renderTextureScale );
+        }
+
+
+        private void _initRenderTarget( View.View view ) {
+            if ( view.renderTarget == null || view.renderTarget.Width != this.renderWidth || view.renderTarget.Height != this.renderHeight ) {
+                view.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, this.renderWidth, this.renderHeight, true,
+                                                        Antares.graphics.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
+            }
         }
     }
 
