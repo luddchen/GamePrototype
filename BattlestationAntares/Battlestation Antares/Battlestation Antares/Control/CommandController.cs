@@ -59,7 +59,13 @@ namespace Battlestation_Antares.Control {
             this.toCockpitButton.positionType = HUDType.RELATIV;
             this.view.allHUD_2D.Add( toCockpitButton );
 
-            buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV );
+            buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV, 
+                delegate() {
+                    if ( this.currentMouseTexture != null ) {
+                        this.currentMouseTexture.isVisible = false;
+                    }
+                    this.currentMode = CommandMode.BUILD;
+                } );
             this.view.allHUD_2D.Add( buildMenu );
 
             mouseTextures = new Dictionary<Type, MouseTexture>();
@@ -105,16 +111,10 @@ namespace Battlestation_Antares.Control {
                 this.currentMode = CommandMode.NORMAL;
             }
 
-            if ( this.buildMenu.isUpdatedClicked( Antares.inputProvider ) ) {
-                if ( this.currentMouseTexture != null ) {
-                    this.currentMouseTexture.isVisible = false;
-                }
-                this.currentMode = CommandMode.BUILD;
-            }
-
             if ( Antares.inputProvider.getMouseWheelChange() != 0 ) {
                 Antares.world.miniMap.ZoomOnMouseWheelOver();
             }
+
         }
 
         private void createNewStructure() {

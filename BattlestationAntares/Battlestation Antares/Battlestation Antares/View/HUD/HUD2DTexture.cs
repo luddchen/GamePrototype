@@ -105,17 +105,17 @@ namespace Battlestation_Antares.View.HUD {
                     break;
 
                 case HUDType.RELATIV:
-                    this.size.X = this.abstractSize.X * Antares.renderSize.X;
-                    this.size.Y = this.abstractSize.Y * Antares.renderSize.Y;
+                    this.size.X = this.abstractSize.X * Antares.RenderSize.X;
+                    this.size.Y = this.abstractSize.Y * Antares.RenderSize.Y;
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:
                     this.size.X = this.abstractSize.X;
-                    this.size.Y = this.abstractSize.Y * Antares.renderSize.Y;
+                    this.size.Y = this.abstractSize.Y * Antares.RenderSize.Y;
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.size.X = this.abstractSize.X * Antares.renderSize.X;
+                    this.size.X = this.abstractSize.X * Antares.RenderSize.X;
                     this.size.Y = this.abstractSize.Y;
                     break;
             }

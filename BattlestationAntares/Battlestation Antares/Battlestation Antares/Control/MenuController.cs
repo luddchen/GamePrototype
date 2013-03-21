@@ -121,8 +121,7 @@ namespace Battlestation_Antares.Control {
             this.soundPage.Add( new HUD2DString( "Sound") );
 
             this.controlPage = new HUD2DArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV);
-            this.controlPage.CreateBackground( true );
-            this.controlPage.Add( new HUD2DString( "Control") );
+            this.controlPage.direction = LayoutDirection.HORIZONTAL;
 
             this.contentPages.Add( this.videoPage );
             this.contentPages.Add( this.soundPage );
@@ -132,6 +131,69 @@ namespace Battlestation_Antares.Control {
                 container.isVisible = false;
                 this.view.allHUD_2D.Add( container );
             }
+
+
+            HUD2DContainer renderResolutionArray = new HUD2DContainer( new Vector2(), HUDType.RELATIV );
+            this.controlPage.Add( renderResolutionArray );
+
+            HUD2DString resolutionTitle = new HUD2DString( "Render Resolution", null, new Vector2( 0, -0.05f ), null, null, 0.6f, null );
+            resolutionTitle.positionType = HUDType.RELATIV;
+            renderResolutionArray.Add( resolutionTitle );
+
+            HUD2DButton resolutionHigh = new HUD2DButton( "1920 x 1080", new Vector2(0, 0), 0.7f );
+            resolutionHigh.positionType = HUDType.RELATIV;
+            HUD2DButton resolutionMedium = new HUD2DButton( "1600 x 900", new Vector2( 0, 0.05f ), 0.7f );
+            resolutionMedium.positionType = HUDType.RELATIV;
+            HUD2DButton resolutionLow = new HUD2DButton( "1280 x 720", new Vector2( 0, 0.1f ), 0.7f );
+            resolutionLow.positionType = HUDType.RELATIV;
+
+            renderResolutionArray.Add( resolutionHigh );
+            renderResolutionArray.Add( resolutionMedium );
+            renderResolutionArray.Add( resolutionLow );
+
+            resolutionHigh.SetPressedAction( 
+                delegate() {
+                    resolutionHigh.style.foregroundColorNormal = Color.Green;
+                    resolutionMedium.style.foregroundColorNormal = Color.White;
+                    resolutionLow.style.foregroundColorNormal = Color.White;
+                    Antares.setRenderSize( 1920, 1080 );
+                } );
+
+            resolutionMedium.SetPressedAction(
+                delegate() {
+                    resolutionHigh.style.foregroundColorNormal = Color.White;
+                    resolutionMedium.style.foregroundColorNormal = Color.Green;
+                    resolutionLow.style.foregroundColorNormal = Color.White;
+                    Antares.setRenderSize( 1600, 900 );
+                } );
+
+            resolutionLow.SetPressedAction(
+                delegate() {
+                    resolutionHigh.style.foregroundColorNormal = Color.White;
+                    resolutionMedium.style.foregroundColorNormal = Color.White;
+                    resolutionLow.style.foregroundColorNormal = Color.Green;
+                    Antares.setRenderSize( 1280, 720 );
+                } );
+
+
+            HUD2DContainer test1Array = new HUD2DContainer( new Vector2(), HUDType.RELATIV );
+            this.controlPage.Add( test1Array );
+
+            HUD2DString test1Title = new HUD2DString( "Placeholder", null, new Vector2( 0, -0.05f ), null, null, 0.6f, null );
+            test1Title.positionType = HUDType.RELATIV;
+            test1Array.Add( test1Title );
+
+            HUD2DButton test1High = new HUD2DButton( "do nothing", new Vector2( 0, 0 ), 0.7f );
+            test1High.positionType = HUDType.RELATIV;
+            HUD2DButton test1Medium = new HUD2DButton( "wait for something", new Vector2( 0, 0.05f ), 0.7f );
+            test1Medium.positionType = HUDType.RELATIV;
+            HUD2DButton test1Low = new HUD2DButton( "do anything", new Vector2( 0, 0.1f ), 0.7f );
+            test1Low.positionType = HUDType.RELATIV;
+
+            test1Array.Add( test1High );
+            test1Array.Add( test1Medium );
+            test1Array.Add( test1Low );
+
 
             this.view.Window_ClientSizeChanged();
         }
