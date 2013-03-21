@@ -61,7 +61,7 @@ namespace Battlestation_Antares.View {
         /// HUD 
         /// </summary>
         public void Draw() {
-            Antares.graphics.GraphicsDevice.Clear( this.backgroundColor );
+            Antares.graphics.GraphicsDevice.Clear( Color.Transparent);
 
             // draw content
             DrawPreContent();

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
 using System.Collections.Generic;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antares.Control {
 
@@ -11,6 +12,9 @@ namespace Battlestation_Antares.Control {
     /// the Menu controller
     /// </summary>
     class MenuController : SituationController {
+
+
+        HUD2DRenderedItem test;
 
         private HUD2DArray buttonGrid;
 
@@ -39,6 +43,22 @@ namespace Battlestation_Antares.Control {
             this.worldUpdate = WorldUpdate.NO_UPDATE;
 
             // test content
+            HUD2DTexture testTex = new HUD2DTexture();
+            testTex.abstractPosition = new Vector2( 0.5f, 0.5f );
+            testTex.positionType = HUDType.RELATIV;
+            testTex.abstractSize = new Vector2( 2f, 2f );
+            testTex.sizeType = HUDType.RELATIV;
+            testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//Galaxy" );
+            testTex.color = new Color( 128, 128, 128, 128 );
+
+            test = new HUD2DRenderedItem( testTex );
+            test.abstractPosition = new Vector2( 0.5f, 0.5f );
+            test.positionType = HUDType.RELATIV;
+            test.abstractSize = new Vector2( 0.7f, 0.7f );
+            test.sizeType = HUDType.RELATIV;
+            testTex.layerDepth = 1.0f;
+            this.view.allHUD_2D.Add( test );
+
 
             this.buttonGrid = new HUD2DArray( new Vector2( 0.5f, 0.8f ), HUDType.RELATIV, new Vector2( 800, 150 ), HUDType.ABSOLUT);
             this.buttonGrid.layerDepth = 0.5f;
@@ -205,6 +225,8 @@ namespace Battlestation_Antares.Control {
         /// <param name="gameTime">the game time</param>
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
+
+            test.Render();
         }
 
 

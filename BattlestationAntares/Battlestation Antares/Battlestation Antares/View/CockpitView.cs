@@ -68,11 +68,11 @@ namespace Battlestation_Antares.View {
 
             // 2D HUD
             cockpitTexture = new HUD2DTexture();
-            cockpitTexture.abstractPosition = new Vector2( 0.5f, 0.5f );
+            cockpitTexture.abstractPosition = new Vector2( 0.5f, 0.75f );
             cockpitTexture.positionType = HUDType.RELATIV;
-            cockpitTexture.abstractSize = new Vector2( 1, 1 );
+            cockpitTexture.abstractSize = new Vector2( 1, 1.5f );
             cockpitTexture.sizeType = HUDType.RELATIV;
-            cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit3" );
+            cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit_test" );
             cockpitTexture.layerDepth = 1.0f;
             this.allHUD_2D.Add( cockpitTexture );
 
