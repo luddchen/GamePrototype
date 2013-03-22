@@ -28,9 +28,8 @@ namespace Battlestation_Antares.Control {
 
 
         private List<IUpdatableItem> allUpdatable;
-        private List<IUpdatableItem> allUpdatableAddList;
-        private List<IUpdatableItem> allUpdatableRemoveList;
-
+        private List<IUpdatableItem> registerList;
+        private List<IUpdatableItem> unregisterList;
 
 
         /// <summary>
@@ -43,8 +42,8 @@ namespace Battlestation_Antares.Control {
             this.view = view;
             this.worldUpdate = WorldUpdate.PRE;
             this.allUpdatable = new List<IUpdatableItem>();
-            this.allUpdatableAddList = new List<IUpdatableItem>();
-            this.allUpdatableRemoveList = new List<IUpdatableItem>();
+            this.registerList = new List<IUpdatableItem>();
+            this.unregisterList = new List<IUpdatableItem>();
         }
 
 
@@ -54,37 +53,45 @@ namespace Battlestation_Antares.Control {
         /// <param name="gameTime">the game time</param>
         public virtual void Update( GameTime gameTime ) {
             // remove updatable items
-            foreach ( IUpdatableItem item in this.allUpdatableRemoveList ) {
+            foreach ( IUpdatableItem item in this.unregisterList ) {
                 this.allUpdatable.Remove( item );
             }
-            this.allUpdatableRemoveList.Clear();
+            this.unregisterList.Clear();
 
             // add updatable items
-            foreach ( IUpdatableItem item in this.allUpdatableAddList ) {
+            foreach ( IUpdatableItem item in this.registerList ) {
                 this.allUpdatable.Add( item );
             }
-            this.allUpdatableAddList.Clear();
+            this.registerList.Clear();
 
             // update items
             foreach ( IUpdatableItem item in this.allUpdatable ) {
-                item.Update( gameTime );
+                if ( item.Enabled ) {
+                    item.Update( gameTime );
+                }
             }
-
-            this.view.ButtonUpdate();
         }
 
         /// <summary>
         /// called upon switching to this situation
         /// </summary>
         public virtual void onEnter() {
-
         }
 
         /// <summary>
         /// called upon leaving this situation
         /// </summary>
         public virtual void onExit() {
+        }
 
+
+        public void Register( IUpdatableItem item ) {
+            this.registerList.Add( item );
+        }
+
+
+        public void Unregister( IUpdatableItem item ) {
+            this.unregisterList.Add( item );
         }
 
 

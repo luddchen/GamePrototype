@@ -9,18 +9,13 @@ namespace Battlestation_Antares.View {
 
     public class AIView : View {
 
-        public AI_Container aiContainer;
-
+        private AI_Container aiContainer;
 
         public AIView( Color? backgroundColor ) : base( backgroundColor ) {
         }
 
 
         public override void Initialize() {
-
-            this.aiContainer = new AI_Container();
-            this.Add( this.aiContainer );
-
             HUDTexture bg = new HUDTexture();
             bg.abstractPosition = new Vector2( 0.41f, 0.5f );
             bg.positionType = HUDType.RELATIV;
@@ -32,13 +27,20 @@ namespace Battlestation_Antares.View {
             this.Add( bg );
         }
 
-        protected override void DrawPreContent() {
-            this.aiContainer.Update();
+        public override void Add( HUD_Item item ) {
+            base.Add( item );
+
+            // dirty way to get post draw content (2nd draw pass)
+            if ( item is AI_Container ) {
+                this.aiContainer = (AI_Container)item;
+            }
         }
 
 
         protected override void DrawPostContent() {
-            this.aiContainer.DrawConnections();
+            if ( this.aiContainer != null ) {
+                this.aiContainer.DrawConnections();
+            }
         }
 
     }

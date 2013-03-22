@@ -31,7 +31,7 @@ namespace Battlestation_Antares.View {
         /// <summary>
         /// a list of HUD elements
         /// </summary>
-        private List<HUD.HUD_Item> allItems;
+        private List<HUD_Item> allItems;
 
 
         /// <summary>
@@ -62,10 +62,10 @@ namespace Battlestation_Antares.View {
             // draw content behind HUD
             DrawPreContent();
 
-            // draw 2D HUD elements
+            // draw HUD elements
             this.spriteBatch.Begin( SpriteSortMode.BackToFront, BlendState.AlphaBlend );// SamplerState.AnisotropicClamp, DepthStencilState.DepthRead, null);
 
-            foreach ( HUD.HUD_Item element in this.allItems ) {
+            foreach ( HUD_Item element in this.allItems ) {
                 element.Draw( this.spriteBatch );
             }
 
@@ -92,18 +92,18 @@ namespace Battlestation_Antares.View {
         }
 
 
-        public void Add( HUD.HUD_Item item ) {
+        public virtual void Add( HUD_Item item ) {
             this.allItems.Add( item );
         }
 
 
-        public void AddRange( IEnumerable<HUD.HUD_Item> collection ) {
+        public void AddRange( IEnumerable<HUD_Item> collection ) {
             this.allItems.AddRange( collection );
         }
 
 
         public virtual void Window_ClientSizeChanged() {
-            foreach ( HUD.HUD_Item element in this.allItems ) {
+            foreach ( HUD_Item element in this.allItems ) {
                 element.ClientSizeChanged();
             }
         }
@@ -117,28 +117,6 @@ namespace Battlestation_Antares.View {
                 this.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, (int)Antares.RenderSize.X, (int)Antares.RenderSize.Y, true,
                                                         Antares.graphics.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
                 this.Window_ClientSizeChanged();
-            }
-        }
-
-
-        public void ButtonUpdate() {
-            foreach ( HUD.HUD_Item item in this.allItems ) {
-                ButtonUpdate( item );
-            }
-        }
-
-        private void ButtonUpdate( HUD.HUD_Item item ) {
-            if ( item.isVisible ) {
-                if ( item is HUDButton ) {
-                    ( (HUDButton)item ).isUpdatedClicked( Antares.inputProvider );
-                }
-
-                if ( item is HUDContainer ) {
-                    foreach ( HUD.HUD_Item child in ( (HUDContainer)item ).allChilds ) {
-                        ButtonUpdate( child );
-                    }
-                }
-
             }
         }
 

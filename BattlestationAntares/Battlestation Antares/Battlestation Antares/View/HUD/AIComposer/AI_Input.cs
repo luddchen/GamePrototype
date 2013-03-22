@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Battlestation_Antares.Control;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
@@ -14,7 +15,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             HULL_HEALTH
         }
 
-        public AI_Input( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition, positionType ) {
+        public AI_Input( Vector2 abstractPosition, HUDType positionType, SituationController controller ) : base( abstractPosition, positionType, controller ) {
             this.typeString.String = "Input";
 
             AddPort( AI_ItemPort.PortType.OUTPUT );

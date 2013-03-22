@@ -17,7 +17,7 @@ namespace Battlestation_Antares.View.HUD {
         private Action downAction;
 
 
-        public HUDButton( String text, Vector2 position, float scale)
+        public HUDButton( String text, Vector2 position, float scale, SituationController controller)
             : base( text) {
             this.abstractPosition = position;
             this.overallScale = scale;
@@ -26,41 +26,16 @@ namespace Battlestation_Antares.View.HUD {
 
             this.color = this.style.foregroundColorNormal;
             this.BackgroundColor = this.style.backgroundColorNormal;
-            SetBackgroundTexture( "Sprites//builder_button" );//"Sprites\\Button2" );
+            SetBackgroundTexture( "Sprites//builder_button" );
+
+            if ( controller != null ) {
+                controller.Register( this );
+            }
         }
 
         public void SetBackgroundTexture( String background ) {
             this.BackgroundTexture = Antares.content.Load<Texture2D>( background );
             this.BackgroundTextureOrigin = new Vector2( BackgroundTexture.Width / 2, BackgroundTexture.Height / 2 );
-        }
-
-        public bool isUpdatedClicked( InputProvider input ) {
-            bool clicked = false;
-
-            if ( this.Intersects( input.getMousePos() ) ) {
-                if ( input.isLeftMouseButtonPressed() ) {
-                    this.color = this.style.foregroundColorPressed;
-                    this.BackgroundColor = this.style.backgroundColorPressed;
-                    this.scale = this.style.scalePressed * this.overallScale;
-                    clicked = true;
-                    if ( this.pressedAction != null ) {
-                        this.pressedAction();
-                    }
-                } else {
-                    if ( input.isLeftMouseButtonDown() && this.downAction != null ) {
-                        this.downAction();
-                    }
-                    this.color = this.style.foregroundColorHover;
-                    this.BackgroundColor = this.style.backgroundColorHover;
-                    this.scale = this.style.scaleHover * this.overallScale;
-                }
-            } else {
-                this.color = this.style.foregroundColorNormal;
-                this.BackgroundColor = this.style.backgroundColorNormal;
-                this.scale = this.style.scaleNormal * this.overallScale;
-            }
-
-            return clicked;
         }
 
 
@@ -81,12 +56,32 @@ namespace Battlestation_Antares.View.HUD {
 
 
         void IUpdatableItem.Update( GameTime gameTime ) {
-            throw new NotImplementedException();
+            if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
+                if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
+                    this.color = this.style.foregroundColorPressed;
+                    this.BackgroundColor = this.style.backgroundColorPressed;
+                    this.scale = this.style.scalePressed * this.overallScale;
+                    if ( this.pressedAction != null ) {
+                        this.pressedAction();
+                    }
+                } else {
+                    if ( Antares.inputProvider.isLeftMouseButtonDown() && this.downAction != null ) {
+                        this.downAction();
+                    }
+                    this.color = this.style.foregroundColorHover;
+                    this.BackgroundColor = this.style.backgroundColorHover;
+                    this.scale = this.style.scaleHover * this.overallScale;
+                }
+            } else {
+                this.color = this.style.foregroundColorNormal;
+                this.BackgroundColor = this.style.backgroundColorNormal;
+                this.scale = this.style.scaleNormal * this.overallScale;
+            }
         }
 
         bool IUpdatableItem.Enabled {
             get {
-                throw new NotImplementedException();
+                return this.IsVisible;
             }
         }
     }

@@ -11,9 +11,15 @@ namespace Battlestation_Antares.Control {
 
     public class AIController : SituationController {
 
+        public AI_Container aiContainer;
+
         public AIController( Antares game, View.View view )
             : base( game, view ) {
-            HUDButton toMenuButton = new HUDButton( "  ", new Vector2( 0.95f, 0.95f ), 1.3f );
+
+            this.aiContainer = new AI_Container(this);
+            this.view.Add( this.aiContainer );
+
+            HUDButton toMenuButton = new HUDButton( "  ", new Vector2( 0.95f, 0.95f ), 1.3f, this );
             toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
@@ -28,11 +34,11 @@ namespace Battlestation_Antares.Control {
             verifyArray.direction = LayoutDirection.HORIZONTAL;
             this.view.Add( verifyArray );
 
-            HUDButton verifyButton = new HUDButton( "Verify", new Vector2(), 0.8f );
+            HUDButton verifyButton = new HUDButton( "Verify", new Vector2(), 0.8f, this );
             verifyButton.SetPressedAction(
                 delegate() {
                     AI.AI ai = new AI.AI();
-                    ai.Create( ( (AIView)this.view ).aiContainer );
+                    ai.Create( this.aiContainer );
                     Console.WriteLine( ai );
 
                     foreach ( Turret turret in Antares.world.allTurrets ) {
@@ -56,28 +62,28 @@ namespace Battlestation_Antares.Control {
             aiButtonArray.direction = LayoutDirection.VERTICAL;
             this.view.Add( aiButtonArray );
 
-            HUDButton saveButton = new HUDButton( "Save", new Vector2(), 0.6f );
+            HUDButton saveButton = new HUDButton( "Save", new Vector2(), 0.6f, this );
             saveButton.SetPressedAction(
                 delegate() {
-                    AI_XML.WriteAIContainer( "testAI.xml", ( (View.AIView)this.view ).aiContainer );
+                    AI_XML.WriteAIContainer( "testAI.xml", this.aiContainer );
                 } );
             saveButton.style = ButtonStyle.BuilderButtonStyle();
             saveButton.SetBackgroundTexture( "Sprites//builder_button" );
             aiButtonArray.Add( saveButton );
 
-            HUDButton loadButton = new HUDButton( "Load", new Vector2(), 0.6f );
+            HUDButton loadButton = new HUDButton( "Load", new Vector2(), 0.6f, this );
             loadButton.SetPressedAction(
                 delegate() {
-                    AI_XML.ReadAIContainer( "testAI.xml", ( (View.AIView)this.view ).aiContainer );
+                    AI_XML.ReadAIContainer( "testAI.xml", this.aiContainer );
                 } );
             loadButton.style = ButtonStyle.BuilderButtonStyle();
             loadButton.SetBackgroundTexture( "Sprites//builder_button" );
             aiButtonArray.Add( loadButton );
 
-            HUDButton clearButton = new HUDButton( "Clear", new Vector2(), 0.6f );
+            HUDButton clearButton = new HUDButton( "Clear", new Vector2(), 0.6f, this );
             clearButton.SetPressedAction(
                 delegate() {
-                    ( (View.AIView)this.view ).aiContainer.ClearAI();
+                    this.aiContainer.ClearAI();
                 } );
             clearButton.style = ButtonStyle.BuilderButtonStyle();
             clearButton.SetBackgroundTexture( "Sprites//builder_button" );

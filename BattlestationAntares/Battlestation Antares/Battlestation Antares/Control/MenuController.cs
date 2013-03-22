@@ -69,58 +69,58 @@ namespace Battlestation_Antares.Control {
 
             this.optionsButtonGroup = new HUDArray( new Vector2( 0.5f, 0.8f ), HUDType.RELATIV, new Vector2( 600, 150 ), HUDType.ABSOLUT);
             this.optionsButtonGroup.direction = LayoutDirection.HORIZONTAL;
-            this.optionsButtonGroup.isVisible = false;
+            this.optionsButtonGroup.IsVisible = false;
 
             this.buttonGrid.Add( this.optionsButtonGroup );
             this.buttonGrid.Add( this.buttons1 );
 
 
-            HUDButton toCommandButton = new HUDButton( "Command", Vector2.Zero, 0.9f);
+            HUDButton toCommandButton = new HUDButton( "Command", Vector2.Zero, 0.9f, this);
             toCommandButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COMMAND );
             } );
             this.buttons1.Add( toCommandButton );
 
-            HUDButton toCockpitButton = new HUDButton( "Cockpit", Vector2.Zero, 0.9f);
+            HUDButton toCockpitButton = new HUDButton( "Cockpit", Vector2.Zero, 0.9f, this);
             toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
             this.buttons1.Add( toCockpitButton );
 
-            HUDButton toAIButton = new HUDButton( "Editor", Vector2.Zero, 0.9f);
+            HUDButton toAIButton = new HUDButton( "Editor", Vector2.Zero, 0.9f, this);
             toAIButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.AI_BUILDER );
             } );
             this.buttons1.Add( toAIButton );
 
-            this.optionsButton = new HUDButton( "Options", Vector2.Zero, 0.9f);
+            this.optionsButton = new HUDButton( "Options", Vector2.Zero, 0.9f, this);
             this.optionsButton.SetPressedAction(
                 delegate() {
                     this.optionsButton.Toggle();
                     hidePages();
-                    this.optionsButtonGroup.isVisible = !( this.optionsButtonGroup.isVisible );
+                    this.optionsButtonGroup.ToggleVisibility();
                 } );
             this.buttons1.Add( this.optionsButton );
 
-            HUDButton exitButton = new HUDButton( "Exit", Vector2.Zero, 0.9f);
+            HUDButton exitButton = new HUDButton( "Exit", Vector2.Zero, 0.9f, this);
             exitButton.SetPressedAction( delegate() {
                 this.game.Exit();
             } );
             this.buttons1.Add( exitButton );
 
-            HUDButton videoButton = new HUDButton( "Video", Vector2.Zero, 0.9f);
+            HUDButton videoButton = new HUDButton( "Video", Vector2.Zero, 0.9f, this);
             videoButton.SetPressedAction( delegate() {
                 showPage( this.videoPage );
             } );
             this.optionsButtonGroup.Add( videoButton );
 
-            HUDButton soundButton = new HUDButton( "Sound", Vector2.Zero, 0.9f);
+            HUDButton soundButton = new HUDButton( "Sound", Vector2.Zero, 0.9f, this);
             soundButton.SetPressedAction( delegate() {
                 showPage( this.soundPage );
             } );
             this.optionsButtonGroup.Add( soundButton );
 
-            HUDButton controlButton = new HUDButton( "Control", Vector2.Zero, 0.9f);
+            HUDButton controlButton = new HUDButton( "Control", Vector2.Zero, 0.9f, this);
             controlButton.SetPressedAction( delegate() {
                 showPage( this.controlPage );
             } );
@@ -148,7 +148,7 @@ namespace Battlestation_Antares.Control {
             this.contentPages.Add( this.controlPage );
 
             foreach ( HUDContainer container in this.contentPages ) {
-                container.isVisible = false;
+                container.IsVisible = false;
                 this.view.Add( container );
             }
 
@@ -160,11 +160,11 @@ namespace Battlestation_Antares.Control {
             resolutionTitle.positionType = HUDType.RELATIV;
             renderResolutionArray.Add( resolutionTitle );
 
-            HUDButton resolutionHigh = new HUDButton( "1920 x 1080", new Vector2(0, 0), 0.7f );
+            HUDButton resolutionHigh = new HUDButton( "1920 x 1080", new Vector2(0, 0), 0.7f, this );
             resolutionHigh.positionType = HUDType.RELATIV;
-            HUDButton resolutionMedium = new HUDButton( "1600 x 900", new Vector2( 0, 0.05f ), 0.7f );
+            HUDButton resolutionMedium = new HUDButton( "1600 x 900", new Vector2( 0, 0.05f ), 0.7f, this );
             resolutionMedium.positionType = HUDType.RELATIV;
-            HUDButton resolutionLow = new HUDButton( "1280 x 720", new Vector2( 0, 0.1f ), 0.7f );
+            HUDButton resolutionLow = new HUDButton( "1280 x 720", new Vector2( 0, 0.1f ), 0.7f, this );
             resolutionLow.positionType = HUDType.RELATIV;
 
             renderResolutionArray.Add( resolutionHigh );
@@ -203,11 +203,11 @@ namespace Battlestation_Antares.Control {
             test1Title.positionType = HUDType.RELATIV;
             test1Array.Add( test1Title );
 
-            HUDButton test1High = new HUDButton( "do nothing", new Vector2( 0, 0 ), 0.7f );
+            HUDButton test1High = new HUDButton( "do nothing", new Vector2( 0, 0 ), 0.7f, null );
             test1High.positionType = HUDType.RELATIV;
-            HUDButton test1Medium = new HUDButton( "wait for something", new Vector2( 0, 0.05f ), 0.7f );
+            HUDButton test1Medium = new HUDButton( "wait for something", new Vector2( 0, 0.05f ), 0.7f, null );
             test1Medium.positionType = HUDType.RELATIV;
-            HUDButton test1Low = new HUDButton( "do anything", new Vector2( 0, 0.1f ), 0.7f );
+            HUDButton test1Low = new HUDButton( "do anything", new Vector2( 0, 0.1f ), 0.7f, null );
             test1Low.positionType = HUDType.RELATIV;
 
             test1Array.Add( test1High );
@@ -232,13 +232,13 @@ namespace Battlestation_Antares.Control {
 
         private void hidePages() {
             foreach ( HUDContainer container in this.contentPages ) {
-                container.isVisible = false;
+                container.IsVisible = false;
             }
         }
 
         private void showPage( HUDContainer container ) {
             hidePages();
-            container.isVisible = true;
+            container.IsVisible = true;
         }
 
     }

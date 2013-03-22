@@ -45,14 +45,14 @@ namespace Battlestation_Antares.Control {
             : base( game, view ) {
             this.currentMode = CommandMode.NORMAL;
 
-            this.toMenuButton = new HUDButton( "Menu", new Vector2( 0.1f, 0.9f ), 0.7f );
+            this.toMenuButton = new HUDButton( "Menu", new Vector2( 0.1f, 0.9f ), 0.7f, this );
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
             this.toMenuButton.positionType = HUDType.RELATIV;
             this.view.Add( toMenuButton );
 
-            this.toCockpitButton = new HUDButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f );
+            this.toCockpitButton = new HUDButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f, this );
             this.toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
@@ -62,15 +62,16 @@ namespace Battlestation_Antares.Control {
             buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV, 
                 delegate() {
                     if ( this.currentMouseTexture != null ) {
-                        this.currentMouseTexture.isVisible = false;
+                        this.currentMouseTexture.IsVisible = false;
                     }
                     this.currentMode = CommandMode.BUILD;
-                } );
+                } ,
+                this);
             this.view.Add( buildMenu );
 
             mouseTextures = new Dictionary<Type, MouseTexture>();
-            mouseTextures.Add( typeof( Battlestation_Antares.Model.Turret ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Turret//turret_2d" ) ) );
-            mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Radar//radar_2d" ) ) );
+            mouseTextures.Add( typeof( Battlestation_Antares.Model.Turret ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Turret//turret_2d" ), this ) );
+            mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Radar//radar_2d" ), this ) );
             this.view.AddRange( mouseTextures.Values );
 
             mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.5f ), new Vector2( 0.625f, 1f ), new Vector2( 0.625f, 1f ), Antares.world.spaceStation );
@@ -97,8 +98,7 @@ namespace Battlestation_Antares.Control {
             if ( currentMode == CommandMode.BUILD ) {
                 // activate mouse texture
                 Type buildingType = buildMenu.getStructureType();
-                this.mouseTextures[buildingType].isVisible = true;
-                this.mouseTextures[buildingType].update();
+                this.mouseTextures[buildingType].IsVisible = true;
             }
 
             if ( currentMode == CommandMode.BUILD && Antares.inputProvider.isLeftMouseButtonPressed() ) {
@@ -107,7 +107,7 @@ namespace Battlestation_Antares.Control {
 
             if ( currentMode == CommandMode.BUILD && Antares.inputProvider.isRightMouseButtonPressed() ) {
                 Type structureType = buildMenu.getStructureType();
-                this.mouseTextures[structureType].isVisible = false;
+                this.mouseTextures[structureType].IsVisible = false;
                 this.currentMode = CommandMode.NORMAL;
             }
 

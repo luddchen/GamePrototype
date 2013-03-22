@@ -49,10 +49,22 @@ namespace Battlestation_Antares.View.HUD {
 
         public Color color;
 
-
         public float layerDepth = 0.5f;
 
-        public bool isVisible;
+        public bool IsVisible {
+            set {
+                this.isVisible = value;
+            }
+            get {
+                if ( this.isVisible ) {
+                    return ( this.parent != null ) ? this.parent.IsVisible : true;
+                }
+
+                return false;
+            }
+        }
+
+        protected bool isVisible;
 
         public HUD_Item parent;
 
@@ -124,6 +136,11 @@ namespace Battlestation_Antares.View.HUD {
                     this.position += new Vector2( Antares.RenderSize.X * this.abstractPosition.X, this.abstractPosition.Y );
                     break;
             }
+        }
+
+
+        public void ToggleVisibility() {
+            this.isVisible = !this.isVisible;
         }
 
 

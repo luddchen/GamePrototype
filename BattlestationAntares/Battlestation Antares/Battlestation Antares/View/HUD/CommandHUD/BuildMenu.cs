@@ -13,12 +13,12 @@ namespace Battlestation_Antares.View.HUD.CommandHUD {
 
         private Action action;
 
-        public BuildMenu( Vector2 abstractPosition, HUDType positionType, Action action )
+        public BuildMenu( Vector2 abstractPosition, HUDType positionType, Action action, SituationController controller )
             : base( abstractPosition, positionType , new Vector2(0.1f, 0.1f), HUDType.RELATIV) {
 
             this.action = action;
 
-            buildTurretButton = new HUDButton( "Turret", new Vector2( 0f, 0f ), 0.7f );
+            buildTurretButton = new HUDButton( "Turret", new Vector2( 0f, 0f ), 0.7f, controller );
             buildTurretButton.abstractPosition = new Vector2( 0f, -30f );
             buildTurretButton.layerDepth = 0.4f;
             buildTurretButton.SetPressedAction( 
@@ -28,7 +28,7 @@ namespace Battlestation_Antares.View.HUD.CommandHUD {
                 } );
             this.Add( buildTurretButton );
 
-            buildRadarButton = new HUDButton( "Radar", new Vector2( 0f, 0f ), 0.7f );
+            buildRadarButton = new HUDButton( "Radar", new Vector2( 0f, 0f ), 0.7f, controller );
             buildRadarButton.abstractPosition = new Vector2( 0f, 30f );
             buildRadarButton.layerDepth = 0.4f;
             buildRadarButton.SetPressedAction(

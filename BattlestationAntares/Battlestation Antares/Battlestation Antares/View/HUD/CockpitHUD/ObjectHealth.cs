@@ -29,7 +29,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
             this.hullImage = new HUDTexture();
             this.hullImage.abstractSize = new Vector2( 75, 75 );
             this.hullImage.sizeType = HUDType.ABSOLUT;
-            this.hullImage.isVisible = false;
+            this.hullImage.IsVisible = false;
             this.Add( this.hullImage );
 
             setLayerDepth( this.layerDepth );
@@ -45,7 +45,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
 
             this.hullImage.Texture = hullTexture;
             this.hullImage.scale = hullScale;
-            this.hullImage.isVisible = true;
+            this.hullImage.IsVisible = true;
             this.GetColor = 
                 delegate(SpatialObject o) {
                     float v = o.attributes.Hull.CurrentHealthPoints / o.attributes.Hull.MaxHealthPoints;

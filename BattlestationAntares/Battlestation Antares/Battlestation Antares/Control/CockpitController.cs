@@ -50,22 +50,14 @@ namespace Battlestation_Antares.Control {
 
             HUDContainer buttons = new HUDContainer( new Vector2( 0.8f, 0.95f ), HUDType.RELATIV );
 
-            toCommandButton =
-                new HUDButton(
-                    "Command",
-                    new Vector2( 0, 0 ),
-                    0.5f );
+            toCommandButton = new HUDButton( "Command", new Vector2( 0, 0 ), 0.5f, this );
 
             this.toCommandButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COMMAND );
             } );
             buttons.Add( toCommandButton );
 
-            toMenuButton =
-                new HUDButton(
-                    "Menu",
-                    new Vector2( toCommandButton.size.X + 10, 0 ),
-                    0.5f );
+            toMenuButton = new HUDButton( "Menu", new Vector2( toCommandButton.size.X + 10, 0 ), 0.5f, this );
 
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );

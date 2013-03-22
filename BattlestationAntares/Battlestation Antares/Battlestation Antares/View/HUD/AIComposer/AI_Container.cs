@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD.AIComposer;
+using Battlestation_Antares.Control;
+using Battlestation_Antaris;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Container : HUDContainer {
+    public class AI_Container : HUDContainer, IUpdatableItem {
 
         private PrimitiveBatch primitiveBatch;
 
@@ -31,10 +33,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public List<HUD_Item> removeList;
 
+        private SituationController controller;
 
-        public AI_Container()
+        public AI_Container(SituationController controller)
             : base( new Vector2( 0, 0 ), HUDType.RELATIV ) {
 
+            this.controller = controller;
             this.primitiveBatch = new PrimitiveBatch( Antares.graphics.GraphicsDevice );
 
             this.removeList = new List<HUD_Item>();
@@ -58,9 +62,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
             this.Add( this.mouseItemTex );
             this.mouseItemTex.layerDepth = 0;
-            this.mouseItemTex.isVisible = false;
+            this.mouseItemTex.IsVisible = false;
 
             this.initButtons();
+
+            if ( controller != null ) {
+                controller.Register( this );
+            }
         }
 
 
@@ -94,7 +102,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.primitiveBatch.End();
         }
 
-        public void Update() {
+        public void Update( GameTime gameTime ) {
             // remove items if necessary 
             foreach ( HUD_Item item in this.removeList ) {
                 if ( item is AI_Connection ) {
@@ -115,7 +123,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             if ( this.moveItem == null ) {
                 // drag item if existent
-                this.mouseItemTex.isVisible = false;
+                this.mouseItemTex.IsVisible = false;
                 if ( Antares.inputProvider.isLeftMouseButtonDown()) {
                     foreach ( AI_Item item in this.aiItems ) {
                         if ( item.typeString.Intersects( Antares.inputProvider.getMousePos() ) ) {
@@ -125,7 +133,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                     }
                 }
             } else {
-                this.mouseItemTex.isVisible = true;
+                this.mouseItemTex.IsVisible = true;
                 this.mouseItemTex.position = Antares.inputProvider.getMousePos();
 
                 AI_Bank targetBank = null;
@@ -317,36 +325,36 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.Add( addButtonArray );
 
 
-            HUDButton addInputButton = new HUDButton( "Input", new Vector2(), 0.7f );
+            HUDButton addInputButton = new HUDButton( "Input", new Vector2(), 0.7f, this.controller );
             addInputButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Input( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
+                AddInsertItem( new AI_Input( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV, this.controller ) );
             } );
             addInputButton.style = ButtonStyle.BuilderButtonStyle();
             addInputButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addInputButton );
 
 
-            HUDButton addTransformerButton = new HUDButton( "Transformer", new Vector2(), 0.7f );
+            HUDButton addTransformerButton = new HUDButton( "Transformer", new Vector2(), 0.7f, this.controller );
             addTransformerButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Transformer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
+                AddInsertItem( new AI_Transformer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV, this.controller ) );
             } );
             addTransformerButton.style = ButtonStyle.BuilderButtonStyle();
             addTransformerButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addTransformerButton );
 
 
-            HUDButton addMixerButton = new HUDButton( "Mixer", new Vector2(), 0.7f );
+            HUDButton addMixerButton = new HUDButton( "Mixer", new Vector2(), 0.7f, this.controller );
             addMixerButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Mixer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
+                AddInsertItem( new AI_Mixer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV, this.controller ) );
             } );
             addMixerButton.style = ButtonStyle.BuilderButtonStyle();
             addMixerButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addMixerButton );
 
 
-            HUDButton addOutputButton = new HUDButton( "Output", new Vector2(), 0.7f );
+            HUDButton addOutputButton = new HUDButton( "Output", new Vector2(), 0.7f, this.controller );
             addOutputButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Output( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
+                AddInsertItem( new AI_Output( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV, this.controller ) );
             } );
             addOutputButton.style = ButtonStyle.BuilderButtonStyle();
             addOutputButton.SetBackgroundTexture( "Sprites//builder_button" );
@@ -387,6 +395,11 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             }
         }
 
+        public bool Enabled {
+            get {
+                return this.IsVisible;
+            }
+        }
     }
 
 }

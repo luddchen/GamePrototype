@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antares.Control;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
@@ -31,7 +32,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private HUDButton removeButton;
 
 
-        public AI_Item( Vector2 abstractPosition, HUDType positionType)
+        public AI_Item( Vector2 abstractPosition, HUDType positionType, SituationController controller)
             : base( abstractPosition, positionType) {
             this.sizeType = HUDType.ABSOLUT;
             this.abstractSize = new Vector2( 200, 100 );
@@ -52,7 +53,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.typeString.abstractPosition = new Vector2( 0, -( this.abstractSize.Y - this.typeString.size.Y ) / 2 );
             Add( this.typeString );
 
-            this.removeButton = new HUDButton( "X", new Vector2( this.abstractSize.X / 2 - 8, -( this.abstractSize.Y / 2 ) + 8 ), 0.5f);
+            this.removeButton = new HUDButton( "X", new Vector2( this.abstractSize.X / 2 - 8, -( this.abstractSize.Y / 2 ) + 8 ), 0.5f, controller);
             this.removeButton.positionType = this.sizeType;
             this.removeButton.style = ButtonStyle.RemoveButtonStyle();
             this.removeButton.SetPressedAction( delegate() {
@@ -67,7 +68,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.subTypeString.abstractPosition = new Vector2( 0, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
             Add( this.subTypeString );
 
-            this.nextSubType = new HUDButton( ">", Vector2.Zero, 0.8f);
+            this.nextSubType = new HUDButton( ">", Vector2.Zero, 0.8f, controller);
             this.nextSubType.positionType = this.sizeType;
             this.nextSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.nextSubType.abstractPosition = new Vector2( ( this.abstractSize.X - this.nextSubType.size.X ) / 2 - 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
@@ -76,7 +77,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             } );
             Add( this.nextSubType );
 
-            this.previousSubType = new HUDButton( "<", Vector2.Zero, 0.8f);
+            this.previousSubType = new HUDButton( "<", Vector2.Zero, 0.8f, controller);
             this.previousSubType.positionType = this.sizeType;
             this.previousSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.previousSubType.abstractPosition = new Vector2( -( this.abstractSize.X - this.nextSubType.size.X ) / 2 + 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
