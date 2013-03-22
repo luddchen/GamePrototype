@@ -6,7 +6,7 @@ using Battlestation_Antares.Model;
 
 namespace Battlestation_Antares.View.HUD {
 
-    public class MiniMapIcon : HUD2DTexture {
+    public class MiniMapIcon : HUDTexture {
 
         public SpatialObject spatialObject;
 

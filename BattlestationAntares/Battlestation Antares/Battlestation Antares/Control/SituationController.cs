@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using Battlestation_Antaris;
 
 namespace Battlestation_Antares.Control {
 
@@ -10,7 +12,7 @@ namespace Battlestation_Antares.Control {
         /// <summary>
         /// the game
         /// </summary>
-        public Antares game;
+        protected Antares game;
 
 
         /// <summary>
@@ -25,6 +27,12 @@ namespace Battlestation_Antares.Control {
         public WorldUpdate worldUpdate;
 
 
+        private List<IUpdatableItem> allUpdatable;
+        private List<IUpdatableItem> allUpdatableAddList;
+        private List<IUpdatableItem> allUpdatableRemoveList;
+
+
+
         /// <summary>
         /// create a new situation controller
         /// </summary>
@@ -34,6 +42,9 @@ namespace Battlestation_Antares.Control {
             this.game = game;
             this.view = view;
             this.worldUpdate = WorldUpdate.PRE;
+            this.allUpdatable = new List<IUpdatableItem>();
+            this.allUpdatableAddList = new List<IUpdatableItem>();
+            this.allUpdatableRemoveList = new List<IUpdatableItem>();
         }
 
 
@@ -42,6 +53,23 @@ namespace Battlestation_Antares.Control {
         /// </summary>
         /// <param name="gameTime">the game time</param>
         public virtual void Update( GameTime gameTime ) {
+            // remove updatable items
+            foreach ( IUpdatableItem item in this.allUpdatableRemoveList ) {
+                this.allUpdatable.Remove( item );
+            }
+            this.allUpdatableRemoveList.Clear();
+
+            // add updatable items
+            foreach ( IUpdatableItem item in this.allUpdatableAddList ) {
+                this.allUpdatable.Add( item );
+            }
+            this.allUpdatableAddList.Clear();
+
+            // update items
+            foreach ( IUpdatableItem item in this.allUpdatable ) {
+                item.Update( gameTime );
+            }
+
             this.view.ButtonUpdate();
         }
 

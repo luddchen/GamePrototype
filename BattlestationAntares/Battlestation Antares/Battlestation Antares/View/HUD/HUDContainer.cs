@@ -5,20 +5,20 @@ using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antares.View.HUD {
 
-    public class HUD2DContainer : HUD2D {
+    public class HUDContainer : HUD_Item {
 
         // list of all childs
-        public List<HUD2D> allChilds;
+        public List<HUD_Item> allChilds;
 
 
-        public HUD2DContainer( Vector2 abstractPosition, HUDType positionType) {
+        public HUDContainer( Vector2 abstractPosition, HUDType positionType) {
             this.abstractPosition = abstractPosition;
             this.positionType = positionType;
-            this.allChilds = new List<HUD2D>();
+            this.allChilds = new List<HUD_Item>();
         }
 
 
-        public virtual void Add( HUD2D element ) {
+        public virtual void Add( HUD_Item element ) {
             element.parent = this;
             element.setLayerDepth( this.layerDepth - 0.01f );
             this.allChilds.Add( element );
@@ -26,7 +26,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public virtual void Remove( HUD2D element ) {
+        public virtual void Remove( HUD_Item element ) {
             this.allChilds.Remove( element );
         }
 
@@ -38,7 +38,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public override void setLayerDepth( float layerDepth ) {
             base.setLayerDepth( layerDepth );
-            foreach ( HUD2D item in this.allChilds ) {
+            foreach ( HUD_Item item in this.allChilds ) {
                 item.setLayerDepth( this.layerDepth - 0.01f );
             }
         }
@@ -46,7 +46,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public override void Draw( SpriteBatch spritBatch ) {
             if ( this.isVisible ) {
-                foreach ( HUD2D item in this.allChilds ) {
+                foreach ( HUD_Item item in this.allChilds ) {
                     item.Draw( spritBatch );
                 }
             }
@@ -56,7 +56,7 @@ namespace Battlestation_Antares.View.HUD {
         public override void ClientSizeChanged() {
             base.ClientSizeChanged();
 
-            foreach ( HUD2D item in this.allChilds ) {
+            foreach ( HUD_Item item in this.allChilds ) {
                 item.ClientSizeChanged();
             }
         }
@@ -64,7 +64,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public override bool Intersects( Vector2 point ) {
             bool intersects = false;
-            foreach ( HUD2D item in this.allChilds ) {
+            foreach ( HUD_Item item in this.allChilds ) {
                 if ( item.Intersects( point ) ) {
                     intersects = true;
                 }

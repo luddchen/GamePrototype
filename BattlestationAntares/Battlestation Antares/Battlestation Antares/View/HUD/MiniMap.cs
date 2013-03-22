@@ -7,7 +7,7 @@ using Battlestation_Antares.Control;
 
 namespace Battlestation_Antares.View.HUD {
 
-    public class MiniMap : HUD2DContainer {
+    public class MiniMap : HUDContainer {
         public class Config {
             public SpatialObject centeredObject;
             public Vector2 abstractPosition;
@@ -42,9 +42,9 @@ namespace Battlestation_Antares.View.HUD {
 
         public static Color BORDER_COLOR_HOVER = new Color( 32, 32, 32, 32 );
 
-        private HUD2DTexture background;
+        private HUDTexture background;
 
-        private HUD2DTexture foreground;
+        private HUDTexture foreground;
 
         private SpatialObject centeredObject;
 
@@ -56,13 +56,13 @@ namespace Battlestation_Antares.View.HUD {
 
         public MiniMap( Vector2 abstractPosition, HUDType positionType )
             : base( abstractPosition, positionType ) {
-            this.background = new HUD2DTexture();
+            this.background = new HUDTexture();
             this.background.color = MiniMap.BACKGROUND_COLOR;
             this.background.abstractSize = new Vector2( 0.25f, 0.4f );
             this.background.sizeType = HUDType.RELATIV;
             this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//Square_Cross" );
 
-            this.foreground = new HUD2DTexture();
+            this.foreground = new HUDTexture();
             this.foreground.color = MiniMap.BORDER_COLOR;
             this.foreground.abstractSize = new Vector2( 0.25f, 0.4f );
             this.foreground.sizeType = HUDType.RELATIV;
@@ -85,7 +85,7 @@ namespace Battlestation_Antares.View.HUD {
         public override void Draw( SpriteBatch spritBatch ) {
             Vector2 backgroundSize = ( this.background.size - this.iconSize ) / 2;
 
-            foreach ( HUD2D element in this.allChilds ) {
+            foreach ( HUD_Item element in this.allChilds ) {
                 if ( element is MiniMapIcon ) {
                     MiniMapIcon icon = ( (MiniMapIcon)element );
                     icon.Update( centeredObject );

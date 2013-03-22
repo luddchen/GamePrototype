@@ -15,8 +15,8 @@ namespace Battlestation_Antares.Control {
         private int mouseTimeOut = 120;
         private int mouseVisibleCounter;
 
-        private HUD2DButton toCommandButton;
-        private HUD2DButton toMenuButton;
+        private HUDButton toCommandButton;
+        private HUDButton toMenuButton;
         private FpsDisplay fpsDisplay;
 
         private Compass compass;
@@ -41,17 +41,17 @@ namespace Battlestation_Antares.Control {
             this.compass.sizeType = HUDType.RELATIV;
             this.compass.layerDepth = 0.1f;
             this.compass.color = new Color( 192, 192, 64 );
-            this.view.allHUD_2D.Add( this.compass );
+            this.view.Add( this.compass );
 
             this.targetInfo = new TargetInfo( new Vector2( 60, 200 ), HUDType.ABSOLUT, new Vector2( 150, 60 ), HUDType.ABSOLUT );
-            this.view.allHUD_2D.Add( this.targetInfo );
+            this.view.Add( this.targetInfo );
 
             mouseVisibleCounter = mouseTimeOut;
 
-            HUD2DContainer buttons = new HUD2DContainer( new Vector2( 0.8f, 0.95f ), HUDType.RELATIV );
+            HUDContainer buttons = new HUDContainer( new Vector2( 0.8f, 0.95f ), HUDType.RELATIV );
 
             toCommandButton =
-                new HUD2DButton(
+                new HUDButton(
                     "Command",
                     new Vector2( 0, 0 ),
                     0.5f );
@@ -62,7 +62,7 @@ namespace Battlestation_Antares.Control {
             buttons.Add( toCommandButton );
 
             toMenuButton =
-                new HUD2DButton(
+                new HUDButton(
                     "Menu",
                     new Vector2( toCommandButton.size.X + 10, 0 ),
                     0.5f );
@@ -71,10 +71,10 @@ namespace Battlestation_Antares.Control {
                 this.game.switchTo( Situation.MENU );
             } );
             buttons.Add( toMenuButton );
-            this.view.allHUD_2D.Add( buttons );
+            this.view.Add( buttons );
 
             fpsDisplay = new FpsDisplay( new Vector2( 50, 20 ) );
-            this.view.allHUD_2D.Add( fpsDisplay );
+            this.view.Add( fpsDisplay );
 
             mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.91f ), new Vector2( 0.25f, 0.18f ), new Vector2( 0.25f, 0.18f ), Antares.world.spaceShip );
         }

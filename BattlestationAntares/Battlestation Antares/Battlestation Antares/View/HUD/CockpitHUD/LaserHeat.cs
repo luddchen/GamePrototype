@@ -3,7 +3,7 @@ using System;
 
 namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
-    public class LaserHeat : HUD2DValueBar {
+    public class LaserHeat : HUDValueBar {
 
         public LaserHeat( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
             : base( abstractPosition, positionType, abstractSize, sizeType, false) {

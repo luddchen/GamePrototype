@@ -28,11 +28,6 @@ namespace Battlestation_Antares {
 
         public static ContentManager content;
 
-        /// <summary>
-        /// game sprite batch
-        /// </summary>
-        public static SpriteBatch spriteBatch;
-
 
         /// <summary>
         /// game input provider
@@ -44,6 +39,12 @@ namespace Battlestation_Antares {
         /// game world model
         /// </summary>
         public static Model.WorldModel world;
+
+
+        /// <summary>
+        /// game sprite batch
+        /// </summary>
+        private SpriteBatch spriteBatch;
 
 
         /// <summary>
@@ -102,10 +103,10 @@ namespace Battlestation_Antares {
         /// initialize the game
         /// </summary>
         protected override void Initialize() {
-            Antares.spriteBatch = new SpriteBatch( GraphicsDevice );
             Antares.inputProvider = new InputProvider();
             Antares.debugViewer = new DebugViewer();
 
+            this.spriteBatch = new SpriteBatch( Antares.graphics.GraphicsDevice );
             _calculateRenderTextureParameter();
 
             // create and initialize world model
@@ -129,7 +130,7 @@ namespace Battlestation_Antares {
         private void initializeDebug() {
             if ( ACTIVATE_DEBUG ) {
                 foreach ( SituationController situationControl in allSituations ) {
-                    situationControl.view.allHUD_2D.Add( Antares.debugViewer );
+                    situationControl.view.Add( Antares.debugViewer );
                 }
             }
         }
@@ -211,14 +212,14 @@ namespace Battlestation_Antares {
 
             Antares.graphics.GraphicsDevice.Clear( Color.Black );
 
-            Antares.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            this.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
             if ( this.lastView != null ) {
-                Antares.spriteBatch.Draw( this.activeSituation.view.renderTarget, Antares.renderTexturePos, null, 
+                this.spriteBatch.Draw( this.activeSituation.view.renderTarget, Antares.renderTexturePos, null, 
                             new Color(this.blendValue, this.blendValue, this.blendValue, this.blendValue), 0.0f,
                             Antares.renderTextureOrigin, Antares.renderTextureScale, SpriteEffects.None, 0.5f );
 
-                Antares.spriteBatch.Draw( this.lastView.renderTarget, Antares.renderTexturePos, null, 
+                this.spriteBatch.Draw( this.lastView.renderTarget, Antares.renderTexturePos, null, 
                             new Color( 255 - this.blendValue, 255 - this.blendValue, 255 - this.blendValue, 255 - this.blendValue ), 0.0f,
                             Antares.renderTextureOrigin, Antares.renderTextureScale, SpriteEffects.None, 0.4f );
 
@@ -229,11 +230,11 @@ namespace Battlestation_Antares {
                 }
 
             } else {
-                Antares.spriteBatch.Draw( this.activeSituation.view.renderTarget, Antares.renderTexturePos, null, Color.White, 0.0f,
+                this.spriteBatch.Draw( this.activeSituation.view.renderTarget, Antares.renderTexturePos, null, Color.White, 0.0f,
                                             Antares.renderTextureOrigin, Antares.renderTextureScale, SpriteEffects.None, 0.5f );
             }
 
-            Antares.spriteBatch.End();
+            this.spriteBatch.End();
         }
 
 

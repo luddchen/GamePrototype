@@ -8,7 +8,7 @@ namespace Battlestation_Antares.View.HUD {
     /// <summary>
     /// a Head Up Display Texture
     /// </summary>
-    public class HUD2DTexture : HUD2D {
+    public class HUDTexture : HUD_Item {
         private Texture2D texture;
 
         /// <summary>
@@ -39,12 +39,12 @@ namespace Battlestation_Antares.View.HUD {
         /// constructs a Head Up Display Element Texture
         /// </summary>
         /// <param name="content"></param>
-        public HUD2DTexture() {
+        public HUDTexture() {
             this.Texture = Antares.content.Load<Texture2D>( "Sprites//Square" );
             this.abstractSize = new Vector2( 10, 10 );
         }
 
-        public HUD2DTexture( Texture2D texture, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation) {
+        public HUDTexture( Texture2D texture, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation) {
             if ( texture == null ) {
                 this.Texture = Antares.content.Load<Texture2D>( "Sprites//Square" );
             }

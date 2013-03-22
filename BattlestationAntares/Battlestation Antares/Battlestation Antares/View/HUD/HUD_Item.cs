@@ -31,7 +31,7 @@ namespace Battlestation_Antares.View.HUD {
     /// <summary>
     /// abstract basis class for 2D HUD elements
     /// </summary>
-    public abstract class HUD2D {
+    public abstract class HUD_Item {
 
         public HUDType positionType;
         public Vector2 abstractPosition;
@@ -54,10 +54,10 @@ namespace Battlestation_Antares.View.HUD {
 
         public bool isVisible;
 
-        public HUD2D parent;
+        public HUD_Item parent;
 
 
-        public HUD2D() {
+        public HUD_Item() {
             this.positionType = HUDType.ABSOLUT;
             this.abstractPosition = Vector2.Zero;
             this.position = Vector2.Zero;

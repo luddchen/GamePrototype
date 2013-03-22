@@ -4,11 +4,11 @@ using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
 
 namespace Battlestation_Antares.View.HUD.CockpitHUD {
-    public class TargetInfo : HUD2DArray {
+    public class TargetInfo : HUDArray {
 
-        private HUD2DString targetObject;
+        private HUDString targetObject;
 
-        private HUD2DString targetDistance;
+        private HUDString targetDistance;
 
         private WorldModel world;
 
@@ -20,9 +20,9 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
         {
             this.world = Antares.world;
 
-            targetObject = new HUD2DString( "");
+            targetObject = new HUDString( "");
             targetObject.scale = 0.5f;
-            targetDistance = new HUD2DString( "");
+            targetDistance = new HUDString( "");
             targetDistance.scale = 0.5f;
 
             Add( targetObject );

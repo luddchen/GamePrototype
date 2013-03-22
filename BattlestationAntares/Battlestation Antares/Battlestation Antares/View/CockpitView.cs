@@ -22,7 +22,7 @@ namespace Battlestation_Antares.View {
         /// </summary>
         protected Camera camera;
 
-        HUD2DTexture cockpitTexture;
+        HUDTexture cockpitTexture;
 
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Battlestation_Antares.View {
         /// </summary>
         public override void Initialize() {
 
-            HUD2DTexture compassBG = new HUD2DTexture();
+            HUDTexture compassBG = new HUDTexture();
             compassBG.abstractPosition = new Vector2( 0.5f, 0.15f );
             compassBG.positionType = HUDType.RELATIV;
             compassBG.abstractSize = new Vector2( 0.125f, 0.15f );
@@ -62,40 +62,40 @@ namespace Battlestation_Antares.View {
             compassBG.layerDepth = 0.11f;
             compassBG.color = new Color( 12, 16, 8, 16 );
             compassBG.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
-            this.allHUD_2D.Add( compassBG );
+            this.Add( compassBG );
 
             // 2D HUD
-            cockpitTexture = new HUD2DTexture();
+            cockpitTexture = new HUDTexture();
             cockpitTexture.abstractPosition = new Vector2( 0.5f, 0.75f );
             cockpitTexture.positionType = HUDType.RELATIV;
             cockpitTexture.abstractSize = new Vector2( 1, 1.5f );
             cockpitTexture.sizeType = HUDType.RELATIV;
             cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit3" );
             cockpitTexture.layerDepth = 1.0f;
-            this.allHUD_2D.Add( cockpitTexture );
+            this.Add( cockpitTexture );
 
-            this.allHUD_2D.Add( Antares.world.miniMap );
+            this.Add( Antares.world.miniMap );
 
-            HUD2DTexture cross = new HUD2DTexture( Antares.content.Load<Texture2D>( "Sprites//Cross" ), new Vector2( 0.5f, 0.5f ), new Vector2( 48, 48 ), null, 1.0f, 0 );
+            HUDTexture cross = new HUDTexture( Antares.content.Load<Texture2D>( "Sprites//Cross" ), new Vector2( 0.5f, 0.5f ), new Vector2( 48, 48 ), null, 1.0f, 0 );
             cross.positionType = HUDType.RELATIV;
             cross.layerDepth = 0.8f;
-            this.allHUD_2D.Add( cross );
+            this.Add( cross );
 
-            this.allHUD_2D.Add( new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
-            this.allHUD_2D.Add( new LaserHeat( new Vector2( 0.35f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
+            this.Add( new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
+            this.Add( new LaserHeat( new Vector2( 0.35f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
 
             ObjectHealth shipHealth = new ObjectHealth( new Vector2( 0.05f, 0.92f ), HUDType.RELATIV );
             shipHealth.setObject( Antares.world.spaceShip, Antares.content.Load<Texture2D>( "Sprites//HUD//Ship" ), 0.75f);
-            this.allHUD_2D.Add( shipHealth );
+            this.Add( shipHealth );
             shipHealth.setLayerDepth( 0.3f );
 
             ObjectHealth stationHealth = new ObjectHealth( new Vector2( 0.15f, 0.92f ), HUDType.RELATIV );
             stationHealth.setObject( Antares.world.spaceStation, Antares.content.Load<Texture2D>( "Sprites//HUD//Station" ), 0.75f );
-            this.allHUD_2D.Add( stationHealth );
+            this.Add( stationHealth );
             stationHealth.setLayerDepth( 0.3f );
 
 
-            HUD2DValueLamp lamp = new HUD2DValueLamp( new Vector2( 0.5f, 0.03f ), HUDType.RELATIV, new Vector2( 0.02f, 0.03f ), HUDType.RELATIV );
+            HUDValueLamp lamp = new HUDValueLamp( new Vector2( 0.5f, 0.03f ), HUDType.RELATIV, new Vector2( 0.02f, 0.03f ), HUDType.RELATIV );
             lamp.GetValue =
                 delegate() {
                     if ( Antares.world.spaceShip.target == null ) {
@@ -104,7 +104,7 @@ namespace Battlestation_Antares.View {
                     return Color.Green;
                     ;
                 };
-            this.allHUD_2D.Add( lamp );
+            this.Add( lamp );
 
             this.targetCrossModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//TargetCross" );
             this.targetCrossBoneTransforms = new Matrix[this.targetCrossModel.Bones.Count];

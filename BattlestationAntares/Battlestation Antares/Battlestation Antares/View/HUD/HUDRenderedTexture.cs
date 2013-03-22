@@ -7,7 +7,7 @@ namespace Battlestation_Antaris.View.HUD {
     /// <summary>
     /// a class to pre-render content to a texture
     /// </summary>
-    public abstract class HUDRenderedTexture : HUD2DTexture {
+    public abstract class HUDRenderedTexture : HUDTexture {
 
         Vector2 renderSize;
 

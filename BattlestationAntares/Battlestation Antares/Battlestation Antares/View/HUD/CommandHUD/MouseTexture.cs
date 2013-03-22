@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 
 namespace Battlestation_Antares.View.HUD.CommandHUD {
-    class MouseTexture : HUD2DTexture {
+    class MouseTexture : HUDTexture {
         public MouseTexture( Texture2D texture )
             : base( texture, null, new Microsoft.Xna.Framework.Vector2( 15f, 15f ), Color.Blue, null, null ) {
             this.positionType = HUDType.ABSOLUT;

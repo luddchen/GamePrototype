@@ -8,7 +8,7 @@ namespace Battlestation_Antares.View.HUD {
     /// <summary>
     /// a Head Up Display String
     /// </summary>
-    public class HUD2DString : HUD2D {
+    public class HUDString : HUD_Item {
 
         /// <summary>
         /// the Font
@@ -109,7 +109,7 @@ namespace Battlestation_Antares.View.HUD {
         /// creates a new HUD string
         /// </summary>
         /// <param name="content">game content manager</param>
-        public HUD2DString() {
+        public HUDString() {
             this.font = Antares.content.Load<SpriteFont>( "Fonts\\Font" );
             this.String = "HUD2DString";
         }
@@ -120,7 +120,7 @@ namespace Battlestation_Antares.View.HUD {
         /// </summary>
         /// <param name="text">text to display</param>
         /// <param name="content">game content manager</param>
-        public HUD2DString( String text) {
+        public HUDString( String text) {
             this.font = Antares.content.Load<SpriteFont>( "Fonts\\Font" );
             this.String = text;
         }
@@ -137,7 +137,7 @@ namespace Battlestation_Antares.View.HUD {
         /// <param name="scale">scale</param>
         /// <param name="rotation">rotation</param>
         /// <param name="content">game content manager</param>
-        public HUD2DString( String text, SpriteFont font, Vector2? position, Color? color, Color? backgroundColor, float? scale, float? rotation) {
+        public HUDString( String text, SpriteFont font, Vector2? position, Color? color, Color? backgroundColor, float? scale, float? rotation) {
             if ( text == null ) {
                 this.String = " ";
             }

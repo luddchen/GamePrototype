@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Battlestation_Antares.View.HUD
 {
 
-    public class HUD2DValueBar : HUD2DContainer {
+    public class HUDValueBar : HUDContainer {
         public delegate float ValueProvider();
 
         public ValueProvider GetValue = 
@@ -19,11 +19,11 @@ namespace Battlestation_Antares.View.HUD
                 return input;
             };
 
-        private HUD2DTexture background;
+        private HUDTexture background;
 
-        private HUD2DTexture foreground;
+        private HUDTexture foreground;
 
-        private HUD2DTexture overlay;
+        private HUDTexture overlay;
 
         private Color zeroColor = new Color(0, 255, 0);
 
@@ -33,13 +33,13 @@ namespace Battlestation_Antares.View.HUD
 
         private bool flip;
 
-        public HUD2DValueBar( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, bool flip)
+        public HUDValueBar( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, bool flip)
             : base( abstractPosition, positionType) {
             this.flip = flip;
             this.abstractSize = abstractSize;
             this.sizeType = sizeType;
 
-            this.background = new HUD2DTexture();
+            this.background = new HUDTexture();
             this.background.positionType = this.sizeType;
             this.background.abstractSize = abstractSize;
             this.background.sizeType = sizeType;
@@ -48,7 +48,7 @@ namespace Battlestation_Antares.View.HUD
             this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//Square" );
             Add( this.background );
 
-            this.foreground = new HUD2DTexture();
+            this.foreground = new HUDTexture();
             this.foreground.positionType = this.sizeType;
             this.foreground.abstractSize = abstractSize;
             this.foreground.abstractSize *= 0.95f;
@@ -58,7 +58,7 @@ namespace Battlestation_Antares.View.HUD
             this.foreground.Texture = Antares.content.Load<Texture2D>( "Sprites//Square" );
             Add(this.foreground);
 
-            this.overlay = new HUD2DTexture();
+            this.overlay = new HUDTexture();
             this.overlay.positionType = this.sizeType;
             this.overlay.abstractSize = abstractSize;
             this.overlay.sizeType = sizeType;

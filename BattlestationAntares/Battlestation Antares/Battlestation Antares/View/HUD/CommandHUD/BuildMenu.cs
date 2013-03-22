@@ -3,13 +3,13 @@ using Microsoft.Xna.Framework;
 using System;
 
 namespace Battlestation_Antares.View.HUD.CommandHUD {
-    class BuildMenu : HUD2DArray {
+    class BuildMenu : HUDArray {
 
         private Type buildingObjectType;
 
-        private HUD2DButton buildTurretButton;
+        private HUDButton buildTurretButton;
 
-        private HUD2DButton buildRadarButton;
+        private HUDButton buildRadarButton;
 
         private Action action;
 
@@ -18,7 +18,7 @@ namespace Battlestation_Antares.View.HUD.CommandHUD {
 
             this.action = action;
 
-            buildTurretButton = new HUD2DButton( "Turret", new Vector2( 0f, 0f ), 0.7f );
+            buildTurretButton = new HUDButton( "Turret", new Vector2( 0f, 0f ), 0.7f );
             buildTurretButton.abstractPosition = new Vector2( 0f, -30f );
             buildTurretButton.layerDepth = 0.4f;
             buildTurretButton.SetPressedAction( 
@@ -28,7 +28,7 @@ namespace Battlestation_Antares.View.HUD.CommandHUD {
                 } );
             this.Add( buildTurretButton );
 
-            buildRadarButton = new HUD2DButton( "Radar", new Vector2( 0f, 0f ), 0.7f );
+            buildRadarButton = new HUDButton( "Radar", new Vector2( 0f, 0f ), 0.7f );
             buildRadarButton.abstractPosition = new Vector2( 0f, 30f );
             buildRadarButton.layerDepth = 0.4f;
             buildRadarButton.SetPressedAction(

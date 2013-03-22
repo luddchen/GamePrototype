@@ -14,24 +14,24 @@ namespace Battlestation_Antares.Control {
     class MenuController : SituationController {
 
 
-        HUD2DRenderedItem test;
+        HUDRenderedItem test;
 
-        private HUD2DArray buttonGrid;
+        private HUDArray buttonGrid;
 
-        private HUD2DArray buttons1;
+        private HUDArray buttons1;
 
-        private HUD2DArray optionsButtonGroup;
+        private HUDArray optionsButtonGroup;
 
-        private HUD2DButton optionsButton;
+        private HUDButton optionsButton;
 
 
-        private List<HUD2DContainer> contentPages;
+        private List<HUDContainer> contentPages;
 
-        private HUD2DArray videoPage;
+        private HUDArray videoPage;
 
-        private HUD2DArray soundPage;
+        private HUDArray soundPage;
 
-        private HUD2DArray controlPage;
+        private HUDArray controlPage;
 
         /// <summary>
         /// create a new menu controller
@@ -43,7 +43,7 @@ namespace Battlestation_Antares.Control {
             this.worldUpdate = WorldUpdate.NO_UPDATE;
 
             // test content
-            HUD2DTexture testTex = new HUD2DTexture();
+            HUDTexture testTex = new HUDTexture();
             testTex.abstractPosition = new Vector2( 0.5f, 0.5f );
             testTex.positionType = HUDType.RELATIV;
             testTex.abstractSize = new Vector2( 2f, 2f );
@@ -51,23 +51,23 @@ namespace Battlestation_Antares.Control {
             testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//Galaxy" );
             testTex.color = new Color( 128, 128, 128, 128 );
 
-            test = new HUD2DRenderedItem( testTex , new Vector2(480,480), null);
+            test = new HUDRenderedItem( testTex , new Vector2(480,480), null);
             test.abstractPosition = new Vector2( 0.5f, 0.5f );
             test.positionType = HUDType.RELATIV;
             test.abstractSize = new Vector2( 0.7f, 0.7f );
             test.sizeType = HUDType.RELATIV;
             testTex.layerDepth = 1.0f;
-            this.view.allHUD_2D.Add( test );
+            this.view.Add( test );
 
 
-            this.buttonGrid = new HUD2DArray( new Vector2( 0.5f, 0.8f ), HUDType.RELATIV, new Vector2( 800, 150 ), HUDType.ABSOLUT);
+            this.buttonGrid = new HUDArray( new Vector2( 0.5f, 0.8f ), HUDType.RELATIV, new Vector2( 800, 150 ), HUDType.ABSOLUT);
             this.buttonGrid.layerDepth = 0.5f;
             this.buttonGrid.direction = LayoutDirection.VERTICAL;
 
-            this.buttons1 = new HUD2DArray( new Vector2( 0.5f, 0.8f ), HUDType.RELATIV, new Vector2( 600, 150 ), HUDType.ABSOLUT);
+            this.buttons1 = new HUDArray( new Vector2( 0.5f, 0.8f ), HUDType.RELATIV, new Vector2( 600, 150 ), HUDType.ABSOLUT);
             this.buttons1.direction = LayoutDirection.HORIZONTAL;
 
-            this.optionsButtonGroup = new HUD2DArray( new Vector2( 0.5f, 0.8f ), HUDType.RELATIV, new Vector2( 600, 150 ), HUDType.ABSOLUT);
+            this.optionsButtonGroup = new HUDArray( new Vector2( 0.5f, 0.8f ), HUDType.RELATIV, new Vector2( 600, 150 ), HUDType.ABSOLUT);
             this.optionsButtonGroup.direction = LayoutDirection.HORIZONTAL;
             this.optionsButtonGroup.isVisible = false;
 
@@ -75,25 +75,25 @@ namespace Battlestation_Antares.Control {
             this.buttonGrid.Add( this.buttons1 );
 
 
-            HUD2DButton toCommandButton = new HUD2DButton( "Command", Vector2.Zero, 0.9f);
+            HUDButton toCommandButton = new HUDButton( "Command", Vector2.Zero, 0.9f);
             toCommandButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COMMAND );
             } );
             this.buttons1.Add( toCommandButton );
 
-            HUD2DButton toCockpitButton = new HUD2DButton( "Cockpit", Vector2.Zero, 0.9f);
+            HUDButton toCockpitButton = new HUDButton( "Cockpit", Vector2.Zero, 0.9f);
             toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
             this.buttons1.Add( toCockpitButton );
 
-            HUD2DButton toAIButton = new HUD2DButton( "Editor", Vector2.Zero, 0.9f);
+            HUDButton toAIButton = new HUDButton( "Editor", Vector2.Zero, 0.9f);
             toAIButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.AI_BUILDER );
             } );
             this.buttons1.Add( toAIButton );
 
-            this.optionsButton = new HUD2DButton( "Options", Vector2.Zero, 0.9f);
+            this.optionsButton = new HUDButton( "Options", Vector2.Zero, 0.9f);
             this.optionsButton.SetPressedAction(
                 delegate() {
                     this.optionsButton.Toggle();
@@ -102,69 +102,69 @@ namespace Battlestation_Antares.Control {
                 } );
             this.buttons1.Add( this.optionsButton );
 
-            HUD2DButton exitButton = new HUD2DButton( "Exit", Vector2.Zero, 0.9f);
+            HUDButton exitButton = new HUDButton( "Exit", Vector2.Zero, 0.9f);
             exitButton.SetPressedAction( delegate() {
                 this.game.Exit();
             } );
             this.buttons1.Add( exitButton );
 
-            HUD2DButton videoButton = new HUD2DButton( "Video", Vector2.Zero, 0.9f);
+            HUDButton videoButton = new HUDButton( "Video", Vector2.Zero, 0.9f);
             videoButton.SetPressedAction( delegate() {
                 showPage( this.videoPage );
             } );
             this.optionsButtonGroup.Add( videoButton );
 
-            HUD2DButton soundButton = new HUD2DButton( "Sound", Vector2.Zero, 0.9f);
+            HUDButton soundButton = new HUDButton( "Sound", Vector2.Zero, 0.9f);
             soundButton.SetPressedAction( delegate() {
                 showPage( this.soundPage );
             } );
             this.optionsButtonGroup.Add( soundButton );
 
-            HUD2DButton controlButton = new HUD2DButton( "Control", Vector2.Zero, 0.9f);
+            HUDButton controlButton = new HUDButton( "Control", Vector2.Zero, 0.9f);
             controlButton.SetPressedAction( delegate() {
                 showPage( this.controlPage );
             } );
             this.optionsButtonGroup.Add( controlButton );
 
 
-            this.view.allHUD_2D.Add( this.buttonGrid );
+            this.view.Add( this.buttonGrid );
 
 
-            this.contentPages = new List<HUD2DContainer>();
+            this.contentPages = new List<HUDContainer>();
 
-            this.videoPage = new HUD2DArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV);
+            this.videoPage = new HUDArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV);
             this.videoPage.CreateBackground( true );
-            this.videoPage.Add( new HUD2DString( "Video") );
+            this.videoPage.Add( new HUDString( "Video") );
 
-            this.soundPage = new HUD2DArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV);
+            this.soundPage = new HUDArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV);
             this.soundPage.CreateBackground( true );
-            this.soundPage.Add( new HUD2DString( "Sound") );
+            this.soundPage.Add( new HUDString( "Sound") );
 
-            this.controlPage = new HUD2DArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV);
+            this.controlPage = new HUDArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV);
             this.controlPage.direction = LayoutDirection.HORIZONTAL;
 
             this.contentPages.Add( this.videoPage );
             this.contentPages.Add( this.soundPage );
             this.contentPages.Add( this.controlPage );
 
-            foreach ( HUD2DContainer container in this.contentPages ) {
+            foreach ( HUDContainer container in this.contentPages ) {
                 container.isVisible = false;
-                this.view.allHUD_2D.Add( container );
+                this.view.Add( container );
             }
 
 
-            HUD2DContainer renderResolutionArray = new HUD2DContainer( new Vector2(), HUDType.RELATIV );
+            HUDContainer renderResolutionArray = new HUDContainer( new Vector2(), HUDType.RELATIV );
             this.controlPage.Add( renderResolutionArray );
 
-            HUD2DString resolutionTitle = new HUD2DString( "Render Resolution", null, new Vector2( 0, -0.05f ), null, null, 0.6f, null );
+            HUDString resolutionTitle = new HUDString( "Render Resolution", null, new Vector2( 0, -0.05f ), null, null, 0.6f, null );
             resolutionTitle.positionType = HUDType.RELATIV;
             renderResolutionArray.Add( resolutionTitle );
 
-            HUD2DButton resolutionHigh = new HUD2DButton( "1920 x 1080", new Vector2(0, 0), 0.7f );
+            HUDButton resolutionHigh = new HUDButton( "1920 x 1080", new Vector2(0, 0), 0.7f );
             resolutionHigh.positionType = HUDType.RELATIV;
-            HUD2DButton resolutionMedium = new HUD2DButton( "1600 x 900", new Vector2( 0, 0.05f ), 0.7f );
+            HUDButton resolutionMedium = new HUDButton( "1600 x 900", new Vector2( 0, 0.05f ), 0.7f );
             resolutionMedium.positionType = HUDType.RELATIV;
-            HUD2DButton resolutionLow = new HUD2DButton( "1280 x 720", new Vector2( 0, 0.1f ), 0.7f );
+            HUDButton resolutionLow = new HUDButton( "1280 x 720", new Vector2( 0, 0.1f ), 0.7f );
             resolutionLow.positionType = HUDType.RELATIV;
 
             renderResolutionArray.Add( resolutionHigh );
@@ -196,18 +196,18 @@ namespace Battlestation_Antares.Control {
                 } );
 
 
-            HUD2DContainer test1Array = new HUD2DContainer( new Vector2(), HUDType.RELATIV );
+            HUDContainer test1Array = new HUDContainer( new Vector2(), HUDType.RELATIV );
             this.controlPage.Add( test1Array );
 
-            HUD2DString test1Title = new HUD2DString( "Placeholder", null, new Vector2( 0, -0.05f ), null, null, 0.6f, null );
+            HUDString test1Title = new HUDString( "Placeholder", null, new Vector2( 0, -0.05f ), null, null, 0.6f, null );
             test1Title.positionType = HUDType.RELATIV;
             test1Array.Add( test1Title );
 
-            HUD2DButton test1High = new HUD2DButton( "do nothing", new Vector2( 0, 0 ), 0.7f );
+            HUDButton test1High = new HUDButton( "do nothing", new Vector2( 0, 0 ), 0.7f );
             test1High.positionType = HUDType.RELATIV;
-            HUD2DButton test1Medium = new HUD2DButton( "wait for something", new Vector2( 0, 0.05f ), 0.7f );
+            HUDButton test1Medium = new HUDButton( "wait for something", new Vector2( 0, 0.05f ), 0.7f );
             test1Medium.positionType = HUDType.RELATIV;
-            HUD2DButton test1Low = new HUD2DButton( "do anything", new Vector2( 0, 0.1f ), 0.7f );
+            HUDButton test1Low = new HUDButton( "do anything", new Vector2( 0, 0.1f ), 0.7f );
             test1Low.positionType = HUDType.RELATIV;
 
             test1Array.Add( test1High );
@@ -231,12 +231,12 @@ namespace Battlestation_Antares.Control {
 
 
         private void hidePages() {
-            foreach ( HUD2DContainer container in this.contentPages ) {
+            foreach ( HUDContainer container in this.contentPages ) {
                 container.isVisible = false;
             }
         }
 
-        private void showPage( HUD2DContainer container ) {
+        private void showPage( HUDContainer container ) {
             hidePages();
             container.isVisible = true;
         }

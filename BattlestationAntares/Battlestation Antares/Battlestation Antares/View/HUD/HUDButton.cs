@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.Control;
+using Battlestation_Antaris;
 
 namespace Battlestation_Antares.View.HUD {
 
-    public class HUD2DButton : HUD2DString {
+    public class HUDButton : HUDString, IUpdatableItem {
 
         public ButtonStyle style;
 
@@ -16,7 +17,7 @@ namespace Battlestation_Antares.View.HUD {
         private Action downAction;
 
 
-        public HUD2DButton( String text, Vector2 position, float scale)
+        public HUDButton( String text, Vector2 position, float scale)
             : base( text) {
             this.abstractPosition = position;
             this.overallScale = scale;
@@ -78,6 +79,16 @@ namespace Battlestation_Antares.View.HUD {
             this.style.foregroundColorNormal = temp;
         }
 
+
+        void IUpdatableItem.Update( GameTime gameTime ) {
+            throw new NotImplementedException();
+        }
+
+        bool IUpdatableItem.Enabled {
+            get {
+                throw new NotImplementedException();
+            }
+        }
     }
 
 }

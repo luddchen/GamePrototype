@@ -24,9 +24,9 @@ namespace Battlestation_Antares.Control {
 
         private CommandMode currentMode;
 
-        private HUD2DButton toMenuButton;
+        private HUDButton toMenuButton;
 
-        private HUD2DButton toCockpitButton;
+        private HUDButton toCockpitButton;
 
         private MiniMap.Config mapConfig;
 
@@ -45,19 +45,19 @@ namespace Battlestation_Antares.Control {
             : base( game, view ) {
             this.currentMode = CommandMode.NORMAL;
 
-            this.toMenuButton = new HUD2DButton( "Menu", new Vector2( 0.1f, 0.9f ), 0.7f );
+            this.toMenuButton = new HUDButton( "Menu", new Vector2( 0.1f, 0.9f ), 0.7f );
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
             this.toMenuButton.positionType = HUDType.RELATIV;
-            this.view.allHUD_2D.Add( toMenuButton );
+            this.view.Add( toMenuButton );
 
-            this.toCockpitButton = new HUD2DButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f );
+            this.toCockpitButton = new HUDButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f );
             this.toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
             this.toCockpitButton.positionType = HUDType.RELATIV;
-            this.view.allHUD_2D.Add( toCockpitButton );
+            this.view.Add( toCockpitButton );
 
             buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV, 
                 delegate() {
@@ -66,12 +66,12 @@ namespace Battlestation_Antares.Control {
                     }
                     this.currentMode = CommandMode.BUILD;
                 } );
-            this.view.allHUD_2D.Add( buildMenu );
+            this.view.Add( buildMenu );
 
             mouseTextures = new Dictionary<Type, MouseTexture>();
             mouseTextures.Add( typeof( Battlestation_Antares.Model.Turret ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Turret//turret_2d" ) ) );
             mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Radar//radar_2d" ) ) );
-            this.view.allHUD_2D.AddRange( mouseTextures.Values );
+            this.view.AddRange( mouseTextures.Values );
 
             mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.5f ), new Vector2( 0.625f, 1f ), new Vector2( 0.625f, 1f ), Antares.world.spaceStation );
             mapConfig.iconPositionScale = 0.25f;

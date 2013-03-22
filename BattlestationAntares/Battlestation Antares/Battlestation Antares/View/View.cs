@@ -23,9 +23,15 @@ namespace Battlestation_Antares.View {
 
 
         /// <summary>
-        /// a list of 2D HUD elements
+        /// spritebatch of this view
         /// </summary>
-        public List<HUD2D> allHUD_2D;
+        private SpriteBatch spriteBatch;
+
+
+        /// <summary>
+        /// a list of HUD elements
+        /// </summary>
+        private List<HUD.HUD_Item> allItems;
 
 
         /// <summary>
@@ -33,8 +39,9 @@ namespace Battlestation_Antares.View {
         /// </summary>
         /// <param name="backgroundColor">background color of this view</param>
         public View(Color? backgroundColor) {
-            this.allHUD_2D = new List<HUD2D>();
+            this.allItems = new List<HUD.HUD_Item>();
             this.backgroundColor = backgroundColor ?? Color.Transparent;
+            this.spriteBatch = new SpriteBatch( Antares.graphics.GraphicsDevice );
         }
 
 
@@ -56,13 +63,13 @@ namespace Battlestation_Antares.View {
             DrawPreContent();
 
             // draw 2D HUD elements
-            Antares.spriteBatch.Begin( SpriteSortMode.BackToFront, BlendState.AlphaBlend );//, SamplerState.AnisotropicClamp, DepthStencilState.DepthRead, null);
+            this.spriteBatch.Begin( SpriteSortMode.BackToFront, BlendState.AlphaBlend );// SamplerState.AnisotropicClamp, DepthStencilState.DepthRead, null);
 
-            foreach ( HUD2D element in this.allHUD_2D ) {
-                element.Draw( Antares.spriteBatch );
+            foreach ( HUD.HUD_Item element in this.allItems ) {
+                element.Draw( this.spriteBatch );
             }
 
-            Antares.spriteBatch.End();
+            this.spriteBatch.End();
 
             // draw content in front of HUD
             DrawPostContent();
@@ -85,8 +92,18 @@ namespace Battlestation_Antares.View {
         }
 
 
+        public void Add( HUD.HUD_Item item ) {
+            this.allItems.Add( item );
+        }
+
+
+        public void AddRange( IEnumerable<HUD.HUD_Item> collection ) {
+            this.allItems.AddRange( collection );
+        }
+
+
         public virtual void Window_ClientSizeChanged() {
-            foreach ( HUD2D element in this.allHUD_2D ) {
+            foreach ( HUD.HUD_Item element in this.allItems ) {
                 element.ClientSizeChanged();
             }
         }
@@ -105,19 +122,19 @@ namespace Battlestation_Antares.View {
 
 
         public void ButtonUpdate() {
-            foreach ( HUD2D item in this.allHUD_2D ) {
+            foreach ( HUD.HUD_Item item in this.allItems ) {
                 ButtonUpdate( item );
             }
         }
 
-        private void ButtonUpdate( HUD2D item ) {
+        private void ButtonUpdate( HUD.HUD_Item item ) {
             if ( item.isVisible ) {
-                if ( item is HUD2DButton ) {
-                    ( (HUD2DButton)item ).isUpdatedClicked( Antares.inputProvider );
+                if ( item is HUDButton ) {
+                    ( (HUDButton)item ).isUpdatedClicked( Antares.inputProvider );
                 }
 
-                if ( item is HUD2DContainer ) {
-                    foreach ( HUD2D child in ( (HUD2DContainer)item ).allChilds ) {
+                if ( item is HUDContainer ) {
+                    foreach ( HUD.HUD_Item child in ( (HUDContainer)item ).allChilds ) {
                         ButtonUpdate( child );
                     }
                 }

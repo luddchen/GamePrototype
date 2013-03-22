@@ -18,12 +18,12 @@ namespace Battlestation_Antares.View {
         /// </summary>
         public override void Initialize() {
             // test content
-            HUD2DString testString = new HUD2DString( "Antares Command");
+            HUDString testString = new HUDString( "Antares Command");
             testString.abstractPosition = new Vector2( 0.5f, 0.1f );
             testString.positionType = HUDType.RELATIV;
 
-            this.allHUD_2D.Add( testString );
-            this.allHUD_2D.Add( Antares.world.miniMap );
+            this.Add( testString );
+            this.Add( Antares.world.miniMap );
         }
 
     }

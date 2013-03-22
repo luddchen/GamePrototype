@@ -6,7 +6,7 @@ using Battlestation_Antares.View.HUD.AIComposer;
 using Battlestation_Antares;
 
 namespace Battlestation_Antaris.View.HUD.AIComposer {
-    public class AI_Bank : HUD2DContainer {
+    public class AI_Bank : HUDContainer {
 
         public static Color NORMAL_COLOR = new Color( 28, 32, 24, 16 );
 
@@ -14,12 +14,12 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public static Color DISABLED_COLOR = new Color( 32, 20, 20, 16 );
 
-        public HUD2DTexture background;
+        public HUDTexture background;
 
         public AI_Bank(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType ) {
             this.abstractSize = abstractSize;
             this.sizeType = sizeType;
-            this.background = new HUD2DTexture();
+            this.background = new HUDTexture();
             this.background.abstractSize = abstractSize;
             this.background.sizeType = sizeType;
             this.background.color = new Color( 32, 32, 32, 32 );
@@ -29,7 +29,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
         }
 
 
-        public override void Add( HUD2D element ) {
+        public override void Add( HUD_Item element ) {
             if ( element is AI_Item && hasFreePlace( element ) ) {
                 base.Add( element );
                 arrangeItems();
@@ -50,7 +50,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
         }
 
 
-        public override void Remove( HUD2D element ) {
+        public override void Remove( HUD_Item element ) {
             base.Remove( element );
             if ( element is AI_Item ) {
                 arrangeItems();
@@ -58,10 +58,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
         }
 
 
-        public bool hasFreePlace(HUD2D element) {
+        public bool hasFreePlace(HUD_Item element) {
             bool freePlace = false;
             float freeWidth = this.abstractSize.X * Antares.RenderSize.X;
-            foreach ( HUD2D item in this.allChilds ) {
+            foreach ( HUD_Item item in this.allChilds ) {
                 if ( item is AI_Item ) {
                     freeWidth -= item.abstractSize.X;
                 }
@@ -75,14 +75,14 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         private void arrangeItems() {
             int itemCount = 0;
-            foreach ( HUD2D item in this.allChilds ) {
+            foreach ( HUD_Item item in this.allChilds ) {
                 if ( item is AI_Item ) {
                     itemCount++;
                 }
             }
             float itemOffset = this.abstractSize.X / itemCount;
             float newPos = -this.abstractSize.X / 2 + itemOffset / 2;
-            foreach ( HUD2D item in this.allChilds ) {
+            foreach ( HUD_Item item in this.allChilds ) {
                 if ( item is AI_Item ) {
                     item.abstractPosition = new Vector2(newPos, 0);
                     newPos += itemOffset;

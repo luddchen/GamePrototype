@@ -3,18 +3,18 @@ using System;
 
 namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
-    public class Velocity : HUD2DContainer {
+    public class Velocity : HUDContainer {
 
-        private HUD2DValueBar posVel;
+        private HUDValueBar posVel;
 
-        private HUD2DValueBar negVel;
+        private HUDValueBar negVel;
 
         public Velocity( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
             : base( abstractPosition, positionType) {
             this.abstractSize = abstractSize;
             this.sizeType = sizeType;
 
-            this.posVel = new HUD2DValueBar( new Vector2( 0, -this.abstractSize.Y / 4 ), this.sizeType,
+            this.posVel = new HUDValueBar( new Vector2( 0, -this.abstractSize.Y / 4 ), this.sizeType,
                                             new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.sizeType, false);
             this.posVel.GetValue =
                 delegate() {
@@ -23,7 +23,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
             this.posVel.SetDiscreteBig();
             this.posVel.SetMaxColor( Color.Yellow );
 
-            this.negVel = new HUD2DValueBar( new Vector2( 0, this.abstractSize.Y / 4 ), this.sizeType,
+            this.negVel = new HUDValueBar( new Vector2( 0, this.abstractSize.Y / 4 ), this.sizeType,
                                             new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.sizeType, true);
             this.negVel.GetValue =
                 delegate() {

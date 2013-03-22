@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Item : HUD2DContainer {
+    public class AI_Item : HUDContainer {
         public AI_Container container;
 
         protected Object subType;
@@ -16,19 +16,19 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public List<AI_ItemPort> outputs;
 
-        public HUD2DTexture background;
+        public HUDTexture background;
 
-        public HUD2DString typeString;
+        public HUDString typeString;
 
-        protected HUD2DString subTypeString;
+        protected HUDString subTypeString;
 
         protected float[] parameters;
 
-        private HUD2DButton nextSubType;
+        private HUDButton nextSubType;
 
-        private HUD2DButton previousSubType;
+        private HUDButton previousSubType;
 
-        private HUD2DButton removeButton;
+        private HUDButton removeButton;
 
 
         public AI_Item( Vector2 abstractPosition, HUDType positionType)
@@ -39,20 +39,20 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.inputs = new List<AI_ItemPort>();
             this.outputs = new List<AI_ItemPort>();
 
-            this.background = new HUD2DTexture();
+            this.background = new HUDTexture();
             this.background.color = new Color( 64, 96, 64 );
             this.background.sizeType = this.sizeType;
             this.background.abstractSize = this.abstractSize;
             this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//builder_bg_temp" );
             Add( this.background );
 
-            this.typeString = new HUD2DString( "X");
+            this.typeString = new HUDString( "X");
             this.typeString.positionType = this.sizeType;
             this.typeString.scale = 0.6f;
             this.typeString.abstractPosition = new Vector2( 0, -( this.abstractSize.Y - this.typeString.size.Y ) / 2 );
             Add( this.typeString );
 
-            this.removeButton = new HUD2DButton( "X", new Vector2( this.abstractSize.X / 2 - 8, -( this.abstractSize.Y / 2 ) + 8 ), 0.5f);
+            this.removeButton = new HUDButton( "X", new Vector2( this.abstractSize.X / 2 - 8, -( this.abstractSize.Y / 2 ) + 8 ), 0.5f);
             this.removeButton.positionType = this.sizeType;
             this.removeButton.style = ButtonStyle.RemoveButtonStyle();
             this.removeButton.SetPressedAction( delegate() {
@@ -60,14 +60,14 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             } );
             Add( this.removeButton );
 
-            this.subTypeString = new HUD2DString( " ");
+            this.subTypeString = new HUDString( " ");
             this.subTypeString.scale = 0.5f;
             this.subTypeString.positionType = this.sizeType;
             this.subTypeString.abstractSize = new Vector2( this.abstractSize.X, this.subTypeString.size.Y );
             this.subTypeString.abstractPosition = new Vector2( 0, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
             Add( this.subTypeString );
 
-            this.nextSubType = new HUD2DButton( ">", Vector2.Zero, 0.8f);
+            this.nextSubType = new HUDButton( ">", Vector2.Zero, 0.8f);
             this.nextSubType.positionType = this.sizeType;
             this.nextSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.nextSubType.abstractPosition = new Vector2( ( this.abstractSize.X - this.nextSubType.size.X ) / 2 - 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
@@ -76,7 +76,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             } );
             Add( this.nextSubType );
 
-            this.previousSubType = new HUD2DButton( "<", Vector2.Zero, 0.8f);
+            this.previousSubType = new HUDButton( "<", Vector2.Zero, 0.8f);
             this.previousSubType.positionType = this.sizeType;
             this.previousSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.previousSubType.abstractPosition = new Vector2( -( this.abstractSize.X - this.nextSubType.size.X ) / 2 + 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );

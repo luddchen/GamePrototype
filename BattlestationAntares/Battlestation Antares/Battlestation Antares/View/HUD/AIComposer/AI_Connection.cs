@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Connection : HUD2D {
+    public class AI_Connection : HUD_Item {
 
         AI_ItemPort source;
 

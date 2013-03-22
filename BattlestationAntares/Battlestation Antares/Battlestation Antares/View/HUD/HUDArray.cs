@@ -11,7 +11,7 @@ namespace Battlestation_Antares.View.HUD {
     }
 
 
-    public class HUD2DArray : HUD2DContainer {
+    public class HUDArray : HUDContainer {
         public static Color BACKGROUND_COLOR = new Color( 24, 32, 32, 128 );
 
         public static Color BACKGROUND_COLOR_HOVER = new Color( 28, 36, 36, 192 );
@@ -25,10 +25,10 @@ namespace Battlestation_Antares.View.HUD {
 
         public LayoutDirection direction;
 
-        private HUD2DTexture background;
+        private HUDTexture background;
 
 
-        public HUD2DArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
+        public HUDArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
             : base( abstractPosition, positionType) {
             this.abstractSize = abstractSize;
             this.sizeType = sizeType;
@@ -56,7 +56,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public override void Add( HUD2D element ) {
+        public override void Add( HUD_Item element ) {
             base.Add( element );
 
             element.sizeType = this.sizeType;
@@ -67,7 +67,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public override void Remove( HUD2D element ) {
+        public override void Remove( HUD_Item element ) {
             base.Remove( element );
             Arrange();
         }
@@ -85,7 +85,7 @@ namespace Battlestation_Antares.View.HUD {
                 itemPosition.X = -( this.abstractSize.X / 2 ) + ( itemSize.X / 2 );
             }
 
-            foreach ( HUD2D item in this.allChilds ) {
+            foreach ( HUD_Item item in this.allChilds ) {
                 item.abstractSize = itemSize - this.borderSize;
 
                 item.abstractPosition = itemPosition;
@@ -132,10 +132,10 @@ namespace Battlestation_Antares.View.HUD {
 
         public void CreateBackground( bool create ) {
             if ( create ) {
-                this.background = new HUD2DTexture();
+                this.background = new HUDTexture();
                 this.background.sizeType = this.sizeType;
                 this.background.abstractSize = this.abstractSize;
-                this.background.color = HUD2DArray.BACKGROUND_COLOR;
+                this.background.color = HUDArray.BACKGROUND_COLOR;
                 this.background.setLayerDepth( this.layerDepth );
                 this.background.parent = this;
 
@@ -172,9 +172,9 @@ namespace Battlestation_Antares.View.HUD {
 
             if ( this.background != null ) {
                 if ( hover ) {
-                    this.background.color = HUD2DArray.BACKGROUND_COLOR_HOVER;
+                    this.background.color = HUDArray.BACKGROUND_COLOR_HOVER;
                 } else {
-                    this.background.color = HUD2DArray.BACKGROUND_COLOR;
+                    this.background.color = HUDArray.BACKGROUND_COLOR;
                 }
             }
 

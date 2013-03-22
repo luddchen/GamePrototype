@@ -21,11 +21,11 @@ namespace Battlestation_Antares.View {
         /// </summary>
         public override void Initialize() {
 
-            HUD2DString testString = new HUD2DString( "Antares Menu" );
+            HUDString testString = new HUDString( "Antares Menu" );
             testString.abstractPosition = new Vector2( 0.5f, 0.1f );
             testString.positionType = HUDType.RELATIV;
 
-            this.allHUD_2D.Add( testString );
+            this.Add( testString );
         }
 
     }

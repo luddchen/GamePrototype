@@ -6,7 +6,7 @@ using Battlestation_Antaris.View.HUD.AIComposer;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Container : HUD2DContainer {
+    public class AI_Container : HUDContainer {
 
         private PrimitiveBatch primitiveBatch;
 
@@ -23,13 +23,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public List<AI_Bank> aiBanks;
 
-        private HUD2DTexture mouseItemTex;
+        private HUDTexture mouseItemTex;
 
         private AI_Item insertItem;
 
         private AI_Bank insertBank;
 
-        public List<HUD2D> removeList;
+        public List<HUD_Item> removeList;
 
 
         public AI_Container()
@@ -37,7 +37,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             this.primitiveBatch = new PrimitiveBatch( Antares.graphics.GraphicsDevice );
 
-            this.removeList = new List<HUD2D>();
+            this.removeList = new List<HUD_Item>();
             this.aiItems = new List<AI_Item>();
             this.aiConnections = new List<AI_Connection>();
 
@@ -51,7 +51,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 addBank();
             }
 
-            this.mouseItemTex = new HUD2DTexture();
+            this.mouseItemTex = new HUDTexture();
             this.mouseItemTex.positionType = HUDType.ABSOLUT;
             this.mouseItemTex.abstractSize = new Vector2( 200, 100 );
             this.mouseItemTex.sizeType = HUDType.ABSOLUT;
@@ -96,7 +96,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public void Update() {
             // remove items if necessary 
-            foreach ( HUD2D item in this.removeList ) {
+            foreach ( HUD_Item item in this.removeList ) {
                 if ( item is AI_Connection ) {
                     this.aiConnections.Remove( (AI_Connection)item );
                 } else if ( item is AI_Item ) {
@@ -312,12 +312,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
 
         private void initButtons() {
-            HUD2DArray addButtonArray = new HUD2DArray( new Vector2( 0.9f, 0.35f ), HUDType.RELATIV, new Vector2( 0.15f, 0.25f ), HUDType.RELATIV );
+            HUDArray addButtonArray = new HUDArray( new Vector2( 0.9f, 0.35f ), HUDType.RELATIV, new Vector2( 0.15f, 0.25f ), HUDType.RELATIV );
             addButtonArray.direction = LayoutDirection.VERTICAL;
             this.Add( addButtonArray );
 
 
-            HUD2DButton addInputButton = new HUD2DButton( "Input", new Vector2(), 0.7f );
+            HUDButton addInputButton = new HUDButton( "Input", new Vector2(), 0.7f );
             addInputButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Input( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
             } );
@@ -326,7 +326,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             addButtonArray.Add( addInputButton );
 
 
-            HUD2DButton addTransformerButton = new HUD2DButton( "Transformer", new Vector2(), 0.7f );
+            HUDButton addTransformerButton = new HUDButton( "Transformer", new Vector2(), 0.7f );
             addTransformerButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Transformer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
             } );
@@ -335,7 +335,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             addButtonArray.Add( addTransformerButton );
 
 
-            HUD2DButton addMixerButton = new HUD2DButton( "Mixer", new Vector2(), 0.7f );
+            HUDButton addMixerButton = new HUDButton( "Mixer", new Vector2(), 0.7f );
             addMixerButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Mixer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
             } );
@@ -344,7 +344,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             addButtonArray.Add( addMixerButton );
 
 
-            HUD2DButton addOutputButton = new HUD2DButton( "Output", new Vector2(), 0.7f );
+            HUDButton addOutputButton = new HUDButton( "Output", new Vector2(), 0.7f );
             addOutputButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Output( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV ) );
             } );
