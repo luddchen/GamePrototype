@@ -8,6 +8,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
     public class AI_Container : HUD2DContainer {
 
+        private PrimitiveBatch primitiveBatch;
+
         public const int maxBanks = 6;
 
         public List<AI_Item> aiItems;
@@ -32,6 +34,9 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public AI_Container()
             : base( new Vector2( 0, 0 ), HUDType.RELATIV ) {
+
+            this.primitiveBatch = new PrimitiveBatch( Antares.graphics.GraphicsDevice );
+
             this.removeList = new List<HUD2D>();
             this.aiItems = new List<AI_Item>();
             this.aiConnections = new List<AI_Connection>();
@@ -80,13 +85,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
 
         public void DrawConnections() {
-            Antares.primitiveBatch.Begin( PrimitiveType.LineList );
+            this.primitiveBatch.Begin( PrimitiveType.LineList );
 
             foreach ( AI_Connection connection in this.aiConnections ) {
-                connection.Draw( Antares.primitiveBatch );
+                connection.Draw( this.primitiveBatch );
             }
 
-            Antares.primitiveBatch.End();
+            this.primitiveBatch.End();
         }
 
         public void Update() {
@@ -370,6 +375,15 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                     bank.abstractPosition.Y = this.aiBanks.IndexOf( bank ) * ( 1.0f / this.aiBanks.Count ) + ( 0.5f / this.aiBanks.Count );
                     bank.ClientSizeChanged();
                 }
+            }
+        }
+
+
+        public override void ClientSizeChanged() {
+            base.ClientSizeChanged();
+
+            if ( this.primitiveBatch != null ) {
+                this.primitiveBatch.ClientSizeChanged();
             }
         }
 

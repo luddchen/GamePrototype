@@ -10,20 +10,16 @@ namespace Battlestation_Antares.View {
     /// </summary>
     public abstract class View {
 
-
-        public RenderTarget2D renderTarget;
-
-
         /// <summary>
-        /// if the view contains 3D elements
+        /// render target of this view
         /// </summary>
-        public bool is3D;
+        public RenderTarget2D renderTarget;
 
 
         /// <summary>
         /// background color of this view
         /// </summary>
-        public Color backgroundColor;
+        private Color backgroundColor;
 
 
         /// <summary>
@@ -33,20 +29,12 @@ namespace Battlestation_Antares.View {
 
 
         /// <summary>
-        /// a list of 3D HUD elements
+        /// create a new view
         /// </summary>
-        public List<HUD3D> allHUD_3D;
-
-
-        /// <summary>
-        /// create a new view, 3D disabled
-        /// </summary>
-        /// <param name="game">the game</param>
-        public View() {
+        /// <param name="backgroundColor">background color of this view</param>
+        public View(Color? backgroundColor) {
             this.allHUD_2D = new List<HUD2D>();
-            this.allHUD_3D = new List<HUD3D>();
-            this.is3D = false;
-            this.backgroundColor = Color.Black;
+            this.backgroundColor = backgroundColor ?? Color.Transparent;
         }
 
 
@@ -58,12 +46,13 @@ namespace Battlestation_Antares.View {
 
         /// <summary>
         /// draw content
-        /// HUD 
         /// </summary>
         public void Draw() {
-            Antares.graphics.GraphicsDevice.Clear( Color.Transparent);
+            this._initRenderTarget();
+            Antares.graphics.GraphicsDevice.SetRenderTarget( this.renderTarget );
+            Antares.graphics.GraphicsDevice.Clear( this.backgroundColor);
 
-            // draw content
+            // draw content behind HUD
             DrawPreContent();
 
             // draw 2D HUD elements
@@ -75,29 +64,23 @@ namespace Battlestation_Antares.View {
 
             Antares.spriteBatch.End();
 
-
-            // draw 3D HUD elements if 3D is enabled
-            if ( this.is3D ) {
-                Antares.graphics.GraphicsDevice.DepthStencilState = new DepthStencilState() {
-                    DepthBufferEnable = true
-                };
-
-                foreach ( HUD3D element in this.allHUD_3D ) {
-                    element.Draw();
-                }
-            }
-
+            // draw content in front of HUD
             DrawPostContent();
 
+            Antares.graphics.GraphicsDevice.SetRenderTarget( null );
         }
 
 
         /// <summary>
-        /// draw the view content
+        /// draw content behind the HUD
         /// </summary>
-        abstract protected void DrawPreContent();
+        protected virtual void DrawPreContent() {
+        }
 
 
+        /// <summary>
+        /// draw content in front of the HUD
+        /// </summary>
         protected virtual void DrawPostContent() {
         }
 
@@ -105,6 +88,18 @@ namespace Battlestation_Antares.View {
         public virtual void Window_ClientSizeChanged() {
             foreach ( HUD2D element in this.allHUD_2D ) {
                 element.ClientSizeChanged();
+            }
+        }
+
+
+        private void _initRenderTarget() {
+            if ( this.renderTarget == null || this.renderTarget.Width != (int)Antares.RenderSize.X || this.renderTarget.Height != (int)Antares.RenderSize.Y ) {
+                if ( this.renderTarget != null ) {
+                    this.renderTarget.Dispose();
+                }
+                this.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, (int)Antares.RenderSize.X, (int)Antares.RenderSize.Y, true,
+                                                        Antares.graphics.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
+                this.Window_ClientSizeChanged();
             }
         }
 

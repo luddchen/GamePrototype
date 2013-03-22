@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Battlestation_Antares.Model;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+using Battlestation_Antares.Model;
+using Battlestation_Antares;
+using Battlestation_Antares.Tools;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Battlestation_Antares.View.HUD.CockpitHUD {
-
-    /// <summary>
-    /// represents an 3D compass as HUD element
-    /// </summary>
-    public class Compass3d : HUD3D {
+namespace Battlestation_Antaris.View.HUD.CockpitHUD {
+    public class Compass : HUDRenderedTexture {
 
         /// <summary>
         /// the compass 3d model
@@ -40,24 +37,21 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
         private Matrix view;
         private Matrix projection;
-        private Vector3 position;
+        private Vector3 compassPos;
 
 
         /// <summary>
         /// creates a new compass instance
         /// </summary>
-        /// <param name="content">game content manager</param>
-        /// <param name="device">game graphics device</param>
-        public Compass3d( ContentManager content) {
-            // init 3d model and its transformation matrices
-            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models/compass3" );
+        public Compass() : base( new Vector2( 300, 300 ), null ) {
+            this.model3d = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models/compass3" );
             this.boneTransforms = new Matrix[model3d.Bones.Count];
 
-            this.target = new Vector3();    // target vector = zero
+            this.target = new Vector3();
 
             this.view = Matrix.CreateLookAt( Vector3.Zero, Vector3.Forward, Vector3.Up );
-            this.projection = Matrix.CreatePerspectiveFieldOfView( MathHelper.PiOver4 / 2, Antares.graphics.GraphicsDevice.Viewport.AspectRatio, 1, 5000 );
-            this.position = Vector3.Add( Vector3.Multiply( Vector3.Forward, 1.8f ), Vector3.Multiply( Vector3.Down, -0.3f ) );
+            this.projection = Matrix.CreatePerspectiveFieldOfView( MathHelper.PiOver4 / 2, 16f / 9f, 1, 5000 );
+            this.compassPos = Vector3.Forward * 1.8f;
         }
 
 
@@ -70,26 +64,22 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
         }
 
 
-        /// <summary>
-        /// draw the compass 3d model
-        /// </summary>
-        public override void Draw() {
+        protected override void _RenderContent() {
+            Antares.InitDepthBuffer();
+
             // if source is set
             if ( this.source != null ) {
                 // get distance vector
                 Vector3 pointer = Vector3.Subtract( this.target, this.source.globalPosition );
 
                 // get local rotation
-                Vector3 rot = Tools.Tools.GetRotation( pointer, this.source.rotation );
+                Vector3 rot = Tools.GetRotation( pointer, this.source.rotation );
 
-                Tools.Draw3D.Draw( model3d, boneTransforms, this.view, this.projection,
-                                    this.position,
-                                    Matrix.CreateFromAxisAngle( Vector3.Right, rot.X ) * Matrix.CreateFromAxisAngle( Vector3.Up, rot.Z ),
-                                    new Vector3( 0.05f ) );
+                Draw3D.Draw( model3d, boneTransforms, this.view, this.projection,
+                            this.compassPos,
+                            Matrix.CreateFromAxisAngle( Vector3.Right, rot.X ) * Matrix.CreateFromAxisAngle( Vector3.Up, rot.Z ),
+                            new Vector3( 0.35f ) );
             }
-
         }
-
-
     }
 }

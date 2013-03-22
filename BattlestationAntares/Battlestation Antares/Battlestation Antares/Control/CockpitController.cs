@@ -2,6 +2,8 @@
 using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.View.HUD.CockpitHUD;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
+using Battlestation_Antares.View;
 
 namespace Battlestation_Antares.Control {
 
@@ -17,6 +19,10 @@ namespace Battlestation_Antares.Control {
         private HUD2DButton toMenuButton;
         private FpsDisplay fpsDisplay;
 
+        private Compass compass;
+
+        private TargetInfo targetInfo;
+
         private MiniMap.Config mapConfig;
 
         /// <summary>
@@ -26,6 +32,20 @@ namespace Battlestation_Antares.Control {
         /// <param name="view">the used view</param>
         public CockpitController( Antares game, View.View view )
             : base( game, view ) {
+
+            this.compass = new Compass();
+            this.compass.Initialize( Antares.world.spaceShip );
+            this.compass.abstractPosition = new Vector2( 0.5f, 0.15f );
+            this.compass.positionType = HUDType.RELATIV;
+            this.compass.abstractSize = new Vector2( 0.125f, 0.15f );
+            this.compass.sizeType = HUDType.RELATIV;
+            this.compass.layerDepth = 0.1f;
+            this.compass.color = new Color( 192, 192, 64 );
+            this.view.allHUD_2D.Add( this.compass );
+
+            this.targetInfo = new TargetInfo( new Vector2( 60, 200 ), HUDType.ABSOLUT, new Vector2( 150, 60 ), HUDType.ABSOLUT );
+            this.view.allHUD_2D.Add( this.targetInfo );
+
             mouseVisibleCounter = mouseTimeOut;
 
             HUD2DContainer buttons = new HUD2DContainer( new Vector2( 0.8f, 0.95f ), HUDType.RELATIV );
@@ -70,6 +90,16 @@ namespace Battlestation_Antares.Control {
         /// <param name="gameTime">the game time</param>
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
+
+            // init compass
+            if ( this.targetInfo.target != null ) {
+                ( (CockpitView)this.view ).target = this.targetInfo.target;
+                this.compass.target = this.targetInfo.target.globalPosition;
+            } else {
+                ( (CockpitView)this.view ).target = null;
+                this.compass.target = Antares.world.spaceStation.globalPosition;
+            }
+            compass.Render();
 
             fpsDisplay.Update( gameTime );
 

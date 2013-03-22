@@ -12,16 +12,7 @@ namespace Battlestation_Antares.View {
     /// </summary>
     class MenuView : View {
 
-        /// <summary>
-        /// draw the view content
-        /// </summary>
-        protected override void DrawPreContent() {
-        }
-
-        /// <summary>
-        /// draw the view post content
-        /// </summary>
-        protected override void DrawPostContent() {
+        public MenuView( Color? backgroundColor ) : base( backgroundColor ) {
         }
 
 

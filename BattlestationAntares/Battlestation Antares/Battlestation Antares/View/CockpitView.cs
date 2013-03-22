@@ -14,18 +14,13 @@ namespace Battlestation_Antares.View {
     /// the cockpit view
     /// </summary>
     class CockpitView : View {
+
+        public SpatialObject target;
+
         /// <summary>
         /// the game view camera
         /// </summary>
         protected Camera camera;
-
-        /// <summary>
-        /// the cockpit compass
-        /// </summary>
-        Compass3d compass;
-
-
-        TargetInfo targetInfo;
 
         HUD2DTexture cockpitTexture;
 
@@ -47,12 +42,8 @@ namespace Battlestation_Antares.View {
         /// creates a new cockpit view
         /// </summary>
         /// <param name="game">the game</param>
-        public CockpitView() {
+        public CockpitView(Color? backgroundColor) : base(backgroundColor) {
             this.camera = new Camera();
-
-            this.compass = new Compass3d( Antares.content );
-            this.allHUD_3D.Add( this.compass );
-            this.is3D = true;
 ;
             this.backgroundObjects = new List<BackgroundObject>();
         }
@@ -62,9 +53,16 @@ namespace Battlestation_Antares.View {
         /// initialize cockpit view HUD and content
         /// </summary>
         public override void Initialize() {
-            // 3D HUD
-            this.compass.Initialize( Antares.world.spaceShip );
 
+            HUD2DTexture compassBG = new HUD2DTexture();
+            compassBG.abstractPosition = new Vector2( 0.5f, 0.15f );
+            compassBG.positionType = HUDType.RELATIV;
+            compassBG.abstractSize = new Vector2( 0.125f, 0.15f );
+            compassBG.sizeType = HUDType.RELATIV;
+            compassBG.layerDepth = 0.11f;
+            compassBG.color = new Color( 12, 16, 8, 16 );
+            compassBG.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
+            this.allHUD_2D.Add( compassBG );
 
             // 2D HUD
             cockpitTexture = new HUD2DTexture();
@@ -72,14 +70,11 @@ namespace Battlestation_Antares.View {
             cockpitTexture.positionType = HUDType.RELATIV;
             cockpitTexture.abstractSize = new Vector2( 1, 1.5f );
             cockpitTexture.sizeType = HUDType.RELATIV;
-            cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit_test" );
+            cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit3" );
             cockpitTexture.layerDepth = 1.0f;
             this.allHUD_2D.Add( cockpitTexture );
 
             this.allHUD_2D.Add( Antares.world.miniMap );
-
-            this.targetInfo = new TargetInfo( new Vector2( 60, 200 ), HUDType.ABSOLUT, new Vector2( 150, 60 ), HUDType.ABSOLUT);
-            this.allHUD_2D.Add( this.targetInfo );
 
             HUD2DTexture cross = new HUD2DTexture( Antares.content.Load<Texture2D>( "Sprites//Cross" ), new Vector2( 0.5f, 0.5f ), new Vector2( 48, 48 ), null, 1.0f, 0 );
             cross.positionType = HUDType.RELATIV;
@@ -147,23 +142,10 @@ namespace Battlestation_Antares.View {
         /// </summary>
         protected override void DrawPreContent() {
 
-            // init depth buffer
-            Antares.graphics.GraphicsDevice.DepthStencilState = new DepthStencilState() {
-                DepthBufferEnable = true,
-                DepthBufferWriteEnable = true
-            };
-            Antares.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            Antares.InitDepthBuffer();
 
             // init camera
             this.camera.ClampTo( Antares.world.spaceShip );
-
-            // init compass
-            if ( this.targetInfo.target != null ) {
-                this.compass.target = this.targetInfo.target.globalPosition;
-            } else {
-                this.compass.target = Antares.world.spaceStation.globalPosition;
-            }
-
 
             this.skybox.Draw( this.camera );
 
@@ -181,13 +163,13 @@ namespace Battlestation_Antares.View {
         }
 
         private void drawTargetCross() {
-            if ( this.targetInfo.target != null ) {
-                Vector3 tRot = Tools.Tools.GetRotation( this.targetInfo.target.globalPosition - Antares.world.spaceShip.globalPosition, Antares.world.spaceShip.rotation );
+            if ( this.target != null ) {
+                Vector3 tRot = Tools.Tools.GetRotation( this.target.globalPosition - Antares.world.spaceShip.globalPosition, Antares.world.spaceShip.rotation );
                 Matrix crossRot = Tools.Tools.YawPitchRoll( Antares.world.spaceShip.rotation, tRot.Z, tRot.X, tRot.Y );
 
                 Tools.Draw3D.Draw( this.targetCrossModel, this.targetCrossBoneTransforms,
                                     this.camera.view, this.camera.projection,
-                                    this.targetInfo.target.globalPosition, crossRot, new Vector3( this.targetInfo.target.bounding.Radius ) );
+                                    this.target.globalPosition, crossRot, new Vector3( this.target.bounding.Radius ) );
             }
         }
 

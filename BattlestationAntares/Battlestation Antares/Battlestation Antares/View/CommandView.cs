@@ -10,12 +10,7 @@ namespace Battlestation_Antares.View {
     /// </summary>
     class CommandView : View {
 
-        /// <summary>
-        /// creates a new command view
-        /// </summary>
-        /// <param name="game"></param>
-        public CommandView() {
-
+        public CommandView( Color? backgroundColor ) : base( backgroundColor ) {
         }
 
         /// <summary>
@@ -31,19 +26,6 @@ namespace Battlestation_Antares.View {
             this.allHUD_2D.Add( Antares.world.miniMap );
         }
 
-        /// <summary>
-        /// draw the command view content
-        /// </summary>
-        protected override void DrawPreContent() {
-
-            // init depth buffer
-            Antares.graphics.GraphicsDevice.DepthStencilState = new DepthStencilState() {
-                DepthBufferEnable = true,
-                DepthBufferWriteEnable = true
-            };
-            Antares.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
-
-        }
     }
 
 }

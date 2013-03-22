@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Battlestation_Antares.Control;
 using System.Collections.Generic;
 using System;
@@ -27,21 +26,12 @@ namespace Battlestation_Antares {
         public static GraphicsDeviceManager graphics;
 
 
-        //private static Vector2 renderSize;
-
-
         public static ContentManager content;
 
         /// <summary>
         /// game sprite batch
         /// </summary>
         public static SpriteBatch spriteBatch;
-
-
-        /// <summary>
-        /// game primitive batch
-        /// </summary>
-        public static PrimitiveBatch primitiveBatch;
 
 
         /// <summary>
@@ -59,7 +49,7 @@ namespace Battlestation_Antares {
         /// <summary>
         /// the active situation (control/view)
         /// </summary>
-        public SituationController activeSituation;
+        private SituationController activeSituation;
 
 
         /// <summary>
@@ -68,9 +58,6 @@ namespace Battlestation_Antares {
         List<SituationController> allSituations;
 
 
-        //private RenderTarget2D renderTarget;
-
-        //private Texture2D renderTexture;
         private static Vector2 renderTextureOrigin;
         private static Vector2 renderTexturePos;
         private static float renderTextureScale;
@@ -91,8 +78,10 @@ namespace Battlestation_Antares {
             Antares.graphics.PreferredBackBufferHeight = (int)( GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9 );
             Antares.graphics.IsFullScreen = false;
             Antares.graphics.SynchronizeWithVerticalRetrace = true;
+
             this.Content.RootDirectory = "Content";
             Antares.content = Content;
+
             this.IsFixedTimeStep = true;
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += new EventHandler<EventArgs>( Window_ClientSizeChanged );
@@ -105,16 +94,7 @@ namespace Battlestation_Antares {
         /// <param name="sender">sender</param>
         /// <param name="e">event</param>
         void Window_ClientSizeChanged( object sender, EventArgs e ) {
-
             _calculateRenderTextureParameter();
-
-            if ( this.activeSituation != null ) {
-                this.activeSituation.view.Window_ClientSizeChanged();
-            }
-
-            if ( Antares.primitiveBatch != null ) {
-                Antares.primitiveBatch.ClientSizeChanged();
-            }
         }
 
 
@@ -122,21 +102,22 @@ namespace Battlestation_Antares {
         /// initialize the game
         /// </summary>
         protected override void Initialize() {
+            Antares.spriteBatch = new SpriteBatch( GraphicsDevice );
             Antares.inputProvider = new InputProvider();
-
             Antares.debugViewer = new DebugViewer();
+
+            _calculateRenderTextureParameter();
 
             // create and initialize world model
             Antares.world = new Model.WorldModel( this );
-
             Antares.world.Initialize( this.Content );
 
             // create situations (control and views)
             this.allSituations = new List<SituationController>();
-            this.allSituations.Add( new CockpitController( this, new View.CockpitView() ) );
-            this.allSituations.Add( new CommandController( this, new View.CommandView() ) );
-            this.allSituations.Add( new MenuController( this, new View.MenuView() ) );
-            this.allSituations.Add( new AIController( this, new View.AIView() ) );
+            this.allSituations.Add( new CockpitController( this, new View.CockpitView(null) ) );
+            this.allSituations.Add( new CommandController( this, new View.CommandView(null) ) );
+            this.allSituations.Add( new MenuController( this, new View.MenuView(null) ) );
+            this.allSituations.Add( new AIController( this, new View.AIView(null) ) );
 
             SpatialObjectFactory.initializeFactory( this.Content, Antares.world );
 
@@ -158,11 +139,6 @@ namespace Battlestation_Antares {
         /// load the game content and initialize views
         /// </summary>
         protected override void LoadContent() {
-            Antares.spriteBatch = new SpriteBatch( GraphicsDevice );
-            Antares.primitiveBatch = new PrimitiveBatch( GraphicsDevice );
-
-            _calculateRenderTextureParameter();
-
             foreach ( SituationController situation in this.allSituations ) {
                 situation.view.Initialize();
             }
@@ -191,8 +167,6 @@ namespace Battlestation_Antares {
             this.activeSituation = this.allSituations[(int)situation];
             this.activeSituation.onEnter();
             this.IsMouseVisible = true;
-
-            this.activeSituation.view.Window_ClientSizeChanged();
         }
 
 
@@ -232,14 +206,10 @@ namespace Battlestation_Antares {
         /// </summary>
         /// <param name="gameTime">the game time</param>
         protected override void Draw( GameTime gameTime ) {
-            this._initRenderTarget( this.activeSituation.view );
-            Antares.graphics.GraphicsDevice.SetRenderTarget( this.activeSituation.view.renderTarget );
 
             this.activeSituation.view.Draw();
 
-            Antares.graphics.GraphicsDevice.SetRenderTarget( null );
-
-            Antares.graphics.GraphicsDevice.Clear( new Color(16,0,0 ) );
+            Antares.graphics.GraphicsDevice.Clear( Color.Black );
 
             Antares.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
@@ -257,10 +227,12 @@ namespace Battlestation_Antares {
                 } else {
                     this.lastView = null;
                 }
+
             } else {
                 Antares.spriteBatch.Draw( this.activeSituation.view.renderTarget, Antares.renderTexturePos, null, Color.White, 0.0f,
                                             Antares.renderTextureOrigin, Antares.renderTextureScale, SpriteEffects.None, 0.5f );
             }
+
             Antares.spriteBatch.End();
         }
 
@@ -273,32 +245,14 @@ namespace Battlestation_Antares {
 
 
         private static void _calculateRenderTextureParameter() {
-            //if ( this.renderTarget == null ) {
-            //    this.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, this.renderWidth, this.renderHeight, true, 
-            //                                            Antares.graphics.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
-            //    this.renderTextureOrigin = new Vector2( this.renderTarget.Width / 2.0f, this.renderTarget.Height / 2.0f );
-            //    Antares.renderSize = new Vector2( this.renderTarget.Width, this.renderTarget.Height);
-            //}
-
             Antares.renderTexturePos = new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width / 2.0f, Antares.graphics.GraphicsDevice.Viewport.Height / 2.0f );
-
             Antares.renderTextureOrigin = new Vector2( Antares.renderWidth / 2.0f, Antares.renderHeight / 2.0f );
-            //Antares.renderSize = new Vector2( Antares.renderWidth, Antares.renderHeight );
 
             float xScale = (float)Antares.graphics.GraphicsDevice.Viewport.Width / (float)Antares.renderWidth;
             float yScale = (float)Antares.graphics.GraphicsDevice.Viewport.Height / (float)Antares.renderHeight;
 
             Antares.renderTextureScale = Math.Min( xScale, yScale );
             Antares.inputProvider.setMouseTransform( Antares.renderTexturePos, Antares.renderTextureOrigin, Antares.renderTextureScale );
-        }
-
-
-        private void _initRenderTarget( View.View view ) {
-            if ( view.renderTarget == null || view.renderTarget.Width != Antares.renderWidth || view.renderTarget.Height != Antares.renderHeight ) {
-                view.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, Antares.renderWidth, Antares.renderHeight, true,
-                                                        Antares.graphics.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
-                Window_ClientSizeChanged( null, null );
-            }
         }
 
 
@@ -311,6 +265,14 @@ namespace Battlestation_Antares {
                 }
                 return renderSize;
             }
+        }
+
+        public static void InitDepthBuffer() {
+            Antares.graphics.GraphicsDevice.DepthStencilState = new DepthStencilState() {
+                DepthBufferEnable = true,
+                DepthBufferWriteEnable = true
+            };
+            Antares.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }
     }
 

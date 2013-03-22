@@ -51,7 +51,7 @@ namespace Battlestation_Antares.Control {
             testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//Galaxy" );
             testTex.color = new Color( 128, 128, 128, 128 );
 
-            test = new HUD2DRenderedItem( testTex );
+            test = new HUD2DRenderedItem( testTex , new Vector2(480,480), null);
             test.abstractPosition = new Vector2( 0.5f, 0.5f );
             test.positionType = HUDType.RELATIV;
             test.abstractSize = new Vector2( 0.7f, 0.7f );

@@ -12,8 +12,11 @@ namespace Battlestation_Antares.View {
         public AI_Container aiContainer;
 
 
+        public AIView( Color? backgroundColor ) : base( backgroundColor ) {
+        }
+
+
         public override void Initialize() {
-            this.backgroundColor = new Color( 6, 8, 4 );
 
             this.aiContainer = new AI_Container();
             this.allHUD_2D.Add( this.aiContainer );
