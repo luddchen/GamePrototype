@@ -164,24 +164,6 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public bool IsUpdatedHovered( InputProvider input ) {
-            bool hover = false;
-            if ( Intersects( input.getMousePos() ) ) {
-                hover = true;
-            }
-
-            if ( this.background != null ) {
-                if ( hover ) {
-                    this.background.color = HUDArray.BACKGROUND_COLOR_HOVER;
-                } else {
-                    this.background.color = HUDArray.BACKGROUND_COLOR;
-                }
-            }
-
-            return hover;
-        }
-
-
     }
 
 }

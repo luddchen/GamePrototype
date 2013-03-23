@@ -9,12 +9,11 @@ namespace Battlestation_Antares.View.HUD {
     /// a Head Up Display Texture
     /// </summary>
     public class HUDTexture : HUD_Item {
+
         private Texture2D texture;
 
-        /// <summary>
-        /// name of this element
-        /// </summary>
-        public String Name;
+        private Vector2 origin;
+
 
         /// <summary>
         /// texture of this element
@@ -25,14 +24,9 @@ namespace Battlestation_Antares.View.HUD {
             }
             set {
                 this.texture = value;
-                this.Origin = new Vector2( this.texture.Width / 2, this.texture.Height / 2 );
+                this.origin = new Vector2( this.texture.Width / 2, this.texture.Height / 2 );
             }
         }
-
-        /// <summary>
-        /// origin of the elements texture
-        /// </summary>
-        public Vector2 Origin;
 
 
         /// <summary>
@@ -76,7 +70,7 @@ namespace Battlestation_Antares.View.HUD {
                                 null,
                                 this.color,
                                 -this.rotation,
-                                this.Origin,
+                                this.origin,
                                 this.effect,
                                 this.layerDepth );
             }

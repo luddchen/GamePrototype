@@ -8,7 +8,7 @@ namespace Battlestation_Antares.View.HUD {
     public class HUDContainer : HUD_Item {
 
         // list of all childs
-        public List<HUD_Item> allChilds;
+        protected List<HUD_Item> allChilds;
 
 
         public HUDContainer( Vector2 abstractPosition, HUDType positionType) {
