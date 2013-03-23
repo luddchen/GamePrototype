@@ -5,10 +5,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD.AIComposer;
 using Battlestation_Antares.Control;
 using Battlestation_Antaris;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
     public class AI_Container : HUDContainer, IUpdatableItem {
+
+        private enum BuilderState {
+            NORMAL,
+            ITEM,
+            CONNECTION
+        }
 
         private PrimitiveBatch primitiveBatch;
 
@@ -25,7 +32,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public List<AI_Bank> aiBanks;
 
-        private HUDTexture mouseItemTex;
+        private HUDActionTexture mouseItemTex;
 
         private AI_Item insertItem;
 
@@ -35,36 +42,28 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private SituationController controller;
 
+        private BuilderState state;
+
         public AI_Container(SituationController controller)
             : base( new Vector2( 0, 0 ), HUDType.RELATIV ) {
 
             this.controller = controller;
             this.primitiveBatch = new PrimitiveBatch( Antares.graphics.GraphicsDevice );
+            this.state = BuilderState.NORMAL;
 
             this.removeList = new List<HUD_Item>();
             this.aiItems = new List<AI_Item>();
             this.aiConnections = new List<AI_Connection>();
+            this.aiBanks = new List<AI_Bank>();
 
             this.insertBank = new AI_Bank( new Vector2( 0.9f, 0.1f ), HUDType.RELATIV, new Vector2( 210, 110 ), HUDType.ABSOLUT );
             this.insertBank.background.Texture = Antares.content.Load<Texture2D>( "Sprites//builder_bg_temp" );
             this.insertBank.background.color = new Color( 120, 128, 112);
             this.Add( this.insertBank );
 
-            this.aiBanks = new List<AI_Bank>();
-            for ( int i = 0; i < maxBanks; i++ ) {
-                addBank();
-            }
-
-            this.mouseItemTex = new HUDTexture();
-            this.mouseItemTex.positionType = HUDType.ABSOLUT;
-            this.mouseItemTex.abstractSize = new Vector2( 200, 100 );
-            this.mouseItemTex.sizeType = HUDType.ABSOLUT;
-            this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
-            this.Add( this.mouseItemTex );
-            this.mouseItemTex.layerDepth = 0;
-            this.mouseItemTex.IsVisible = false;
-
-            this.initButtons();
+            _addBanks(maxBanks);
+            _initMouseTexture();
+            _initButtons();
 
             if ( controller != null ) {
                 controller.Register( this );
@@ -114,78 +113,9 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 }
             }
             this.removeList.Clear();
+        }
 
-            // reset bank background color
-            foreach ( AI_Bank bank in this.aiBanks ) {
-                bank.background.color = AI_Bank.NORMAL_COLOR;
-            }
-
-
-            if ( this.moveItem == null ) {
-                // drag item if existent
-                this.mouseItemTex.IsVisible = false;
-                if ( Antares.inputProvider.isLeftMouseButtonDown()) {
-                    foreach ( AI_Item item in this.aiItems ) {
-                        if ( item.typeString.Intersects( Antares.inputProvider.getMousePos() ) ) {
-                            this.moveItem = item;
-                            break;
-                        }
-                    }
-                }
-            } else {
-                this.mouseItemTex.IsVisible = true;
-                this.mouseItemTex.position = Antares.inputProvider.getMousePos();
-
-                AI_Bank targetBank = null;
-                foreach ( AI_Bank bank in this.aiBanks ) {
-                    if ( bank.Intersects( Antares.inputProvider.getMousePos() ) ) {
-                        if ( bank.hasFreePlace( this.moveItem ) ) {
-                            targetBank = bank;
-                        }
-                    }
-                }
-
-                if ( targetBank != null ) {
-                    bool insert = true;
-                    if ( ( (AI_Bank)this.moveItem.parent ) == this.insertBank ) {
-                        this.insertItem = null;
-                    } else {
-                        int targetBankIndex = this.aiBanks.IndexOf( targetBank );
-                        foreach ( AI_ItemPort itemPort in this.moveItem.inputs ) {
-                            foreach ( AI_Connection con in itemPort.connections ) {
-                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getSource().item.parent ) >= targetBankIndex ) {
-                                    insert = false;
-                                }
-                            }
-                        }
-                        foreach ( AI_ItemPort itemPort in this.moveItem.outputs ) {
-                            foreach ( AI_Connection con in itemPort.connections ) {
-                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getTarget().item.parent ) <= targetBankIndex ) {
-                                    insert = false;
-                                }
-                            }
-                        }
-                    }
-                    if ( insert ) {
-                        ( (AI_Bank)this.moveItem.parent ).Remove( this.moveItem );
-
-                        float targetXSize = targetBank.abstractSize.X * Antares.RenderSize.X;
-                        float bankPos = ( Antares.inputProvider.getMousePos().X - ( targetBank.position.X - targetXSize / 2 ) ) / targetXSize;
-                        targetBank.InsertAt( this.moveItem, bankPos );
-
-                        targetBank.background.color = AI_Bank.ENABLED_COLOR;
-                    } else {
-
-                        targetBank.background.color = AI_Bank.DISABLED_COLOR;
-                    }
-                }
-
-                if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
-                    this.moveItem = null;
-                }
-
-            }
-
+        public void TempUpdate( GameTime gameTime ) {
             AI_ItemPort port = getMouseOverPort();
             if ( port != null ) {
                 if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
@@ -301,7 +231,6 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             return null;
         }
 
-
         public void ClearAI() {
             foreach ( AI_Connection c in this.aiConnections ) {
                 c.Delete();
@@ -318,8 +247,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.aiItems.Clear();
         }
 
-
-        private void initButtons() {
+        private void _initButtons() {
             HUDArray addButtonArray = new HUDArray( new Vector2( 0.9f, 0.35f ), HUDType.RELATIV, new Vector2( 0.15f, 0.25f ), HUDType.RELATIV );
             addButtonArray.direction = LayoutDirection.VERTICAL;
             this.Add( addButtonArray );
@@ -361,19 +289,52 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             addButtonArray.Add( addOutputButton );
         }
 
+        private void _initMouseTexture() {
+            this.mouseItemTex = new HUDActionTexture(
+                delegate() {
+                    this.mouseItemTex.abstractPosition = Antares.inputProvider.getMousePos();
+                    this.mouseItemTex.ClientSizeChanged();
+                },
+                controller );
+            this.mouseItemTex.positionType = HUDType.ABSOLUT;
+            this.mouseItemTex.abstractSize = new Vector2( 200, 100 );
+            this.mouseItemTex.sizeType = HUDType.ABSOLUT;
+            this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
+            this.Add( this.mouseItemTex );
+            this.mouseItemTex.layerDepth = 0;
+            this.mouseItemTex.IsVisible = false;
+        }
+
         private void AddInsertItem(AI_Item item) {
             if ( this.insertItem != null ) {
                 this.Remove( this.insertItem );
+                this.controller.Unregister( this.insertItem );
+                this.insertItem = null;
             }
             this.insertItem = item;
             this.Add( item );
             this.insertBank.Add( this.insertItem );
+            item.dragAction = 
+                delegate() {
+                    DragItem( item );
+                };
         }
 
-
-        public void addBank() {
-            if ( this.aiBanks.Count < maxBanks ) {
+        private void _addBanks(int count) {
+            for ( int i = 0; i < count && i < maxBanks; i++ ) {
                 AI_Bank newBank = new AI_Bank( new Vector2( 0.41f, 0.5f), HUDType.RELATIV, new Vector2( 0.8f, 110 ), HUDType.RELATIV_ABSOLUT );
+                if ( this.controller != null ) {
+                    this.controller.Register( newBank );
+                }
+                newBank.mouseOverAction = 
+                    delegate() {
+                        BankMouseOver( newBank );
+                    };
+
+                newBank.mousePressedAction =
+                    delegate() {
+                        BankMousePressed( newBank );
+                    };
 
                 this.aiBanks.Add( newBank );
                 this.Add( newBank );
@@ -386,6 +347,62 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             }
         }
 
+        public void DragItem( AI_Item item ) {
+            if ( this.state == BuilderState.NORMAL ) {
+                this.moveItem = item;
+                this.mouseItemTex.IsVisible = true;
+                this.state = BuilderState.ITEM;
+            }
+        }
+
+
+        public void BankMouseOver( AI_Bank bank ) {
+            if ( this.state == BuilderState.ITEM ) {
+                if ( bank != (AI_Bank)this.moveItem.parent ) {
+                    if ( bank.hasFreePlace( this.moveItem ) ) {
+                        if ( ( (AI_Bank)this.moveItem.parent ) == this.insertBank ) {
+                            this.insertItem = null;
+                        }
+                        bool insert = true;
+                        int targetBankIndex = this.aiBanks.IndexOf( bank );
+                        foreach ( AI_ItemPort itemPort in this.moveItem.inputs ) {
+                            foreach ( AI_Connection con in itemPort.connections ) {
+                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getSource().item.parent ) >= targetBankIndex ) {
+                                    insert = false;
+                                }
+                            }
+                        }
+                        foreach ( AI_ItemPort itemPort in this.moveItem.outputs ) {
+                            foreach ( AI_Connection con in itemPort.connections ) {
+                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getTarget().item.parent ) <= targetBankIndex ) {
+                                    insert = false;
+                                }
+                            }
+                        }
+                        if ( insert ) {
+                            _switchBank( this.moveItem, bank );
+                            bank.background.color = AI_Bank.ENABLED_COLOR;
+                        } else {
+                            bank.background.color = AI_Bank.DISABLED_COLOR;
+                        }
+                    } else {
+                        bank.background.color = AI_Bank.DISABLED_COLOR;
+                    }
+                } else {
+                    _switchBank( this.moveItem, bank );
+                }
+            }
+        }
+
+
+        public void BankMousePressed( AI_Bank bank ) {
+            if ( this.state == BuilderState.ITEM ) {
+                this.moveItem = null;
+                this.mouseItemTex.IsVisible = false;
+                this.state = BuilderState.NORMAL;
+            }
+        }
+
 
         public override void ClientSizeChanged() {
             base.ClientSizeChanged();
@@ -394,6 +411,16 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 this.primitiveBatch.ClientSizeChanged();
             }
         }
+
+
+        private void _switchBank( AI_Item item, AI_Bank target ) {
+            ( (AI_Bank)item.parent ).Remove( item );
+
+            float targetXSize = target.abstractSize.X * Antares.RenderSize.X;
+            float bankPos = ( Antares.inputProvider.getMousePos().X - ( target.position.X - targetXSize / 2 ) ) / targetXSize;
+            target.InsertAt( item, bankPos );
+        }
+
 
         public bool Enabled {
             get {

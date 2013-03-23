@@ -6,7 +6,7 @@ using Battlestation_Antares.View.HUD.AIComposer;
 using Battlestation_Antares;
 
 namespace Battlestation_Antaris.View.HUD.AIComposer {
-    public class AI_Bank : HUDContainer {
+    public class AI_Bank : HUDContainer, IUpdatableItem {
 
         public static Color NORMAL_COLOR = new Color( 28, 32, 24, 16 );
 
@@ -15,6 +15,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
         public static Color DISABLED_COLOR = new Color( 32, 20, 20, 16 );
 
         public HUDTexture background;
+
+        public Action mouseOverAction;
+
+        public Action mousePressedAction;
 
         public AI_Bank(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType ) {
             this.abstractSize = abstractSize;
@@ -100,6 +104,28 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public override bool Intersects( Microsoft.Xna.Framework.Vector2 point ) {
             return this.background.Intersects(point);
+        }
+
+        public void Update( GameTime gameTime ) {
+            if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
+                if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
+                    if ( this.mouseOverAction != null ) {
+                        this.mousePressedAction();
+                    }
+                } else {
+                    if ( this.mousePressedAction != null ) {
+                        this.mouseOverAction();
+                    }
+                }
+            } else {
+                this.background.color = AI_Bank.NORMAL_COLOR;
+            }
+        }
+
+        public bool Enabled {
+            get {
+                return this.IsVisible;
+            }
         }
     }
 }

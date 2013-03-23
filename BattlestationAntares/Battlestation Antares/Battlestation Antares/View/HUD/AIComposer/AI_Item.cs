@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.Control;
+using Battlestation_Antaris;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Item : HUDContainer {
+    public class AI_Item : HUDContainer, IUpdatableItem {
         public AI_Container container;
 
         protected Object subType;
@@ -30,6 +31,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private HUDButton previousSubType;
 
         private HUDButton removeButton;
+
+        public Action dragAction;
 
 
         public AI_Item( Vector2 abstractPosition, HUDType positionType, SituationController controller)
@@ -85,6 +88,10 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 switchToPreviousSubType();
             } );
             Add( this.previousSubType );
+
+            if ( controller != null ) {
+                controller.Register( this );
+            }
         }
 
 
@@ -213,6 +220,22 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             return 0;
         }
 
+
+        public void Update( GameTime gameTime ) {
+            if ( this.dragAction != null ) {
+                if ( this.typeString.Intersects( Antares.inputProvider.getMousePos() ) ) {
+                    if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
+                        this.dragAction();
+                    }
+                }
+            }
+        }
+
+        public bool Enabled {
+            get {
+                return this.IsVisible;
+            }
+        }
     }
 
 }
