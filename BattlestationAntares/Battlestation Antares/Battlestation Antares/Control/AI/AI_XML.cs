@@ -77,7 +77,7 @@ namespace Battlestation_Antares.Control.AI {
         }
 
 
-        public static void ReadAIContainer( String fileName, AI_Container aiContainer ) {
+        public static void ReadAIContainer( String fileName, AI_Container aiContainer, SituationController controller ) {
             aiContainer.ClearAI();
 
             XmlTextReader reader = new XmlTextReader( fileName );
@@ -89,10 +89,15 @@ namespace Battlestation_Antares.Control.AI {
                             AI_Item item = null;
 
                             Type type = Type.GetType( reader.GetAttribute( 0 ) );
-                            Object[] parameters = new Object[2];
+                            Object[] parameters = new Object[3];
                             parameters[0] = new Vector2( 0.5f, 0.5f );
                             parameters[1] = HUDType.RELATIV;
+                            parameters[2] = controller;
                             item = (AI_Item)Activator.CreateInstance( type, parameters );
+                            item.dragAction =
+                                delegate() {
+                                    aiContainer.DragItem( item );
+                                };
 
                             ContinueToNode( reader, "SubType" );
                             item.SetSubType( Enum.Parse( item.GetSubType().GetType(), reader.ReadString() ) );

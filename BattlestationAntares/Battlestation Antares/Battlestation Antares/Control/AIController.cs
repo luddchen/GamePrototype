@@ -74,7 +74,7 @@ namespace Battlestation_Antares.Control {
             HUDButton loadButton = new HUDButton( "Load", new Vector2(), 0.6f, this );
             loadButton.SetPressedAction(
                 delegate() {
-                    AI_XML.ReadAIContainer( "testAI.xml", this.aiContainer );
+                    AI_XML.ReadAIContainer( "testAI.xml", this.aiContainer, this );
                 } );
             loadButton.style = ButtonStyle.BuilderButtonStyle();
             loadButton.SetBackgroundTexture( "Sprites//builder_button" );
