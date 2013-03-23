@@ -11,7 +11,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             REMEMBER
         }
 
-        public AI_Output( Vector2 abstractPosition, HUDType positionType, SituationController controller ) : base( abstractPosition, positionType, controller ) {
+        public AI_Output( Vector2 abstractPosition, HUDType positionType) : base( abstractPosition, positionType) {
             this.typeString.String = "Output";
 
             AddPort( AI_ItemPort.PortType.INPUT );

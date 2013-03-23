@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
-using Battlestation_Antares.View;
 using Battlestation_Antares.View.HUD.AIComposer;
 using Battlestation_Antares.Control.AI;
 using Battlestation_Antares.Model;

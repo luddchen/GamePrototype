@@ -18,7 +18,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private float value;
 
-        public HUD2DSlider( Vector2 abstractPosition, Vector2 abstractSize, SituationController controller ) : base( abstractPosition, HUDType.ABSOLUT ) {
+        public HUD2DSlider( Vector2 abstractPosition, Vector2 abstractSize) : base( abstractPosition, HUDType.ABSOLUT ) {
             this.valueString = new HUDString( "0.00" );
             this.valueString.scale = 0.5f;
             this.valueString.abstractPosition = new Vector2( -abstractSize.X * 0.375f, 0 );
@@ -29,7 +29,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.sliderBackground.color = new Color( 60, 64, 56, 64 );
             this.sliderBackground.Texture = Antares.content.Load<Texture2D>( "Sprites//SliderBG" );
 
-            this.sliderButton = new HUDButton( "", Vector2.Zero, 0.5f, controller );
+            this.sliderButton = new HUDButton( "", Vector2.Zero, 0.5f, null );
             this.sliderButtonZero = abstractSize.X * 0.1f - this.sliderBackground.abstractSize.X / 2;
             this.sliderButtonOne = abstractSize.X * 0.1f + this.sliderBackground.abstractSize.X / 2;
 
@@ -59,6 +59,10 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public float GetValue() {
             return this.value;
+        }
+
+        public void Update(GameTime gameTime) {
+            this.sliderButton.Update( gameTime );
         }
 
 

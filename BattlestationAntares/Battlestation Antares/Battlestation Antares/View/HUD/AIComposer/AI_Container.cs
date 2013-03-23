@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD.AIComposer;
@@ -74,11 +73,25 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         public void Add( AI_Item item ) {
             item.container = this;
             this.aiItems.Add( item );
+            this.controller.Register( item );
         }
 
 
         public void Add( AI_Connection connection ) {
             this.aiConnections.Add( connection );
+            connection.action =
+                delegate() {
+                    if ( connection.Intersects( Antares.inputProvider.getMousePos() ) ) {
+                        connection.color = connection.colorHighlight;
+                        if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
+                            connection.Delete();
+                            this.removeList.Add( connection );
+                        }
+                    } else {
+                        connection.color = connection.colorNormal;
+                    }
+                };
+            this.controller.Register( connection );
         }
 
 
@@ -88,6 +101,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 bank.Remove( item );
             }
             this.insertBank.Remove( item );
+            this.controller.Unregister( item );
         }
 
 
@@ -121,17 +135,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         public void ClearAI() {
             foreach ( AI_Connection c in this.aiConnections ) {
                 c.Delete();
+                this.removeList.Add( c );
             }
-            this.aiConnections.Clear();
 
             foreach ( AI_Item i in this.aiItems ) {
-                this.allChilds.Remove( i );
-                foreach ( AI_Bank bank in this.aiBanks ) {
-                    bank.Remove( i );
-                }
-                this.insertBank.Remove( i );
+                this.removeList.Add( i );
             }
-            this.aiItems.Clear();
         }
 
 
@@ -143,7 +152,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             HUDButton addInputButton = new HUDButton( "Input", new Vector2(), 0.7f, this.controller );
             addInputButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Input( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV, this.controller ) );
+                AddInsertItem( new AI_Input( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
             } );
             addInputButton.style = ButtonStyle.BuilderButtonStyle();
             addInputButton.SetBackgroundTexture( "Sprites//builder_button" );
@@ -152,7 +161,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             HUDButton addTransformerButton = new HUDButton( "Transformer", new Vector2(), 0.7f, this.controller );
             addTransformerButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Transformer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV, this.controller ) );
+                AddInsertItem( new AI_Transformer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
             } );
             addTransformerButton.style = ButtonStyle.BuilderButtonStyle();
             addTransformerButton.SetBackgroundTexture( "Sprites//builder_button" );
@@ -161,7 +170,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             HUDButton addMixerButton = new HUDButton( "Mixer", new Vector2(), 0.7f, this.controller );
             addMixerButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Mixer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV, this.controller ) );
+                AddInsertItem( new AI_Mixer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
             } );
             addMixerButton.style = ButtonStyle.BuilderButtonStyle();
             addMixerButton.SetBackgroundTexture( "Sprites//builder_button" );
@@ -170,7 +179,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             HUDButton addOutputButton = new HUDButton( "Output", new Vector2(), 0.7f, this.controller );
             addOutputButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Output( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV, this.controller ) );
+                AddInsertItem( new AI_Output( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
             } );
             addOutputButton.style = ButtonStyle.BuilderButtonStyle();
             addOutputButton.SetBackgroundTexture( "Sprites//builder_button" );
@@ -312,21 +321,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private void _startConnection( AI_ItemPort port ) {
             this.state = BuilderState.CONNECTION;
 
-            AI_Connection con = new AI_Connection();
-            con.action =
-                delegate() {
-                    if ( con.Intersects( Antares.inputProvider.getMousePos() ) ) {
-                        con.color = con.colorHighlight;
-                        if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
-                            con.Delete();
-                            this.removeList.Add( con );
-                        }
-                    } else {
-                        con.color = con.colorNormal;
-                    }
-                };
-            this.controller.Register( con );
-            this.moveConnection = con;
+            this.moveConnection = new AI_Connection();
 
             AI_ItemPort.PortType portType = AI_ItemPort.Inverse( port.portType );
             this.movePort = new AI_ItemPort( Antares.inputProvider.getMousePos(), HUDType.ABSOLUT, portType, this.controller );
@@ -340,10 +335,14 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 };
             this.movePort.action();
 
+            if ( port.portType == AI_ItemPort.PortType.INPUT && port.connections.Count > 0) {
+                this.removeList.Add( port.connections[0] );
+                port.connections[0].Delete();
+            }
             port.Add( this.moveConnection );
             this.movePort.Add( this.moveConnection );
 
-            this.aiConnections.Add( this.moveConnection );
+            Add( this.moveConnection );
         }
 
 

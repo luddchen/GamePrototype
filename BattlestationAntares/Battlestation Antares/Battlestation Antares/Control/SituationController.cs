@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Battlestation_Antaris;
+using System;
+using Battlestation_Antares.Tools;
 
 namespace Battlestation_Antares.Control {
 
@@ -37,6 +39,11 @@ namespace Battlestation_Antares.Control {
             this.allUpdatable = new List<IUpdatableItem>();
             this.registerList = new List<IUpdatableItem>();
             this.unregisterList = new List<IUpdatableItem>();
+
+            Antares.debugViewer.Add( new DebugElement( this, this.GetType().Name + " Updatable",
+                delegate( Object obj ) {
+                    return String.Format( "{0}", ( obj as SituationController ).allUpdatable.Count );
+                } ) );
         }
 
 

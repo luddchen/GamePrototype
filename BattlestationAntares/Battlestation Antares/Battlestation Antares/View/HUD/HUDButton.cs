@@ -55,7 +55,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        void IUpdatableItem.Update( GameTime gameTime ) {
+        public void Update( GameTime gameTime ) {
             if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
                 if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
                     this.color = this.style.foregroundColorPressed;
@@ -79,7 +79,7 @@ namespace Battlestation_Antares.View.HUD {
             }
         }
 
-        bool IUpdatableItem.Enabled {
+        public bool Enabled {
             get {
                 return this.IsVisible;
             }

@@ -15,7 +15,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             HULL_HEALTH
         }
 
-        public AI_Input( Vector2 abstractPosition, HUDType positionType, SituationController controller ) : base( abstractPosition, positionType, controller ) {
+        public AI_Input( Vector2 abstractPosition, HUDType positionType) : base( abstractPosition, positionType) {
             this.typeString.String = "Input";
 
             AddPort( AI_ItemPort.PortType.OUTPUT );

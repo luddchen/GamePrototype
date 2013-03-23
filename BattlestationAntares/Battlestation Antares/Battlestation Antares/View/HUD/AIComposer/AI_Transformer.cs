@@ -18,8 +18,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private HUD2DSlider slider;
 
-        public AI_Transformer( Vector2 abstractPosition, HUDType positionType, SituationController controller )
-            : base( abstractPosition, positionType, controller ) {
+        public AI_Transformer( Vector2 abstractPosition, HUDType positionType) : base( abstractPosition, positionType) {
             this.typeString.String = "Transformer";
 
             AddPort( AI_ItemPort.PortType.INPUT );
@@ -37,7 +36,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 || (TransformerType)subType == TransformerType.MORE_TO_ONE ) {
                 this.parameters = new float[1];
                 if ( this.slider == null ) {
-                    this.slider = new HUD2DSlider( new Vector2( 0, this.abstractSize.Y / 4 ), new Vector2( this.abstractSize.X, this.abstractSize.Y / 2 ), this.controller );
+                    this.slider = new HUD2DSlider( new Vector2( 0, this.abstractSize.Y / 4 ), new Vector2( this.abstractSize.X, this.abstractSize.Y / 2 ));
                     this.Add( this.slider );
                 }
                 this.slider.IsVisible = true;
@@ -63,6 +62,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 return this.slider.GetValue();
             }
             return base.GetParameter( index );
+        }
+
+        public override void Update( GameTime gameTime ) {
+            base.Update( gameTime );
+            if ( this.slider != null && this.slider.IsVisible ) {
+                this.slider.Update( gameTime );
+            }
         }
 
     }

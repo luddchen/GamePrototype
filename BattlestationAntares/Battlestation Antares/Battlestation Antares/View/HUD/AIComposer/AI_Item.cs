@@ -34,12 +34,9 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public Action dragAction;
 
-        public SituationController controller;
 
-
-        public AI_Item( Vector2 abstractPosition, HUDType positionType, SituationController controller)
+        public AI_Item( Vector2 abstractPosition, HUDType positionType)
             : base( abstractPosition, positionType) {
-            this.controller = controller;
             this.sizeType = HUDType.ABSOLUT;
             this.abstractSize = new Vector2( 200, 100 );
 
@@ -59,7 +56,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.typeString.abstractPosition = new Vector2( 0, -( this.abstractSize.Y - this.typeString.size.Y ) / 2 );
             Add( this.typeString );
 
-            this.removeButton = new HUDButton( "X", new Vector2( this.abstractSize.X / 2 - 8, -( this.abstractSize.Y / 2 ) + 8 ), 0.5f, controller);
+            this.removeButton = new HUDButton( "X", new Vector2( this.abstractSize.X / 2 - 8, -( this.abstractSize.Y / 2 ) + 8 ), 0.5f, null);
             this.removeButton.positionType = this.sizeType;
             this.removeButton.style = ButtonStyle.RemoveButtonStyle();
             this.removeButton.SetPressedAction( delegate() {
@@ -74,7 +71,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.subTypeString.abstractPosition = new Vector2( 0, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
             Add( this.subTypeString );
 
-            this.nextSubType = new HUDButton( ">", Vector2.Zero, 0.8f, controller);
+            this.nextSubType = new HUDButton( ">", Vector2.Zero, 0.8f, null);
             this.nextSubType.positionType = this.sizeType;
             this.nextSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.nextSubType.abstractPosition = new Vector2( ( this.abstractSize.X - this.nextSubType.size.X ) / 2 - 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
@@ -83,7 +80,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             } );
             Add( this.nextSubType );
 
-            this.previousSubType = new HUDButton( "<", Vector2.Zero, 0.8f, controller);
+            this.previousSubType = new HUDButton( "<", Vector2.Zero, 0.8f, null);
             this.previousSubType.positionType = this.sizeType;
             this.previousSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.previousSubType.abstractPosition = new Vector2( -( this.abstractSize.X - this.nextSubType.size.X ) / 2 + 2, -( this.abstractSize.Y - this.typeString.size.Y * 3 ) / 2 );
@@ -91,15 +88,11 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 switchToPreviousSubType();
             } );
             Add( this.previousSubType );
-
-            if ( controller != null ) {
-                controller.Register( this );
-            }
         }
 
 
         public void AddPort( AI_ItemPort.PortType portType ) {
-            AI_ItemPort newPort = new AI_ItemPort( Vector2.Zero, HUDType.ABSOLUT, portType, this, this.controller);
+            AI_ItemPort newPort = new AI_ItemPort( Vector2.Zero, HUDType.ABSOLUT, portType, this, null);
 
             Vector2 portPosition = new Vector2( -this.abstractSize.X / 2, 0 );
             float portOffset = 0;
@@ -181,7 +174,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private void Destroy() {
             foreach ( AI_ItemPort port in this.inputs ) {
                 while ( port.connections.Count > 0 ) {
-                    this.container.aiConnections.Remove( port.connections[0] );
+                    this.container.removeList.Add( port.connections[0] );
                     port.connections[0].Delete();
                 }
                 port.connections.Clear();
@@ -189,7 +182,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             foreach ( AI_ItemPort port in this.outputs ) {
                 while ( port.connections.Count > 0 ) {
-                    this.container.aiConnections.Remove( port.connections[0] );
+                    this.container.removeList.Add( port.connections[0] );
                     port.connections[0].Delete();
                 }
                 port.connections.Clear();
@@ -224,7 +217,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         }
 
 
-        public void Update( GameTime gameTime ) {
+        public virtual void Update( GameTime gameTime ) {
             if ( this.dragAction != null ) {
                 if ( this.typeString.Intersects( Antares.inputProvider.getMousePos() ) ) {
                     if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
@@ -232,6 +225,15 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                     }
                 }
             }
+            foreach ( AI_ItemPort port in this.inputs ) {
+                port.Update( gameTime );
+            }
+            foreach ( AI_ItemPort port in this.outputs ) {
+                port.Update( gameTime );
+            }
+            this.removeButton.Update( gameTime );
+            this.previousSubType.Update( gameTime );
+            this.nextSubType.Update( gameTime );
         }
 
         public bool Enabled {
