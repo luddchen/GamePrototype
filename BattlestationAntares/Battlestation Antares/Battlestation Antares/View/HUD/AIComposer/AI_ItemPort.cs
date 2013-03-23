@@ -1,14 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Battlestation_Antaris;
+using Battlestation_Antares.Control;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_ItemPort : HUDTexture {
+    public class AI_ItemPort : HUDActionTexture {
         public enum PortType {
             INPUT,
             OUTPUT
         }
+
+        public static PortType Inverse( PortType type ) {
+            return ( type == PortType.INPUT ) ? PortType.OUTPUT : PortType.INPUT;
+        }
+
+        public Color normalColor = Color.White;
+
+        public Color hoverColor = Color.Green;
 
         public PortType portType;
 
@@ -16,15 +27,30 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public List<AI_Connection> connections;
 
-        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType) {
+        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType, SituationController controller) : base(null, controller) {
             this.portType = portType;
             this.connections = new List<AI_Connection>();
         }
 
-        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType, AI_Item item) {
+        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType, AI_Item item, SituationController controller ) : base(null, controller) {
             this.portType = portType;
             this.item = item;
             this.connections = new List<AI_Connection>();
+            this.action =
+                delegate() {
+                    if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
+                        if ( Antares.inputProvider.isLeftMouseButtonPressed() 
+                            && this.parent != null 
+                            && this.parent is AI_Item 
+                            && ((AI_Item)this.parent).container != null) 
+                        {
+                            ( (AI_Item)this.parent ).container.PortPressed( this );
+                        }
+                        this.color = this.hoverColor;
+                    } else {
+                        this.color = this.normalColor;
+                    }
+                };
         }
 
         public void Add( AI_Connection c ) {
@@ -53,7 +79,6 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 }
             }
         }
-
 
     }
 

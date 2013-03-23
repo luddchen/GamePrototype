@@ -101,11 +101,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.primitiveBatch.End();
         }
 
+
         public void Update( GameTime gameTime ) {
             // remove items if necessary 
             foreach ( HUD_Item item in this.removeList ) {
                 if ( item is AI_Connection ) {
                     this.aiConnections.Remove( (AI_Connection)item );
+                    this.controller.Unregister( (AI_Connection)item );
                 } else if ( item is AI_Item ) {
                     Remove( (AI_Item)item );
                 } else {
@@ -115,121 +117,6 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.removeList.Clear();
         }
 
-        public void TempUpdate( GameTime gameTime ) {
-            AI_ItemPort port = getMouseOverPort();
-            if ( port != null ) {
-                if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
-
-                    if ( this.moveConnection != null ) {
-                        if ( port.portType == this.movePort.portType ) {
-                            bool doIt = true;
-                            int portItemBank = this.aiBanks.IndexOf( (AI_Bank)port.item.parent );
-                            int endPortItemBank = 0;
-                            if ( port.portType == AI_ItemPort.PortType.INPUT ) {
-                                endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getSource().item.parent );
-                                if ( portItemBank <= endPortItemBank ) {
-                                    doIt = false;
-                                }
-                            } else {
-                                endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getTarget().item.parent );
-                                if ( portItemBank >= endPortItemBank ) {
-                                    doIt = false;
-                                }
-                            }
-
-                            if ( doIt ) {
-                                if ( port.portType == AI_ItemPort.PortType.INPUT && port.connections.Count > 0 ) {
-                                    AI_Connection old = port.connections[0];
-                                    old.setSource( null );
-                                    old.setTarget( null );
-                                    this.aiConnections.Remove( old );
-                                }
-
-                                port.Add( this.moveConnection );
-                                if ( this.moveConnection.getTarget() != null
-                                    && this.moveConnection.getSource() != null
-                                    && this.moveConnection.getTarget().item == this.moveConnection.getSource().item ) {
-                                    this.moveConnection.setTarget( null );
-                                    this.moveConnection.setSource( null );
-                                    this.aiConnections.Remove( this.moveConnection );
-                                }
-                                Remove( this.movePort );
-                                this.movePort = null;
-                                this.moveConnection = null;
-                            }
-                        }
-                    } else {
-                        this.moveConnection = new AI_Connection();
-
-                        AI_ItemPort.PortType portType = ( port.portType == AI_ItemPort.PortType.INPUT ) ? AI_ItemPort.PortType.OUTPUT : AI_ItemPort.PortType.INPUT;
-                        this.movePort = new AI_ItemPort( Antares.inputProvider.getMousePos(), HUDType.ABSOLUT, portType );
-
-                        port.Add( this.moveConnection );
-                        this.movePort.Add( this.moveConnection );
-
-                        Add( this.movePort );
-                        this.aiConnections.Add( this.moveConnection );
-                    }
-
-                }
-            } else {
-                if ( this.moveConnection != null ) {
-                    if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
-                        this.moveConnection.setTarget( null );
-                        this.moveConnection.setSource( null );
-
-                        this.aiConnections.Remove( this.moveConnection );
-                        Remove( this.movePort );
-
-                        this.moveConnection = null;
-                        this.movePort = null;
-                    }
-                }
-            }
-
-            if ( this.moveConnection != null ) {
-                this.movePort.position = Antares.inputProvider.getMousePos();
-            }
-
-
-            foreach ( AI_Connection con in this.aiConnections ) {
-                if ( con.Intersects( Antares.inputProvider.getMousePos() ) ) {
-                    con.color = con.colorHighlight;
-                    if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
-                        con.Delete();
-                        this.removeList.Add( con );
-                    }
-                } else {
-                    con.color = con.colorNormal;
-                }
-            }
-
-        }
-
-
-        private AI_ItemPort getMouseOverPort() {
-            foreach ( AI_Item item in this.aiItems ) {
-                foreach ( AI_ItemPort port in item.inputs ) {
-                    if ( port.Intersects( Antares.inputProvider.getMousePos() ) ) {
-                        port.color = Color.Green;
-                        return port;
-                    } else {
-                        port.color = Color.White;
-                    }
-                }
-
-                foreach ( AI_ItemPort port in item.outputs ) {
-                    if ( port.Intersects( Antares.inputProvider.getMousePos() ) ) {
-                        port.color = Color.Green;
-                        return port;
-                    } else {
-                        port.color = Color.White;
-                    }
-                }
-            }
-
-            return null;
-        }
 
         public void ClearAI() {
             foreach ( AI_Connection c in this.aiConnections ) {
@@ -246,6 +133,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             }
             this.aiItems.Clear();
         }
+
 
         private void _initButtons() {
             HUDArray addButtonArray = new HUDArray( new Vector2( 0.9f, 0.35f ), HUDType.RELATIV, new Vector2( 0.15f, 0.25f ), HUDType.RELATIV );
@@ -289,6 +177,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             addButtonArray.Add( addOutputButton );
         }
 
+
         private void _initMouseTexture() {
             this.mouseItemTex = new HUDActionTexture(
                 delegate() {
@@ -305,6 +194,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.mouseItemTex.IsVisible = false;
         }
 
+
         private void AddInsertItem(AI_Item item) {
             if ( this.insertItem != null ) {
                 this.Remove( this.insertItem );
@@ -319,6 +209,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                     DragItem( item );
                 };
         }
+
 
         private void _addBanks(int count) {
             for ( int i = 0; i < count && i < maxBanks; i++ ) {
@@ -346,6 +237,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 }
             }
         }
+
 
         public void DragItem( AI_Item item ) {
             if ( this.state == BuilderState.NORMAL ) {
@@ -399,6 +291,118 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             if ( this.state == BuilderState.ITEM ) {
                 this.moveItem = null;
                 this.mouseItemTex.IsVisible = false;
+                this.state = BuilderState.NORMAL;
+            }
+        }
+
+
+        public void PortPressed( AI_ItemPort port ) {
+            switch ( this.state ) {
+                case BuilderState.NORMAL :
+                    _startConnection( port );
+                    break;
+
+                case BuilderState.CONNECTION :
+                    _stopConnection( port );
+                    break;
+            }
+        }
+
+
+        private void _startConnection( AI_ItemPort port ) {
+            this.state = BuilderState.CONNECTION;
+
+            AI_Connection con = new AI_Connection();
+            con.action =
+                delegate() {
+                    if ( con.Intersects( Antares.inputProvider.getMousePos() ) ) {
+                        con.color = con.colorHighlight;
+                        if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
+                            con.Delete();
+                            this.removeList.Add( con );
+                        }
+                    } else {
+                        con.color = con.colorNormal;
+                    }
+                };
+            this.controller.Register( con );
+            this.moveConnection = con;
+
+            AI_ItemPort.PortType portType = AI_ItemPort.Inverse( port.portType );
+            this.movePort = new AI_ItemPort( Antares.inputProvider.getMousePos(), HUDType.ABSOLUT, portType, this.controller );
+            this.movePort.action =
+                delegate() {
+                    this.movePort.abstractPosition = Antares.inputProvider.getMousePos();
+                    this.movePort.ClientSizeChanged();
+                    if ( Antares.inputProvider.isRightMouseButtonPressed() && this.movePort.Intersects( Antares.inputProvider.getMousePos() ) ) {
+                        ClearMoveConnection();
+                    }
+                };
+            this.movePort.action();
+
+            port.Add( this.moveConnection );
+            this.movePort.Add( this.moveConnection );
+
+            this.aiConnections.Add( this.moveConnection );
+        }
+
+
+        private void _stopConnection( AI_ItemPort port ) {
+
+            // check type of ports (only source -> target)
+            if ( port.portType == this.movePort.portType ) {
+
+                // check flow direction (only top to bottom)
+                bool doIt = true;
+                int portItemBank = this.aiBanks.IndexOf( (AI_Bank)port.item.parent );
+                int endPortItemBank;
+                if ( port.portType == AI_ItemPort.PortType.INPUT ) {
+                    endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getSource().item.parent );
+                    if ( portItemBank <= endPortItemBank ) {
+                        doIt = false;
+                    }
+                } else {
+                    endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getTarget().item.parent );
+                    if ( portItemBank >= endPortItemBank ) {
+                        doIt = false;
+                    }
+                }
+
+                // if all correct
+                if ( doIt ) {
+                    this.movePort.action = null;
+
+                    // if end port is an input with an existing connection, remove that connection
+                    if ( port.portType == AI_ItemPort.PortType.INPUT && port.connections.Count > 0 ) {
+                        AI_Connection old = port.connections[0];
+                        old.setSource( null );
+                        old.setTarget( null );
+                        this.aiConnections.Remove( old );
+                    }
+
+                    // bind connection to end port
+                    port.Add( this.moveConnection );
+                    this.controller.Unregister( this.movePort );
+                    this.movePort = null;
+                    this.moveConnection = null;
+
+                    this.state = BuilderState.NORMAL;
+                }
+            }
+        }
+
+
+        public void ClearMoveConnection() {
+            if ( this.state == BuilderState.CONNECTION ) {
+                this.moveConnection.setTarget( null );
+                this.moveConnection.setSource( null );
+
+                this.removeList.Add( this.moveConnection );
+
+                this.moveConnection = null;
+                this.controller.Unregister( this.movePort );
+                this.movePort = null;
+
                 this.state = BuilderState.NORMAL;
             }
         }

@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Connection : HUD_Item {
+    public class AI_Connection : HUD_Item, IUpdatableItem {
 
         AI_ItemPort source;
 
         AI_ItemPort target;
+
+        public Action action;
 
         public int width = 3;
 
@@ -107,6 +110,18 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             return false;
         }
 
+
+        public void Update( GameTime gameTime ) {
+            if ( this.action != null ) {
+                this.action();
+            }
+        }
+
+        public bool Enabled {
+            get {
+                return this.IsVisible;
+            }
+        }
     }
 
 }

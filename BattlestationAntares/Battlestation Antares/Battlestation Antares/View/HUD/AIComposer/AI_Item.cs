@@ -34,9 +34,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public Action dragAction;
 
+        public SituationController controller;
+
 
         public AI_Item( Vector2 abstractPosition, HUDType positionType, SituationController controller)
             : base( abstractPosition, positionType) {
+            this.controller = controller;
             this.sizeType = HUDType.ABSOLUT;
             this.abstractSize = new Vector2( 200, 100 );
 
@@ -96,7 +99,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
 
         public void AddPort( AI_ItemPort.PortType portType ) {
-            AI_ItemPort newPort = new AI_ItemPort( Vector2.Zero, HUDType.ABSOLUT, portType, this);
+            AI_ItemPort newPort = new AI_ItemPort( Vector2.Zero, HUDType.ABSOLUT, portType, this, this.controller);
 
             Vector2 portPosition = new Vector2( -this.abstractSize.X / 2, 0 );
             float portOffset = 0;
