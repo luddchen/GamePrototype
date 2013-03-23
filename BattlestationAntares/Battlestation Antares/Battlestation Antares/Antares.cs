@@ -179,24 +179,7 @@ namespace Battlestation_Antares {
             // update input
             Antares.inputProvider.Update();
 
-            switch ( this.activeSituation.worldUpdate ) {
-                // update world, then update situation 
-                case WorldUpdate.PRE:
-                    Antares.world.Update( gameTime );
-                    this.activeSituation.Update( gameTime );
-                    break;
-
-                // update only situation, no world update
-                case WorldUpdate.NO_UPDATE:
-                    this.activeSituation.Update( gameTime );
-                    break;
-
-                // update situation, then update world
-                case WorldUpdate.POST:
-                    this.activeSituation.Update( gameTime );
-                    Antares.world.Update( gameTime );
-                    break;
-            }
+            this.activeSituation.Update( gameTime );
 
             base.Update( gameTime );
         }

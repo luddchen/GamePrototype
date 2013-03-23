@@ -21,12 +21,6 @@ namespace Battlestation_Antares.Control {
         public View.View view;
 
 
-        /// <summary>
-        /// the order of world updates
-        /// </summary>
-        public WorldUpdate worldUpdate;
-
-
         private List<IUpdatableItem> allUpdatable;
         private List<IUpdatableItem> registerList;
         private List<IUpdatableItem> unregisterList;
@@ -40,7 +34,6 @@ namespace Battlestation_Antares.Control {
         public SituationController( Antares game, View.View view ) {
             this.game = game;
             this.view = view;
-            this.worldUpdate = WorldUpdate.PRE;
             this.allUpdatable = new List<IUpdatableItem>();
             this.registerList = new List<IUpdatableItem>();
             this.unregisterList = new List<IUpdatableItem>();

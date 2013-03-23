@@ -87,7 +87,6 @@
     <Compile Include="Control\MenuController.cs" />
     <Compile Include="Control\Situation.cs" />
     <Compile Include="Control\SituationController.cs" />
-    <Compile Include="Control\WorldUpdate.cs" />
     <Compile Include="IUpdatableItem.cs" />
     <Compile Include="Model\Dust.cs" />
     <Compile Include="Model\Laser.cs" />

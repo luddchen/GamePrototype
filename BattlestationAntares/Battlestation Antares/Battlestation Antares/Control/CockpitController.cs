@@ -82,6 +82,7 @@ namespace Battlestation_Antares.Control {
         /// <param name="gameTime">the game time</param>
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
+            Antares.world.Update( gameTime );
 
             // init compass
             if ( this.targetInfo.target != null ) {

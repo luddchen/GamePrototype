@@ -27,8 +27,6 @@ namespace Battlestation_Antares.Control {
             toMenuButton.style = ButtonStyle.BuilderButtonStyle();
             toMenuButton.SetBackgroundTexture( "Sprites//HUD//Ship" );
             this.view.Add( toMenuButton );
-            this.worldUpdate = WorldUpdate.NO_UPDATE;
-
 
             HUDArray verifyArray = new HUDArray( new Vector2( 0.9f, 0.6f ), HUDType.RELATIV, new Vector2( 0.15f, 0.1f ), HUDType.RELATIV );
             verifyArray.direction = LayoutDirection.HORIZONTAL;

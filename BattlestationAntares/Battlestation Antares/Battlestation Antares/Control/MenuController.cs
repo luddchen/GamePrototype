@@ -40,7 +40,6 @@ namespace Battlestation_Antares.Control {
         /// <param name="view">the used view</param>
         public MenuController( Antares game, View.View view )
             : base( game, view ) {
-            this.worldUpdate = WorldUpdate.NO_UPDATE;
 
             // test content
             HUDTexture testTex = new HUDTexture();
