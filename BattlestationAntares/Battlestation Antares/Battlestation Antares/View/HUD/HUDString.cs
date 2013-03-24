@@ -105,7 +105,7 @@ namespace Battlestation_Antares.View.HUD {
             if ( isVisible ) {
                 spriteBatch.DrawString( this.font, this.Text, this.Position,
                                         this.color, -this.rotation, this.measureString / 2,
-                                        this.scale, this.effect, this.layerDepth - 0.01f );
+                                        this.scale, this.effect, this.LayerDepth );
             }
         }
 

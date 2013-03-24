@@ -12,9 +12,6 @@ namespace Battlestation_Antares.View.HUD {
         protected List<HUD_Item> allChilds;
 
         public override float LayerDepth {
-            get {
-                return base.LayerDepth;
-            }
             set {
                 foreach ( HUD_Item item in this.allChilds ) {
                     item.LayerDepth = value - 0.01f;
@@ -25,9 +22,6 @@ namespace Battlestation_Antares.View.HUD {
         }
 
         public override HUDType SizeType {
-            get {
-                return base.SizeType;
-            }
             set {
                 this.background.SizeType = value;
                 base.SizeType = value;
@@ -35,9 +29,6 @@ namespace Battlestation_Antares.View.HUD {
         }
 
         public override Vector2 AbstractSize {
-            get {
-                return base.AbstractSize;
-            }
             set {
                 this.background.AbstractSize = value;
                 base.AbstractSize = value;
@@ -50,14 +41,14 @@ namespace Battlestation_Antares.View.HUD {
             this.background = new HUDTexture();
             this.background.IsVisible = false;
             this.background.parent = this;
-            this.positionType = positionType;
+            this.PositionType = positionType;
             this.AbstractPosition = abstractPosition;
         }
 
 
         public virtual void Add( HUD_Item element ) {
             element.parent = this;
-            element.LayerDepth = this.layerDepth - 0.01f;
+            element.LayerDepth = this.LayerDepth - 0.01f;
             element.ClientSizeChanged();
             this.allChilds.Add( element );
         }

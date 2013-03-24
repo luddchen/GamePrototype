@@ -5,7 +5,6 @@ using Battlestation_Antares.View.HUD.CommandHUD;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Battlestation_Antares.Model;
-using Battlestation_Antares.Tools;
 
 namespace Battlestation_Antares.Control {
 
@@ -49,7 +48,7 @@ namespace Battlestation_Antares.Control {
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
-            this.toMenuButton.positionType = HUDType.RELATIV;
+            this.toMenuButton.PositionType = HUDType.RELATIV;
             this.toMenuButton.SizeType = HUDType.RELATIV;
             this.toMenuButton.AbstractSize = new Vector2( 0.1f, 0.05f );
             this.view.Add( toMenuButton );
@@ -58,7 +57,7 @@ namespace Battlestation_Antares.Control {
             this.toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
-            this.toCockpitButton.positionType = HUDType.RELATIV;
+            this.toCockpitButton.PositionType = HUDType.RELATIV;
             this.toCockpitButton.SizeType = HUDType.RELATIV;
             this.toCockpitButton.AbstractSize = new Vector2( 0.1f, 0.05f );
             this.view.Add( toCockpitButton );
@@ -96,7 +95,7 @@ namespace Battlestation_Antares.Control {
         /// update the command controller
         /// </summary>
         /// <param name="gameTime">the game time</param>
-        public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
+        public override void Update( GameTime gameTime ) {
             base.Update( gameTime );
             Antares.world.Update( gameTime );
 

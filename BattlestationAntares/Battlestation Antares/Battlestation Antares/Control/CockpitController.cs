@@ -1,5 +1,4 @@
-﻿using System;
-using Battlestation_Antares.View.HUD;
+﻿using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.View.HUD.CockpitHUD;
 using Battlestation_Antaris.View.HUD.CockpitHUD;
@@ -36,7 +35,7 @@ namespace Battlestation_Antares.Control {
             this.compass = new Compass();
             this.compass.Initialize( Antares.world.spaceShip );
             this.compass.AbstractPosition = new Vector2( 0.5f, 0.15f );
-            this.compass.positionType = HUDType.RELATIV;
+            this.compass.PositionType = HUDType.RELATIV;
             this.compass.AbstractSize = new Vector2( 0.125f, 0.15f );
             this.compass.SizeType = HUDType.RELATIV;
             this.compass.LayerDepth = 0.1f;

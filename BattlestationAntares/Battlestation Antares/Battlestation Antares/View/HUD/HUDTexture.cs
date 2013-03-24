@@ -52,8 +52,8 @@ namespace Battlestation_Antares.View.HUD {
         /// </summary>
         /// <param name="spriteBatch">the spritebatch</param>
         public override void Draw( SpriteBatch spriteBatch ) {
-            if ( isVisible ) {
-                spriteBatch.Draw( this.Texture, this.dest, null, this.color, -this.rotation, this.origin, this.effect, this.layerDepth );
+            if ( this.isVisible ) {
+                spriteBatch.Draw( this.Texture, this.dest, null, this.color, -this.rotation, this.origin, this.effect, this.LayerDepth );
             }
         }
     }

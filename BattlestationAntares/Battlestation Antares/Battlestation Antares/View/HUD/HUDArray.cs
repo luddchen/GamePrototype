@@ -22,9 +22,6 @@ namespace Battlestation_Antares.View.HUD {
         public LayoutDirection direction;
 
         public override HUDType SizeType {
-            get {
-                return base.SizeType;
-            }
             set {
                 switch ( value ) {
                     case HUDType.ABSOLUT:
@@ -58,7 +55,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public override void Add( HUD_Item element ) {
             element.SizeType = this.SizeType;
-            element.positionType = this.SizeType;
+            element.PositionType = this.SizeType;
             base.Add( element );
             Arrange();
         }

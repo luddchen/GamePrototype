@@ -34,7 +34,17 @@ namespace Battlestation_Antares.View.HUD {
 
         # region position elements 
 
-            public HUDType positionType = HUDType.ABSOLUT;
+            private HUDType positionType = HUDType.ABSOLUT;
+
+            public virtual HUDType PositionType {
+                get {
+                    return this.positionType;
+                }
+                set {
+                    this.positionType = value;
+                    ClientSizeChanged();
+                }
+            }
 
             private Vector2 abstractPosition = Vector2.Zero;
 
@@ -100,7 +110,7 @@ namespace Battlestation_Antares.View.HUD {
 
         #region layer, visibility, intersection and relation elements
 
-            protected float layerDepth = 0.5f;
+            private float layerDepth = 0.5f;
 
             public virtual float LayerDepth {
                 get {
@@ -112,8 +122,14 @@ namespace Battlestation_Antares.View.HUD {
             }
 
 
+            /// <summary>
+            /// local visibility
+            /// </summary>
             protected bool isVisible = true;
 
+            /// <summary>
+            /// global visibility
+            /// </summary>
             public virtual bool IsVisible {
                 set {
                     this.isVisible = value;

@@ -22,7 +22,7 @@ namespace Battlestation_Antares.Control {
             toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
-            toMenuButton.positionType = HUDType.RELATIV;
+            toMenuButton.PositionType = HUDType.RELATIV;
             toMenuButton.style = ButtonStyle.BuilderButtonStyle();
             toMenuButton.SetBackground( Antares.content.Load<Texture2D>( "Sprites//HUD//Ship" ) );
             this.view.Add( toMenuButton );

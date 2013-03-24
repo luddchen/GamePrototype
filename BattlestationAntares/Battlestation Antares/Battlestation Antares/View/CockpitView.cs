@@ -56,7 +56,7 @@ namespace Battlestation_Antares.View {
 
             HUDTexture compassBG = new HUDTexture();
             compassBG.AbstractPosition = new Vector2( 0.5f, 0.15f );
-            compassBG.positionType = HUDType.RELATIV;
+            compassBG.PositionType = HUDType.RELATIV;
             compassBG.AbstractSize = new Vector2( 0.125f, 0.15f );
             compassBG.SizeType = HUDType.RELATIV;
             compassBG.LayerDepth = 0.11f;
@@ -66,9 +66,9 @@ namespace Battlestation_Antares.View {
 
             // 2D HUD
             cockpitTexture = new HUDTexture();
-            cockpitTexture.AbstractPosition = new Vector2( 0.5f, 0.75f );
-            cockpitTexture.positionType = HUDType.RELATIV;
-            cockpitTexture.AbstractSize = new Vector2( 1, 1.5f );
+            cockpitTexture.AbstractPosition = new Vector2( 0.5f, 0.5f );
+            cockpitTexture.PositionType = HUDType.RELATIV;
+            cockpitTexture.AbstractSize = new Vector2( 1, 1 );
             cockpitTexture.SizeType = HUDType.RELATIV;
             cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit3" );
             cockpitTexture.LayerDepth = 1.0f;
@@ -77,19 +77,21 @@ namespace Battlestation_Antares.View {
             this.Add( Antares.world.miniMap );
 
             HUDTexture cross = new HUDTexture( Antares.content.Load<Texture2D>( "Sprites//Cross" ), new Vector2( 0.5f, 0.5f ), new Vector2( 48, 48 ), null, 1.0f, 0 );
-            cross.positionType = HUDType.RELATIV;
+            cross.PositionType = HUDType.RELATIV;
             cross.LayerDepth = 0.8f;
             this.Add( cross );
 
             this.Add( new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
-            this.Add( new LaserHeat( new Vector2( 0.35f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
+            LaserHeat heat = new LaserHeat( new Vector2( 0.35f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV );
+            heat.LayerDepth = 0.3f;
+            this.Add( heat );
 
-            ObjectHealth shipHealth = new ObjectHealth( new Vector2( 0.05f, 0.92f ), HUDType.RELATIV );
+            ObjectHealth shipHealth = new ObjectHealth( new Vector2( 0.045f, 0.8f ), HUDType.RELATIV );
             shipHealth.setObject( Antares.world.spaceShip, Antares.content.Load<Texture2D>( "Sprites//HUD//Ship" ), 0.75f);
             this.Add( shipHealth );
             shipHealth.LayerDepth = 0.3f;
 
-            ObjectHealth stationHealth = new ObjectHealth( new Vector2( 0.15f, 0.92f ), HUDType.RELATIV );
+            ObjectHealth stationHealth = new ObjectHealth( new Vector2( 0.11f, 0.92f ), HUDType.RELATIV );
             stationHealth.setObject( Antares.world.spaceStation, Antares.content.Load<Texture2D>( "Sprites//HUD//Station" ), 0.75f );
             this.Add( stationHealth );
             stationHealth.LayerDepth = 0.3f;

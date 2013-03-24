@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Battlestation_Antares.View.HUD;
+﻿using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
-using Battlestation_Antares;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.View.HUD.CockpitHUD {
@@ -21,18 +18,16 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
 
 
         public ObjectHealth( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition, positionType ) {
-            this.shield = new HUDValueCircle( Vector2.Zero, HUDType.ABSOLUT, new Vector2( 150, 150 ), HUDType.ABSOLUT );
+            this.shield = new HUDValueCircle( Vector2.Zero, HUDType.ABSOLUT, new Vector2( 0.09f, 0.16f ), HUDType.RELATIV );
             this.shield.SetMaxColor( Color.Blue );
             this.shield.SetMinColor( Color.DarkRed );
             this.Add( this.shield );
 
             this.hullImage = new HUDTexture();
-            this.hullImage.AbstractSize = new Vector2( 75, 75 );
-            this.hullImage.SizeType = HUDType.ABSOLUT;
+            this.hullImage.AbstractSize = new Vector2( 0.05f, 0.09f );
+            this.hullImage.SizeType = HUDType.RELATIV;
             this.hullImage.IsVisible = false;
             this.Add( this.hullImage );
-
-            LayerDepth = this.layerDepth;
         }
 
 
@@ -55,21 +50,21 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
 
 
         public new float LayerDepth {
-            set {
-                base.LayerDepth = value;
-                this.hullImage.LayerDepth = this.layerDepth - 0.05f;
-            }
             get {
                 return base.LayerDepth;
+            }
+            set {
+                base.LayerDepth = value;
+                this.hullImage.LayerDepth = value - 0.05f;
             }
         }
 
 
-        public override void Draw( SpriteBatch spritBatch ) {
+        public override void Draw( SpriteBatch spriteBatch ) {
             if ( this.GetColor != null ) {
                 this.hullImage.color = this.GetColor(this.obj);
             }
-            base.Draw( spritBatch );
+            base.Draw( spriteBatch );
         }
 
     }

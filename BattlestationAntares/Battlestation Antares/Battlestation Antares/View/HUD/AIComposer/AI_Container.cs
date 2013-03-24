@@ -190,7 +190,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                     this.mouseItemTex.ClientSizeChanged();
                 },
                 controller );
-            this.mouseItemTex.positionType = HUDType.ABSOLUT;
+            this.mouseItemTex.PositionType = HUDType.ABSOLUT;
             this.mouseItemTex.AbstractSize = new Vector2( 200, 100 );
             this.mouseItemTex.SizeType = HUDType.ABSOLUT;
             this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
@@ -234,12 +234,10 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
                 this.aiBanks.Add( newBank );
                 this.Add( newBank );
-                newBank.LayerDepth = this.layerDepth;
 
                 foreach ( AI_Bank bank in this.aiBanks ) {
                     bank.AbstractPosition = 
                         new Vector2( bank.AbstractPosition.X, this.aiBanks.IndexOf( bank ) * ( 1.0f / this.aiBanks.Count ) + ( 0.5f / this.aiBanks.Count ) );
-                    bank.ClientSizeChanged();
                 }
             }
         }

@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Battlestation_Antares.View.HUD;
-using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.View.HUD.AIComposer;
-using System;
-using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antares.View {
 
@@ -23,7 +19,7 @@ namespace Battlestation_Antares.View {
 
             HUDString testString = new HUDString( "Antares Menu" );
             testString.AbstractPosition = new Vector2( 0.5f, 0.1f );
-            testString.positionType = HUDType.RELATIV;
+            testString.PositionType = HUDType.RELATIV;
 
             this.Add( testString );
         }

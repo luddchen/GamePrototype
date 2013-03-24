@@ -15,11 +15,9 @@ namespace Battlestation_Antares.View.HUD {
         public delegate float ColorMixValue(float input);
 
         public ColorMixValue GetColorMixValue =
-            delegate(float input) {
+            delegate( float input) {
                 return input;
             };
-
-        //private HUDTexture background;
 
         private HUDTexture foreground;
 
@@ -30,59 +28,45 @@ namespace Battlestation_Antares.View.HUD {
         private Color oneColor = new Color( 255, 32, 0 );
 
 
-        public HUDValueCircle( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
-            : base( abstractPosition, positionType) {
-            this.AbstractSize = abstractSize;
+        public HUDValueCircle( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType ) {
             this.SizeType = sizeType;
+            this.AbstractSize = abstractSize;
 
-            this.background = new HUDTexture();
-            this.background.positionType = this.SizeType;
-            this.background.AbstractSize = abstractSize;
-            this.background.SizeType = sizeType;
-            this.background.color = Color.Black;
-            this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
-            Add( this.background );
+            SetBackgroundColor( Color.Black );
+            SetBackground( "Sprites//Circle" );
 
             this.foreground = new HUDTexture();
-            this.foreground.positionType = this.SizeType;
-            this.foreground.AbstractSize = abstractSize;
-            this.foreground.AbstractSize *= 0.95f;
+            this.foreground.PositionType = SizeType;
             this.foreground.SizeType = sizeType;
+            this.foreground.AbstractSize = abstractSize * 0.95f;
+
             this.foreground.color = Color.White;
             this.foreground.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
             Add( this.foreground );
 
             this.overlay = new HUDTexture();
-            this.overlay.positionType = this.SizeType;
-            this.overlay.AbstractSize = abstractSize;
+            this.overlay.PositionType = SizeType;
             this.overlay.SizeType = sizeType;
+            this.overlay.AbstractSize = abstractSize;
             this.overlay.color = Color.White;
             this.SetNormal();
             Add( this.overlay );
-
-            LayerDepth = 0.5f;
         }
 
-        public new float LayerDepth {
+        public override float LayerDepth {
             set {
                 base.LayerDepth = value;
-                this.background.LayerDepth = this.layerDepth;
-                this.overlay.LayerDepth = this.layerDepth - 0.02f;
-            }
-            get {
-                return base.LayerDepth;
+                this.overlay.LayerDepth = value - 0.02f;
             }
         }
 
-        public override sealed void Draw( Microsoft.Xna.Framework.Graphics.SpriteBatch spritBatch ) {
+        public override sealed void Draw( SpriteBatch spritBatch ) {
             float value = this.GetValue();
             value = MathHelper.Clamp( value, 0.0f, 1.0f );
 
             this.foreground.scale = ( value + 1.0f ) / 2;
-
+            this.foreground.ClientSizeChanged(); // until change scale attribute in HUD_Item
             this.foreground.color = Color.Lerp( zeroColor, oneColor, this.GetColorMixValue( value ) );
-
-            this.foreground.ClientSizeChanged();
 
             base.Draw( spritBatch );
         }

@@ -13,22 +13,14 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public static Color DISABLED_COLOR = new Color( 32, 20, 20, 16 );
 
-        //public HUDTexture background;
-
         public Action mouseOverAction;
 
         public Action mousePressedAction;
 
         public AI_Bank(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType ) {
-            this.AbstractSize = abstractSize;
             this.SizeType = sizeType;
-            this.background = new HUDTexture();
-            this.background.AbstractSize = abstractSize;
-            this.background.SizeType = sizeType;
-            this.background.color = new Color( 32, 32, 32, 32 );
-
-            base.Add( this.background );
-            this.LayerDepth = this.layerDepth;
+            this.AbstractSize = abstractSize;
+            SetBackgroundColor( new Color( 32, 32, 32, 32 ) );
         }
 
 
@@ -46,8 +38,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
                 this.allChilds.Insert( index, item );
 
                 item.parent = this;
-                item.LayerDepth = this.layerDepth - 0.01f;
-                item.ClientSizeChanged();
+                item.LayerDepth = this.LayerDepth - 0.01f;
                 arrangeItems();
             }
         }
@@ -89,26 +80,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
                 if ( item is AI_Item ) {
                     item.AbstractPosition = new Vector2(newPos, 0);
                     newPos += itemOffset;
-                    item.ClientSizeChanged();
                 }
             }
         }
 
-
-        public new float LayerDepth {
-            set {
-                base.LayerDepth = value;
-                this.background.LayerDepth = this.layerDepth;
-            }
-            get {
-                return base.LayerDepth;
-            }
-        }
-
-
-        public override bool Intersects( Microsoft.Xna.Framework.Vector2 point ) {
-            return this.background.Intersects(point);
-        }
 
         public void Update( GameTime gameTime ) {
             if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {

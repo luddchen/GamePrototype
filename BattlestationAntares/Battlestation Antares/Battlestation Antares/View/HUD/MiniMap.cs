@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
 using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.Control;
 
 namespace Battlestation_Antares.View.HUD {
 
@@ -42,8 +40,6 @@ namespace Battlestation_Antares.View.HUD {
 
         public static Color BORDER_COLOR_HOVER = new Color( 32, 32, 32, 32 );
 
-        //private HUDTexture background;
-
         private HUDTexture foreground;
 
         private SpatialObject centeredObject;
@@ -54,13 +50,11 @@ namespace Battlestation_Antares.View.HUD {
 
         private MiniMap.Config oldConfig;
 
-        public MiniMap( Vector2 abstractPosition, HUDType positionType )
-            : base( abstractPosition, positionType ) {
-            this.background = new HUDTexture();
-            this.background.color = MiniMap.BACKGROUND_COLOR;
-            this.background.AbstractSize = new Vector2( 0.25f, 0.4f );
-            this.background.SizeType = HUDType.RELATIV;
-            this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//Square_Cross" );
+        public MiniMap( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition, positionType ) {
+            SetBackgroundColor( MiniMap.BACKGROUND_COLOR );
+            SetBackground( "Sprites//Square_Cross" );
+            this.SizeType = HUDType.RELATIV;
+            this.AbstractSize = new Vector2( 0.25f, 0.4f );
 
             this.foreground = new HUDTexture();
             this.foreground.color = MiniMap.BORDER_COLOR;
@@ -68,22 +62,9 @@ namespace Battlestation_Antares.View.HUD {
             this.foreground.SizeType = HUDType.RELATIV;
             this.foreground.Texture = Antares.content.Load<Texture2D>( "Sprites//SquareBorder" );
 
-            Add( this.background );
             Add( this.foreground );
 
-            this.background.LayerDepth = this.layerDepth;
-            this.foreground.LayerDepth = this.layerDepth - 0.01f;
-        }
-
-
-        public new float LayerDepth {
-            set {
-                base.LayerDepth = value;
-                this.background.LayerDepth = this.layerDepth;
-            }
-            get {
-                return base.LayerDepth;
-            }
+            this.foreground.LayerDepth = this.LayerDepth - 0.01f;
         }
 
 
@@ -141,7 +122,7 @@ namespace Battlestation_Antares.View.HUD {
             }
             oldConfig = config;
             this.AbstractPosition = config.abstractPosition;
-            this.background.AbstractSize = config.bgAbstractSize;
+            this.AbstractSize = config.bgAbstractSize;
             this.foreground.AbstractSize = config.fgAbstractSize;
             this.iconPositionScale = config.iconPositionScale;
             this.centeredObject = config.centeredObject;
