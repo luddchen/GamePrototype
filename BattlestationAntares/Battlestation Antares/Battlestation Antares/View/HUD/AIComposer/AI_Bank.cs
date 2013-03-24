@@ -28,7 +28,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
             this.background.color = new Color( 32, 32, 32, 32 );
 
             base.Add( this.background );
-            this.setLayerDepth( this.layerDepth );
+            this.LayerDepth = this.layerDepth;
         }
 
 
@@ -46,7 +46,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
                 this.allChilds.Insert( index, item );
 
                 item.parent = this;
-                item.setLayerDepth( this.layerDepth - 0.01f );
+                item.LayerDepth = this.layerDepth - 0.01f;
                 item.ClientSizeChanged();
                 arrangeItems();
             }
@@ -95,9 +95,14 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
         }
 
 
-        public override void setLayerDepth( float layerDepth ) {
-            base.setLayerDepth( layerDepth );
-            this.background.layerDepth = this.layerDepth;
+        public new float LayerDepth {
+            set {
+                base.LayerDepth = value;
+                this.background.LayerDepth = this.layerDepth;
+            }
+            get {
+                return base.LayerDepth;
+            }
         }
 
 

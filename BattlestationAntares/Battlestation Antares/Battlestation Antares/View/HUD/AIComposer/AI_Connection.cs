@@ -74,12 +74,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             if ( this.source != null && this.target != null ) {
                 if ( this.width > 1 ) {
                     for ( Vector2 pos = new Vector2( -this.width / 2, 0 ); pos.X <= ( this.width / 2 ); pos.X += 1.0f ) {
-                        primitiveBatch.AddVertex( this.source.position + pos, this.color );
-                        primitiveBatch.AddVertex( this.target.position + pos, this.color );
+                        primitiveBatch.AddVertex( this.source.Position + pos, this.color );
+                        primitiveBatch.AddVertex( this.target.Position + pos, this.color );
                     }
                 } else {
-                    primitiveBatch.AddVertex( this.source.position, this.color );
-                    primitiveBatch.AddVertex( this.target.position, this.color );
+                    primitiveBatch.AddVertex( this.source.Position, this.color );
+                    primitiveBatch.AddVertex( this.target.Position, this.color );
                 }
             }
         }
@@ -89,8 +89,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             if ( this.source == null || this.target == null ) {
                 return false;
             }
-            Vector2 lineVec = this.target.position - this.source.position; // Vector source -> target
-            Vector2 pointVec = point - this.source.position; // Vector source -> point
+            Vector2 lineVec = this.target.Position - this.source.Position; // Vector source -> target
+            Vector2 pointVec = point - this.source.Position; // Vector source -> point
 
             float xOff = pointVec.X / lineVec.X;
             float yOff = pointVec.Y / lineVec.Y;

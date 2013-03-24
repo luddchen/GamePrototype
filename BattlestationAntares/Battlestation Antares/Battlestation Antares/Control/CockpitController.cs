@@ -39,7 +39,7 @@ namespace Battlestation_Antares.Control {
             this.compass.positionType = HUDType.RELATIV;
             this.compass.abstractSize = new Vector2( 0.125f, 0.15f );
             this.compass.sizeType = HUDType.RELATIV;
-            this.compass.layerDepth = 0.1f;
+            this.compass.LayerDepth = 0.1f;
             this.compass.color = new Color( 192, 192, 64 );
             this.view.Add( this.compass );
 

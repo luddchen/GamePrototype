@@ -136,7 +136,7 @@ namespace Battlestation_Antares.View.HUD {
                 this.background.sizeType = this.sizeType;
                 this.background.abstractSize = this.abstractSize;
                 this.background.color = HUDArray.BACKGROUND_COLOR;
-                this.background.setLayerDepth( this.layerDepth );
+                this.background.LayerDepth = this.layerDepth;
                 this.background.parent = this;
 
                 this.background.ClientSizeChanged();

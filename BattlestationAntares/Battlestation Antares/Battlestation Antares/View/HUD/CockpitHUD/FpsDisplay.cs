@@ -22,12 +22,12 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
             text = new HUDString( "FPS : " );
             text.abstractPosition = new Vector2( -15, 0 );
             text.scale = 0.4f;
-            text.layerDepth = 0.4f;
+            text.LayerDepth = 0.4f;
 
             this.fps = new HUDString( "" + frameCounter );
             this.fps.abstractPosition = new Vector2( 25, 0 );
             this.fps.scale = 0.4f;
-            this.fps.layerDepth = 0.4f;
+            this.fps.LayerDepth = 0.4f;
 
             Add( background );
             Add( text );

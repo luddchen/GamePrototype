@@ -35,7 +35,12 @@ namespace Battlestation_Antares.View.HUD {
 
         public HUDType positionType;
         public Vector2 abstractPosition;
-        public Vector2 position;
+        protected Vector2 position;
+        public Vector2 Position {
+            get {
+                return this.position;
+            }
+        }
 
         public HUDType sizeType;
         public Vector2 abstractSize;
@@ -49,7 +54,19 @@ namespace Battlestation_Antares.View.HUD {
 
         public Color color;
 
-        public float layerDepth = 0.5f;
+        protected float layerDepth = 0.5f;
+
+        public float LayerDepth {
+            get {
+                return this.layerDepth;
+            }
+            set {
+                this.layerDepth = value;
+            }
+        }
+
+
+        protected bool isVisible;
 
         public bool IsVisible {
             set {
@@ -63,8 +80,6 @@ namespace Battlestation_Antares.View.HUD {
                 return false;
             }
         }
-
-        protected bool isVisible;
 
         public HUD_Item parent;
 
@@ -83,11 +98,6 @@ namespace Battlestation_Antares.View.HUD {
             this.rotation = 0.0f;
             this.effect = SpriteEffects.None;
             this.color = Color.White;
-        }
-
-
-        public virtual void setLayerDepth( float layerDepth ) {
-            this.layerDepth = layerDepth;
         }
 
 
@@ -120,12 +130,11 @@ namespace Battlestation_Antares.View.HUD {
 
             switch ( this.positionType ) {
                 case HUDType.RELATIV:
-                    this.position += new Vector2( Antares.RenderSize.X * this.abstractPosition.X, Antares.RenderSize.Y * this.abstractPosition.Y );
+                    this.position += Vector2.Multiply( this.abstractPosition, Antares.RenderSize ); // component wise mul
                     break;
 
                 case HUDType.ABSOLUT:
-                    this.position += new Vector2( this.abstractPosition.X,
-                                                 this.abstractPosition.Y );
+                    this.position += new Vector2( this.abstractPosition.X, this.abstractPosition.Y );
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:

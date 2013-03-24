@@ -59,7 +59,7 @@ namespace Battlestation_Antares.View {
             compassBG.positionType = HUDType.RELATIV;
             compassBG.abstractSize = new Vector2( 0.125f, 0.15f );
             compassBG.sizeType = HUDType.RELATIV;
-            compassBG.layerDepth = 0.11f;
+            compassBG.LayerDepth = 0.11f;
             compassBG.color = new Color( 12, 16, 8, 16 );
             compassBG.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
             this.Add( compassBG );
@@ -71,14 +71,14 @@ namespace Battlestation_Antares.View {
             cockpitTexture.abstractSize = new Vector2( 1, 1.5f );
             cockpitTexture.sizeType = HUDType.RELATIV;
             cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit3" );
-            cockpitTexture.layerDepth = 1.0f;
+            cockpitTexture.LayerDepth = 1.0f;
             this.Add( cockpitTexture );
 
             this.Add( Antares.world.miniMap );
 
             HUDTexture cross = new HUDTexture( Antares.content.Load<Texture2D>( "Sprites//Cross" ), new Vector2( 0.5f, 0.5f ), new Vector2( 48, 48 ), null, 1.0f, 0 );
             cross.positionType = HUDType.RELATIV;
-            cross.layerDepth = 0.8f;
+            cross.LayerDepth = 0.8f;
             this.Add( cross );
 
             this.Add( new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
@@ -87,12 +87,12 @@ namespace Battlestation_Antares.View {
             ObjectHealth shipHealth = new ObjectHealth( new Vector2( 0.05f, 0.92f ), HUDType.RELATIV );
             shipHealth.setObject( Antares.world.spaceShip, Antares.content.Load<Texture2D>( "Sprites//HUD//Ship" ), 0.75f);
             this.Add( shipHealth );
-            shipHealth.setLayerDepth( 0.3f );
+            shipHealth.LayerDepth = 0.3f;
 
             ObjectHealth stationHealth = new ObjectHealth( new Vector2( 0.15f, 0.92f ), HUDType.RELATIV );
             stationHealth.setObject( Antares.world.spaceStation, Antares.content.Load<Texture2D>( "Sprites//HUD//Station" ), 0.75f );
             this.Add( stationHealth );
-            stationHealth.setLayerDepth( 0.3f );
+            stationHealth.LayerDepth = 0.3f;
 
 
             HUDValueLamp lamp = new HUDValueLamp( new Vector2( 0.5f, 0.03f ), HUDType.RELATIV, new Vector2( 0.02f, 0.03f ), HUDType.RELATIV );

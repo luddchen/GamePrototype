@@ -20,7 +20,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public virtual void Add( HUD_Item element ) {
             element.parent = this;
-            element.setLayerDepth( this.layerDepth - 0.01f );
+            element.LayerDepth = this.layerDepth - 0.01f;
             this.allChilds.Add( element );
             element.ClientSizeChanged();
         }
@@ -36,12 +36,24 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public override void setLayerDepth( float layerDepth ) {
-            base.setLayerDepth( layerDepth );
-            foreach ( HUD_Item item in this.allChilds ) {
-                item.setLayerDepth( this.layerDepth - 0.01f );
+        //public override void LayerDepth( float layerDepth ) {
+        //    base.LayerDepth( layerDepth );
+        //    foreach ( HUD_Item item in this.allChilds ) {
+        //        item.LayerDepth( this.layerDepth - 0.01f );
+        //    }
+        //}
+        public new float LayerDepth {
+            set {
+                base.LayerDepth = value;
+                foreach ( HUD_Item item in this.allChilds ) {
+                    item.LayerDepth = this.layerDepth - 0.01f;
+                }
+            }
+            get {
+                return base.LayerDepth;
             }
         }
+
 
 
         public override void Draw( SpriteBatch spritBatch ) {

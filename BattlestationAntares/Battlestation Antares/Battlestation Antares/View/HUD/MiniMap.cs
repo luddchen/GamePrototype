@@ -71,14 +71,19 @@ namespace Battlestation_Antares.View.HUD {
             Add( this.background );
             Add( this.foreground );
 
-            this.background.layerDepth = this.layerDepth;
-            this.foreground.layerDepth = this.layerDepth - 0.01f;
+            this.background.LayerDepth = this.layerDepth;
+            this.foreground.LayerDepth = this.layerDepth - 0.01f;
         }
 
 
-        public override void setLayerDepth( float layerDepth ) {
-            base.setLayerDepth( layerDepth );
-            this.background.layerDepth = this.layerDepth;
+        public new float LayerDepth {
+            set {
+                base.LayerDepth = value;
+                this.background.LayerDepth = this.layerDepth;
+            }
+            get {
+                return base.LayerDepth;
+            }
         }
 
 

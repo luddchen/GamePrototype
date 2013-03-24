@@ -49,13 +49,18 @@ namespace Battlestation_Antares.View.HUD {
             this.SetNormal();
             Add( this.overlay );
 
-            setLayerDepth( 0.5f );
+            LayerDepth = 0.5f;
         }
 
-        public override void setLayerDepth( float layerDepth ) {
-            base.setLayerDepth( layerDepth );
-            this.background.layerDepth = this.layerDepth;
-            this.overlay.layerDepth = this.layerDepth - 0.02f;
+        public new float LayerDepth {
+            set {
+                base.LayerDepth = value;
+                this.background.LayerDepth = this.layerDepth;
+                this.overlay.LayerDepth = this.layerDepth - 0.02f;
+            }
+            get {
+                return base.LayerDepth;
+            }
         }
 
         public override sealed void Draw( Microsoft.Xna.Framework.Graphics.SpriteBatch spritBatch ) {

@@ -199,7 +199,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.mouseItemTex.sizeType = HUDType.ABSOLUT;
             this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
             this.Add( this.mouseItemTex );
-            this.mouseItemTex.layerDepth = 0;
+            this.mouseItemTex.LayerDepth = 0;
             this.mouseItemTex.IsVisible = false;
         }
 
@@ -238,7 +238,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
                 this.aiBanks.Add( newBank );
                 this.Add( newBank );
-                newBank.setLayerDepth( this.layerDepth );
+                newBank.LayerDepth = this.layerDepth;
 
                 foreach ( AI_Bank bank in this.aiBanks ) {
                     bank.abstractPosition.Y = this.aiBanks.IndexOf( bank ) * ( 1.0f / this.aiBanks.Count ) + ( 0.5f / this.aiBanks.Count );
@@ -420,7 +420,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             ( (AI_Bank)item.parent ).Remove( item );
 
             float targetXSize = target.abstractSize.X * Antares.RenderSize.X;
-            float bankPos = ( Antares.inputProvider.getMousePos().X - ( target.position.X - targetXSize / 2 ) ) / targetXSize;
+            float bankPos = ( Antares.inputProvider.getMousePos().X - ( target.Position.X - targetXSize / 2 ) ) / targetXSize;
             target.InsertAt( item, bankPos );
         }
 

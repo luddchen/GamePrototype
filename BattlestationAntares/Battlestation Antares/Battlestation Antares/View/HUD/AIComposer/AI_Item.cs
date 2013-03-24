@@ -122,9 +122,14 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         }
 
 
-        public override void setLayerDepth( float layerDepth ) {
-            base.setLayerDepth( layerDepth );
-            this.background.setLayerDepth( this.layerDepth );
+        public new float LayerDepth {
+            set {
+                base.LayerDepth = value;
+                this.background.LayerDepth = this.layerDepth;
+            }
+            get {
+                return base.LayerDepth;
+            }
         }
 
 

@@ -32,7 +32,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
             this.hullImage.IsVisible = false;
             this.Add( this.hullImage );
 
-            setLayerDepth( this.layerDepth );
+            LayerDepth = this.layerDepth;
         }
 
 
@@ -54,9 +54,14 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         }
 
 
-        public override void setLayerDepth( float layerDepth ) {
-            base.setLayerDepth( layerDepth );
-            this.hullImage.setLayerDepth( this.layerDepth - 0.05f );
+        public new float LayerDepth {
+            set {
+                base.LayerDepth = value;
+                this.hullImage.LayerDepth = this.layerDepth - 0.05f;
+            }
+            get {
+                return base.LayerDepth;
+            }
         }
 
 
