@@ -12,12 +12,6 @@ namespace Battlestation_Antares.View.HUD {
 
         private Texture2D texture;
 
-        private Vector2 origin;
-
-
-        /// <summary>
-        /// texture of this element
-        /// </summary>
         public Texture2D Texture {
             get {
                 return this.texture;
@@ -27,6 +21,8 @@ namespace Battlestation_Antares.View.HUD {
                 this.origin = new Vector2( this.texture.Width / 2, this.texture.Height / 2 );
             }
         }
+
+        private Vector2 origin;
 
 
         /// <summary>
@@ -59,61 +55,8 @@ namespace Battlestation_Antares.View.HUD {
         /// <param name="spriteBatch">the spritebatch</param>
         public override void Draw( SpriteBatch spriteBatch ) {
             if ( isVisible ) {
-                Rectangle dest = new Rectangle(
-                        (int)position.X,
-                        (int)position.Y,
-                        (int)( size.X * scale ),
-                        (int)( size.Y * scale ) );
-
-                spriteBatch.Draw( this.Texture,
-                                dest,
-                                null,
-                                this.color,
-                                -this.rotation,
-                                this.origin,
-                                this.effect,
-                                this.layerDepth );
+                spriteBatch.Draw( this.Texture, this.dest, null, this.color, -this.rotation, this.origin, this.effect, this.layerDepth );
             }
         }
-
-        /// <summary>
-        /// testing intersection with point
-        /// </summary>
-        /// <param name="point">the test point</param>
-        /// <returns>true if there is an intersetion</returns>
-        public override bool Intersects( Vector2 point ) {
-            if ( point.X < position.X - scale * size.X / 2 || point.X > position.X + scale * size.X / 2 ||
-                point.Y < position.Y - scale * size.Y / 2 || point.Y > position.Y + scale * size.Y / 2 ) {
-                return false;
-            }
-            return true;
-        }
-
-
-        public override void ClientSizeChanged() {
-            base.ClientSizeChanged();
-
-            switch ( this.sizeType ) {
-                case HUDType.ABSOLUT:
-                    this.size = this.abstractSize;
-                    break;
-
-                case HUDType.RELATIV:
-                    this.size.X = this.abstractSize.X * Antares.RenderSize.X;
-                    this.size.Y = this.abstractSize.Y * Antares.RenderSize.Y;
-                    break;
-
-                case HUDType.ABSOLUT_RELATIV:
-                    this.size.X = this.abstractSize.X;
-                    this.size.Y = this.abstractSize.Y * Antares.RenderSize.Y;
-                    break;
-
-                case HUDType.RELATIV_ABSOLUT:
-                    this.size.X = this.abstractSize.X * Antares.RenderSize.X;
-                    this.size.Y = this.abstractSize.Y;
-                    break;
-            }
-        }
-
     }
 }

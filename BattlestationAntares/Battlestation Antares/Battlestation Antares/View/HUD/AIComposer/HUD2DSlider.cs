@@ -39,7 +39,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.sliderButton.SetBackgroundTexture( "Sprites//Slider" );
             this.sliderButton.SetDownAction(
                 delegate() {
-                    float newPos = Antares.inputProvider.getMousePos().X - this.position.X;
+                    float newPos = Antares.inputProvider.getMousePos().X - this.Position.X;
                     if ( newPos >= this.sliderButtonZero && newPos <= this.sliderButtonOne ) {
                         SetValue( ( newPos - this.sliderButtonZero ) / this.sliderBackground.abstractSize.X );
                     }

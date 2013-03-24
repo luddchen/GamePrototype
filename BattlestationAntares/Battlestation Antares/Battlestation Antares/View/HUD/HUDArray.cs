@@ -156,8 +156,8 @@ namespace Battlestation_Antares.View.HUD {
 
 
         public override bool Intersects( Vector2 point ) {
-            if ( point.X < position.X - scale * size.X / 2 || point.X > position.X + scale * size.X / 2 ||
-                point.Y < position.Y - scale * size.Y / 2 || point.Y > position.Y + scale * size.Y / 2 ) {
+            if ( point.X < Position.X - scale * size.X / 2 || point.X > Position.X + scale * size.X / 2 ||
+                point.Y < Position.Y - scale * size.Y / 2 || point.Y > Position.Y + scale * size.Y / 2 ) {
                 return false;
             }
             return true;

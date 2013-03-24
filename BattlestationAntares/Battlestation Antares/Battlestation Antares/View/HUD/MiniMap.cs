@@ -149,7 +149,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
         public Vector2 screenToMiniMapCoord( Vector2 screenCoord ) {
-            return screenCoord - this.position;
+            return screenCoord - this.Position;
         }
 
         public Vector3 miniMapToWorldCoord( Vector2 miniMapCoord ) {

@@ -174,7 +174,7 @@ namespace Battlestation_Antares.View.HUD {
                 if ( this.BackgroundTexture != null ) {
                     Vector2 bgSize = BackgroundSize;
                     Rectangle dest =
-                        new Rectangle( (int)this.position.X, (int)this.position.Y,
+                        new Rectangle( (int)this.Position.X, (int)this.Position.Y,
                                         (int)bgSize.X, (int)bgSize.Y );
 
                     spriteBatch.Draw( this.BackgroundTexture, dest, null,
@@ -182,7 +182,7 @@ namespace Battlestation_Antares.View.HUD {
                                         this.BackgroundTextureOrigin, this.effect, this.layerDepth );
                 }
 
-                spriteBatch.DrawString( this.font, this.String, this.position,
+                spriteBatch.DrawString( this.font, this.String, this.Position,
                                         this.color, -this.rotation, this.MeasureString / 2,
                                         this.scale, this.effect, this.layerDepth - 0.01f );
             }
@@ -200,13 +200,13 @@ namespace Battlestation_Antares.View.HUD {
             }
 
             if ( this.BackgroundTexture == null ) {
-                if ( point.X < position.X - size.X / 2 || point.X > position.X + size.X / 2 ||
-                    point.Y < position.Y - size.Y / 2 || point.Y > position.Y + size.Y / 2 ) {
+                if ( point.X < Position.X - size.X / 2 || point.X > Position.X + size.X / 2 ||
+                    point.Y < Position.Y - size.Y / 2 || point.Y > Position.Y + size.Y / 2 ) {
                     return false;
                 }
             } else {
-                if ( point.X < position.X - BackgroundSize.X / 2 || point.X > position.X + BackgroundSize.X / 2 ||
-                    point.Y < position.Y - BackgroundSize.Y / 2 || point.Y > position.Y + BackgroundSize.Y / 2 ) {
+                if ( point.X < Position.X - BackgroundSize.X / 2 || point.X > Position.X + BackgroundSize.X / 2 ||
+                    point.Y < Position.Y - BackgroundSize.Y / 2 || point.Y > Position.Y + BackgroundSize.Y / 2 ) {
                     return false;
                 }
             }
