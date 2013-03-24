@@ -50,6 +50,8 @@ namespace Battlestation_Antares.Control {
                 this.game.switchTo( Situation.MENU );
             } );
             this.toMenuButton.positionType = HUDType.RELATIV;
+            this.toMenuButton.SizeType = HUDType.RELATIV;
+            this.toMenuButton.AbstractSize = new Vector2( 0.1f, 0.05f );
             this.view.Add( toMenuButton );
 
             this.toCockpitButton = new HUDButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f, this );
@@ -57,6 +59,8 @@ namespace Battlestation_Antares.Control {
                 this.game.switchTo( Situation.COCKPIT );
             } );
             this.toCockpitButton.positionType = HUDType.RELATIV;
+            this.toCockpitButton.SizeType = HUDType.RELATIV;
+            this.toCockpitButton.AbstractSize = new Vector2( 0.1f, 0.05f );
             this.view.Add( toCockpitButton );
 
             buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV, 

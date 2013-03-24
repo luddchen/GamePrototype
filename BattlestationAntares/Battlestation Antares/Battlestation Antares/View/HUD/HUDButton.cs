@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.Control;
@@ -7,7 +6,7 @@ using Battlestation_Antaris;
 
 namespace Battlestation_Antares.View.HUD {
 
-    public class HUDButton : HUDString, IUpdatableItem {
+    public class HUDButton : HUDContainer, IUpdatableItem {
 
         public ButtonStyle style;
 
@@ -16,26 +15,25 @@ namespace Battlestation_Antares.View.HUD {
         private Action pressedAction;
         private Action downAction;
 
+        private HUDString buttonString;
 
-        public HUDButton( String text, Vector2 position, float scale, SituationController controller)
-            : base( text) {
+
+        public HUDButton( String text, Vector2 position, float scale, SituationController controller) : base(position, HUDType.RELATIV) {
+            this.buttonString = new HUDString( text );
+            this.buttonString.scale = scale;
+            Add( this.buttonString );
+            this.AbstractSize = Vector2.Multiply( this.buttonString.Size, new Vector2( 1.2f, 1.0f ) ); // if no size set adapt to string
+
             this.AbstractPosition = position;
-            this.overallScale = scale;
-            this.scale = scale;
+            this.overallScale = 1.0f;
             this.style = ButtonStyle.DefaultButtonStyle();
 
-            this.color = this.style.foregroundColorNormal;
-            this.BackgroundColor = this.style.backgroundColorNormal;
-            SetBackgroundTexture( "Sprites//builder_button" );
+            SetBackgroundColor( this.style.backgroundColorNormal );
+            SetBackground( Antares.content.Load<Texture2D>( "Sprites//builder_button" ) );
 
             if ( controller != null ) {
                 controller.Register( this );
             }
-        }
-
-        public void SetBackgroundTexture( String background ) {
-            this.BackgroundTexture = Antares.content.Load<Texture2D>( background );
-            this.BackgroundTextureOrigin = new Vector2( BackgroundTexture.Width / 2, BackgroundTexture.Height / 2 );
         }
 
 
@@ -58,9 +56,9 @@ namespace Battlestation_Antares.View.HUD {
         public void Update( GameTime gameTime ) {
             if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
                 if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
-                    this.color = this.style.foregroundColorPressed;
-                    this.BackgroundColor = this.style.backgroundColorPressed;
-                    this.scale = this.style.scalePressed * this.overallScale;
+                    this.buttonString.color = this.style.foregroundColorPressed;
+                    SetBackgroundColor( this.style.backgroundColorPressed );
+                    this.background.scale = this.style.scalePressed * this.overallScale;
                     if ( this.pressedAction != null ) {
                         this.pressedAction();
                     }
@@ -68,14 +66,15 @@ namespace Battlestation_Antares.View.HUD {
                     if ( Antares.inputProvider.isLeftMouseButtonDown() && this.downAction != null ) {
                         this.downAction();
                     }
-                    this.color = this.style.foregroundColorHover;
-                    this.BackgroundColor = this.style.backgroundColorHover;
-                    this.scale = this.style.scaleHover * this.overallScale;
+                    this.buttonString.color = this.style.foregroundColorHover;
+                    SetBackgroundColor( this.style.backgroundColorHover );
+                    this.background.scale = this.style.scaleHover * this.overallScale;
                 }
+
             } else {
-                this.color = this.style.foregroundColorNormal;
-                this.BackgroundColor = this.style.backgroundColorNormal;
-                this.scale = this.style.scaleNormal * this.overallScale;
+                this.buttonString.color = this.style.foregroundColorNormal;
+                SetBackgroundColor( this.style.backgroundColorNormal );
+                this.background.scale = this.style.scaleNormal * this.overallScale;
             }
         }
 

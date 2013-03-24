@@ -28,7 +28,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
 
             this.hullImage = new HUDTexture();
             this.hullImage.AbstractSize = new Vector2( 75, 75 );
-            this.hullImage.sizeType = HUDType.ABSOLUT;
+            this.hullImage.SizeType = HUDType.ABSOLUT;
             this.hullImage.IsVisible = false;
             this.Add( this.hullImage );
 

@@ -38,7 +38,7 @@ namespace Battlestation_Antares.Control {
             this.compass.AbstractPosition = new Vector2( 0.5f, 0.15f );
             this.compass.positionType = HUDType.RELATIV;
             this.compass.AbstractSize = new Vector2( 0.125f, 0.15f );
-            this.compass.sizeType = HUDType.RELATIV;
+            this.compass.SizeType = HUDType.RELATIV;
             this.compass.LayerDepth = 0.1f;
             this.compass.color = new Color( 192, 192, 64 );
             this.view.Add( this.compass );
@@ -48,16 +48,18 @@ namespace Battlestation_Antares.Control {
 
             mouseVisibleCounter = mouseTimeOut;
 
-            HUDContainer buttons = new HUDContainer( new Vector2( 0.8f, 0.95f ), HUDType.RELATIV );
+            HUDArray buttons = new HUDArray( new Vector2( 0.8f, 0.95f ), HUDType.RELATIV, new Vector2(0.15f, 0.04f), HUDType.RELATIV );
+            buttons.direction = LayoutDirection.HORIZONTAL;
+            buttons.borderSize = new Vector2( 0.01f, 0 );
 
-            toCommandButton = new HUDButton( "Command", new Vector2( 0, 0 ), 0.5f, this );
+            toCommandButton = new HUDButton( "Command", new Vector2(), 0.6f, this );
 
             this.toCommandButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COMMAND );
             } );
             buttons.Add( toCommandButton );
 
-            toMenuButton = new HUDButton( "Menu", new Vector2( toCommandButton.Size.X + 10, 0 ), 0.5f, this );
+            toMenuButton = new HUDButton( "Menu", new Vector2(), 0.6f, this );
 
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );

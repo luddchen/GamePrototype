@@ -56,8 +56,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.aiBanks = new List<AI_Bank>();
 
             this.insertBank = new AI_Bank( new Vector2( 0.9f, 0.1f ), HUDType.RELATIV, new Vector2( 210, 110 ), HUDType.ABSOLUT );
-            this.insertBank.background.Texture = Antares.content.Load<Texture2D>( "Sprites//builder_bg_temp" );
-            this.insertBank.background.color = new Color( 120, 128, 112);
+            this.insertBank.SetBackground( Antares.content.Load<Texture2D>( "Sprites//builder_bg_temp" ) );
+            this.insertBank.SetBackgroundColor( new Color( 120, 128, 112) );
             this.Add( this.insertBank );
 
             _addBanks(maxBanks);
@@ -155,7 +155,6 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 AddInsertItem( new AI_Input( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
             } );
             addInputButton.style = ButtonStyle.BuilderButtonStyle();
-            addInputButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addInputButton );
 
 
@@ -164,7 +163,6 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 AddInsertItem( new AI_Transformer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
             } );
             addTransformerButton.style = ButtonStyle.BuilderButtonStyle();
-            addTransformerButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addTransformerButton );
 
 
@@ -173,7 +171,6 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 AddInsertItem( new AI_Mixer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
             } );
             addMixerButton.style = ButtonStyle.BuilderButtonStyle();
-            addMixerButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addMixerButton );
 
 
@@ -182,7 +179,6 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 AddInsertItem( new AI_Output( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
             } );
             addOutputButton.style = ButtonStyle.BuilderButtonStyle();
-            addOutputButton.SetBackgroundTexture( "Sprites//builder_button" );
             addButtonArray.Add( addOutputButton );
         }
 
@@ -196,7 +192,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 controller );
             this.mouseItemTex.positionType = HUDType.ABSOLUT;
             this.mouseItemTex.AbstractSize = new Vector2( 200, 100 );
-            this.mouseItemTex.sizeType = HUDType.ABSOLUT;
+            this.mouseItemTex.SizeType = HUDType.ABSOLUT;
             this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
             this.Add( this.mouseItemTex );
             this.mouseItemTex.LayerDepth = 0;
@@ -283,12 +279,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                         }
                         if ( insert ) {
                             _switchBank( this.moveItem, bank );
-                            bank.background.color = AI_Bank.ENABLED_COLOR;
+                            bank.SetBackgroundColor( AI_Bank.ENABLED_COLOR );
                         } else {
-                            bank.background.color = AI_Bank.DISABLED_COLOR;
+                            bank.SetBackgroundColor( AI_Bank.DISABLED_COLOR );
                         }
                     } else {
-                        bank.background.color = AI_Bank.DISABLED_COLOR;
+                        bank.SetBackgroundColor( AI_Bank.DISABLED_COLOR );
                     }
                 } else {
                     _switchBank( this.moveItem, bank );

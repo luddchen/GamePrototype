@@ -28,7 +28,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
             Add( targetObject );
             Add( targetDistance );
 
-            CreateBackground( true );
+            SetBackgroundColor( HUDArray.BACKGROUND_COLOR );
 
             this.isVisible = false;
         }
@@ -37,12 +37,12 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
             this.target = this.world.spaceShip.target;
 
             if ( target != null ) {
-                this.targetObject.String = target.ToString();
+                this.targetObject.Text = target.ToString();
                 //this.targetDistance.String = String.Format("{0:F0} m", testDist);
                 this.isVisible = true;
             } else {
-                this.targetObject.String = "";
-                this.targetDistance.String = "";
+                this.targetObject.Text = "";
+                this.targetDistance.Text = "";
                 this.isVisible = false;
             }
 

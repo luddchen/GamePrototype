@@ -18,7 +18,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public List<AI_ItemPort> outputs;
 
-        public HUDTexture background;
+        //public HUDTexture background;
 
         public HUDString typeString;
 
@@ -37,7 +37,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public AI_Item( Vector2 abstractPosition, HUDType positionType)
             : base( abstractPosition, positionType) {
-            this.sizeType = HUDType.ABSOLUT;
+            this.SizeType = HUDType.ABSOLUT;
             this.AbstractSize = new Vector2( 200, 100 );
 
             this.inputs = new List<AI_ItemPort>();
@@ -45,19 +45,19 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             this.background = new HUDTexture();
             this.background.color = new Color( 64, 96, 64 );
-            this.background.sizeType = this.sizeType;
+            this.background.SizeType = this.SizeType;
             this.background.AbstractSize = this.AbstractSize;
             this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//builder_bg_temp" );
             Add( this.background );
 
             this.typeString = new HUDString( "X");
-            this.typeString.positionType = this.sizeType;
+            this.typeString.positionType = this.SizeType;
             this.typeString.scale = 0.6f;
             this.typeString.AbstractPosition = new Vector2( 0, -( this.AbstractSize.Y - this.typeString.Size.Y ) / 2 );
             Add( this.typeString );
 
             this.removeButton = new HUDButton( "X", new Vector2( this.AbstractSize.X / 2 - 8, -( this.AbstractSize.Y / 2 ) + 8 ), 0.5f, null);
-            this.removeButton.positionType = this.sizeType;
+            this.removeButton.positionType = this.SizeType;
             this.removeButton.style = ButtonStyle.RemoveButtonStyle();
             this.removeButton.SetPressedAction( delegate() {
                 Destroy();
@@ -66,13 +66,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             this.subTypeString = new HUDString( " ");
             this.subTypeString.scale = 0.5f;
-            this.subTypeString.positionType = this.sizeType;
+            this.subTypeString.positionType = this.SizeType;
             this.subTypeString.AbstractSize = new Vector2( this.AbstractSize.X, this.subTypeString.Size.Y );
             this.subTypeString.AbstractPosition = new Vector2( 0, -( this.AbstractSize.Y - this.typeString.Size.Y * 3 ) / 2 );
             Add( this.subTypeString );
 
             this.nextSubType = new HUDButton( ">", Vector2.Zero, 0.8f, null);
-            this.nextSubType.positionType = this.sizeType;
+            this.nextSubType.positionType = this.SizeType;
             this.nextSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.nextSubType.AbstractPosition = new Vector2( ( this.AbstractSize.X - this.nextSubType.Size.X ) / 2 - 2, -( this.AbstractSize.Y - this.typeString.Size.Y * 3 ) / 2 );
             this.nextSubType.SetPressedAction( delegate() {
@@ -81,7 +81,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             Add( this.nextSubType );
 
             this.previousSubType = new HUDButton( "<", Vector2.Zero, 0.8f, null);
-            this.previousSubType.positionType = this.sizeType;
+            this.previousSubType.positionType = this.SizeType;
             this.previousSubType.style = ButtonStyle.NoBackgroundButtonStyle();
             this.previousSubType.AbstractPosition = new Vector2( -( this.AbstractSize.X - this.nextSubType.Size.X ) / 2 + 2, -( this.AbstractSize.Y - this.typeString.Size.Y * 3 ) / 2 );
             this.previousSubType.SetPressedAction( delegate() {
@@ -168,7 +168,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public virtual void SetSubType( Object subType ) {
             this.subType = subType;
-            this.subTypeString.String = this.subType.ToString().Replace( '_', ' ' );
+            this.subTypeString.Text = this.subType.ToString().Replace( '_', ' ' );
         }
 
         public Object GetSubType() {

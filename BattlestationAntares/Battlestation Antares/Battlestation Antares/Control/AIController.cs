@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Battlestation_Antares.View.HUD.AIComposer;
 using Battlestation_Antares.Control.AI;
 using Battlestation_Antares.Model;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.Control {
 
@@ -23,7 +24,7 @@ namespace Battlestation_Antares.Control {
             } );
             toMenuButton.positionType = HUDType.RELATIV;
             toMenuButton.style = ButtonStyle.BuilderButtonStyle();
-            toMenuButton.SetBackgroundTexture( "Sprites//HUD//Ship" );
+            toMenuButton.SetBackground( Antares.content.Load<Texture2D>( "Sprites//HUD//Ship" ) );
             this.view.Add( toMenuButton );
 
             HUDArray verifyArray = new HUDArray( new Vector2( 0.9f, 0.6f ), HUDType.RELATIV, new Vector2( 0.15f, 0.1f ), HUDType.RELATIV );
@@ -43,15 +44,15 @@ namespace Battlestation_Antares.Control {
                     }
                 } );
             verifyButton.style = ButtonStyle.BuilderButtonStyle();
-            verifyButton.SetBackgroundTexture( "Sprites//builder_button_round" );
+            verifyButton.SetBackground( Antares.content.Load<Texture2D>( "Sprites//builder_button_round" ) );
             verifyArray.Add( verifyButton );
 
             HUDArray statusArray = new HUDArray( new Vector2(), HUDType.RELATIV, new Vector2(), HUDType.RELATIV );
             statusArray.direction = LayoutDirection.VERTICAL;
             verifyArray.Add( statusArray );
 
-            statusArray.Add( new HUDString( "Status", null, null, null, null, 0.6f, 0 ) );
-            statusArray.Add( new HUDString( "unknown", null, null, Color.Yellow, null, 0.6f, 0 ) );
+            statusArray.Add( new HUDString( "Status", null, null, null, 0.6f, 0 ) );
+            statusArray.Add( new HUDString( "unknown", null, null, Color.Yellow, 0.6f, 0 ) );
 
 
             HUDArray aiButtonArray = new HUDArray( new Vector2( 0.9f, 0.8f ), HUDType.RELATIV, new Vector2( 0.1f, 0.15f ), HUDType.RELATIV );
@@ -64,7 +65,6 @@ namespace Battlestation_Antares.Control {
                     AI_XML.WriteAIContainer( "testAI.xml", this.aiContainer );
                 } );
             saveButton.style = ButtonStyle.BuilderButtonStyle();
-            saveButton.SetBackgroundTexture( "Sprites//builder_button" );
             aiButtonArray.Add( saveButton );
 
             HUDButton loadButton = new HUDButton( "Load", new Vector2(), 0.6f, this );
@@ -73,7 +73,6 @@ namespace Battlestation_Antares.Control {
                     AI_XML.ReadAIContainer( "testAI.xml", this.aiContainer, this );
                 } );
             loadButton.style = ButtonStyle.BuilderButtonStyle();
-            loadButton.SetBackgroundTexture( "Sprites//builder_button" );
             aiButtonArray.Add( loadButton );
 
             HUDButton clearButton = new HUDButton( "Clear", new Vector2(), 0.6f, this );
@@ -82,7 +81,6 @@ namespace Battlestation_Antares.Control {
                     this.aiContainer.ClearAI();
                 } );
             clearButton.style = ButtonStyle.BuilderButtonStyle();
-            clearButton.SetBackgroundTexture( "Sprites//builder_button" );
             aiButtonArray.Add( clearButton );
 
         }

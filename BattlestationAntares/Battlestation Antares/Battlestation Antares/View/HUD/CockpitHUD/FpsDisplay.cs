@@ -40,7 +40,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
             this.frameCounter++;
 
             if ( this.elapsedTime > 1000 ) {
-                fps.String = "" + frameCounter;
+                fps.Text = "" + frameCounter;
                 this.frameCounter = 0;
                 this.elapsedTime = 0;
             }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.Control;
+﻿using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antares.View.HUD {
     public enum LayoutDirection {
@@ -25,45 +21,46 @@ namespace Battlestation_Antares.View.HUD {
 
         public LayoutDirection direction;
 
-        private HUDTexture background;
+        public override HUDType SizeType {
+            get {
+                return base.SizeType;
+            }
+            set {
+                switch ( value ) {
+                    case HUDType.ABSOLUT:
+                        this.borderSize = new Vector2( ABSOLUT_BORDER, ABSOLUT_BORDER );
+                        break;
 
+                    case HUDType.RELATIV:
+                        this.borderSize = new Vector2( RELATIV_BORDER, RELATIV_BORDER );
+                        break;
 
-        public HUDArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
-            : base( abstractPosition, positionType) {
-            this.AbstractSize = abstractSize;
-            this.sizeType = sizeType;
+                    case HUDType.ABSOLUT_RELATIV:
+                        this.borderSize = new Vector2( ABSOLUT_BORDER, RELATIV_BORDER );
+                        break;
 
-            this.direction = LayoutDirection.VERTICAL;
+                    case HUDType.RELATIV_ABSOLUT:
+                        this.borderSize = new Vector2( RELATIV_BORDER, ABSOLUT_BORDER );
+                        break;
+                }
 
-            switch ( this.sizeType ) {
-
-                case HUDType.ABSOLUT:
-                    this.borderSize = new Vector2( ABSOLUT_BORDER, ABSOLUT_BORDER );
-                    break;
-
-                case HUDType.RELATIV:
-                    this.borderSize = new Vector2( RELATIV_BORDER, RELATIV_BORDER );
-                    break;
-
-                case HUDType.ABSOLUT_RELATIV:
-                    this.borderSize = new Vector2( ABSOLUT_BORDER, RELATIV_BORDER );
-                    break;
-
-                case HUDType.RELATIV_ABSOLUT:
-                    this.borderSize = new Vector2( RELATIV_BORDER, ABSOLUT_BORDER );
-                    break;
+                base.SizeType = value;
             }
         }
 
 
+        public HUDArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType) {
+            this.SizeType = sizeType;
+            this.AbstractSize = abstractSize;
+            this.direction = LayoutDirection.VERTICAL;
+        }
+
+
         public override void Add( HUD_Item element ) {
+            element.SizeType = this.SizeType;
+            element.positionType = this.SizeType;
             base.Add( element );
-
-            element.sizeType = this.sizeType;
-            element.positionType = this.sizeType;
-
             Arrange();
-
         }
 
 
@@ -87,7 +84,6 @@ namespace Battlestation_Antares.View.HUD {
 
             foreach ( HUD_Item item in this.allChilds ) {
                 item.AbstractSize = itemSize - this.borderSize;
-
                 item.AbstractPosition = itemPosition;
 
                 if ( this.direction == LayoutDirection.VERTICAL ) {
@@ -95,44 +91,7 @@ namespace Battlestation_Antares.View.HUD {
                 } else {
                     itemPosition.X += itemSize.X;
                 }
-
-                item.ClientSizeChanged();
             }
-        }
-
-
-        public override void ClientSizeChanged() {
-
-            base.ClientSizeChanged();
-
-            if ( this.background != null ) {
-                this.background.ClientSizeChanged();
-            }
-        }
-
-
-        public void CreateBackground( bool create ) {
-            if ( create ) {
-                this.background = new HUDTexture();
-                this.background.sizeType = this.sizeType;
-                this.background.AbstractSize = this.AbstractSize;
-                this.background.color = HUDArray.BACKGROUND_COLOR;
-                this.background.LayerDepth = this.layerDepth;
-                this.background.parent = this;
-
-                this.background.ClientSizeChanged();
-            } else {
-                background = null;
-            }
-        }
-
-
-        public override void Draw( SpriteBatch spritBatch ) {
-            if ( this.isVisible && this.background != null ) {
-                this.background.Draw( spritBatch );
-            }
-
-            base.Draw( spritBatch );
         }
 
     }

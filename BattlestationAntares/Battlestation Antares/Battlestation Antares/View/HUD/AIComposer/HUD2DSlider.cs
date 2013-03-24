@@ -36,7 +36,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.sliderButton.AbstractPosition = new Vector2( this.sliderButtonZero, 0 );
             this.sliderButton.AbstractSize = new Vector2( abstractSize.Y * 0.8f, abstractSize.Y * 0.8f );
             this.sliderButton.style = ButtonStyle.SliderButtonStyle();
-            this.sliderButton.SetBackgroundTexture( "Sprites//Slider" );
+            this.sliderButton.SetBackground( Antares.content.Load<Texture2D>( "Sprites//Slider" ) );
             this.sliderButton.SetDownAction(
                 delegate() {
                     float newPos = Antares.inputProvider.getMousePos().X - this.Position.X;
@@ -55,7 +55,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 new Vector2( newValue * this.sliderBackground.AbstractSize.X + this.sliderButtonZero, this.sliderButton.AbstractPosition.Y );
             this.sliderButton.ClientSizeChanged();
             this.value = newValue;
-            this.valueString.String = String.Format( "{0:F2}", this.value );
+            this.valueString.Text = String.Format( "{0:F2}", this.value );
         }
 
         public float GetValue() {

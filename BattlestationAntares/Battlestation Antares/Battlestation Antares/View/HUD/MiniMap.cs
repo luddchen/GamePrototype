@@ -42,7 +42,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public static Color BORDER_COLOR_HOVER = new Color( 32, 32, 32, 32 );
 
-        private HUDTexture background;
+        //private HUDTexture background;
 
         private HUDTexture foreground;
 
@@ -59,13 +59,13 @@ namespace Battlestation_Antares.View.HUD {
             this.background = new HUDTexture();
             this.background.color = MiniMap.BACKGROUND_COLOR;
             this.background.AbstractSize = new Vector2( 0.25f, 0.4f );
-            this.background.sizeType = HUDType.RELATIV;
+            this.background.SizeType = HUDType.RELATIV;
             this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//Square_Cross" );
 
             this.foreground = new HUDTexture();
             this.foreground.color = MiniMap.BORDER_COLOR;
             this.foreground.AbstractSize = new Vector2( 0.25f, 0.4f );
-            this.foreground.sizeType = HUDType.RELATIV;
+            this.foreground.SizeType = HUDType.RELATIV;
             this.foreground.Texture = Antares.content.Load<Texture2D>( "Sprites//SquareBorder" );
 
             Add( this.background );

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
@@ -39,7 +38,7 @@ namespace Battlestation_Antares.View.HUD {
 
             private Vector2 abstractPosition = Vector2.Zero;
 
-            public Vector2 AbstractPosition {
+            public virtual Vector2 AbstractPosition {
                 get {
                     return this.abstractPosition;
                 }
@@ -51,7 +50,7 @@ namespace Battlestation_Antares.View.HUD {
 
             private Vector2 position = Vector2.Zero;
 
-            public Vector2 Position {
+            public virtual Vector2 Position {
                 get {
                     return this.position;
                 }
@@ -62,11 +61,21 @@ namespace Battlestation_Antares.View.HUD {
 
         # region size elements
 
-            public HUDType sizeType = HUDType.ABSOLUT;
+            private HUDType sizeType = HUDType.ABSOLUT;
+
+            public virtual HUDType SizeType {
+                get {
+                    return this.sizeType;
+                }
+                set {
+                    this.sizeType = value;
+                    ClientSizeChanged();
+                }
+            }
 
             private Vector2 abstractSize = Vector2.Zero;
 
-            public Vector2 AbstractSize {
+            public virtual Vector2 AbstractSize {
                 get {
                     return this.abstractSize;
                 }
@@ -78,7 +87,7 @@ namespace Battlestation_Antares.View.HUD {
 
             private Vector2 size = Vector2.Zero;
 
-            public Vector2 Size {
+            public virtual Vector2 Size {
                 get {
                     return this.size;
                 }
@@ -93,7 +102,7 @@ namespace Battlestation_Antares.View.HUD {
 
             protected float layerDepth = 0.5f;
 
-            public float LayerDepth {
+            public virtual float LayerDepth {
                 get {
                     return this.layerDepth;
                 }
@@ -105,7 +114,7 @@ namespace Battlestation_Antares.View.HUD {
 
             protected bool isVisible = true;
 
-            public bool IsVisible {
+            public virtual bool IsVisible {
                 set {
                     this.isVisible = value;
                 }
@@ -141,7 +150,7 @@ namespace Battlestation_Antares.View.HUD {
         /// draw this element
         /// </summary>
         /// <param name="spritBatch">the spritebatch</param>
-        public abstract void Draw( SpriteBatch spritBatch );
+        public abstract void Draw( SpriteBatch spriteBatch );
 
 
         /// <summary>
@@ -150,10 +159,7 @@ namespace Battlestation_Antares.View.HUD {
         /// <param name="point">the test point</param>
         /// <returns>true if there is an intersetion</returns>
         public virtual bool Intersects( Vector2 point ) {
-            if ( Math.Abs( point.X - this.dest.X ) > ( this.dest.Width / 2 ) || Math.Abs( point.Y - this.dest.Y ) > ( this.dest.Height / 2 ) ) {
-                return false;
-            }
-            return true;
+            return ( Math.Abs( point.X - this.dest.X ) < ( this.dest.Width / 2 ) && Math.Abs( point.Y - this.dest.Y ) < ( this.dest.Height / 2 ) );
         }
 
         /// <summary>

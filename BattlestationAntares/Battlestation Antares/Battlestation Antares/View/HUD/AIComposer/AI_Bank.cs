@@ -13,7 +13,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public static Color DISABLED_COLOR = new Color( 32, 20, 20, 16 );
 
-        public HUDTexture background;
+        //public HUDTexture background;
 
         public Action mouseOverAction;
 
@@ -21,10 +21,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public AI_Bank(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType ) {
             this.AbstractSize = abstractSize;
-            this.sizeType = sizeType;
+            this.SizeType = sizeType;
             this.background = new HUDTexture();
             this.background.AbstractSize = abstractSize;
-            this.background.sizeType = sizeType;
+            this.background.SizeType = sizeType;
             this.background.color = new Color( 32, 32, 32, 32 );
 
             base.Add( this.background );

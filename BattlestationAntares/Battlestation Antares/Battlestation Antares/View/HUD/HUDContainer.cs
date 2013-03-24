@@ -7,33 +7,59 @@ namespace Battlestation_Antares.View.HUD {
 
     public class HUDContainer : HUD_Item {
 
+        protected HUDTexture background;
+
         protected List<HUD_Item> allChilds;
 
-        public new float LayerDepth {
-            set {
-                base.LayerDepth = value;
-                foreach ( HUD_Item item in this.allChilds ) {
-                    item.LayerDepth = this.layerDepth - 0.01f;
-                }
-            }
+        public override float LayerDepth {
             get {
                 return base.LayerDepth;
+            }
+            set {
+                foreach ( HUD_Item item in this.allChilds ) {
+                    item.LayerDepth = value - 0.01f;
+                }
+                this.background.LayerDepth = value;
+                base.LayerDepth = value;
+            }
+        }
+
+        public override HUDType SizeType {
+            get {
+                return base.SizeType;
+            }
+            set {
+                this.background.SizeType = value;
+                base.SizeType = value;
+            }
+        }
+
+        public override Vector2 AbstractSize {
+            get {
+                return base.AbstractSize;
+            }
+            set {
+                this.background.AbstractSize = value;
+                base.AbstractSize = value;
             }
         }
 
 
         public HUDContainer( Vector2 abstractPosition, HUDType positionType) {
             this.allChilds = new List<HUD_Item>();
-            this.AbstractPosition = abstractPosition;
+            this.background = new HUDTexture();
+            this.background.IsVisible = false;
+            this.background.parent = this;
             this.positionType = positionType;
+            this.AbstractPosition = abstractPosition;
         }
 
 
         public virtual void Add( HUD_Item element ) {
             element.parent = this;
             element.LayerDepth = this.layerDepth - 0.01f;
-            this.allChilds.Add( element );
             element.ClientSizeChanged();
+            this.allChilds.Add( element );
         }
 
 
@@ -47,10 +73,30 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public override void Draw( SpriteBatch spritBatch ) {
+        public void SetBackground( Texture2D texture ) {
+            if ( texture == null ) {
+                this.background.IsVisible = false;
+            } else {
+                this.background.IsVisible = true;
+                this.background.Texture = texture;
+            }
+        }
+
+        public void SetBackground( String textureName ) {
+            SetBackground( ( textureName == null ) ? null : Antares.content.Load<Texture2D>( textureName ) );
+        }
+
+        public void SetBackgroundColor( Color color ) {
+            this.background.IsVisible = true;
+            this.background.color = color;
+        }
+
+
+        public override void Draw( SpriteBatch spriteBatch ) {
             if ( this.isVisible ) {
+                this.background.Draw( spriteBatch );
                 foreach ( HUD_Item item in this.allChilds ) {
-                    item.Draw( spritBatch );
+                    item.Draw( spriteBatch );
                 }
             }
         }
@@ -58,23 +104,12 @@ namespace Battlestation_Antares.View.HUD {
 
         public override void ClientSizeChanged() {
             base.ClientSizeChanged();
+            this.background.ClientSizeChanged();
 
             foreach ( HUD_Item item in this.allChilds ) {
                 item.ClientSizeChanged();
             }
         }
-
-
-        //public override bool Intersects( Vector2 point ) {
-        //    bool intersects = false;
-        //    foreach ( HUD_Item item in this.allChilds ) {
-        //        if ( item.Intersects( point ) ) {
-        //            intersects = true;
-        //        }
-        //    }
-        //    return intersects;
-        //}
-
 
     }
 

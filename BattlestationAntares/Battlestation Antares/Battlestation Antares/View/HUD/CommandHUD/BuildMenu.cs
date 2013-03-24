@@ -38,7 +38,7 @@ namespace Battlestation_Antares.View.HUD.CommandHUD {
                 } );
             this.Add( buildRadarButton );
 
-            this.CreateBackground( true );
+            //this.CreateBackground( true ); // use SetBackground() instead
         }
 
         public Type getStructureType() {

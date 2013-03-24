@@ -17,7 +17,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private HUD2DSlider slider;
 
         public AI_Mixer( Vector2 abstractPosition, HUDType positionType) : base( abstractPosition, positionType) {
-            this.typeString.String = "Mixer";
+            this.typeString.Text = "Mixer";
 
             AddPort( AI_ItemPort.PortType.INPUT );
             AddPort( AI_ItemPort.PortType.INPUT );

@@ -20,7 +20,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
         public void Add( DebugElement debugElement ) {
-            HUDString newHUDStr = new HUDString( "", null, null, null, null, 0.35f, 0.0f);
+            HUDString newHUDStr = new HUDString( "", null, null, null, 0.35f, 0.0f);
             this.debugElements.Add( debugElement );
             this.outputStrings.Add( newHUDStr );
 
@@ -43,7 +43,7 @@ namespace Battlestation_Antares.View.HUD {
                 if ( debugElement.active ) {
                     nrActive++;
                 }
-                outputStr.String = debugElement.getDebugString();
+                outputStr.Text = debugElement.getDebugString();
                 outputStr.AbstractPosition = new Vector2( outputStr.Size.X / 2, 10f * nrActive );
             }
             base.Draw( spritBatch );

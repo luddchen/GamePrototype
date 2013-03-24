@@ -136,7 +136,7 @@ namespace Battlestation_Antares.Control {
             HUDContainer renderResolutionArray = new HUDContainer( new Vector2(), HUDType.RELATIV );
             videoPage.Add( renderResolutionArray );
 
-            HUDString resolutionTitle = new HUDString( "Render Resolution", null, new Vector2( 0, -0.05f ), null, null, 0.6f, null );
+            HUDString resolutionTitle = new HUDString( "Render Resolution", null, new Vector2( 0, -0.05f ), null, 0.6f, null );
             resolutionTitle.positionType = HUDType.RELATIV;
             renderResolutionArray.Add( resolutionTitle );
 
@@ -179,7 +179,7 @@ namespace Battlestation_Antares.Control {
             HUDContainer test1Array = new HUDContainer( new Vector2(), HUDType.RELATIV );
             videoPage.Add( test1Array );
 
-            HUDString test1Title = new HUDString( "Placeholder", null, new Vector2( 0, -0.05f ), null, null, 0.6f, null );
+            HUDString test1Title = new HUDString( "Placeholder", null, new Vector2( 0, -0.05f ), null, 0.6f, null );
             test1Title.positionType = HUDType.RELATIV;
             test1Array.Add( test1Title );
 
@@ -200,7 +200,6 @@ namespace Battlestation_Antares.Control {
 
         private void _addSoundPage() {
             HUDArray soundPage = new HUDArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV );
-            //soundPage.CreateBackground( true );
             soundPage.Add( new HUDString( "Sound" ) );
 
             _addOptionPage( "Sound", soundPage );
@@ -212,7 +211,7 @@ namespace Battlestation_Antares.Control {
             testTex.AbstractPosition = new Vector2( 0.5f, 0.5f );
             testTex.positionType = HUDType.RELATIV;
             testTex.AbstractSize = new Vector2( 2f, 2f );
-            testTex.sizeType = HUDType.RELATIV;
+            testTex.SizeType = HUDType.RELATIV;
             testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//Galaxy" );
             testTex.color = new Color( 128, 128, 128, 128 );
 
@@ -220,7 +219,7 @@ namespace Battlestation_Antares.Control {
             this.test.AbstractPosition = new Vector2( 0.5f, 0.5f );
             this.test.positionType = HUDType.RELATIV;
             this.test.AbstractSize = new Vector2( 0.7f, 0.7f );
-            this.test.sizeType = HUDType.RELATIV;
+            this.test.SizeType = HUDType.RELATIV;
             this.view.Add( this.test );
         }
 

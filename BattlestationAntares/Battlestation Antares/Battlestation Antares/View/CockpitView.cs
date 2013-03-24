@@ -58,7 +58,7 @@ namespace Battlestation_Antares.View {
             compassBG.AbstractPosition = new Vector2( 0.5f, 0.15f );
             compassBG.positionType = HUDType.RELATIV;
             compassBG.AbstractSize = new Vector2( 0.125f, 0.15f );
-            compassBG.sizeType = HUDType.RELATIV;
+            compassBG.SizeType = HUDType.RELATIV;
             compassBG.LayerDepth = 0.11f;
             compassBG.color = new Color( 12, 16, 8, 16 );
             compassBG.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
@@ -69,7 +69,7 @@ namespace Battlestation_Antares.View {
             cockpitTexture.AbstractPosition = new Vector2( 0.5f, 0.75f );
             cockpitTexture.positionType = HUDType.RELATIV;
             cockpitTexture.AbstractSize = new Vector2( 1, 1.5f );
-            cockpitTexture.sizeType = HUDType.RELATIV;
+            cockpitTexture.SizeType = HUDType.RELATIV;
             cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit3" );
             cockpitTexture.LayerDepth = 1.0f;
             this.Add( cockpitTexture );
