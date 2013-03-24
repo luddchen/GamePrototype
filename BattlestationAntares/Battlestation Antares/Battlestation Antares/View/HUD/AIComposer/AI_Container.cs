@@ -190,12 +190,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private void _initMouseTexture() {
             this.mouseItemTex = new HUDActionTexture(
                 delegate() {
-                    this.mouseItemTex.abstractPosition = Antares.inputProvider.getMousePos();
+                    this.mouseItemTex.AbstractPosition = Antares.inputProvider.getMousePos();
                     this.mouseItemTex.ClientSizeChanged();
                 },
                 controller );
             this.mouseItemTex.positionType = HUDType.ABSOLUT;
-            this.mouseItemTex.abstractSize = new Vector2( 200, 100 );
+            this.mouseItemTex.AbstractSize = new Vector2( 200, 100 );
             this.mouseItemTex.sizeType = HUDType.ABSOLUT;
             this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
             this.Add( this.mouseItemTex );
@@ -241,7 +241,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 newBank.LayerDepth = this.layerDepth;
 
                 foreach ( AI_Bank bank in this.aiBanks ) {
-                    bank.abstractPosition.Y = this.aiBanks.IndexOf( bank ) * ( 1.0f / this.aiBanks.Count ) + ( 0.5f / this.aiBanks.Count );
+                    bank.AbstractPosition = 
+                        new Vector2( bank.AbstractPosition.X, this.aiBanks.IndexOf( bank ) * ( 1.0f / this.aiBanks.Count ) + ( 0.5f / this.aiBanks.Count ) );
                     bank.ClientSizeChanged();
                 }
             }
@@ -327,7 +328,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.movePort = new AI_ItemPort( Antares.inputProvider.getMousePos(), HUDType.ABSOLUT, portType, this.controller );
             this.movePort.action =
                 delegate() {
-                    this.movePort.abstractPosition = Antares.inputProvider.getMousePos();
+                    this.movePort.AbstractPosition = Antares.inputProvider.getMousePos();
                     this.movePort.ClientSizeChanged();
                     if ( Antares.inputProvider.isRightMouseButtonPressed() && this.movePort.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         ClearMoveConnection();
@@ -419,7 +420,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private void _switchBank( AI_Item item, AI_Bank target ) {
             ( (AI_Bank)item.parent ).Remove( item );
 
-            float targetXSize = target.abstractSize.X * Antares.RenderSize.X;
+            float targetXSize = target.AbstractSize.X * Antares.RenderSize.X;
             float bankPos = ( Antares.inputProvider.getMousePos().X - ( target.Position.X - targetXSize / 2 ) ) / targetXSize;
             target.InsertAt( item, bankPos );
         }

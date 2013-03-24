@@ -33,63 +33,108 @@ namespace Battlestation_Antares.View.HUD {
     /// </summary>
     public abstract class HUD_Item {
 
-        public HUDType positionType = HUDType.ABSOLUT;
-        public Vector2 abstractPosition = Vector2.Zero;
+        # region position elements 
 
-        private Vector2 position = Vector2.Zero;
+            public HUDType positionType = HUDType.ABSOLUT;
 
-        public Vector2 Position {
-            get {
-                return this.position;
-            }
-        }
+            private Vector2 abstractPosition = Vector2.Zero;
 
-
-        public HUDType sizeType = HUDType.ABSOLUT;
-        public Vector2 abstractSize = Vector2.Zero;
-        public Vector2 size = Vector2.Zero;
-
-
-        public float scale = 1.0f;
-
-        public float rotation = 0.0f;
-
-        public SpriteEffects effect = SpriteEffects.None;
-
-        public Color color = Color.White;
-
-
-        protected float layerDepth = 0.5f;
-
-        public float LayerDepth {
-            get {
-                return this.layerDepth;
-            }
-            set {
-                this.layerDepth = value;
-            }
-        }
-
-
-        protected bool isVisible = true;
-        public bool IsVisible {
-            set {
-                this.isVisible = value;
-            }
-            get {
-                if ( this.isVisible ) {
-                    return ( this.parent != null ) ? this.parent.IsVisible : true;
+            public Vector2 AbstractPosition {
+                get {
+                    return this.abstractPosition;
                 }
-
-                return false;
+                set {
+                    this.abstractPosition = value;
+                    ClientSizeChanged();
+                }
             }
-        }
+
+            private Vector2 position = Vector2.Zero;
+
+            public Vector2 Position {
+                get {
+                    return this.position;
+                }
+            }
+
+        # endregion
 
 
-        protected Rectangle dest = new Rectangle();
+        # region size elements
+
+            public HUDType sizeType = HUDType.ABSOLUT;
+
+            private Vector2 abstractSize = Vector2.Zero;
+
+            public Vector2 AbstractSize {
+                get {
+                    return this.abstractSize;
+                }
+                set {
+                    this.abstractSize = value;
+                    ClientSizeChanged();
+                }
+            }
+
+            private Vector2 size = Vector2.Zero;
+
+            public Vector2 Size {
+                get {
+                    return this.size;
+                }
+            }
+
+            public float scale = 1.0f;
+
+        # endregion
 
 
-        public HUD_Item parent;
+        #region layer, visibility, intersection and relation elements
+
+            protected float layerDepth = 0.5f;
+
+            public float LayerDepth {
+                get {
+                    return this.layerDepth;
+                }
+                set {
+                    this.layerDepth = value;
+                }
+            }
+
+
+            protected bool isVisible = true;
+
+            public bool IsVisible {
+                set {
+                    this.isVisible = value;
+                }
+                get {
+                    if ( this.isVisible ) {
+                        return ( this.parent != null ) ? this.parent.IsVisible : true;
+                    }
+
+                    return false;
+                }
+            }
+
+
+            protected Rectangle dest = new Rectangle();
+
+            public HUD_Item parent;
+
+        #endregion
+
+
+        #region other elements
+
+            public float rotation = 0.0f;
+
+            public SpriteEffects effect = SpriteEffects.None;
+
+            public Color color = Color.White;
+
+        #endregion
 
 
         /// <summary>
@@ -116,12 +161,15 @@ namespace Battlestation_Antares.View.HUD {
         /// </summary>
         /// <param name="offset"></param>
         public virtual void ClientSizeChanged() {
+
+            // root position
             if ( this.parent != null ) {
                 this.position = this.parent.position;
             } else {
                 this.position = Vector2.Zero;
             }
 
+            // calclate own position
             switch ( this.positionType ) {
                 case HUDType.ABSOLUT:
                     this.position += this.abstractPosition;
@@ -140,6 +188,7 @@ namespace Battlestation_Antares.View.HUD {
                     break;
             }
 
+            // calculate own size
             switch ( this.sizeType ) {
                 case HUDType.ABSOLUT:
                     this.size = this.abstractSize;
@@ -160,6 +209,7 @@ namespace Battlestation_Antares.View.HUD {
                     break;
             }
 
+            // calculate intersection rectangle
             this.dest.X = (int)Position.X;
             this.dest.Y = (int)Position.Y;
             this.dest.Width = (int)( size.X * scale );
@@ -167,13 +217,16 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
+        /// <summary>
+        /// toggle the visibility of this item, independent of parent visibility
+        /// </summary>
         public void ToggleVisibility() {
             this.isVisible = !this.isVisible;
         }
 
 
         public override string ToString() {
-            return "HUD2DItem : pos = " + this.position + " , size = " + this.size + " , scale = " + this.scale + " , layer = " + this.layerDepth;
+            return this.GetType().Name;
         }
 
     }

@@ -44,8 +44,7 @@ namespace Battlestation_Antares.View.HUD {
                     nrActive++;
                 }
                 outputStr.String = debugElement.getDebugString();
-                outputStr.abstractPosition = new Vector2( outputStr.size.X / 2, 10f * nrActive );
-                outputStr.ClientSizeChanged();
+                outputStr.AbstractPosition = new Vector2( outputStr.Size.X / 2, 10f * nrActive );
             }
             base.Draw( spritBatch );
         }

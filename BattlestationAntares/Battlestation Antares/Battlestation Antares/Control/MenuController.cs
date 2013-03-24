@@ -114,7 +114,7 @@ namespace Battlestation_Antares.Control {
 
 
         private void _addOptionPage( String name, HUD_Item item ) {
-            this.optionButtons.abstractSize += new Vector2( 0, 0.1f );
+            this.optionButtons.AbstractSize += new Vector2( 0, 0.1f );
 
             HUDButton newButton = new HUDButton( name, Vector2.Zero, 0.9f, this );
             newButton.SetPressedAction( delegate() {
@@ -209,17 +209,17 @@ namespace Battlestation_Antares.Control {
 
         private void _createTestBackground() {
             HUDTexture testTex = new HUDTexture();
-            testTex.abstractPosition = new Vector2( 0.5f, 0.5f );
+            testTex.AbstractPosition = new Vector2( 0.5f, 0.5f );
             testTex.positionType = HUDType.RELATIV;
-            testTex.abstractSize = new Vector2( 2f, 2f );
+            testTex.AbstractSize = new Vector2( 2f, 2f );
             testTex.sizeType = HUDType.RELATIV;
             testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//Galaxy" );
             testTex.color = new Color( 128, 128, 128, 128 );
 
             this.test = new HUDRenderedItem( testTex, new Vector2( 480, 480 ), null );
-            this.test.abstractPosition = new Vector2( 0.5f, 0.5f );
+            this.test.AbstractPosition = new Vector2( 0.5f, 0.5f );
             this.test.positionType = HUDType.RELATIV;
-            this.test.abstractSize = new Vector2( 0.7f, 0.7f );
+            this.test.AbstractSize = new Vector2( 0.7f, 0.7f );
             this.test.sizeType = HUDType.RELATIV;
             this.view.Add( this.test );
         }

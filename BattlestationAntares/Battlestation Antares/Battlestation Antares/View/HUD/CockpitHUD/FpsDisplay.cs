@@ -16,16 +16,16 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
         public FpsDisplay( Vector2 position) : base( position, HUDType.ABSOLUT) {
             HUDTexture background = new HUDTexture();
             background.color = new Color( 32, 32, 32, 160 );
-            background.abstractSize = new Vector2( 80, 25 );
+            background.AbstractSize = new Vector2( 80, 25 );
 
             HUDString text;
             text = new HUDString( "FPS : " );
-            text.abstractPosition = new Vector2( -15, 0 );
+            text.AbstractPosition = new Vector2( -15, 0 );
             text.scale = 0.4f;
             text.LayerDepth = 0.4f;
 
             this.fps = new HUDString( "" + frameCounter );
-            this.fps.abstractPosition = new Vector2( 25, 0 );
+            this.fps.AbstractPosition = new Vector2( 25, 0 );
             this.fps.scale = 0.4f;
             this.fps.LayerDepth = 0.4f;
 

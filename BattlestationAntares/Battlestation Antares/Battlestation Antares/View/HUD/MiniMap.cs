@@ -58,13 +58,13 @@ namespace Battlestation_Antares.View.HUD {
             : base( abstractPosition, positionType ) {
             this.background = new HUDTexture();
             this.background.color = MiniMap.BACKGROUND_COLOR;
-            this.background.abstractSize = new Vector2( 0.25f, 0.4f );
+            this.background.AbstractSize = new Vector2( 0.25f, 0.4f );
             this.background.sizeType = HUDType.RELATIV;
             this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//Square_Cross" );
 
             this.foreground = new HUDTexture();
             this.foreground.color = MiniMap.BORDER_COLOR;
-            this.foreground.abstractSize = new Vector2( 0.25f, 0.4f );
+            this.foreground.AbstractSize = new Vector2( 0.25f, 0.4f );
             this.foreground.sizeType = HUDType.RELATIV;
             this.foreground.Texture = Antares.content.Load<Texture2D>( "Sprites//SquareBorder" );
 
@@ -88,15 +88,15 @@ namespace Battlestation_Antares.View.HUD {
 
 
         public override void Draw( SpriteBatch spritBatch ) {
-            Vector2 backgroundSize = ( this.background.size - this.iconSize ) / 2;
+            Vector2 backgroundSize = ( this.background.Size - this.iconSize ) / 2;
 
             foreach ( HUD_Item element in this.allChilds ) {
                 if ( element is MiniMapIcon ) {
                     MiniMapIcon icon = ( (MiniMapIcon)element );
                     icon.Update( centeredObject );
 
-                    if ( Math.Abs( icon.abstractPosition.X ) < backgroundSize.X &&
-                        Math.Abs( icon.abstractPosition.Y ) < backgroundSize.Y &&
+                    if ( Math.Abs( icon.AbstractPosition.X ) < backgroundSize.X &&
+                        Math.Abs( icon.AbstractPosition.Y ) < backgroundSize.Y &&
                         ( icon.spatialObject.isVisible || icon.spatialObject is SpaceShip ) ) {
                         icon.IsVisible = true;
                     } else {
@@ -140,9 +140,9 @@ namespace Battlestation_Antares.View.HUD {
                 oldConfig.iconPositionScale = this.iconPositionScale;
             }
             oldConfig = config;
-            this.abstractPosition = config.abstractPosition;
-            this.background.abstractSize = config.bgAbstractSize;
-            this.foreground.abstractSize = config.fgAbstractSize;
+            this.AbstractPosition = config.abstractPosition;
+            this.background.AbstractSize = config.bgAbstractSize;
+            this.foreground.AbstractSize = config.fgAbstractSize;
             this.iconPositionScale = config.iconPositionScale;
             this.centeredObject = config.centeredObject;
 

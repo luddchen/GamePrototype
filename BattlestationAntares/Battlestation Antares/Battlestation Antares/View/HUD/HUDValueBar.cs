@@ -36,12 +36,12 @@ namespace Battlestation_Antares.View.HUD
         public HUDValueBar( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, bool flip)
             : base( abstractPosition, positionType) {
             this.flip = flip;
-            this.abstractSize = abstractSize;
+            this.AbstractSize = abstractSize;
             this.sizeType = sizeType;
 
             this.background = new HUDTexture();
             this.background.positionType = this.sizeType;
-            this.background.abstractSize = abstractSize;
+            this.background.AbstractSize = abstractSize;
             this.background.sizeType = sizeType;
 
             this.background.color = Color.Black;
@@ -50,8 +50,7 @@ namespace Battlestation_Antares.View.HUD
 
             this.foreground = new HUDTexture();
             this.foreground.positionType = this.sizeType;
-            this.foreground.abstractSize = abstractSize;
-            this.foreground.abstractSize *= 0.95f;
+            this.foreground.AbstractSize = abstractSize * 0.95f;
             this.foreground.sizeType = sizeType;
 
             this.foreground.color = Color.White;
@@ -60,7 +59,7 @@ namespace Battlestation_Antares.View.HUD
 
             this.overlay = new HUDTexture();
             this.overlay.positionType = this.sizeType;
-            this.overlay.abstractSize = abstractSize;
+            this.overlay.AbstractSize = abstractSize;
             this.overlay.sizeType = sizeType;
             this.overlay.color = Color.White;
             this.SetNormal();
@@ -69,7 +68,7 @@ namespace Battlestation_Antares.View.HUD
             }
             Add( this.overlay );
 
-            this.maxHeight = this.foreground.abstractSize.Y;
+            this.maxHeight = this.foreground.AbstractSize.Y;
             LayerDepth = 0.5f;
         }
 
@@ -88,12 +87,12 @@ namespace Battlestation_Antares.View.HUD
             float value = this.GetValue();
             value = MathHelper.Clamp( value, 0.0f, 1.0f );
 
-            this.foreground.abstractSize.Y = this.maxHeight * value;
+            this.foreground.AbstractSize = new Vector2( this.foreground.AbstractSize.X, this.maxHeight * value );
 
             if ( this.flip ) {
-                this.foreground.abstractPosition.Y = ( this.foreground.abstractSize.Y - this.maxHeight ) / 2.0f;
+                this.foreground.AbstractPosition = new Vector2( this.foreground.AbstractPosition.X, ( this.foreground.AbstractSize.Y - this.maxHeight ) / 2.0f );
             } else {
-                this.foreground.abstractPosition.Y = ( this.maxHeight * ( 1.0f - value ) ) / 2.0f;
+                this.foreground.AbstractPosition = new Vector2( this.foreground.AbstractPosition.X, ( this.maxHeight * ( 1.0f - value ) ) / 2.0f );
             }
 
             this.foreground.color = Color.Lerp( this.zeroColor, this.oneColor, this.GetColorMixValue( value ) );

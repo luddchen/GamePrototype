@@ -20,7 +20,7 @@ namespace Battlestation_Antares.View.HUD.CommandHUD {
         }
 
         public void Update( GameTime gameTime ) {
-            this.abstractPosition = Antares.inputProvider.getMousePos();
+            this.AbstractPosition = Antares.inputProvider.getMousePos();
             ClientSizeChanged();
         }
 

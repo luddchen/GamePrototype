@@ -19,7 +19,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public HUDButton( String text, Vector2 position, float scale, SituationController controller)
             : base( text) {
-            this.abstractPosition = position;
+            this.AbstractPosition = position;
             this.overallScale = scale;
             this.scale = scale;
             this.style = ButtonStyle.DefaultButtonStyle();

@@ -37,28 +37,28 @@ namespace Battlestation_Antares.View.HUD {
         public Vector2 BackgroundSize {
             get {
                 Vector2 backgroundSize = new Vector2();
-                if ( this.abstractSize == Vector2.Zero ) {
-                    backgroundSize = this.size * 1.2f;
+                if ( this.AbstractSize == Vector2.Zero ) {
+                    backgroundSize = this.Size * 1.2f;
                 } else {
                     switch ( this.sizeType ) {
 
                         case HUDType.ABSOLUT:
-                            backgroundSize = this.abstractSize;
+                            backgroundSize = this.AbstractSize;
                             break;
 
                         case HUDType.RELATIV:
-                            backgroundSize.X = this.abstractSize.X * Antares.RenderSize.X;
-                            backgroundSize.Y = this.abstractSize.Y * Antares.RenderSize.Y;
+                            backgroundSize.X = this.AbstractSize.X * Antares.RenderSize.X;
+                            backgroundSize.Y = this.AbstractSize.Y * Antares.RenderSize.Y;
                             break;
 
                         case HUDType.ABSOLUT_RELATIV:
-                            backgroundSize.X = this.abstractSize.X;
-                            backgroundSize.Y = this.abstractSize.Y * Antares.RenderSize.Y;
+                            backgroundSize.X = this.AbstractSize.X;
+                            backgroundSize.Y = this.AbstractSize.Y * Antares.RenderSize.Y;
                             break;
 
                         case HUDType.RELATIV_ABSOLUT:
-                            backgroundSize.X = this.abstractSize.X * Antares.RenderSize.X;
-                            backgroundSize.Y = this.abstractSize.Y;
+                            backgroundSize.X = this.AbstractSize.X * Antares.RenderSize.X;
+                            backgroundSize.Y = this.AbstractSize.Y;
                             break;
                     }
 
@@ -98,7 +98,7 @@ namespace Battlestation_Antares.View.HUD {
         /// <summary>
         /// size of scaled string
         /// </summary>
-        public new Vector2 size {
+        public new Vector2 Size {
             get {
                 return this.MeasureString * this.scale;
             }
@@ -152,7 +152,7 @@ namespace Battlestation_Antares.View.HUD {
                 this.font = font;
             }
 
-            this.abstractPosition = position ?? Vector2.Zero;
+            this.AbstractPosition = position ?? Vector2.Zero;
             this.color = color ?? Color.Beige;
             this.scale = scale ?? 1.0f;
             this.rotation = rotation ?? 0.0f;
@@ -200,8 +200,8 @@ namespace Battlestation_Antares.View.HUD {
             }
 
             if ( this.BackgroundTexture == null ) {
-                if ( point.X < Position.X - size.X / 2 || point.X > Position.X + size.X / 2 ||
-                    point.Y < Position.Y - size.Y / 2 || point.Y > Position.Y + size.Y / 2 ) {
+                if ( point.X < Position.X - Size.X / 2 || point.X > Position.X + Size.X / 2 ||
+                    point.Y < Position.Y - Size.Y / 2 || point.Y > Position.Y + Size.Y / 2 ) {
                     return false;
                 }
             } else {

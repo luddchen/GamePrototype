@@ -21,12 +21,12 @@ namespace Battlestation_Antares.View.HUD {
 
         public HUDValueLamp( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType )
             : base( abstractPosition, positionType ) {
-            this.abstractSize = abstractSize;
+            this.AbstractSize = abstractSize;
             this.sizeType = sizeType;
 
             this.background = new HUDTexture();
             this.background.positionType = this.sizeType;
-            this.background.abstractSize = abstractSize;
+            this.background.AbstractSize = abstractSize;
             this.background.sizeType = sizeType;
             this.background.color = Color.Black;
             this.background.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
@@ -34,8 +34,7 @@ namespace Battlestation_Antares.View.HUD {
 
             this.foreground = new HUDTexture();
             this.foreground.positionType = this.sizeType;
-            this.foreground.abstractSize = abstractSize;
-            this.foreground.abstractSize *= 0.95f;
+            this.foreground.AbstractSize = abstractSize * 0.95f;
             this.foreground.sizeType = sizeType;
             this.foreground.color = Color.White;
             this.foreground.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
@@ -43,7 +42,7 @@ namespace Battlestation_Antares.View.HUD {
 
             this.overlay = new HUDTexture();
             this.overlay.positionType = this.sizeType;
-            this.overlay.abstractSize = abstractSize;
+            this.overlay.AbstractSize = abstractSize;
             this.overlay.sizeType = sizeType;
             this.overlay.color = Color.White;
             this.SetNormal();

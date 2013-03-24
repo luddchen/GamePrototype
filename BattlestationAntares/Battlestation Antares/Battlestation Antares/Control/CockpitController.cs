@@ -35,9 +35,9 @@ namespace Battlestation_Antares.Control {
 
             this.compass = new Compass();
             this.compass.Initialize( Antares.world.spaceShip );
-            this.compass.abstractPosition = new Vector2( 0.5f, 0.15f );
+            this.compass.AbstractPosition = new Vector2( 0.5f, 0.15f );
             this.compass.positionType = HUDType.RELATIV;
-            this.compass.abstractSize = new Vector2( 0.125f, 0.15f );
+            this.compass.AbstractSize = new Vector2( 0.125f, 0.15f );
             this.compass.sizeType = HUDType.RELATIV;
             this.compass.LayerDepth = 0.1f;
             this.compass.color = new Color( 192, 192, 64 );
@@ -57,7 +57,7 @@ namespace Battlestation_Antares.Control {
             } );
             buttons.Add( toCommandButton );
 
-            toMenuButton = new HUDButton( "Menu", new Vector2( toCommandButton.size.X + 10, 0 ), 0.5f, this );
+            toMenuButton = new HUDButton( "Menu", new Vector2( toCommandButton.Size.X + 10, 0 ), 0.5f, this );
 
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );

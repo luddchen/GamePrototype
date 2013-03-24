@@ -55,9 +55,9 @@ namespace Battlestation_Antares.View {
         public override void Initialize() {
 
             HUDTexture compassBG = new HUDTexture();
-            compassBG.abstractPosition = new Vector2( 0.5f, 0.15f );
+            compassBG.AbstractPosition = new Vector2( 0.5f, 0.15f );
             compassBG.positionType = HUDType.RELATIV;
-            compassBG.abstractSize = new Vector2( 0.125f, 0.15f );
+            compassBG.AbstractSize = new Vector2( 0.125f, 0.15f );
             compassBG.sizeType = HUDType.RELATIV;
             compassBG.LayerDepth = 0.11f;
             compassBG.color = new Color( 12, 16, 8, 16 );
@@ -66,9 +66,9 @@ namespace Battlestation_Antares.View {
 
             // 2D HUD
             cockpitTexture = new HUDTexture();
-            cockpitTexture.abstractPosition = new Vector2( 0.5f, 0.75f );
+            cockpitTexture.AbstractPosition = new Vector2( 0.5f, 0.75f );
             cockpitTexture.positionType = HUDType.RELATIV;
-            cockpitTexture.abstractSize = new Vector2( 1, 1.5f );
+            cockpitTexture.AbstractSize = new Vector2( 1, 1.5f );
             cockpitTexture.sizeType = HUDType.RELATIV;
             cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit3" );
             cockpitTexture.LayerDepth = 1.0f;

@@ -22,7 +22,7 @@ namespace Battlestation_Antares.View {
         public override void Initialize() {
 
             HUDString testString = new HUDString( "Antares Menu" );
-            testString.abstractPosition = new Vector2( 0.5f, 0.1f );
+            testString.AbstractPosition = new Vector2( 0.5f, 0.1f );
             testString.positionType = HUDType.RELATIV;
 
             this.Add( testString );

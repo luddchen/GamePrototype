@@ -26,12 +26,12 @@ namespace Battlestation_Antares.View.HUD {
 
 
         /// <summary>
-        /// constructs a Head Up Display Element Texture
+        /// constructs a HUD Texture
         /// </summary>
         /// <param name="content"></param>
         public HUDTexture() {
             this.Texture = Antares.content.Load<Texture2D>( "Sprites//Square" );
-            this.abstractSize = new Vector2( 10, 10 );
+            this.AbstractSize = new Vector2( 10, 10 );
         }
 
         public HUDTexture( Texture2D texture, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation) {
@@ -42,8 +42,8 @@ namespace Battlestation_Antares.View.HUD {
                 this.Texture = texture;
             }
 
-            this.abstractPosition = position ?? Vector2.Zero;
-            this.abstractSize = size ?? new Vector2( 10, 10 );
+            this.AbstractPosition = position ?? Vector2.Zero;
+            this.AbstractSize = size ?? new Vector2( 10, 10 );
             this.color = color ?? Color.White;
             this.scale = scale ?? 1.0f;
             this.rotation = rotation ?? 0.0f;

@@ -23,7 +23,7 @@ namespace Battlestation_Antares.View.HUD {
         public void AddToWorld() {
             if ( miniMap != null ) {
                 miniMap.Add( this );
-                this.abstractSize = miniMap.iconSize;
+                this.AbstractSize = miniMap.iconSize;
             }
         }
 
@@ -50,8 +50,8 @@ namespace Battlestation_Antares.View.HUD {
                 center.Z = centerObject.globalPosition.Z;
             }
 
-            this.abstractPosition.X = ( this.spatialObject.globalPosition.X - center.X ) * miniMap.iconPositionScale;
-            this.abstractPosition.Y = ( this.spatialObject.globalPosition.Z - center.Z ) * miniMap.iconPositionScale;
+            this.AbstractPosition =
+                new Vector2( this.spatialObject.globalPosition.X - center.X, this.spatialObject.globalPosition.Z - center.Z ) * miniMap.iconPositionScale;
 
             if ( this.updateRotation ) {
                 this.rotation = Tools.Tools.GetUpAxisRotation( this.spatialObject.rotation.Forward, Matrix.Identity );

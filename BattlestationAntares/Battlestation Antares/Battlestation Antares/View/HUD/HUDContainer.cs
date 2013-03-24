@@ -7,14 +7,25 @@ namespace Battlestation_Antares.View.HUD {
 
     public class HUDContainer : HUD_Item {
 
-        // list of all childs
         protected List<HUD_Item> allChilds;
+
+        public new float LayerDepth {
+            set {
+                base.LayerDepth = value;
+                foreach ( HUD_Item item in this.allChilds ) {
+                    item.LayerDepth = this.layerDepth - 0.01f;
+                }
+            }
+            get {
+                return base.LayerDepth;
+            }
+        }
 
 
         public HUDContainer( Vector2 abstractPosition, HUDType positionType) {
-            this.abstractPosition = abstractPosition;
-            this.positionType = positionType;
             this.allChilds = new List<HUD_Item>();
+            this.AbstractPosition = abstractPosition;
+            this.positionType = positionType;
         }
 
 
@@ -36,26 +47,6 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        //public override void LayerDepth( float layerDepth ) {
-        //    base.LayerDepth( layerDepth );
-        //    foreach ( HUD_Item item in this.allChilds ) {
-        //        item.LayerDepth( this.layerDepth - 0.01f );
-        //    }
-        //}
-        public new float LayerDepth {
-            set {
-                base.LayerDepth = value;
-                foreach ( HUD_Item item in this.allChilds ) {
-                    item.LayerDepth = this.layerDepth - 0.01f;
-                }
-            }
-            get {
-                return base.LayerDepth;
-            }
-        }
-
-
-
         public override void Draw( SpriteBatch spritBatch ) {
             if ( this.isVisible ) {
                 foreach ( HUD_Item item in this.allChilds ) {
@@ -74,15 +65,15 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public override bool Intersects( Vector2 point ) {
-            bool intersects = false;
-            foreach ( HUD_Item item in this.allChilds ) {
-                if ( item.Intersects( point ) ) {
-                    intersects = true;
-                }
-            }
-            return intersects;
-        }
+        //public override bool Intersects( Vector2 point ) {
+        //    bool intersects = false;
+        //    foreach ( HUD_Item item in this.allChilds ) {
+        //        if ( item.Intersects( point ) ) {
+        //            intersects = true;
+        //        }
+        //    }
+        //    return intersects;
+        //}
 
 
     }

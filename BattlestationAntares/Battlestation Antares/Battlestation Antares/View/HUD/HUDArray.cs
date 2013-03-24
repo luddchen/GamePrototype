@@ -30,7 +30,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public HUDArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
             : base( abstractPosition, positionType) {
-            this.abstractSize = abstractSize;
+            this.AbstractSize = abstractSize;
             this.sizeType = sizeType;
 
             this.direction = LayoutDirection.VERTICAL;
@@ -74,21 +74,21 @@ namespace Battlestation_Antares.View.HUD {
 
 
         private void Arrange() {
-            Vector2 itemSize = this.abstractSize;
+            Vector2 itemSize = this.AbstractSize;
             Vector2 itemPosition = new Vector2();
 
             if ( this.direction == LayoutDirection.VERTICAL ) {
                 itemSize.Y = itemSize.Y / this.allChilds.Count;
-                itemPosition.Y = -( this.abstractSize.Y / 2 ) + ( itemSize.Y / 2 );
+                itemPosition.Y = -( this.AbstractSize.Y / 2 ) + ( itemSize.Y / 2 );
             } else {
                 itemSize.X = itemSize.X / this.allChilds.Count;
-                itemPosition.X = -( this.abstractSize.X / 2 ) + ( itemSize.X / 2 );
+                itemPosition.X = -( this.AbstractSize.X / 2 ) + ( itemSize.X / 2 );
             }
 
             foreach ( HUD_Item item in this.allChilds ) {
-                item.abstractSize = itemSize - this.borderSize;
+                item.AbstractSize = itemSize - this.borderSize;
 
-                item.abstractPosition = itemPosition;
+                item.AbstractPosition = itemPosition;
 
                 if ( this.direction == LayoutDirection.VERTICAL ) {
                     itemPosition.Y += itemSize.Y;
@@ -103,25 +103,6 @@ namespace Battlestation_Antares.View.HUD {
 
         public override void ClientSizeChanged() {
 
-            switch ( this.sizeType ) {
-                case HUDType.RELATIV:
-                    this.size = new Vector2( Antares.RenderSize.X * this.abstractSize.X, Antares.RenderSize.Y * this.abstractSize.Y );
-                    break;
-
-                case HUDType.ABSOLUT:
-                    this.size = new Vector2( this.abstractSize.X,
-                                                 this.abstractSize.Y );
-                    break;
-
-                case HUDType.ABSOLUT_RELATIV:
-                    this.size = new Vector2( this.abstractSize.X, Antares.RenderSize.Y * this.abstractSize.Y );
-                    break;
-
-                case HUDType.RELATIV_ABSOLUT:
-                    this.size = new Vector2( Antares.RenderSize.X * this.abstractSize.X, this.abstractSize.Y );
-                    break;
-            }
-
             base.ClientSizeChanged();
 
             if ( this.background != null ) {
@@ -134,7 +115,7 @@ namespace Battlestation_Antares.View.HUD {
             if ( create ) {
                 this.background = new HUDTexture();
                 this.background.sizeType = this.sizeType;
-                this.background.abstractSize = this.abstractSize;
+                this.background.AbstractSize = this.AbstractSize;
                 this.background.color = HUDArray.BACKGROUND_COLOR;
                 this.background.LayerDepth = this.layerDepth;
                 this.background.parent = this;
@@ -153,16 +134,6 @@ namespace Battlestation_Antares.View.HUD {
 
             base.Draw( spritBatch );
         }
-
-
-        public override bool Intersects( Vector2 point ) {
-            if ( point.X < Position.X - scale * size.X / 2 || point.X > Position.X + scale * size.X / 2 ||
-                point.Y < Position.Y - scale * size.Y / 2 || point.Y > Position.Y + scale * size.Y / 2 ) {
-                return false;
-            }
-            return true;
-        }
-
 
     }
 

@@ -27,8 +27,8 @@ namespace Battlestation_Antares.Control.AI {
                 writer.WriteEndElement();
 
                 writer.WriteStartElement( "Position" );
-                writer.WriteAttributeString( "x", item.abstractPosition.X.ToString() );
-                writer.WriteAttributeString( "y", item.abstractPosition.Y.ToString() );
+                writer.WriteAttributeString( "x", item.AbstractPosition.X.ToString() );
+                writer.WriteAttributeString( "y", item.AbstractPosition.Y.ToString() );
                 writer.WriteEndElement();
 
                 writer.WriteStartElement( "Bank" );
@@ -104,8 +104,7 @@ namespace Battlestation_Antares.Control.AI {
                             item.SetSubType( Enum.Parse( item.GetSubType().GetType(), reader.ReadString() ) );
 
                             ContinueToNode( reader, "Position" );
-                            item.abstractPosition.X = float.Parse( reader.GetAttribute( 0 ) );
-                            item.abstractPosition.Y = float.Parse( reader.GetAttribute( 1 ) );
+                            item.AbstractPosition = new Vector2( float.Parse( reader.GetAttribute( 0 ) ), float.Parse( reader.GetAttribute( 1 ) ) );
 
                             ContinueToNode( reader, "Bank" );
                             int bankNr = int.Parse( reader.GetAttribute( 0 ) );

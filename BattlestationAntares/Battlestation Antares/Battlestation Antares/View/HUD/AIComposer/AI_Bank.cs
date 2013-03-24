@@ -20,10 +20,10 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
         public Action mousePressedAction;
 
         public AI_Bank(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType ) {
-            this.abstractSize = abstractSize;
+            this.AbstractSize = abstractSize;
             this.sizeType = sizeType;
             this.background = new HUDTexture();
-            this.background.abstractSize = abstractSize;
+            this.background.AbstractSize = abstractSize;
             this.background.sizeType = sizeType;
             this.background.color = new Color( 32, 32, 32, 32 );
 
@@ -63,13 +63,13 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public bool hasFreePlace(HUD_Item element) {
             bool freePlace = false;
-            float freeWidth = this.abstractSize.X * Antares.RenderSize.X;
+            float freeWidth = this.AbstractSize.X * Antares.RenderSize.X;
             foreach ( HUD_Item item in this.allChilds ) {
                 if ( item is AI_Item ) {
-                    freeWidth -= item.abstractSize.X;
+                    freeWidth -= item.AbstractSize.X;
                 }
             }
-            if ( freeWidth > element.abstractSize.X ) {
+            if ( freeWidth > element.AbstractSize.X ) {
                 freePlace = true;
             }
             return freePlace;
@@ -83,11 +83,11 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
                     itemCount++;
                 }
             }
-            float itemOffset = this.abstractSize.X / itemCount;
-            float newPos = -this.abstractSize.X / 2 + itemOffset / 2;
+            float itemOffset = this.AbstractSize.X / itemCount;
+            float newPos = -this.AbstractSize.X / 2 + itemOffset / 2;
             foreach ( HUD_Item item in this.allChilds ) {
                 if ( item is AI_Item ) {
-                    item.abstractPosition = new Vector2(newPos, 0);
+                    item.AbstractPosition = new Vector2(newPos, 0);
                     newPos += itemOffset;
                     item.ClientSizeChanged();
                 }
