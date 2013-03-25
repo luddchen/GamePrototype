@@ -42,7 +42,7 @@ namespace Battlestation_Antares.Control {
             this.compass.color = new Color( 192, 192, 64 );
             this.view.Add( this.compass );
 
-            this.targetInfo = new TargetInfo( new Vector2( 60, 200 ), HUDType.ABSOLUT, new Vector2( 150, 60 ), HUDType.ABSOLUT );
+            this.targetInfo = new TargetInfo( new Vector2( 0.4f, 0.03f ), HUDType.RELATIV, new Vector2( 0.125f, 0.025f ), HUDType.RELATIV );
             this.view.Add( this.targetInfo );
 
             mouseVisibleCounter = mouseTimeOut;
@@ -66,7 +66,7 @@ namespace Battlestation_Antares.Control {
             buttons.Add( toMenuButton );
             this.view.Add( buttons );
 
-            fpsDisplay = new FpsDisplay( new Vector2( 50, 20 ) );
+            fpsDisplay = new FpsDisplay( new Vector2( 0.125f, 0.03f ) );
             this.view.Add( fpsDisplay );
 
             mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.91f ), new Vector2( 0.25f, 0.18f ), new Vector2( 0.25f, 0.18f ), Antares.world.spaceShip );

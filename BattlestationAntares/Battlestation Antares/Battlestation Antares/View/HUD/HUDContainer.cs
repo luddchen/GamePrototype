@@ -95,10 +95,15 @@ namespace Battlestation_Antares.View.HUD {
 
         public override void ClientSizeChanged() {
             base.ClientSizeChanged();
-            this.background.ClientSizeChanged();
 
-            foreach ( HUD_Item item in this.allChilds ) {
-                item.ClientSizeChanged();
+            if ( this.background != null ) {
+                this.background.ClientSizeChanged();
+            }
+
+            if ( this.allChilds != null ) {
+                foreach ( HUD_Item item in this.allChilds ) {
+                    item.ClientSizeChanged();
+                }
             }
         }
 

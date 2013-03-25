@@ -133,6 +133,7 @@
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
     <Compile Include="View\HUD\DebugViewer.cs" />
     <Compile Include="View\HUD\HUDActionTexture.cs" />
+    <Compile Include="View\HUD\HUDMaskedContainer.cs" />
     <Compile Include="View\HUD\HUDRenderedItem.cs" />
     <Compile Include="View\HUD\HUDValueBar.cs" />
     <Compile Include="View\HUD\HUDValueCircle.cs" />

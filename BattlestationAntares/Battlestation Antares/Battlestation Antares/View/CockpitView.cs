@@ -81,7 +81,9 @@ namespace Battlestation_Antares.View {
             cross.LayerDepth = 0.8f;
             this.Add( cross );
 
-            this.Add( new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV ) );
+            Velocity velocity = new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV );
+            velocity.LayerDepth = 0.3f;
+            this.Add( velocity );
             LaserHeat heat = new LaserHeat( new Vector2( 0.35f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV );
             heat.LayerDepth = 0.3f;
             this.Add( heat );

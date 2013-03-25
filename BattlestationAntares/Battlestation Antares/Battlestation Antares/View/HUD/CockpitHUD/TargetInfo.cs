@@ -8,7 +8,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
         private HUDString targetObject;
 
-        private HUDString targetDistance;
+        //private HUDString targetDistance;
 
         private WorldModel world;
 
@@ -20,15 +20,15 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
         {
             this.world = Antares.world;
 
-            targetObject = new HUDString( "");
-            targetObject.scale = 0.5f;
-            targetDistance = new HUDString( "");
-            targetDistance.scale = 0.5f;
+            targetObject = new HUDString( " " );
+            //targetDistance = new HUDString( " " );
+            //targetDistance.scale = 0.8f;
 
             Add( targetObject );
-            Add( targetDistance );
+            //Add( targetDistance );
 
-            SetBackgroundColor( HUDArray.BACKGROUND_COLOR );
+            SetBackgroundColor( new Color(16, 16, 4, 64 ) );
+            SetBackground( "Sprites//Circle" );
 
             this.isVisible = false;
         }
@@ -41,8 +41,8 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
                 //this.targetDistance.String = String.Format("{0:F0} m", testDist);
                 this.isVisible = true;
             } else {
-                this.targetObject.Text = "";
-                this.targetDistance.Text = "";
+                this.targetObject.Text = " ";
+                //this.targetDistance.Text = " ";
                 this.isVisible = false;
             }
 

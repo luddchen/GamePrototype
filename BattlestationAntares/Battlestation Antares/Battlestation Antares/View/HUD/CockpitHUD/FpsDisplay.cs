@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antares.View.HUD.CockpitHUD {
-    class FpsDisplay : HUDContainer {
+    class FpsDisplay : HUDArray {
 
         private HUDString fps;
 
@@ -13,23 +13,16 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
         private int frameCounter = 0;
 
 
-        public FpsDisplay( Vector2 position) : base( position, HUDType.ABSOLUT) {
-            HUDTexture background = new HUDTexture();
-            background.color = new Color( 32, 32, 32, 160 );
-            background.AbstractSize = new Vector2( 80, 25 );
+        public FpsDisplay( Vector2 position) : base( position, HUDType.RELATIV, new Vector2(0.06f, 0.02f), HUDType.RELATIV) {
+            //SetBackgroundColor( new Color( 32, 32, 32, 160 ) );
+            this.borderSize = new Vector2( 0.003f, 0.003f );
+            this.direction = LayoutDirection.HORIZONTAL;
 
             HUDString text;
             text = new HUDString( "FPS : " );
-            text.AbstractPosition = new Vector2( -15, 0 );
-            text.scale = 0.4f;
-            text.LayerDepth = 0.4f;
 
             this.fps = new HUDString( "" + frameCounter );
-            this.fps.AbstractPosition = new Vector2( 25, 0 );
-            this.fps.scale = 0.4f;
-            this.fps.LayerDepth = 0.4f;
 
-            Add( background );
             Add( text );
             Add( this.fps );
         }

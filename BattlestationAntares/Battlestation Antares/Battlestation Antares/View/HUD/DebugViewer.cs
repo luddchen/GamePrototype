@@ -13,10 +13,11 @@ namespace Battlestation_Antares.View.HUD {
 
         private List<HUDString> outputStrings;
 
-        public DebugViewer() : base( new Vector2( 10f, 0.05f ), HUDType.ABSOLUT_RELATIV) {
+        public DebugViewer() : base( new Vector2( 0.01f, 0.01f ), HUDType.RELATIV) {
             this.activeDebugging = false;
             this.debugElements = new List<DebugElement>();
             this.outputStrings = new List<HUDString>();
+            this.LayerDepth = 0.1f;
         }
 
         public void Add( DebugElement debugElement ) {

@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antares.View.HUD
 {
 
-    public class HUDValueBar : HUDContainer {
+    public class HUDValueBar : HUDMaskedContainer {
         public delegate float ValueProvider();
 
         public ValueProvider GetValue = 
@@ -21,8 +22,6 @@ namespace Battlestation_Antares.View.HUD
 
         private HUDTexture foreground;
 
-        private HUDTexture overlay;
-
         private Color zeroColor = new Color(0, 255, 0);
 
         private Color oneColor = new Color(255, 32, 0);
@@ -32,10 +31,8 @@ namespace Battlestation_Antares.View.HUD
         private bool flip;
 
         public HUDValueBar( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, bool flip)
-            : base( abstractPosition, positionType) {
+            : base( abstractPosition, positionType, abstractSize, sizeType) {
             this.flip = flip;
-            this.SizeType = sizeType;
-            this.AbstractSize = abstractSize;
 
             SetBackgroundColor( Color.Black );
             background.IsVisible = true;
@@ -48,25 +45,12 @@ namespace Battlestation_Antares.View.HUD
             this.foreground.color = Color.White;
             Add(this.foreground);
 
-            this.overlay = new HUDTexture();
-            this.overlay.PositionType = this.SizeType;
-            this.overlay.SizeType = sizeType;
-            this.overlay.AbstractSize = abstractSize;
-            this.overlay.color = Color.White;
             this.SetNormal();
-            if ( flip ) {
-                this.overlay.effect = SpriteEffects.FlipVertically;
-            }
-            Add( this.overlay );
+            //if ( flip ) {
+            //    this.mask.effect = SpriteEffects.FlipVertically;
+            //}
 
             this.maxHeight = this.foreground.AbstractSize.Y;
-        }
-
-        public override float LayerDepth {
-            set {
-                base.LayerDepth = value;
-                this.overlay.LayerDepth = value - 0.02f;
-            }
         }
 
         public override sealed void Draw( SpriteBatch spriteBatch ) {
@@ -97,15 +81,15 @@ namespace Battlestation_Antares.View.HUD
 
 
         public void SetDiscrete() {
-            this.overlay.Texture = Antares.content.Load<Texture2D>( "Sprites//HUD//ValueBar_Discrete" );
+            SetMask( "Sprites//HUD//ValueBar_Discrete" );
         }
 
         public void SetDiscreteBig() {
-            this.overlay.Texture = Antares.content.Load<Texture2D>( "Sprites//HUD//ValueBar_DiscreteBig" );
+            SetMask( "Sprites//HUD//ValueBar_DiscreteBig" );
         }
 
         public void SetNormal() {
-            this.overlay.Texture = Antares.content.Load<Texture2D>( "Sprites//HUD//ValueBar" );
+            SetMask( "Sprites//HUD//ValueBar" );
         }
 
     }
