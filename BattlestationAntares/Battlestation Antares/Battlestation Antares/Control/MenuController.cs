@@ -1,10 +1,10 @@
 ﻿using System;
-using Battlestation_Antares.View;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.View.HUD;
 using System.Collections.Generic;
+using HUD.HUD;
 using Battlestation_Antaris.View.HUD;
+using HUD;
 
 namespace Battlestation_Antares.Control {
 
@@ -25,7 +25,7 @@ namespace Battlestation_Antares.Control {
         /// </summary>
         /// <param name="game">the game</param>
         /// <param name="view">the used view</param>
-        public MenuController( Antares game, View.View view )
+        public MenuController( Antares game, HUDView view )
             : base( game, view ) {
 
             _createTestBackground();
@@ -79,24 +79,28 @@ namespace Battlestation_Antares.Control {
 
 
             HUDButton toCommandButton = new HUDButton( "Command", Vector2.Zero, 0.9f, this );
+            toCommandButton.style = AntaresButtonStyles.Button();
             toCommandButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COMMAND );
             } );
             buttonsGroup1.Add( toCommandButton );
 
             HUDButton toCockpitButton = new HUDButton( "Cockpit", Vector2.Zero, 0.9f, this );
+            toCockpitButton.style = AntaresButtonStyles.Button();
             toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
             buttonsGroup1.Add( toCockpitButton );
 
             HUDButton toAIButton = new HUDButton( "Editor", Vector2.Zero, 0.9f, this );
+            toAIButton.style = AntaresButtonStyles.Button();
             toAIButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.AI_BUILDER );
             } );
             buttonsGroup1.Add( toAIButton );
 
             HUDButton optionsButton = new HUDButton( "Options", Vector2.Zero, 0.9f, this );
+            optionsButton.style = AntaresButtonStyles.Button();
             optionsButton.SetPressedAction(
                 delegate() {
                     optionsButton.Toggle();
@@ -106,6 +110,7 @@ namespace Battlestation_Antares.Control {
             buttonsGroup1.Add( optionsButton );
 
             HUDButton exitButton = new HUDButton( "Exit", Vector2.Zero, 0.9f, this );
+            exitButton.style = AntaresButtonStyles.Button();
             exitButton.SetPressedAction( delegate() {
                 this.game.Exit();
             } );
@@ -117,11 +122,11 @@ namespace Battlestation_Antares.Control {
             this.optionButtons.AbstractSize += new Vector2( 0, 0.1f );
 
             HUDButton newButton = new HUDButton( name, Vector2.Zero, 0.9f, this );
+            newButton.style = AntaresButtonStyles.Button();
             newButton.SetPressedAction( delegate() {
                 showPage( item );
             } );
             this.optionButtons.Add( newButton );
-            //this.optionButtons.ClientSizeChanged();
 
             this.contentPages.Add( item );
             this.view.Add( item );
@@ -130,16 +135,20 @@ namespace Battlestation_Antares.Control {
 
 
         private void _addVideoPage() {
-            HUDContainer videoPage = new HUDContainer( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV );
+            HUDContainer videoPage = new HUDContainer( new Vector2( 0.5f, 0.4f ) );
 
             HUDArray renderResolutionArray = new HUDArray( new Vector2( -0.15f, 0.0f ), HUDType.RELATIV, new Vector2( 0.2f, 0.3f ), HUDType.RELATIV );
             renderResolutionArray.borderSize = new Vector2( 0.025f, 0.02f );
             videoPage.Add( renderResolutionArray );
 
-            HUDString resolutionTitle = new HUDString( "Render Resolution", null, new Vector2(), null, 0.7f, null );
+            HUDString resolutionTitle = new HUDString( "Render Resolution", 0.7f );
             HUDButton resolutionHigh = new HUDButton( "1920 x 1080", new Vector2(), 0.7f, this );
             HUDButton resolutionMedium = new HUDButton( "1600 x 900", new Vector2(), 0.7f, this );
             HUDButton resolutionLow = new HUDButton( "1280 x 720", new Vector2(), 0.7f, this );
+
+            resolutionHigh.style = AntaresButtonStyles.Button();
+            resolutionMedium.style = AntaresButtonStyles.Button();
+            resolutionLow.style = AntaresButtonStyles.Button();
 
             renderResolutionArray.Add( resolutionTitle );
             renderResolutionArray.Add( resolutionHigh );
@@ -175,7 +184,7 @@ namespace Battlestation_Antares.Control {
             test1Array.borderSize = new Vector2( 0.025f, 0.02f );
             videoPage.Add( test1Array );
 
-            HUDString test1Title = new HUDString( "Placeholder", null, new Vector2(), null, 0.7f, null );
+            HUDString test1Title = new HUDString( "Placeholder", 0.7f );
             HUDButton test1High = new HUDButton( "do nothing", new Vector2(), 0.7f, null );
             HUDButton test1Medium = new HUDButton( "wait for something", new Vector2(), 0.7f, null );
             HUDButton test1Low = new HUDButton( "do anything", new Vector2(), 0.7f, null );
@@ -191,7 +200,7 @@ namespace Battlestation_Antares.Control {
 
         private void _addSoundPage() {
             HUDArray soundPage = new HUDArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV );
-            soundPage.Add( new HUDString( "Sound", null, null, Color.Blue, 0.5f, null ) );
+            soundPage.Add( new HUDString( "Sound", 0.5f ) );
 
             _addOptionPage( "Sound", soundPage );
         }

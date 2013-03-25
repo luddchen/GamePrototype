@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Battlestation_Antares.View.HUD.CockpitHUD;
 using Battlestation_Antaris.View.HUD.CockpitHUD;
 using Battlestation_Antares.View;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antares.Control {
 
@@ -29,7 +31,7 @@ namespace Battlestation_Antares.Control {
         /// </summary>
         /// <param name="game">the game</param>
         /// <param name="view">the used view</param>
-        public CockpitController( Antares game, View.View view )
+        public CockpitController( Antares game, HUDView view )
             : base( game, view ) {
 
             this.compass = new Compass();

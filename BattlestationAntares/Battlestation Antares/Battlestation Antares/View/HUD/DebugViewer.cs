@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD {
     public class DebugViewer : HUDContainer {
@@ -13,7 +13,7 @@ namespace Battlestation_Antares.View.HUD {
 
         private List<HUDString> outputStrings;
 
-        public DebugViewer() : base( new Vector2( 0.01f, 0.01f ), HUDType.RELATIV) {
+        public DebugViewer() : base( new Vector2( 0.01f, 0.01f ) ) {
             this.activeDebugging = false;
             this.debugElements = new List<DebugElement>();
             this.outputStrings = new List<HUDString>();
@@ -21,7 +21,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
         public void Add( DebugElement debugElement ) {
-            HUDString newHUDStr = new HUDString( "", null, null, null, 0.9f, 0.0f);
+            HUDString newHUDStr = new HUDString( "", 0.9f );
             newHUDStr.PositionType = HUDType.ABSOLUT_RELATIV;
             newHUDStr.SizeType = HUDType.ABSOLUT_RELATIV;
             newHUDStr.AbstractSize = new Vector2( 1, 0.02f );

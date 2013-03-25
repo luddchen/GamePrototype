@@ -1,15 +1,13 @@
 ﻿using System;
-using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
-using Battlestation_Antares.Control;
 
-namespace Battlestation_Antaris.View.HUD {
+namespace HUD.HUD {
     public class HUDActionTexture : HUDTexture, IUpdatableItem {
 
         public Action action;
 
 
-        public HUDActionTexture( Action action, SituationController controller ) {
+        public HUDActionTexture( Action action, IUpdateController controller ) {
             this.action = action;
             if ( controller != null ) {
                 controller.Register( this );

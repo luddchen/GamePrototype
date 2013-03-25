@@ -1,9 +1,10 @@
 ﻿using System;
-using Battlestation_Antares.View.HUD;
-using Microsoft.Xna.Framework;
-using Battlestation_Antares.View.HUD.AIComposer;
 using Battlestation_Antares.Control.AI;
 using Battlestation_Antares.Model;
+using Battlestation_Antares.View.HUD.AIComposer;
+using HUD;
+using HUD.HUD;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.Control {
@@ -12,7 +13,7 @@ namespace Battlestation_Antares.Control {
 
         public AI_Container aiContainer;
 
-        public AIController( Antares game, View.View view )
+        public AIController( Antares game, HUDView view )
             : base( game, view ) {
 
             this.aiContainer = new AI_Container(this);
@@ -53,8 +54,8 @@ namespace Battlestation_Antares.Control {
             statusArray.direction = LayoutDirection.VERTICAL;
             verifyArray.Add( statusArray );
 
-            statusArray.Add( new HUDString( "Status", null, null, null, 0.66f, 0 ) );
-            statusArray.Add( new HUDString( "unknown", null, null, Color.Yellow, 0.66f, 0 ) );
+            statusArray.Add( new HUDString( "Status", 0.66f ) );
+            statusArray.Add( new HUDString( "unknown", Color.Yellow, 0.66f ) );
 
 
             HUDArray aiButtonArray = new HUDArray( new Vector2( 0.9f, 0.8f ), HUDType.RELATIV, new Vector2( 0.1f, 0.15f ), HUDType.RELATIV );

@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using Battlestation_Antares.View.HUD;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antares.View {
 
     /// <summary>
     /// the command view
     /// </summary>
-    class CommandView : View {
+    class CommandView : HUDView {
 
         public CommandView( Color? backgroundColor ) : base( backgroundColor ) {
         }

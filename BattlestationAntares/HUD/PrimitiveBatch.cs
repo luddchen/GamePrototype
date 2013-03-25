@@ -9,15 +9,12 @@
 
 #region Using Statements
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Input;
+using HUD.HUD;
 #endregion
 
-namespace Battlestation_Antares {
+namespace HUD {
 
     // PrimitiveBatch is a class that handles efficient rendering automatically for its
     // users, in a similar way to SpriteBatch. PrimitiveBatch can render lines, points,
@@ -78,11 +75,11 @@ namespace Battlestation_Antares {
 
             // projection uses CreateOrthographicOffCenter to create 2d projection
             // matrix with 0,0 in the upper left.
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, Antares.RenderSize.X, Antares.RenderSize.Y, 0, 0, 1 );
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, HUD_Item.game.RenderSize().X, HUD_Item.game.RenderSize().Y, 0, 0, 1 );
         }
 
         public void ClientSizeChanged( ) {
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, Antares.RenderSize.X, Antares.RenderSize.Y, 0, 0, 1 );
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, HUD_Item.game.RenderSize().X, HUD_Item.game.RenderSize().Y, 0, 0, 1 );
         }
 
         public void Dispose() {

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Battlestation_Antares.Control;
+﻿using Microsoft.Xna.Framework;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
     public class AI_Output : AI_Item {

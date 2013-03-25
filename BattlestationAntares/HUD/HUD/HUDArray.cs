@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Battlestation_Antares.View.HUD {
+namespace HUD.HUD {
+
     public enum LayoutDirection {
         HORIZONTAL,
         VERTICAL
@@ -46,7 +47,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public HUDArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType) {
+        public HUDArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition ) {
             this.SizeType = sizeType;
             this.AbstractSize = abstractSize;
             this.direction = LayoutDirection.VERTICAL;

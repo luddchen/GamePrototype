@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD.CockpitHUD {
     public class TargetInfo : HUDArray {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Battlestation_Antaris {
+namespace HUD {
 
     public interface IUpdatableItem {
 

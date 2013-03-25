@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD.CockpitHUD {
 

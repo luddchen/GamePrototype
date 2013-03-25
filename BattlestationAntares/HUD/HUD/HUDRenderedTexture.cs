@@ -1,9 +1,7 @@
-﻿using Battlestation_Antares.View.HUD;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Battlestation_Antares;
 
-namespace Battlestation_Antaris.View.HUD {
+namespace HUD.HUD {
     /// <summary>
     /// a class to pre-render content to a texture
     /// </summary>
@@ -23,7 +21,7 @@ namespace Battlestation_Antaris.View.HUD {
         public HUDRenderedTexture(Vector2? renderSize, Color? backgroundColor) {
             this.renderSize = renderSize ?? new Vector2( 100, 100 );
             this.backgroundColor = backgroundColor ?? Color.Transparent;
-            this.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, (int)this.renderSize.X, (int)this.renderSize.Y );
+            this.renderTarget = new RenderTarget2D( HUD_Item.game.GraphicsDevice, (int)this.renderSize.X, (int)this.renderSize.Y );
         }
 
 
@@ -33,15 +31,15 @@ namespace Battlestation_Antaris.View.HUD {
         /// </summary>
         public void Render() {
             RenderTarget2D oldTarget = null;
-            if ( Antares.graphics.GraphicsDevice.GetRenderTargets().Length > 0 ) {
-                oldTarget = (RenderTarget2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget;
+            if ( HUD_Item.game.GraphicsDevice.GetRenderTargets().Length > 0 ) {
+                oldTarget = (RenderTarget2D)HUD_Item.game.GraphicsDevice.GetRenderTargets()[0].RenderTarget;
             }
-            Antares.graphics.GraphicsDevice.SetRenderTarget( renderTarget );
-            Antares.graphics.GraphicsDevice.Clear( this.backgroundColor );
+            HUD_Item.game.GraphicsDevice.SetRenderTarget( renderTarget );
+            HUD_Item.game.GraphicsDevice.Clear( this.backgroundColor );
 
             _RenderContent();
 
-            Antares.graphics.GraphicsDevice.SetRenderTarget( oldTarget );
+            HUD_Item.game.GraphicsDevice.SetRenderTarget( oldTarget );
 
             this.Texture = (Texture2D)renderTarget;
         }

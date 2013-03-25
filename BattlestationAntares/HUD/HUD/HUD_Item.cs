@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace Battlestation_Antares.View.HUD {
+namespace HUD.HUD {
 
     public enum HUDType {
         /// <summary>
@@ -32,9 +32,13 @@ namespace Battlestation_Antares.View.HUD {
     /// </summary>
     public abstract class HUD_Item {
 
+        public static IHUDGame game;
+
+        public static IInputProvider inputProvider;
+
         # region position elements 
 
-            private HUDType positionType = HUDType.ABSOLUT;
+            private HUDType positionType = HUDType.RELATIV;
 
             public virtual HUDType PositionType {
                 get {
@@ -71,7 +75,7 @@ namespace Battlestation_Antares.View.HUD {
 
         # region size elements
 
-            private HUDType sizeType = HUDType.ABSOLUT;
+            private HUDType sizeType = HUDType.RELATIV;
 
             public virtual HUDType SizeType {
                 get {
@@ -198,15 +202,15 @@ namespace Battlestation_Antares.View.HUD {
                     break;
 
                 case HUDType.RELATIV:
-                    this.position += Vector2.Multiply( this.abstractPosition, Antares.RenderSize );
+                    this.position += Multiply( this.abstractPosition, HUD_Item.game.RenderSize() );
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:
-                    this.position += new Vector2( this.abstractPosition.X, Antares.RenderSize.Y * this.abstractPosition.Y );
+                    this.position += new Vector2( this.abstractPosition.X, HUD_Item.game.RenderSize().Y * this.abstractPosition.Y );
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.position += new Vector2( Antares.RenderSize.X * this.abstractPosition.X, this.abstractPosition.Y );
+                    this.position += new Vector2( HUD_Item.game.RenderSize().X * this.abstractPosition.X, this.abstractPosition.Y );
                     break;
             }
 
@@ -217,16 +221,16 @@ namespace Battlestation_Antares.View.HUD {
                     break;
 
                 case HUDType.RELATIV:
-                    this.size = Vector2.Multiply( this.abstractSize, Antares.RenderSize );
+                    this.size = Multiply( this.abstractSize, HUD_Item.game.RenderSize() );
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:
                     this.size.X = this.abstractSize.X;
-                    this.size.Y = this.abstractSize.Y * Antares.RenderSize.Y;
+                    this.size.Y = this.abstractSize.Y * HUD_Item.game.RenderSize().Y;
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.size.X = this.abstractSize.X * Antares.RenderSize.X;
+                    this.size.X = this.abstractSize.X * HUD_Item.game.RenderSize().X;
                     this.size.Y = this.abstractSize.Y;
                     break;
             }
@@ -249,6 +253,13 @@ namespace Battlestation_Antares.View.HUD {
 
         public override string ToString() {
             return this.GetType().Name;
+        }
+
+
+        // helper functions
+
+        public static Vector2 Multiply( Vector2 abstractCoord, Point targetSize ) {
+            return new Vector2( abstractCoord.X * targetSize.X, abstractCoord.Y * targetSize.Y );
         }
 
     }

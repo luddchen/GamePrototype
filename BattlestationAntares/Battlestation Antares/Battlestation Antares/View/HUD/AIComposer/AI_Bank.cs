@@ -1,8 +1,9 @@
 ﻿using System;
-using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.View.HUD.AIComposer;
 using Battlestation_Antares;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antaris.View.HUD.AIComposer {
     public class AI_Bank : HUDContainer, IUpdatableItem {
@@ -17,7 +18,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public Action mousePressedAction;
 
-        public AI_Bank(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType ) {
+        public AI_Bank(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition ) {
             this.SizeType = sizeType;
             this.AbstractSize = abstractSize;
             SetBackgroundColor( new Color( 32, 32, 32, 32 ) );
@@ -54,7 +55,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public bool hasFreePlace(HUD_Item element) {
             bool freePlace = false;
-            float freeWidth = this.AbstractSize.X * Antares.RenderSize.X;
+            float freeWidth = this.AbstractSize.X * HUD_Item.game.RenderSize().X;
             foreach ( HUD_Item item in this.allChilds ) {
                 if ( item is AI_Item ) {
                     freeWidth -= item.AbstractSize.X;

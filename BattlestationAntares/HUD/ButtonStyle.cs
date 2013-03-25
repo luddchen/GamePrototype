@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace Battlestation_Antares.View.HUD {
+namespace HUD {
     public class ButtonStyle {
         public Color backgroundColorNormal;
 
@@ -21,6 +20,12 @@ namespace Battlestation_Antares.View.HUD {
         public float scaleHover;
 
         public float scalePressed;
+
+        public Texture2D backgroundTextureNormal;
+
+        public Texture2D backgroundTextureHover;
+
+        public Texture2D backgroundTexturePressed;
 
 
         public static ButtonStyle DefaultButtonStyle() {

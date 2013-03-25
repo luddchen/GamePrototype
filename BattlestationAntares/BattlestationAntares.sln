@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlestation Antares", "Battlestation Antares\Battlestation Antares\Battlestation Antares.csproj", "{AED1C8E5-DCCF-46E6-AD49-E3C9CCAE0CE7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battlestation AntaresContent", "Battlestation Antares\Battlestation AntaresContent\Battlestation AntaresContent.contentproj", "{3F6E1494-B98B-4AE0-824B-CE4D5D74BC91}"
@@ -8,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialObjectAttributesLibrary", "SpatialObjectAttributesLibrary\SpatialObjectAttributesLibrary.csproj", "{77241907-8BBD-407C-8196-C1867B450C4E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpatialObjectAttributesContentPipelineExtension", "SpatialObjectAttributesContentPipelineExtension\SpatialObjectAttributesContentPipelineExtension.csproj", "{25EEDF73-0480-428E-8F99-451C247FD482}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HUD", "HUD\HUD.csproj", "{E5599BA4-8BB7-4668-A0A9-616744DEA5DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{25EEDF73-0480-428E-8F99-451C247FD482}.Debug|x86.Build.0 = Debug|x86
 		{25EEDF73-0480-428E-8F99-451C247FD482}.Release|x86.ActiveCfg = Debug|x86
 		{25EEDF73-0480-428E-8F99-451C247FD482}.Release|x86.Build.0 = Debug|x86
+		{E5599BA4-8BB7-4668-A0A9-616744DEA5DA}.Debug|x86.ActiveCfg = Debug|x86
+		{E5599BA4-8BB7-4668-A0A9-616744DEA5DA}.Debug|x86.Build.0 = Debug|x86
+		{E5599BA4-8BB7-4668-A0A9-616744DEA5DA}.Release|x86.ActiveCfg = Release|x86
+		{E5599BA4-8BB7-4668-A0A9-616744DEA5DA}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

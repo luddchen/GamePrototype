@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
@@ -10,7 +11,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
         private HUDValueBar negVel;
 
         public Velocity( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
-            : base( abstractPosition, positionType) {
+            : base( abstractPosition ) {
             this.AbstractSize = abstractSize;
             this.SizeType = sizeType;
 

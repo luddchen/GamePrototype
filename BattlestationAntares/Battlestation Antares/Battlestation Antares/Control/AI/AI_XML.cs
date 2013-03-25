@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Xml;
-using System.Collections.Generic;
 using Battlestation_Antares.View.HUD.AIComposer;
 using Microsoft.Xna.Framework;
-using Battlestation_Antares.View.HUD;
 using Battlestation_Antaris.View.HUD.AIComposer;
+using HUD.HUD;
 
 namespace Battlestation_Antares.Control.AI {
 

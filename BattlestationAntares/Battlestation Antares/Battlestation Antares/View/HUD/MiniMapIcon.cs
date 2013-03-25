@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD {
 

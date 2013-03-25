@@ -7,13 +7,15 @@ using Battlestation_Antares.View.HUD.CockpitHUD;
 using Battlestation_Antares.Tools;
 using Battlestation_Antaris.View.HUD.CockpitHUD;
 using Battlestation_Antares.Model;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antares.View {
 
     /// <summary>
     /// the cockpit view
     /// </summary>
-    class CockpitView : View {
+    class CockpitView : HUDView {
 
         public SpatialObject target;
 

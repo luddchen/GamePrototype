@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Battlestation_Antares.Control;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
@@ -16,7 +16,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private float value;
 
-        public HUD2DSlider( Vector2 abstractPosition, Vector2 abstractSize) : base( abstractPosition, HUDType.ABSOLUT ) {
+        public HUD2DSlider( Vector2 abstractPosition, Vector2 abstractSize) : base( abstractPosition ) {
+            this.SizeType = HUDType.ABSOLUT;
             this.AbstractSize = abstractSize;
             this.valueString = new HUDString( "0.00" );
             this.valueString.AbstractPosition = new Vector2( 0, -this.AbstractSize.Y * 2.0f );

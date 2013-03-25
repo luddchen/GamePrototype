@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace Battlestation_Antares.View.HUD {
+namespace HUD.HUD {
 
     public class HUDContainer : HUD_Item {
 
@@ -36,13 +36,17 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public HUDContainer( Vector2 abstractPosition, HUDType positionType) {
+        public HUDContainer( Vector2 position) {
             this.allChilds = new List<HUD_Item>();
             this.background = new HUDTexture();
             this.background.IsVisible = false;
             this.background.parent = this;
-            this.PositionType = positionType;
-            this.AbstractPosition = abstractPosition;
+            this.AbstractPosition = position;
+        }
+
+
+        public HUDContainer( Vector2 position, Vector2 size ) : this(position) {
+            this.AbstractSize = size;
         }
 
 
@@ -74,7 +78,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
         public void SetBackground( String textureName ) {
-            SetBackground( ( textureName == null ) ? null : Antares.content.Load<Texture2D>( textureName ) );
+            SetBackground( ( textureName == null ) ? null : HUD_Item.game.Content.Load<Texture2D>( textureName ) );
         }
 
         public void SetBackgroundColor( Color color ) {

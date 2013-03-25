@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antaris.View.HUD.AIComposer;
 using Battlestation_Antares.Control;
-using Battlestation_Antaris;
-using Battlestation_Antaris.View.HUD;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
@@ -44,7 +44,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private BuilderState state;
 
         public AI_Container(SituationController controller)
-            : base( new Vector2( 0, 0 ), HUDType.RELATIV ) {
+            : base( new Vector2( 0, 0 ) ) {
 
             this.controller = controller;
             this.primitiveBatch = new PrimitiveBatch( Antares.graphics.GraphicsDevice );
@@ -414,7 +414,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private void _switchBank( AI_Item item, AI_Bank target ) {
             ( (AI_Bank)item.parent ).Remove( item );
 
-            float targetXSize = target.AbstractSize.X * Antares.RenderSize.X;
+            float targetXSize = target.AbstractSize.X * HUD_Item.game.RenderSize().X;
             float bankPos = ( Antares.inputProvider.getMousePos().X - ( target.Position.X - targetXSize / 2 ) ) / targetXSize;
             target.InsertAt( item, bankPos );
         }

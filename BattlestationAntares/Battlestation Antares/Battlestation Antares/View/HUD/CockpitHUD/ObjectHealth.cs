@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
 using Microsoft.Xna.Framework.Graphics;
+using HUD.HUD;
 
 namespace Battlestation_Antaris.View.HUD.CockpitHUD {
     public class ObjectHealth : HUDContainer {
@@ -17,7 +18,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         private SpatialObject obj;
 
 
-        public ObjectHealth( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition, positionType ) {
+        public ObjectHealth( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition ) {
             this.shield = new HUDValueCircle( Vector2.Zero, HUDType.ABSOLUT, new Vector2( 0.09f, 0.16f ), HUDType.RELATIV );
             this.shield.SetMaxColor( Color.Blue );
             this.shield.SetMinColor( Color.DarkRed );

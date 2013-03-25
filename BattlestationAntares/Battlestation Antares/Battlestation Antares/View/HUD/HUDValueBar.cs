@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antaris.View.HUD;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD
 {

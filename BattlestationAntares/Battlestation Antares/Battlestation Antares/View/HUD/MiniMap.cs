@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
 using Microsoft.Xna.Framework.Graphics;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD {
 
@@ -50,7 +51,7 @@ namespace Battlestation_Antares.View.HUD {
 
         private MiniMap.Config oldConfig;
 
-        public MiniMap( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition, positionType ) {
+        public MiniMap( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition ) {
             SetBackgroundColor( MiniMap.BACKGROUND_COLOR );
             SetBackground( "Sprites//Square_Cross" );
             this.SizeType = HUDType.RELATIV;

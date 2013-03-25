@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Battlestation_Antaris;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
@@ -31,7 +32,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         public Action dragAction;
 
 
-        public AI_Item( Vector2 abstractPosition, HUDType positionType) : base( abstractPosition, positionType) {
+        public AI_Item( Vector2 abstractPosition, HUDType positionType) : base( abstractPosition ) {
             this.SizeType = HUDType.ABSOLUT;
             this.AbstractSize = new Vector2( 200, 100 );
 

@@ -87,7 +87,6 @@
     <Compile Include="Control\MenuController.cs" />
     <Compile Include="Control\Situation.cs" />
     <Compile Include="Control\SituationController.cs" />
-    <Compile Include="IUpdatableItem.cs" />
     <Compile Include="Model\Dust.cs" />
     <Compile Include="Model\Laser.cs" />
     <Compile Include="Model\Missile.cs" />
@@ -98,7 +97,6 @@
     <Compile Include="Model\SpatialObjectFactory.cs" />
     <Compile Include="Model\Turret.cs" />
     <Compile Include="Model\WorldModel.cs" />
-    <Compile Include="PrimitiveBatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Antares.cs" />
@@ -124,7 +122,7 @@
     <Compile Include="View\HUD\AIComposer\AI_Output.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Transformer.cs" />
     <Compile Include="View\HUD\AIComposer\HUD2DSlider.cs" />
-    <Compile Include="View\HUD\ButtonStyle.cs" />
+    <Compile Include="View\HUD\AntaresButtonStyles.cs" />
     <Compile Include="View\HUD\CockpitHUD\Compass.cs" />
     <Compile Include="View\HUD\CockpitHUD\LaserHeat.cs" />
     <Compile Include="View\HUD\CockpitHUD\ObjectHealth.cs" />
@@ -132,26 +130,15 @@
     <Compile Include="View\HUD\CockpitHUD\Velocity.cs" />
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
     <Compile Include="View\HUD\DebugViewer.cs" />
-    <Compile Include="View\HUD\HUDActionTexture.cs" />
-    <Compile Include="View\HUD\HUDMaskedContainer.cs" />
-    <Compile Include="View\HUD\HUDRenderedItem.cs" />
     <Compile Include="View\HUD\HUDValueBar.cs" />
     <Compile Include="View\HUD\HUDValueCircle.cs" />
     <Compile Include="View\HUD\HUDValueLamp.cs" />
-    <Compile Include="View\HUD\HUDRenderedTexture.cs" />
     <Compile Include="View\HUD\MiniMapIcon.cs" />
     <Compile Include="View\HUD\CommandHUD\BuildMenu.cs" />
     <Compile Include="View\HUD\CockpitHUD\FpsDisplay.cs" />
-    <Compile Include="View\HUD\HUDArray.cs" />
-    <Compile Include="View\HUD\HUDButton.cs" />
-    <Compile Include="View\HUD\HUD_Item.cs" />
-    <Compile Include="View\HUD\HUDContainer.cs" />
-    <Compile Include="View\HUD\HUDString.cs" />
-    <Compile Include="View\HUD\HUDTexture.cs" />
     <Compile Include="View\HUD\MiniMap.cs" />
     <Compile Include="View\MenuView.cs" />
     <Compile Include="View\Skybox.cs" />
-    <Compile Include="View\View.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Antares.ico" />
@@ -160,6 +147,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\HUD\HUD.csproj">
+      <Project>{E5599BA4-8BB7-4668-A0A9-616744DEA5DA}</Project>
+      <Name>HUD</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SpatialObjectAttributesLibrary\SpatialObjectAttributesLibrary.csproj">
       <Project>{77241907-8BBD-407C-8196-C1867B450C4E}</Project>
       <Name>SpatialObjectAttributesLibrary</Name>

@@ -1,11 +1,12 @@
 ﻿using Battlestation_Antares.View.HUD.AIComposer;
-using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antares.View {
 
-    public class AIView : View {
+    public class AIView : HUDView {
 
         private AI_Container aiContainer;
 

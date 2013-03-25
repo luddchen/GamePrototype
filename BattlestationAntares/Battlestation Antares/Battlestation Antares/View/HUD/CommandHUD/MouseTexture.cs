@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antaris;
 using Battlestation_Antares.Control;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antares.View.HUD.CommandHUD {
     class MouseTexture : HUDTexture, IUpdatableItem {

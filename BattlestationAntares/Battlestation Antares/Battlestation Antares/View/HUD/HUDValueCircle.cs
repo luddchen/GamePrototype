@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD {
 
@@ -28,7 +28,7 @@ namespace Battlestation_Antares.View.HUD {
         private Color oneColor = new Color( 255, 32, 0 );
 
 
-        public HUDValueCircle( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition, positionType ) {
+        public HUDValueCircle( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition ) {
             this.SizeType = sizeType;
             this.AbstractSize = abstractSize;
 

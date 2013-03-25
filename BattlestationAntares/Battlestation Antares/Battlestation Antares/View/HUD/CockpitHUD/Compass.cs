@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
 using Battlestation_Antares;
 using Battlestation_Antares.Tools;
-using Microsoft.Xna.Framework.Graphics;
+using HUD.HUD;
 
 namespace Battlestation_Antaris.View.HUD.CockpitHUD {
     public class Compass : HUDRenderedTexture {

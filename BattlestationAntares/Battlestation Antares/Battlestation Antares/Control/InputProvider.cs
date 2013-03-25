@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using HUD;
 
 namespace Battlestation_Antares.Control {
 
@@ -33,7 +34,7 @@ namespace Battlestation_Antares.Control {
     /// <summary>
     /// a class that collects and provides user/player input
     /// </summary>
-    public class InputProvider {
+    public class InputProvider : IInputProvider {
 
         /// <summary>
         /// the old keyboard state
@@ -108,7 +109,7 @@ namespace Battlestation_Antares.Control {
         public bool isKeyOnState( ControlKey key, ControlState state ) {
             bool oldState = this.oldKeyboardState.IsKeyDown( (Keys)key );
             bool newState = this.newKeyboardState.IsKeyDown( (Keys)key );
-
+            
             if ( state == ControlState.PRESSED && !oldState && newState )
                 return true;
             if ( state == ControlState.RELEASED && oldState && !newState )
@@ -135,6 +136,10 @@ namespace Battlestation_Antares.Control {
 
         public bool isLeftMouseButtonDown() {
             return newMouseState.LeftButton == ButtonState.Pressed;
+        }
+
+        public bool isRightMouseButtonDown() {
+            return newMouseState.RightButton == ButtonState.Pressed;
         }
 
         public Vector2 getMousePos() {

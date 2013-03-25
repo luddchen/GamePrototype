@@ -1,6 +1,7 @@
 ﻿using Battlestation_Antares.Control;
 using Microsoft.Xna.Framework;
 using System;
+using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD.CommandHUD {
     class BuildMenu : HUDArray {

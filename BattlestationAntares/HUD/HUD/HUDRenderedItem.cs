@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Battlestation_Antares.View;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Battlestation_Antares;
-using Battlestation_Antares.View.HUD;
 
-namespace Battlestation_Antaris.View.HUD {
+namespace HUD.HUD {
+
     public class HUDRenderedItem : HUDRenderedTexture {
 
         SpriteBatch batch;
@@ -16,7 +12,7 @@ namespace Battlestation_Antaris.View.HUD {
 
         public HUDRenderedItem( HUD_Item item, Vector2? renderSize, Color? backgroundColor ) : base(renderSize, backgroundColor) {
             this.item = item;
-            batch = new SpriteBatch( Antares.graphics.GraphicsDevice );
+            batch = new SpriteBatch( HUD_Item.game.GraphicsDevice );
         }
 
 

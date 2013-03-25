@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares;
 
-namespace Battlestation_Antaris.View.HUD {
+namespace HUD.HUD {
     public class HUDMaskedContainer : HUDContainer {
 
         private HUDTexture mask;
@@ -32,7 +29,7 @@ namespace Battlestation_Antaris.View.HUD {
         }
 
         public HUDMaskedContainer( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType )
-            : base( abstractPosition, positionType ) {
+            : base( abstractPosition ) {
             this.mask = new HUDTexture();
             this.mask.parent = this;
             this.mask.LayerDepth = base.LayerDepth - 0.05f;
@@ -51,7 +48,7 @@ namespace Battlestation_Antaris.View.HUD {
         }
 
         public void SetMask( String textureName ) {
-            SetMask( ( textureName == null ) ? null : Antares.content.Load<Texture2D>( textureName ) );
+            SetMask( ( textureName == null ) ? null : HUD_Item.game.Content.Load<Texture2D>( textureName ) );
         }
 
         public void SetMaskColor( Color color ) {

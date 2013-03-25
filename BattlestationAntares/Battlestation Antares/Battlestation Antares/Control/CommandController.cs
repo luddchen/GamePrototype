@@ -5,6 +5,8 @@ using Battlestation_Antares.View.HUD.CommandHUD;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Battlestation_Antares.Model;
+using HUD.HUD;
+using HUD;
 
 namespace Battlestation_Antares.Control {
 
@@ -40,7 +42,7 @@ namespace Battlestation_Antares.Control {
         /// </summary>
         /// <param name="game">the game</param>
         /// <param name="view">the used view</param>
-        public CommandController( Antares game, View.View view )
+        public CommandController( Antares game, HUDView view )
             : base( game, view ) {
             this.currentMode = CommandMode.NORMAL;
 

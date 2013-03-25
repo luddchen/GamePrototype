@@ -6,13 +6,15 @@ using System;
 using Battlestation_Antares.Model;
 using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework.Content;
+using HUD;
+using HUD.HUD;
 
 namespace Battlestation_Antares {
 
     /// <summary>
     /// the Antares main class
     /// </summary>
-    public class Antares : Microsoft.Xna.Framework.Game {
+    public class Antares : Game, IHUDGame {
         private const Boolean ACTIVATE_DEBUG = true;
 
         /// <summary>
@@ -66,7 +68,7 @@ namespace Battlestation_Antares {
         private static int renderWidth = 1920;
         private static int renderHeight = 1080;
 
-        private View.View lastView;
+        private HUDView lastView;
         private int blendValue;
 
         /// <summary>
@@ -79,7 +81,7 @@ namespace Battlestation_Antares {
             Antares.graphics.PreferredBackBufferHeight = (int)( GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9 );
             Antares.graphics.IsFullScreen = false;
             Antares.graphics.SynchronizeWithVerticalRetrace = true;
-
+            
             this.Content.RootDirectory = "Content";
             Antares.content = Content;
 
@@ -104,6 +106,10 @@ namespace Battlestation_Antares {
         /// </summary>
         protected override void Initialize() {
             Antares.inputProvider = new InputProvider();
+
+            HUD_Item.game = this;
+            HUD_Item.inputProvider = Antares.inputProvider;
+
             Antares.debugViewer = new DebugViewer();
 
             this.spriteBatch = new SpriteBatch( Antares.graphics.GraphicsDevice );
@@ -240,17 +246,6 @@ namespace Battlestation_Antares {
         }
 
 
-        public static Vector2 RenderSize {
-            get {
-                Vector2 renderSize = new Vector2( Antares.renderWidth, Antares.renderHeight );
-                if ( Antares.graphics.GraphicsDevice.GetRenderTargets().Length > 0 ) {
-                    renderSize.X = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Width;
-                    renderSize.Y = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Height;
-                }
-                return renderSize;
-            }
-        }
-
         public static void InitDepthBuffer() {
             Antares.graphics.GraphicsDevice.DepthStencilState = new DepthStencilState() {
                 DepthBufferEnable = true,
@@ -258,6 +253,28 @@ namespace Battlestation_Antares {
             };
             Antares.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }
+
+        public Point RenderSize() {
+            Point renderSize = new Point( Antares.renderWidth, Antares.renderHeight );
+            if ( Antares.graphics.GraphicsDevice.GetRenderTargets().Length > 0 ) {
+                renderSize.X = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Width;
+                renderSize.Y = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Height;
+            }
+            return renderSize;
+        }
+
+        public Texture2D DefaultTexture {
+            get {
+                return Content.Load<Texture2D>( "Sprites//Square" );
+            }
+        }
+
+        public SpriteFont DefaultFont {
+            get {
+                return Content.Load<SpriteFont>( "Fonts//Font" );
+            }
+        }
+
     }
 
 }

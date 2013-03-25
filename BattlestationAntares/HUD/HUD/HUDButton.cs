@@ -1,16 +1,13 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.Control;
-using Battlestation_Antaris;
 
-namespace Battlestation_Antares.View.HUD {
+namespace HUD.HUD {
 
     public class HUDButton : HUDContainer, IUpdatableItem {
 
-        public ButtonStyle style;
+        public ButtonStyle style = ButtonStyle.DefaultButtonStyle();
 
-        private float overallScale;
+        private float overallScale = 1.0f;
 
         private Action pressedAction;
         private Action downAction;
@@ -31,19 +28,21 @@ namespace Battlestation_Antares.View.HUD {
             }
         }
 
-        public HUDButton( String text, Vector2 position, float scale, SituationController controller) : base(position, HUDType.RELATIV) {
-            this.buttonString = new HUDString( text );
-            this.buttonString.scale = scale;
-            Add( this.buttonString );
+
+        public HUDButton( String text, Vector2 position, Vector2 size, float scale, IUpdateController controller) : base(position, size) {
+            Add( this.buttonString = new HUDString( text, Vector2.Zero, size, null, scale, null, null ) );
+            this.AbstractSize = size;
+            _initialize( controller );
+        }
+
+        public HUDButton( String text, Vector2 position, float scale, IUpdateController controller) : base(position) {
+            Add( this.buttonString = new HUDString( text, scale ) );
             this.AbstractSize = Vector2.Multiply( this.buttonString.Size, new Vector2( 1.2f, 1.0f ) ); // if no size set adapt to string
+            _initialize( controller );
+        }
 
-            this.AbstractPosition = position;
-            this.overallScale = 1.0f;
-            this.style = ButtonStyle.DefaultButtonStyle();
-
+        private void _initialize( IUpdateController controller ) {
             SetBackgroundColor( this.style.backgroundColorNormal );
-            SetBackground( Antares.content.Load<Texture2D>( "Sprites//builder_button" ) );
-
             if ( controller != null ) {
                 controller.Register( this );
             }
@@ -67,27 +66,36 @@ namespace Battlestation_Antares.View.HUD {
 
 
         public void Update( GameTime gameTime ) {
-            if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
-                if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
+            if ( this.Intersects( HUD_Item.inputProvider.getMousePos() ) ) {
+                if ( HUD_Item.inputProvider.isLeftMouseButtonPressed() ) {
                     this.buttonString.color = this.style.foregroundColorPressed;
                     SetBackgroundColor( this.style.backgroundColorPressed );
                     this.background.scale = this.style.scalePressed * this.overallScale;
+                    if ( this.style.backgroundTexturePressed != null ) {
+                        SetBackground( this.style.backgroundTexturePressed );
+                    }
                     if ( this.pressedAction != null ) {
                         this.pressedAction();
                     }
                 } else {
-                    if ( Antares.inputProvider.isLeftMouseButtonDown() && this.downAction != null ) {
+                    if ( HUD_Item.inputProvider.isLeftMouseButtonDown() && this.downAction != null ) {
                         this.downAction();
                     }
                     this.buttonString.color = this.style.foregroundColorHover;
                     SetBackgroundColor( this.style.backgroundColorHover );
                     this.background.scale = this.style.scaleHover * this.overallScale;
+                    if ( this.style.backgroundTextureHover != null ) {
+                        SetBackground( this.style.backgroundTextureHover );
+                    }
                 }
 
             } else {
                 this.buttonString.color = this.style.foregroundColorNormal;
                 SetBackgroundColor( this.style.backgroundColorNormal );
                 this.background.scale = this.style.scaleNormal * this.overallScale;
+                if ( this.style.backgroundTextureNormal != null ) {
+                    SetBackground( this.style.backgroundTextureNormal );
+                }
             }
         }
 

@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Battlestation_Antares.View.HUD;
+using HUD.HUD;
 
-namespace Battlestation_Antares.View {
+namespace HUD {
 
     /// <summary>
     /// abstract basis class for views
     /// </summary>
-    public abstract class View {
+    public abstract class HUDView {
 
         /// <summary>
         /// render target of this view
@@ -38,10 +38,10 @@ namespace Battlestation_Antares.View {
         /// create a new view
         /// </summary>
         /// <param name="backgroundColor">background color of this view</param>
-        public View(Color? backgroundColor) {
-            this.allItems = new List<HUD.HUD_Item>();
+        public HUDView(Color? backgroundColor) {
+            this.allItems = new List<HUD_Item>();
             this.backgroundColor = backgroundColor ?? Color.Transparent;
-            this.spriteBatch = new SpriteBatch( Antares.graphics.GraphicsDevice );
+            this.spriteBatch = new SpriteBatch( HUD_Item.game.GraphicsDevice );
         }
 
 
@@ -56,10 +56,9 @@ namespace Battlestation_Antares.View {
         /// </summary>
         public void Draw() {
             this._initRenderTarget();
-            Antares.graphics.GraphicsDevice.SetRenderTarget( this.renderTarget );
-            Antares.graphics.GraphicsDevice.Clear( this.backgroundColor);
+            HUD_Item.game.GraphicsDevice.SetRenderTarget( this.renderTarget );
+            HUD_Item.game.GraphicsDevice.Clear( this.backgroundColor );
 
-            // draw content behind HUD
             DrawPreContent();
 
             // draw HUD elements
@@ -71,10 +70,9 @@ namespace Battlestation_Antares.View {
 
             this.spriteBatch.End();
 
-            // draw content in front of HUD
             DrawPostContent();
 
-            Antares.graphics.GraphicsDevice.SetRenderTarget( null );
+            HUD_Item.game.GraphicsDevice.SetRenderTarget( null );
         }
 
 
@@ -102,6 +100,16 @@ namespace Battlestation_Antares.View {
         }
 
 
+        public void Remove( HUD_Item item ) {
+            this.allItems.Remove( item );
+        }
+
+
+        public void Clear() {
+            this.allItems.Clear();
+        }
+
+
         public virtual void Window_ClientSizeChanged() {
             foreach ( HUD_Item element in this.allItems ) {
                 element.ClientSizeChanged();
@@ -110,12 +118,12 @@ namespace Battlestation_Antares.View {
 
 
         private void _initRenderTarget() {
-            if ( this.renderTarget == null || this.renderTarget.Width != (int)Antares.RenderSize.X || this.renderTarget.Height != (int)Antares.RenderSize.Y ) {
+            if ( this.renderTarget == null || this.renderTarget.Width != HUD_Item.game.RenderSize().X || this.renderTarget.Height != HUD_Item.game.RenderSize().Y ) {
                 if ( this.renderTarget != null ) {
                     this.renderTarget.Dispose();
                 }
-                this.renderTarget = new RenderTarget2D( Antares.graphics.GraphicsDevice, (int)Antares.RenderSize.X, (int)Antares.RenderSize.Y, true,
-                                                        Antares.graphics.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
+                this.renderTarget = new RenderTarget2D( HUD_Item.game.GraphicsDevice, HUD_Item.game.RenderSize().X, HUD_Item.game.RenderSize().Y, true,
+                                                        HUD_Item.game.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
                 this.Window_ClientSizeChanged();
             }
         }

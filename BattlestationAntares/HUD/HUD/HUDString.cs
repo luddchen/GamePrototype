@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Battlestation_Antares.View.HUD {
+namespace HUD.HUD {
 
     /// <summary>
     /// a Head Up Display String
@@ -49,50 +49,38 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        /// <summary>
-        /// creates a new HUD string
-        /// </summary>
-        public HUDString() {
-            this.font = Antares.content.Load<SpriteFont>( "Fonts\\Font" );
-            this.Text = "HUD2DString";
-        }
+        public HUDString() : this(null, null, null, null, null, null, null) { }
 
 
-        /// <summary>
-        /// creates a new HUD string
-        /// </summary>
-        /// <param name="text">text to display</param>
-        public HUDString( String text) {
-            this.font = Antares.content.Load<SpriteFont>( "Fonts\\Font" );
-            this.Text = text;
-        }
+        public HUDString(String text, float? scale) : this(text, null, null, null, scale, null, null) {}
 
 
-        /// <summary>
-        /// creates a new HUD string
-        /// </summary>
-        /// <param name="text">text to display</param>
-        /// <param name="font">font</param>
-        /// <param name="position">position</param>
-        /// <param name="color">color</param>
-        /// <param name="scale">scale</param>
-        /// <param name="rotation">rotation</param>
-        public HUDString( String text, SpriteFont font, Vector2? position, Color? color, float? scale, float? rotation) {
+        public HUDString( String text, Color? color, float? scale ) : this( text, null, null, color, scale, null, null ) { }
+
+
+        public HUDString( String text, Vector2? position, Vector2? size ) : this(text, position, size, null, null, null, null) { }
+
+
+        public HUDString( String text) : this(text, null, null, null, null, null, null) { }
+
+
+        public HUDString( String text, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation, SpriteFont font) {
             if ( font == null ) {
-                this.font = Antares.content.Load<SpriteFont>( "Fonts\\Font" );
+                this.font = HUD_Item.game.DefaultFont;
             }
             if ( font != null ) {
                 this.font = font;
             }
 
             if ( text == null ) {
-                this.Text = " ";
+                this.Text = "HUD String";
             }
             if ( text != null ) {
                 this.Text = text;
             }
 
             this.AbstractPosition = position ?? Vector2.Zero;
+            this.AbstractSize = size ?? this.measureString;
             this.color = color ?? Color.Beige;
             this.scale = scale ?? 1.0f;
             this.rotation = rotation ?? 0.0f;
