@@ -36,7 +36,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 || (TransformerType)subType == TransformerType.MORE_TO_ONE ) {
                 this.parameters = new float[1];
                 if ( this.slider == null ) {
-                    this.slider = new HUD2DSlider( new Vector2( 0, this.AbstractSize.Y / 4 ), new Vector2( this.AbstractSize.X, this.AbstractSize.Y / 2 ));
+                    this.slider = new HUD2DSlider( new Vector2( 0, this.AbstractSize.Y / 4 ), new Vector2( this.AbstractSize.X * 0.9f, this.AbstractSize.Y / 10 ) );
                     this.Add( this.slider );
                 }
                 this.slider.IsVisible = true;

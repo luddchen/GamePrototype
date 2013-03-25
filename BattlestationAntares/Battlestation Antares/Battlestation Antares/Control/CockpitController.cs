@@ -51,14 +51,14 @@ namespace Battlestation_Antares.Control {
             buttons.direction = LayoutDirection.HORIZONTAL;
             buttons.borderSize = new Vector2( 0.01f, 0 );
 
-            toCommandButton = new HUDButton( "Command", new Vector2(), 0.6f, this );
+            toCommandButton = new HUDButton( "Command", new Vector2(), 0.9f, this );
 
             this.toCommandButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COMMAND );
             } );
             buttons.Add( toCommandButton );
 
-            toMenuButton = new HUDButton( "Menu", new Vector2(), 0.6f, this );
+            toMenuButton = new HUDButton( "Menu", new Vector2(), 0.9f, this );
 
             this.toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );

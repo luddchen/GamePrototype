@@ -121,7 +121,7 @@ namespace Battlestation_Antares.Control {
                 showPage( item );
             } );
             this.optionButtons.Add( newButton );
-            this.optionButtons.ClientSizeChanged();
+            //this.optionButtons.ClientSizeChanged();
 
             this.contentPages.Add( item );
             this.view.Add( item );
@@ -130,18 +130,16 @@ namespace Battlestation_Antares.Control {
 
 
         private void _addVideoPage() {
-            HUDArray videoPage = new HUDArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV );
-            videoPage.direction = LayoutDirection.HORIZONTAL;
+            HUDContainer videoPage = new HUDContainer( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV );
 
-            HUDContainer renderResolutionArray = new HUDContainer( new Vector2(), HUDType.RELATIV );
+            HUDArray renderResolutionArray = new HUDArray( new Vector2( -0.15f, 0.0f ), HUDType.RELATIV, new Vector2( 0.2f, 0.3f ), HUDType.RELATIV );
+            renderResolutionArray.borderSize = new Vector2( 0.025f, 0.02f );
             videoPage.Add( renderResolutionArray );
 
-            HUDString resolutionTitle = new HUDString( "Render Resolution", null, new Vector2( 0, -0.05f ), null, 0.6f, null );
-            resolutionTitle.PositionType = HUDType.RELATIV;
-
-            HUDButton resolutionHigh = new HUDButton( "1920 x 1080", new Vector2( 0, 0 ), 0.7f, this );
-            HUDButton resolutionMedium = new HUDButton( "1600 x 900", new Vector2( 0, 0.05f ), 0.7f, this );
-            HUDButton resolutionLow = new HUDButton( "1280 x 720", new Vector2( 0, 0.1f ), 0.7f, this );
+            HUDString resolutionTitle = new HUDString( "Render Resolution", null, new Vector2(), null, 0.7f, null );
+            HUDButton resolutionHigh = new HUDButton( "1920 x 1080", new Vector2(), 0.7f, this );
+            HUDButton resolutionMedium = new HUDButton( "1600 x 900", new Vector2(), 0.7f, this );
+            HUDButton resolutionLow = new HUDButton( "1280 x 720", new Vector2(), 0.7f, this );
 
             renderResolutionArray.Add( resolutionTitle );
             renderResolutionArray.Add( resolutionHigh );
@@ -173,14 +171,14 @@ namespace Battlestation_Antares.Control {
                 } );
 
 
-            HUDContainer test1Array = new HUDContainer( new Vector2(), HUDType.RELATIV );
+            HUDArray test1Array = new HUDArray( new Vector2( 0.15f, 0.0f ), HUDType.RELATIV, new Vector2( 0.2f, 0.3f ), HUDType.RELATIV );
+            test1Array.borderSize = new Vector2( 0.025f, 0.02f );
             videoPage.Add( test1Array );
 
-            HUDString test1Title = new HUDString( "Placeholder", null, new Vector2( 0, -0.05f ), null, 0.6f, null );
-            test1Title.PositionType = HUDType.RELATIV;
-            HUDButton test1High = new HUDButton( "do nothing", new Vector2( 0, 0 ), 0.7f, null );
-            HUDButton test1Medium = new HUDButton( "wait for something", new Vector2( 0, 0.05f ), 0.7f, null );
-            HUDButton test1Low = new HUDButton( "do anything", new Vector2( 0, 0.1f ), 0.7f, null );
+            HUDString test1Title = new HUDString( "Placeholder", null, new Vector2(), null, 0.7f, null );
+            HUDButton test1High = new HUDButton( "do nothing", new Vector2(), 0.7f, null );
+            HUDButton test1Medium = new HUDButton( "wait for something", new Vector2(), 0.7f, null );
+            HUDButton test1Low = new HUDButton( "do anything", new Vector2(), 0.7f, null );
 
             test1Array.Add( test1Title );
             test1Array.Add( test1High );
@@ -193,7 +191,7 @@ namespace Battlestation_Antares.Control {
 
         private void _addSoundPage() {
             HUDArray soundPage = new HUDArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV );
-            soundPage.Add( new HUDString( "Sound" ) );
+            soundPage.Add( new HUDString( "Sound", null, null, Color.Blue, 0.5f, null ) );
 
             _addOptionPage( "Sound", soundPage );
         }

@@ -17,6 +17,19 @@ namespace Battlestation_Antares.View.HUD {
 
         private HUDString buttonString;
 
+        public override Vector2 AbstractSize {
+            set {
+                base.AbstractSize = value;
+                this.buttonString.AbstractSize = value;
+            }
+        }
+
+        public override HUDType SizeType {
+            set {
+                base.SizeType = value;
+                this.buttonString.SizeType = value;
+            }
+        }
 
         public HUDButton( String text, Vector2 position, float scale, SituationController controller) : base(position, HUDType.RELATIV) {
             this.buttonString = new HUDString( text );

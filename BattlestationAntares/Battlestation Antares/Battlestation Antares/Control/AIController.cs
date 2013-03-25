@@ -18,20 +18,22 @@ namespace Battlestation_Antares.Control {
             this.aiContainer = new AI_Container(this);
             this.view.Add( this.aiContainer );
 
-            HUDButton toMenuButton = new HUDButton( "  ", new Vector2( 0.95f, 0.95f ), 1.3f, this );
+            HUDButton toMenuButton = new HUDButton( "Menu", new Vector2( 0.95f, 0.95f ), 0.5f, this );
             toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
             toMenuButton.PositionType = HUDType.RELATIV;
             toMenuButton.style = ButtonStyle.BuilderButtonStyle();
             toMenuButton.SetBackground( Antares.content.Load<Texture2D>( "Sprites//HUD//Ship" ) );
+            toMenuButton.SizeType = HUDType.RELATIV;
+            toMenuButton.AbstractSize = new Vector2( 0.03f, 0.055f );
             this.view.Add( toMenuButton );
 
             HUDArray verifyArray = new HUDArray( new Vector2( 0.9f, 0.6f ), HUDType.RELATIV, new Vector2( 0.15f, 0.1f ), HUDType.RELATIV );
             verifyArray.direction = LayoutDirection.HORIZONTAL;
             this.view.Add( verifyArray );
 
-            HUDButton verifyButton = new HUDButton( "Verify", new Vector2(), 0.8f, this );
+            HUDButton verifyButton = new HUDButton( "Verify", new Vector2(), 0.66f, this );
             verifyButton.SetPressedAction(
                 delegate() {
                     AI.AI ai = new AI.AI();
@@ -51,15 +53,15 @@ namespace Battlestation_Antares.Control {
             statusArray.direction = LayoutDirection.VERTICAL;
             verifyArray.Add( statusArray );
 
-            statusArray.Add( new HUDString( "Status", null, null, null, 0.6f, 0 ) );
-            statusArray.Add( new HUDString( "unknown", null, null, Color.Yellow, 0.6f, 0 ) );
+            statusArray.Add( new HUDString( "Status", null, null, null, 0.66f, 0 ) );
+            statusArray.Add( new HUDString( "unknown", null, null, Color.Yellow, 0.66f, 0 ) );
 
 
             HUDArray aiButtonArray = new HUDArray( new Vector2( 0.9f, 0.8f ), HUDType.RELATIV, new Vector2( 0.1f, 0.15f ), HUDType.RELATIV );
             aiButtonArray.direction = LayoutDirection.VERTICAL;
             this.view.Add( aiButtonArray );
 
-            HUDButton saveButton = new HUDButton( "Save", new Vector2(), 0.6f, this );
+            HUDButton saveButton = new HUDButton( "Save", new Vector2(), 0.75f, this );
             saveButton.SetPressedAction(
                 delegate() {
                     AI_XML.WriteAIContainer( "testAI.xml", this.aiContainer );
@@ -67,7 +69,7 @@ namespace Battlestation_Antares.Control {
             saveButton.style = ButtonStyle.BuilderButtonStyle();
             aiButtonArray.Add( saveButton );
 
-            HUDButton loadButton = new HUDButton( "Load", new Vector2(), 0.6f, this );
+            HUDButton loadButton = new HUDButton( "Load", new Vector2(), 0.75f, this );
             loadButton.SetPressedAction(
                 delegate() {
                     AI_XML.ReadAIContainer( "testAI.xml", this.aiContainer, this );
@@ -75,7 +77,7 @@ namespace Battlestation_Antares.Control {
             loadButton.style = ButtonStyle.BuilderButtonStyle();
             aiButtonArray.Add( loadButton );
 
-            HUDButton clearButton = new HUDButton( "Clear", new Vector2(), 0.6f, this );
+            HUDButton clearButton = new HUDButton( "Clear", new Vector2(), 0.75f, this );
             clearButton.SetPressedAction(
                 delegate() {
                     this.aiContainer.ClearAI();

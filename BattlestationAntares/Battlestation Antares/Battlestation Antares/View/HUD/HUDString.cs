@@ -31,6 +31,8 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
+        protected float fontSize = 1.0f;
+
         /// <summary>
         /// the width and height of the string (depends on font)
         /// </summary>
@@ -42,7 +44,7 @@ namespace Battlestation_Antares.View.HUD {
         /// </summary>
         public override Vector2 Size {
             get {
-                return this.measureString * this.scale;
+                return this.measureString * this.scale * this.fontSize;
             }
         }
 
@@ -105,7 +107,7 @@ namespace Battlestation_Antares.View.HUD {
             if ( isVisible ) {
                 spriteBatch.DrawString( this.font, this.Text, this.Position,
                                         this.color, -this.rotation, this.measureString / 2,
-                                        this.scale, this.effect, this.LayerDepth );
+                                        this.scale * this.fontSize, this.effect, this.LayerDepth );
             }
         }
 
@@ -119,6 +121,11 @@ namespace Battlestation_Antares.View.HUD {
             return ( Math.Abs( Position.X - point.X ) < Size.X / 2 && Math.Abs( Position.Y - point.Y ) < Size.Y / 2 );
         }
 
+
+        public override void ClientSizeChanged() {
+            base.ClientSizeChanged();
+            this.fontSize = this.dest.Height / this.measureString.Y;
+        }
 
     }
 }

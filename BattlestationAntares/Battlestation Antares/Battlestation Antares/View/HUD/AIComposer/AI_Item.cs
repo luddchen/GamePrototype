@@ -43,12 +43,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             this.typeString = new HUDString( "X");
             this.typeString.PositionType = this.SizeType;
-            this.typeString.scale = 0.6f;
-            this.typeString.AbstractPosition = new Vector2( 0, -( this.AbstractSize.Y - this.typeString.Size.Y ) / 2 );
+            this.typeString.AbstractSize = new Vector2( this.AbstractSize.X, this.AbstractSize.Y / 5f );
+            this.typeString.AbstractPosition = new Vector2( 0, -( this.AbstractSize.Y - this.typeString.AbstractSize.Y ) / 2 );
             Add( this.typeString );
 
-            this.removeButton = new HUDButton( "X", new Vector2( this.AbstractSize.X / 2 - 8, -( this.AbstractSize.Y / 2 ) + 8 ), 0.5f, null);
+            this.removeButton = new HUDButton( "X", new Vector2( this.AbstractSize.X / 2 - 8, -( this.AbstractSize.Y / 2 ) + 8 ), 1f, null);
             this.removeButton.PositionType = this.SizeType;
+            this.removeButton.AbstractSize = new Vector2( 16, 16 );
             this.removeButton.style = ButtonStyle.RemoveButtonStyle();
             this.removeButton.SetPressedAction( delegate() {
                 Destroy();
@@ -56,25 +57,26 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             Add( this.removeButton );
 
             this.subTypeString = new HUDString( " ");
-            this.subTypeString.scale = 0.5f;
             this.subTypeString.PositionType = this.SizeType;
-            this.subTypeString.AbstractSize = new Vector2( this.AbstractSize.X, this.subTypeString.Size.Y );
+            this.subTypeString.AbstractSize = new Vector2( this.AbstractSize.X, this.AbstractSize.Y / 5f);
             this.subTypeString.AbstractPosition = new Vector2( 0, -( this.AbstractSize.Y - this.typeString.Size.Y * 3 ) / 2 );
             Add( this.subTypeString );
 
-            this.nextSubType = new HUDButton( ">", Vector2.Zero, 0.8f, null);
+            this.nextSubType = new HUDButton( ">", Vector2.Zero, 1, null);
             this.nextSubType.PositionType = this.SizeType;
             this.nextSubType.style = ButtonStyle.NoBackgroundButtonStyle();
-            this.nextSubType.AbstractPosition = new Vector2( ( this.AbstractSize.X - this.nextSubType.Size.X ) / 2 - 2, -( this.AbstractSize.Y - this.typeString.Size.Y * 3 ) / 2 );
+            this.nextSubType.AbstractPosition = new Vector2( this.AbstractSize.X / 2 - 8, this.subTypeString.AbstractPosition.Y );
+            this.nextSubType.AbstractSize = new Vector2( 24, 24 );
             this.nextSubType.SetPressedAction( delegate() {
                 switchToNextSubType();
             } );
             Add( this.nextSubType );
 
-            this.previousSubType = new HUDButton( "<", Vector2.Zero, 0.8f, null);
+            this.previousSubType = new HUDButton( "<", Vector2.Zero, 1, null);
             this.previousSubType.PositionType = this.SizeType;
             this.previousSubType.style = ButtonStyle.NoBackgroundButtonStyle();
-            this.previousSubType.AbstractPosition = new Vector2( -( this.AbstractSize.X - this.nextSubType.Size.X ) / 2 + 2, -( this.AbstractSize.Y - this.typeString.Size.Y * 3 ) / 2 );
+            this.previousSubType.AbstractPosition = new Vector2( -( this.AbstractSize.X / 2 - 8 ), this.subTypeString.AbstractPosition.Y );
+            this.previousSubType.AbstractSize = new Vector2( 24, 24 );
             this.previousSubType.SetPressedAction( delegate() {
                 switchToPreviousSubType();
             } );
