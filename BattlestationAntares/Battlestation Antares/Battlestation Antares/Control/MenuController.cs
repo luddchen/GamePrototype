@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using HUD.HUD;
 using Battlestation_Antaris.View.HUD;
 using HUD;
+using Battlestation_Antares.View.HUD;
 
 namespace Battlestation_Antares.Control {
 
@@ -20,6 +21,8 @@ namespace Battlestation_Antares.Control {
 
         private HUDArray optionButtons;
 
+        private List<DiscoLight> discoLights;
+
         /// <summary>
         /// create a new menu controller
         /// </summary>
@@ -34,6 +37,14 @@ namespace Battlestation_Antares.Control {
             _addVideoPage();
             _addSoundPage();
 
+            this.discoLights = new List<DiscoLight>();
+            for ( int i = 0; i < 3; i++ ) {
+                DiscoLight dLight = new DiscoLight( new Vector2( 0.5f, 0.5f ), new Vector2( 0.5f, 0.5f ), 3, 3 );
+                dLight.LayerDepth = 0.1f;
+                this.view.Add( dLight );
+                this.discoLights.Add( dLight );
+            }
+
             this.view.Window_ClientSizeChanged();
         }
 
@@ -46,7 +57,9 @@ namespace Battlestation_Antares.Control {
             base.Update( gameTime );
 
             this.test.Update( gameTime );
-            ;
+            foreach ( DiscoLight light in this.discoLights ) {
+                light.Update( gameTime );
+            }
         }
 
 
@@ -213,7 +226,7 @@ namespace Battlestation_Antares.Control {
             testTex.PositionType = HUDType.RELATIV;
             testTex.AbstractSize = new Vector2( 2f, 2f );
             testTex.SizeType = HUDType.RELATIV;
-            testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//Galaxy" );
+            testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//StationScreen" );
             testTex.color = new Color( 128, 128, 128, 128 );
 
             this.test = new HUDRenderedItem( testTex, new Point( 480, 480 ), null );

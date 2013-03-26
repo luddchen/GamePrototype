@@ -53,7 +53,7 @@ namespace Battlestation_Antares.View.HUD {
                 new Vector2( this.spatialObject.globalPosition.X - center.X, this.spatialObject.globalPosition.Z - center.Z ) * miniMap.iconPositionScale;
 
             if ( this.updateRotation ) {
-                this.rotation = Tools.Tools.GetUpAxisRotation( this.spatialObject.rotation.Forward, Matrix.Identity );
+                this.AbstractRotation = Tools.Tools.GetUpAxisRotation( this.spatialObject.rotation.Forward, Matrix.Identity );
             }
         }
 

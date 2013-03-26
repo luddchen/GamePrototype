@@ -157,7 +157,25 @@ namespace HUD.HUD {
 
         #region other elements
 
-            public float rotation = 0.0f;
+            private float abstractRotation = 0.0f;
+
+            public float AbstractRotation {
+                get {
+                    return this.abstractRotation;
+                }
+                set {
+                    this.abstractRotation = value;
+                    RenderSizeChanged();
+                }
+            }
+
+            private float rotation = 0.0f;
+
+            public float Rotation {
+                get {
+                    return this.rotation;
+                }
+            }
 
             public SpriteEffects effect = SpriteEffects.None;
 
@@ -179,7 +197,14 @@ namespace HUD.HUD {
         /// <param name="point">the test point</param>
         /// <returns>true if there is an intersetion</returns>
         public virtual bool Intersects( Vector2 point ) {
-            return ( Math.Abs( point.X - this.dest.X ) < ( this.dest.Width / 2 ) && Math.Abs( point.Y - this.dest.Y ) < ( this.dest.Height / 2 ) );
+            if ( this.Rotation == 0 ) {
+                return ( Math.Abs( point.X - this.dest.X ) < ( this.dest.Width / 2 ) && Math.Abs( point.Y - this.dest.Y ) < ( this.dest.Height / 2 ) );
+            } else {
+                Vector2 rotatedPoint = Vector2.Transform( point, Matrix.CreateTranslation( new Vector3( -this.Position, 0 ) ) );
+                rotatedPoint = Vector2.Transform( rotatedPoint, Matrix.CreateRotationZ( this.Rotation ) );
+                rotatedPoint = Vector2.Transform( rotatedPoint, Matrix.CreateTranslation( new Vector3( this.Position, 0 ) ) );
+                return ( Math.Abs( rotatedPoint.X - this.dest.X ) < ( this.dest.Width / 2 ) && Math.Abs( rotatedPoint.Y - this.dest.Y ) < ( this.dest.Height / 2 ) );
+            }
         }
 
         /// <summary>
@@ -188,6 +213,8 @@ namespace HUD.HUD {
         /// <param name="offset"></param>
         public virtual void RenderSizeChanged() {
 
+            _rotationChanged();
+
             // root position
             if ( this.parent != null ) {
                 this.position = this.parent.position;
@@ -195,22 +222,39 @@ namespace HUD.HUD {
                 this.position = Vector2.Zero;
             }
 
+            Vector2 rotatedAbstractPosition = this.AbstractPosition;
+
+            if ( this.parent != null ) {
+                //  without apect ratio
+                //rotatedAbstractPosition = Vector2.Transform( this.AbstractPosition, Matrix.CreateRotationZ( -this.parent.Rotation ) );
+
+                // with aspect ratio
+                rotatedAbstractPosition.X = 
+                    (float)
+                    ( Math.Cos( -this.parent.Rotation ) * this.AbstractPosition.X 
+                    - Math.Sin( -this.parent.Rotation ) * this.AbstractPosition.Y * HUD_Item.game.RenderSize().Y / HUD_Item.game.RenderSize().X);
+                rotatedAbstractPosition.Y = 
+                    (float)
+                    ( Math.Sin( -this.parent.Rotation ) * this.AbstractPosition.X * HUD_Item.game.RenderSize().X / HUD_Item.game.RenderSize().Y 
+                    + Math.Cos( -this.parent.Rotation ) * this.AbstractPosition.Y );
+            }
+
             // calclate own position
             switch ( this.positionType ) {
                 case HUDType.ABSOLUT:
-                    this.position += this.abstractPosition;
+                    this.position += rotatedAbstractPosition;
                     break;
 
                 case HUDType.RELATIV:
-                    this.position += Multiply( this.abstractPosition, HUD_Item.game.RenderSize() );
+                    this.position += Multiply( rotatedAbstractPosition, HUD_Item.game.RenderSize() );
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:
-                    this.position += new Vector2( this.abstractPosition.X, HUD_Item.game.RenderSize().Y * this.abstractPosition.Y );
+                    this.position += new Vector2( rotatedAbstractPosition.X, HUD_Item.game.RenderSize().Y * rotatedAbstractPosition.Y );
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.position += new Vector2( HUD_Item.game.RenderSize().X * this.abstractPosition.X, this.abstractPosition.Y );
+                    this.position += new Vector2( HUD_Item.game.RenderSize().X * rotatedAbstractPosition.X, rotatedAbstractPosition.Y );
                     break;
             }
 
@@ -240,6 +284,15 @@ namespace HUD.HUD {
             this.dest.Y = (int)Position.Y;
             this.dest.Width = (int)Size.X;
             this.dest.Height = (int)Size.Y;
+
+            //_rotationChanged();
+        }
+
+        private void _rotationChanged() {
+            this.rotation = this.abstractRotation;
+            if ( this.parent != null ) {
+                this.rotation += this.parent.Rotation;
+            }
         }
 
 
@@ -263,7 +316,7 @@ namespace HUD.HUD {
         }
 
         public static Vector2 AbstractToConcrete( Vector2 abstractCoord ) {
-            return HUD_Item.Multiply( abstractCoord, HUD_Item.game.RenderSize() );
+            return Multiply( abstractCoord, HUD_Item.game.RenderSize() );
         }
 
     }

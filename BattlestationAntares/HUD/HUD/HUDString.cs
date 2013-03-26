@@ -83,7 +83,7 @@ namespace HUD.HUD {
             this.AbstractSize = size ?? this.measureString;
             this.color = color ?? Color.Beige;
             this.scale = scale ?? 1.0f;
-            this.rotation = rotation ?? 0.0f;
+            this.AbstractRotation = rotation ?? 0.0f;
         }
 
 
@@ -94,7 +94,7 @@ namespace HUD.HUD {
         public override void Draw( SpriteBatch spriteBatch ) {
             if ( isVisible ) {
                 spriteBatch.DrawString( this.font, this.Text, this.Position,
-                                        this.color, -this.rotation, this.measureString / 2,
+                                        this.color, -this.Rotation, this.measureString / 2,
                                         this.scale * this.fontSize, this.effect, this.LayerDepth );
             }
         }

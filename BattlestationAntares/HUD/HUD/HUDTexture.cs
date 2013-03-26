@@ -50,7 +50,7 @@ namespace HUD.HUD {
             this.AbstractSize = size ?? new Vector2();
             this.color = color ?? Color.White;
             this.scale = scale ?? 1.0f;
-            this.rotation = rotation ?? 0.0f;
+            this.AbstractRotation = rotation ?? 0.0f;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace HUD.HUD {
         /// <param name="spriteBatch">the spritebatch</param>
         public override void Draw( SpriteBatch spriteBatch ) {
             if ( this.isVisible ) {
-                spriteBatch.Draw( this.Texture, this.dest, null, this.color, -this.rotation, this.origin, this.effect, this.LayerDepth );
+                spriteBatch.Draw( this.Texture, this.dest, null, this.color, -this.Rotation, this.origin, this.effect, this.LayerDepth );
             }
         }
     }

@@ -130,6 +130,7 @@
     <Compile Include="View\HUD\CockpitHUD\Velocity.cs" />
     <Compile Include="View\HUD\CommandHUD\MouseTexture.cs" />
     <Compile Include="View\HUD\DebugViewer.cs" />
+    <Compile Include="View\HUD\DiscoLight.cs" />
     <Compile Include="View\HUD\HUDValueBar.cs" />
     <Compile Include="View\HUD\HUDValueCircle.cs" />
     <Compile Include="View\HUD\HUDValueLamp.cs" />

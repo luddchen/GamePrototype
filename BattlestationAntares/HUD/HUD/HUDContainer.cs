@@ -12,7 +12,7 @@ namespace HUD.HUD {
 
         private List<HUD_Item> allChilds;
 
-        protected ReadOnlyCollection<HUD_Item> AllChilds {
+        public ReadOnlyCollection<HUD_Item> AllChilds {
             get {
                 return allChilds.AsReadOnly();
             }
