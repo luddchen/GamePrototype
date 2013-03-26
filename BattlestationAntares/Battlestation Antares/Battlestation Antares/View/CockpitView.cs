@@ -86,9 +86,14 @@ namespace Battlestation_Antares.View {
             Velocity velocity = new Velocity( new Vector2( 0.3f, 0.925f ), new Vector2( 0.01f, 0.15f ) );
             velocity.LayerDepth = 0.3f;
             this.Add( velocity );
-            LaserHeat heat = new LaserHeat( new Vector2( 0.35f, 0.925f ), new Vector2( 0.01f, 0.15f ) );
+            LaserHeat heat = new LaserHeat( new Vector2( 0.38f, 0.895f ), new Vector2( 0.0125f, 0.21f ) );
             heat.LayerDepth = 0.3f;
+            heat.AbstractRotation = (float)( -Math.PI / 18.0 );
             this.Add( heat );
+            LaserHeat heat2 = new LaserHeat( new Vector2( 0.62f, 0.895f ), new Vector2( 0.0125f, 0.21f ) );
+            heat2.LayerDepth = 0.3f;
+            heat2.AbstractRotation = (float)( Math.PI / 18.0 );
+            this.Add( heat2 );
 
             ObjectHealth shipHealth = new ObjectHealth( new Vector2( 0.045f, 0.8f ), HUDType.RELATIV );
             shipHealth.setObject( Antares.world.spaceShip, Antares.content.Load<Texture2D>( "Sprites//HUD//Ship" ), 0.75f);

@@ -6,6 +6,7 @@ using HUD.HUD;
 using Battlestation_Antaris.View.HUD;
 using HUD;
 using Battlestation_Antares.View.HUD;
+using Battlestation_Antares.Tools;
 
 namespace Battlestation_Antares.Control {
 
@@ -40,7 +41,7 @@ namespace Battlestation_Antares.Control {
             this.discoLights = new List<DiscoLight>();
             for ( int i = 0; i < 3; i++ ) {
                 DiscoLight dLight = new DiscoLight( new Vector2( 0.5f, 0.5f ), new Vector2( 0.5f, 0.5f ), 3, 3 );
-                dLight.LayerDepth = 0.1f;
+                dLight.LayerDepth = (float)RandomGen.random.NextDouble();
                 this.view.Add( dLight );
                 this.discoLights.Add( dLight );
             }
@@ -56,7 +57,7 @@ namespace Battlestation_Antares.Control {
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
 
-            this.test.Update( gameTime );
+            //this.test.Update( gameTime );
             foreach ( DiscoLight light in this.discoLights ) {
                 light.Update( gameTime );
             }
@@ -224,17 +225,19 @@ namespace Battlestation_Antares.Control {
             HUDTexture testTex = new HUDTexture();
             testTex.AbstractPosition = new Vector2( 0.5f, 0.5f );
             testTex.PositionType = HUDType.RELATIV;
-            testTex.AbstractSize = new Vector2( 2f, 2f );
+            testTex.AbstractSize = new Vector2( 0.8f, 0.8f );
             testTex.SizeType = HUDType.RELATIV;
             testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//StationScreen" );
             testTex.color = new Color( 128, 128, 128, 128 );
+            testTex.LayerDepth = 0.6f;
+            this.view.Add( testTex );
 
-            this.test = new HUDRenderedItem( testTex, new Point( 480, 480 ), null );
-            this.test.AbstractPosition = new Vector2( 0.5f, 0.5f );
-            this.test.PositionType = HUDType.RELATIV;
-            this.test.AbstractSize = new Vector2( 0.7f, 0.7f );
-            this.test.SizeType = HUDType.RELATIV;
-            this.view.Add( this.test );
+            //this.test = new HUDRenderedItem( testTex, new Point( 480, 480 ), null );
+            //this.test.AbstractPosition = new Vector2( 0.5f, 0.5f );
+            //this.test.PositionType = HUDType.RELATIV;
+            //this.test.AbstractSize = new Vector2( 0.7f, 0.7f );
+            //this.test.SizeType = HUDType.RELATIV;
+            //this.view.Add( this.test );
         }
 
     }

@@ -28,7 +28,7 @@ namespace Battlestation_Antares.View.HUD {
 
                 } else {
 
-                    float lightSize = (float)RandomGen.random.NextDouble() * 0.2f + 0.3f;
+                    float lightSize = (float)RandomGen.random.NextDouble() * 0.3f + 0.6f;
                     HUDTexture tex =
                         new HUDTexture(
                             "Sprites//HUD//LampLight",
@@ -38,10 +38,10 @@ namespace Battlestation_Antares.View.HUD {
                             new Vector2( lightSize * HUD_Item.game.RenderSize().Y / HUD_Item.game.RenderSize().X, lightSize ));
                     tex.color =
                         new Color(
-                            (float)( RandomGen.random.NextDouble() * 0.07 ),
-                            (float)( RandomGen.random.NextDouble() * 0.07 ),
-                            (float)( RandomGen.random.NextDouble() * 0.07 ),
-                            (float)( RandomGen.random.NextDouble() * 0.007 ) );
+                            (float)( RandomGen.random.NextDouble() * 0.01 ),
+                            (float)( RandomGen.random.NextDouble() * 0.01 ),
+                            (float)( RandomGen.random.NextDouble() * 0.01 ),
+                            (float)( RandomGen.random.NextDouble() * 0.001 ) );
                     Add( tex );
 
                 }

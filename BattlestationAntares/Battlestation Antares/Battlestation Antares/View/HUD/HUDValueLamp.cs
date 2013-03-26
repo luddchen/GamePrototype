@@ -22,8 +22,8 @@ namespace Battlestation_Antares.View.HUD {
             SetBackground( "Sprites//Circle", Color.Black );
             SetMask( "Sprites//HUD//Lamp" );
 
-            this.foreground = new HUDTexture( "Sprites//HUD//LampLight" );
-            this.foreground.AbstractSize = abstractSize * 2.0f;
+            this.foreground = new HUDTexture( "Sprites//HUD//Lamp2" );
+            this.foreground.AbstractSize = abstractSize * 3.6f;
             Add( this.foreground );
 
         }
