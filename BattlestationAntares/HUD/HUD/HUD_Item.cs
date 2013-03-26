@@ -103,7 +103,7 @@ namespace HUD.HUD {
 
             public virtual Vector2 Size {
                 get {
-                    return this.size;
+                    return this.size * this.scale;
                 }
             }
 
@@ -238,8 +238,8 @@ namespace HUD.HUD {
             // calculate intersection rectangle
             this.dest.X = (int)Position.X;
             this.dest.Y = (int)Position.Y;
-            this.dest.Width = (int)( size.X * scale );
-            this.dest.Height = (int)( size.Y * scale );
+            this.dest.Width = (int)Size.X;
+            this.dest.Height = (int)Size.Y;
         }
 
 
@@ -260,6 +260,10 @@ namespace HUD.HUD {
 
         public static Vector2 Multiply( Vector2 abstractCoord, Point targetSize ) {
             return new Vector2( abstractCoord.X * targetSize.X, abstractCoord.Y * targetSize.Y );
+        }
+
+        public static Vector2 AbstractToConcrete( Vector2 abstractCoord ) {
+            return HUD_Item.Multiply( abstractCoord, HUD_Item.game.RenderSize() );
         }
 
     }

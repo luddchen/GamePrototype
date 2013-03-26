@@ -19,7 +19,7 @@ namespace Battlestation_Antares.Control {
             this.aiContainer = new AI_Container(this);
             this.view.Add( this.aiContainer );
 
-            HUDButton toMenuButton = new HUDButton( "Menu", new Vector2( 0.95f, 0.95f ), 0.5f, this );
+            HUDButton toMenuButton = new HUDButton( "Menu", new Vector2( 0.95f, 0.95f ), 0.33f, this );
             toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
@@ -34,7 +34,7 @@ namespace Battlestation_Antares.Control {
             verifyArray.direction = LayoutDirection.HORIZONTAL;
             this.view.Add( verifyArray );
 
-            HUDButton verifyButton = new HUDButton( "Verify", new Vector2(), 0.66f, this );
+            HUDButton verifyButton = new HUDButton( "Verify", new Vector2(), 0.33f, this );
             verifyButton.SetPressedAction(
                 delegate() {
                     AI.AI ai = new AI.AI();

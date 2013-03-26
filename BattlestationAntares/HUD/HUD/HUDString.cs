@@ -112,7 +112,7 @@ namespace HUD.HUD {
 
         public override void RenderSizeChanged() {
             base.RenderSizeChanged();
-            this.fontSize = this.dest.Height / this.measureString.Y;
+            this.fontSize = HUD_Item.AbstractToConcrete(this.AbstractSize).Y / this.measureString.Y;
         }
 
     }
