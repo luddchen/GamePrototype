@@ -26,8 +26,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
             Add( targetObject );
             //Add( targetDistance );
 
-            SetBackgroundColor( new Color(16, 16, 4, 64 ) );
-            SetBackground( "Sprites//Circle" );
+            SetBackground( "Sprites//Circle", new Color(16, 16, 4, 64 ) );
 
             this.isVisible = false;
         }

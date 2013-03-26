@@ -32,7 +32,7 @@ namespace Battlestation_Antares.View.HUD {
             this.SizeType = sizeType;
             this.AbstractSize = abstractSize;
 
-            SetBackgroundColor( Color.Black );
+            SetBackground( Color.Black );
             SetBackground( "Sprites//Circle" );
 
             this.foreground = new HUDTexture();
@@ -65,7 +65,7 @@ namespace Battlestation_Antares.View.HUD {
             value = MathHelper.Clamp( value, 0.0f, 1.0f );
 
             this.foreground.scale = ( value + 1.0f ) / 2;
-            this.foreground.ClientSizeChanged(); // until change scale attribute in HUD_Item
+            this.foreground.RenderSizeChanged(); // until change scale attribute in HUD_Item
             this.foreground.color = Color.Lerp( zeroColor, oneColor, this.GetColorMixValue( value ) );
 
             base.Draw( spritBatch );

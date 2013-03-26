@@ -39,8 +39,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.inputs = new List<AI_ItemPort>();
             this.outputs = new List<AI_ItemPort>();
 
-            SetBackgroundColor( new Color( 64, 96, 64 ) );
-            SetBackground( "Sprites//builder_bg_temp" );
+            SetBackground( "Sprites//builder_bg_temp", new Color( 64, 96, 64 ) );
 
             this.typeString = new HUDString( "X");
             this.typeString.PositionType = this.SizeType;

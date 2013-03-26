@@ -34,7 +34,7 @@ namespace HUD.HUD {
         protected float fontSize = 1.0f;
 
         /// <summary>
-        /// the width and height of the string (depends on font)
+        /// the width and height of the unsized string (depends on font)
         /// </summary>
         protected Vector2 measureString;
 
@@ -110,8 +110,8 @@ namespace HUD.HUD {
         }
 
 
-        public override void ClientSizeChanged() {
-            base.ClientSizeChanged();
+        public override void RenderSizeChanged() {
+            base.RenderSizeChanged();
             this.fontSize = this.dest.Height / this.measureString.Y;
         }
 

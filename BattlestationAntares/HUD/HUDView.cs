@@ -112,7 +112,7 @@ namespace HUD {
 
         public virtual void Window_ClientSizeChanged() {
             foreach ( HUD_Item element in this.allItems ) {
-                element.ClientSizeChanged();
+                element.RenderSizeChanged();
             }
         }
 

@@ -52,8 +52,7 @@ namespace Battlestation_Antares.View.HUD {
         private MiniMap.Config oldConfig;
 
         public MiniMap( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition ) {
-            SetBackgroundColor( MiniMap.BACKGROUND_COLOR );
-            SetBackground( "Sprites//Square_Cross" );
+            SetBackground( "Sprites//Square_Cross", MiniMap.BACKGROUND_COLOR );
             this.SizeType = HUDType.RELATIV;
             this.AbstractSize = new Vector2( 0.25f, 0.4f );
 
@@ -87,7 +86,7 @@ namespace Battlestation_Antares.View.HUD {
                 }
             }
 
-            ClientSizeChanged();
+            RenderSizeChanged();
 
             base.Draw( spritBatch );
         }

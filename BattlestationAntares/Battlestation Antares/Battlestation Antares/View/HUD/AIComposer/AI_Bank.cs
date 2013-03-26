@@ -21,7 +21,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
         public AI_Bank(Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition ) {
             this.SizeType = sizeType;
             this.AbstractSize = abstractSize;
-            SetBackgroundColor( new Color( 32, 32, 32, 32 ) );
+            SetBackground( new Color( 32, 32, 32, 32 ) );
         }
 
 

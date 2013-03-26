@@ -42,7 +42,7 @@ namespace HUD.HUD {
         }
 
         private void _initialize( IUpdateController controller ) {
-            SetBackgroundColor( this.style.backgroundColorNormal );
+            SetBackground( this.style.backgroundColorNormal );
             if ( controller != null ) {
                 controller.Register( this );
             }
@@ -69,11 +69,8 @@ namespace HUD.HUD {
             if ( this.Intersects( HUD_Item.inputProvider.getMousePos() ) ) {
                 if ( HUD_Item.inputProvider.isLeftMouseButtonPressed() ) {
                     this.buttonString.color = this.style.foregroundColorPressed;
-                    SetBackgroundColor( this.style.backgroundColorPressed );
+                    SetBackground( this.style.backgroundTexturePressed, this.style.backgroundColorPressed );
                     this.background.scale = this.style.scalePressed * this.overallScale;
-                    if ( this.style.backgroundTexturePressed != null ) {
-                        SetBackground( this.style.backgroundTexturePressed );
-                    }
                     if ( this.pressedAction != null ) {
                         this.pressedAction();
                     }
@@ -82,20 +79,14 @@ namespace HUD.HUD {
                         this.downAction();
                     }
                     this.buttonString.color = this.style.foregroundColorHover;
-                    SetBackgroundColor( this.style.backgroundColorHover );
+                    SetBackground( this.style.backgroundTextureHover, this.style.backgroundColorHover );
                     this.background.scale = this.style.scaleHover * this.overallScale;
-                    if ( this.style.backgroundTextureHover != null ) {
-                        SetBackground( this.style.backgroundTextureHover );
-                    }
                 }
 
             } else {
                 this.buttonString.color = this.style.foregroundColorNormal;
-                SetBackgroundColor( this.style.backgroundColorNormal );
+                SetBackground( this.style.backgroundTextureNormal, this.style.backgroundColorNormal );
                 this.background.scale = this.style.scaleNormal * this.overallScale;
-                if ( this.style.backgroundTextureNormal != null ) {
-                    SetBackground( this.style.backgroundTextureNormal );
-                }
             }
         }
 

@@ -53,7 +53,7 @@ namespace HUD.HUD {
         public virtual void Add( HUD_Item element ) {
             element.parent = this;
             element.LayerDepth = this.LayerDepth - 0.01f;
-            element.ClientSizeChanged();
+            element.RenderSizeChanged();
             this.allChilds.Add( element );
         }
 
@@ -68,22 +68,37 @@ namespace HUD.HUD {
         }
 
 
-        public void SetBackground( Texture2D texture ) {
-            if ( texture == null ) {
-                this.background.IsVisible = false;
+        public void SetBackground( Object texture, Color color ) {
+            if ( texture != null && color != null ) {
+                SetBackground( texture );
+                SetBackground( color );
+            } else if ( texture != null ) {
+                SetBackground( texture );
+            } else if ( color != null ) {
+                SetBackground( color );
             } else {
-                this.background.IsVisible = true;
-                this.background.Texture = texture;
+                SetBackground( null );
             }
         }
 
-        public void SetBackground( String textureName ) {
-            SetBackground( ( textureName == null ) ? null : HUD_Item.game.Content.Load<Texture2D>( textureName ) );
-        }
+        public void SetBackground( Object property ) {
+            bool visibility = true;
 
-        public void SetBackgroundColor( Color color ) {
-            this.background.IsVisible = true;
-            this.background.color = color;
+            if ( property == null ) {
+                visibility = false;
+            } else {
+                if ( property is Texture2D ) {
+                    this.background.Texture = (Texture2D)property;
+                } else if ( property is String ) {
+                    this.background.Texture = HUD_Item.game.Content.Load<Texture2D>( (String)property );
+                } else if ( property is Color ) {
+                    this.background.color = (Color)property;
+                } else {
+                    visibility = false;
+                }
+            }
+
+            this.background.IsVisible = visibility;
         }
 
 
@@ -97,16 +112,16 @@ namespace HUD.HUD {
         }
 
 
-        public override void ClientSizeChanged() {
-            base.ClientSizeChanged();
+        public override void RenderSizeChanged() {
+            base.RenderSizeChanged();
 
             if ( this.background != null ) {
-                this.background.ClientSizeChanged();
+                this.background.RenderSizeChanged();
             }
 
             if ( this.allChilds != null ) {
                 foreach ( HUD_Item item in this.allChilds ) {
-                    item.ClientSizeChanged();
+                    item.RenderSizeChanged();
                 }
             }
         }

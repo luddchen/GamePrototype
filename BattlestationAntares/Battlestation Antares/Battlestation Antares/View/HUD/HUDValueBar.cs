@@ -34,7 +34,7 @@ namespace Battlestation_Antares.View.HUD
             : base( abstractPosition, positionType, abstractSize, sizeType) {
             this.flip = flip;
 
-            SetBackgroundColor( Color.Black );
+            SetBackground( Color.Black );
             background.IsVisible = true;
 
             this.foreground = new HUDTexture();

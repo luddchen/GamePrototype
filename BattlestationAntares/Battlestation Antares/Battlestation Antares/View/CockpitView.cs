@@ -105,7 +105,7 @@ namespace Battlestation_Antares.View {
             lamp.GetValue =
                 delegate() {
                     if ( Antares.world.spaceShip.target == null ) {
-                        return new Color( 64, 64, 64 );
+                        return Color.Transparent;
                     }
                     return Color.Green;
                     ;

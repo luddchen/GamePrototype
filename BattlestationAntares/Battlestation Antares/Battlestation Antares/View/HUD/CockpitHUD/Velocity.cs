@@ -35,7 +35,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
             Add( this.posVel );
             Add( this.negVel );
-            ClientSizeChanged();
+            RenderSizeChanged();
         }
 
 

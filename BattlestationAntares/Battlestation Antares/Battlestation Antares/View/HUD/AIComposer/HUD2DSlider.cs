@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using HUD.HUD;
 using HUD;
@@ -23,8 +22,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.valueString.AbstractPosition = new Vector2( 0, -this.AbstractSize.Y * 2.0f );
             this.valueString.AbstractSize = new Vector2( 0, this.AbstractSize.Y * 1.7f);
 
-            SetBackgroundColor( new Color( 60, 64, 56, 64 ) );
-            SetBackground( "Sprites//SliderBG" );
+            SetBackground( "Sprites//SliderBG", new Color( 60, 64, 56, 64 ) );
 
             this.sliderButton = new HUDButton( " ", new Vector2( this.sliderButtonZero, 0 ), 1, null );
             this.sliderButtonZero = - this.AbstractSize.X / 2;
@@ -33,7 +31,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.sliderButton.AbstractSize = new Vector2( this.AbstractSize.Y , this.AbstractSize.Y ) * 2;
 
             this.sliderButton.style = ButtonStyle.SliderButtonStyle();
-            this.sliderButton.SetBackground( Antares.content.Load<Texture2D>( "Sprites//Slider" ) );
+            this.sliderButton.SetBackground( "Sprites//Slider" );
             this.sliderButton.SetDownAction(
                 delegate() {
                     float newPos = Antares.inputProvider.getMousePos().X - this.Position.X;

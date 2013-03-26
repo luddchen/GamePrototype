@@ -46,7 +46,7 @@ namespace HUD.HUD {
                 }
                 set {
                     this.positionType = value;
-                    ClientSizeChanged();
+                    RenderSizeChanged();
                 }
             }
 
@@ -58,7 +58,7 @@ namespace HUD.HUD {
                 }
                 set {
                     this.abstractPosition = value;
-                    ClientSizeChanged();
+                    RenderSizeChanged();
                 }
             }
 
@@ -83,7 +83,7 @@ namespace HUD.HUD {
                 }
                 set {
                     this.sizeType = value;
-                    ClientSizeChanged();
+                    RenderSizeChanged();
                 }
             }
 
@@ -95,7 +95,7 @@ namespace HUD.HUD {
                 }
                 set {
                     this.abstractSize = value;
-                    ClientSizeChanged();
+                    RenderSizeChanged();
                 }
             }
 
@@ -186,7 +186,7 @@ namespace HUD.HUD {
         /// callback if the game window size change
         /// </summary>
         /// <param name="offset"></param>
-        public virtual void ClientSizeChanged() {
+        public virtual void RenderSizeChanged() {
 
             // root position
             if ( this.parent != null ) {

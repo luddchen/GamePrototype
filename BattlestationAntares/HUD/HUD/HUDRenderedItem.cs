@@ -18,7 +18,7 @@ namespace HUD.HUD {
 
         protected override void  _RenderContent()
         {
-            item.ClientSizeChanged();
+            item.RenderSizeChanged();
 
             batch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
             item.Draw( batch );

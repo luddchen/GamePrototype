@@ -38,23 +38,41 @@ namespace HUD.HUD {
             this.AbstractSize = abstractSize;
         }
 
-        public void SetMask( Texture2D texture ) {
-            if ( texture == null ) {
-                this.mask.IsVisible = false;
+
+        public void SetMask( Object texture, Color color ) {
+            if ( texture != null && color != null ) {
+                SetMask( texture );
+                SetMask( color );
+            } else if ( texture != null ) {
+                SetMask( texture );
+            } else if ( color != null ) {
+                SetMask( color );
             } else {
-                this.mask.IsVisible = true;
-                this.mask.Texture = texture;
+                SetMask( null );
             }
         }
 
-        public void SetMask( String textureName ) {
-            SetMask( ( textureName == null ) ? null : HUD_Item.game.Content.Load<Texture2D>( textureName ) );
+
+        public void SetMask( Object property ) {
+            bool visibility = true;
+
+            if ( property == null ) {
+                visibility = false;
+            } else {
+                if ( property is Texture2D ) {
+                    this.mask.Texture = (Texture2D)property;
+                } else if ( property is String ) {
+                    this.mask.Texture = HUD_Item.game.Content.Load<Texture2D>( (String)property );
+                } else if ( property is Color ) {
+                    this.mask.color = (Color)property;
+                } else {
+                    visibility = false;
+                }
+            }
+
+            this.mask.IsVisible = visibility;
         }
 
-        public void SetMaskColor( Color color ) {
-            this.mask.IsVisible = true;
-            this.mask.color = color;
-        }
 
         public override void Draw( SpriteBatch spriteBatch ) {
             if ( this.isVisible ) {
@@ -63,10 +81,11 @@ namespace HUD.HUD {
             base.Draw( spriteBatch );
         }
 
-        public override void ClientSizeChanged() {
-            base.ClientSizeChanged();
+
+        public override void RenderSizeChanged() {
+            base.RenderSizeChanged();
             if ( this.mask != null ) {
-                this.mask.ClientSizeChanged();
+                this.mask.RenderSizeChanged();
             }
         }
     }

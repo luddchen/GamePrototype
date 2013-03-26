@@ -56,8 +56,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.aiBanks = new List<AI_Bank>();
 
             this.insertBank = new AI_Bank( new Vector2( 0.9f, 0.1f ), HUDType.RELATIV, new Vector2( 210, 110 ), HUDType.ABSOLUT );
-            this.insertBank.SetBackground( Antares.content.Load<Texture2D>( "Sprites//builder_bg_temp" ) );
-            this.insertBank.SetBackgroundColor( new Color( 120, 128, 112) );
+            this.insertBank.SetBackground( "Sprites//builder_bg_temp", new Color( 120, 128, 112 ) );
             this.Add( this.insertBank );
 
             _addBanks(maxBanks);
@@ -187,7 +186,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.mouseItemTex = new HUDActionTexture(
                 delegate() {
                     this.mouseItemTex.AbstractPosition = Antares.inputProvider.getMousePos();
-                    this.mouseItemTex.ClientSizeChanged();
+                    this.mouseItemTex.RenderSizeChanged();
                 },
                 controller );
             this.mouseItemTex.PositionType = HUDType.ABSOLUT;
@@ -277,12 +276,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                         }
                         if ( insert ) {
                             _switchBank( this.moveItem, bank );
-                            bank.SetBackgroundColor( AI_Bank.ENABLED_COLOR );
+                            bank.SetBackground( AI_Bank.ENABLED_COLOR );
                         } else {
-                            bank.SetBackgroundColor( AI_Bank.DISABLED_COLOR );
+                            bank.SetBackground( AI_Bank.DISABLED_COLOR );
                         }
                     } else {
-                        bank.SetBackgroundColor( AI_Bank.DISABLED_COLOR );
+                        bank.SetBackground( AI_Bank.DISABLED_COLOR );
                     }
                 } else {
                     _switchBank( this.moveItem, bank );
@@ -323,7 +322,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.movePort.action =
                 delegate() {
                     this.movePort.AbstractPosition = Antares.inputProvider.getMousePos();
-                    this.movePort.ClientSizeChanged();
+                    this.movePort.RenderSizeChanged();
                     if ( Antares.inputProvider.isRightMouseButtonPressed() && this.movePort.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         ClearMoveConnection();
                     }
@@ -402,8 +401,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         }
 
 
-        public override void ClientSizeChanged() {
-            base.ClientSizeChanged();
+        public override void RenderSizeChanged() {
+            base.RenderSizeChanged();
 
             if ( this.primitiveBatch != null ) {
                 this.primitiveBatch.ClientSizeChanged();
