@@ -34,7 +34,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.portType = portType;
             this.item = item;
             this.connections = new List<AI_Connection>();
-            this.action =
+            this.Action =
                 delegate() {
                     if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         if ( Antares.inputProvider.isLeftMouseButtonPressed() 

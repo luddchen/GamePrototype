@@ -30,16 +30,13 @@ namespace Battlestation_Antares.View.HUD
 
         private bool flip;
 
-        public HUDValueBar( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType, bool flip)
-            : base( abstractPosition, positionType, abstractSize, sizeType) {
+        public HUDValueBar( Vector2 abstractPosition, Vector2 abstractSize, bool flip)
+            : base( abstractPosition, abstractSize) {
             this.flip = flip;
 
             SetBackground( Color.Black );
-            background.IsVisible = true;
 
             this.foreground = new HUDTexture();
-            this.foreground.PositionType = this.SizeType;
-            this.foreground.SizeType = sizeType;
             this.foreground.AbstractSize = abstractSize * 0.95f;
 
             this.foreground.color = Color.White;

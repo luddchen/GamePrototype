@@ -83,10 +83,10 @@ namespace Battlestation_Antares.View {
             cross.LayerDepth = 0.8f;
             this.Add( cross );
 
-            Velocity velocity = new Velocity( new Vector2( 0.3f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV );
+            Velocity velocity = new Velocity( new Vector2( 0.3f, 0.925f ), new Vector2( 0.01f, 0.15f ) );
             velocity.LayerDepth = 0.3f;
             this.Add( velocity );
-            LaserHeat heat = new LaserHeat( new Vector2( 0.35f, 0.925f ), HUDType.RELATIV, new Vector2( 15, 0.15f ), HUDType.ABSOLUT_RELATIV );
+            LaserHeat heat = new LaserHeat( new Vector2( 0.35f, 0.925f ), new Vector2( 0.01f, 0.15f ) );
             heat.LayerDepth = 0.3f;
             this.Add( heat );
 
@@ -101,7 +101,7 @@ namespace Battlestation_Antares.View {
             stationHealth.LayerDepth = 0.3f;
 
 
-            HUDValueLamp lamp = new HUDValueLamp( new Vector2( 0.5f, 0.03f ), HUDType.RELATIV, new Vector2( 0.02f, 0.03f ), HUDType.RELATIV );
+            HUDValueLamp lamp = new HUDValueLamp( new Vector2( 0.5f, 0.03f ), new Vector2( 0.02f, 0.03f ) );
             lamp.GetValue =
                 delegate() {
                     if ( Antares.world.spaceShip.target == null ) {

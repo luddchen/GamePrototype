@@ -16,14 +16,13 @@ namespace Battlestation_Antares.View.HUD {
         private HUDTexture foreground;
 
 
-        public HUDValueLamp( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType )
-            : base( abstractPosition, positionType, abstractSize, sizeType ) {
+        public HUDValueLamp( Vector2 abstractPosition, Vector2 abstractSize )
+            : base( abstractPosition, abstractSize ) {
 
             SetBackground( "Sprites//Circle", Color.Black );
             SetMask( "Sprites//HUD//Lamp" );
 
             this.foreground = new HUDTexture( "Sprites//HUD//LampLight" );
-            this.foreground.SizeType = sizeType;
             this.foreground.AbstractSize = abstractSize * 2.0f;
             Add( this.foreground );
 

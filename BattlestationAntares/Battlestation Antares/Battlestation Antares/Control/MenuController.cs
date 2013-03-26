@@ -45,7 +45,8 @@ namespace Battlestation_Antares.Control {
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
 
-            this.test.Render();
+            this.test.Update( gameTime );
+            ;
         }
 
 
@@ -62,13 +63,13 @@ namespace Battlestation_Antares.Control {
 
 
         private void _createMainMenu() {
-            HUDArray buttonsGroup1 = new HUDArray( new Vector2( 0.5f, 0.9f ), HUDType.RELATIV, new Vector2( 0.7f, 0.05f ), HUDType.RELATIV );
+            HUDArray buttonsGroup1 = new HUDArray( new Vector2( 0.5f, 0.9f ), new Vector2( 0.7f, 0.05f ) );
             buttonsGroup1.borderSize = new Vector2( 0.02f, 0.0f );
             buttonsGroup1.direction = LayoutDirection.HORIZONTAL;
 
             this.view.Add( buttonsGroup1 );
 
-            this.optionButtons = new HUDArray( new Vector2( 0.1f, 0.5f ), HUDType.RELATIV, new Vector2( 0.1f, 0.01f ), HUDType.RELATIV );
+            this.optionButtons = new HUDArray( new Vector2( 0.1f, 0.5f ), new Vector2( 0.1f, 0.01f ) );
             this.optionButtons.borderSize = new Vector2( 0.0f, 0.05f );
             this.optionButtons.direction = LayoutDirection.VERTICAL;
             this.optionButtons.IsVisible = false;
@@ -137,7 +138,7 @@ namespace Battlestation_Antares.Control {
         private void _addVideoPage() {
             HUDContainer videoPage = new HUDContainer( new Vector2( 0.5f, 0.4f ) );
 
-            HUDArray renderResolutionArray = new HUDArray( new Vector2( -0.15f, 0.0f ), HUDType.RELATIV, new Vector2( 0.2f, 0.3f ), HUDType.RELATIV );
+            HUDArray renderResolutionArray = new HUDArray( new Vector2( -0.15f, 0.0f ),  new Vector2( 0.2f, 0.3f ) );
             renderResolutionArray.borderSize = new Vector2( 0.025f, 0.02f );
             videoPage.Add( renderResolutionArray );
 
@@ -180,7 +181,7 @@ namespace Battlestation_Antares.Control {
                 } );
 
 
-            HUDArray test1Array = new HUDArray( new Vector2( 0.15f, 0.0f ), HUDType.RELATIV, new Vector2( 0.2f, 0.3f ), HUDType.RELATIV );
+            HUDArray test1Array = new HUDArray( new Vector2( 0.15f, 0.0f ), new Vector2( 0.2f, 0.3f ) );
             test1Array.borderSize = new Vector2( 0.025f, 0.02f );
             videoPage.Add( test1Array );
 
@@ -199,7 +200,7 @@ namespace Battlestation_Antares.Control {
 
 
         private void _addSoundPage() {
-            HUDArray soundPage = new HUDArray( new Vector2( 0.5f, 0.4f ), HUDType.RELATIV, new Vector2( 0.7f, 0.5f ), HUDType.RELATIV );
+            HUDArray soundPage = new HUDArray( new Vector2( 0.5f, 0.4f ), new Vector2( 0.7f, 0.5f ) );
             soundPage.Add( new HUDString( "Sound", 0.5f ) );
 
             _addOptionPage( "Sound", soundPage );
@@ -215,7 +216,7 @@ namespace Battlestation_Antares.Control {
             testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//Galaxy" );
             testTex.color = new Color( 128, 128, 128, 128 );
 
-            this.test = new HUDRenderedItem( testTex, new Vector2( 480, 480 ), null );
+            this.test = new HUDRenderedItem( testTex, new Point( 480, 480 ), null );
             this.test.AbstractPosition = new Vector2( 0.5f, 0.5f );
             this.test.PositionType = HUDType.RELATIV;
             this.test.AbstractSize = new Vector2( 0.7f, 0.7f );

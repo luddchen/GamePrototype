@@ -69,9 +69,10 @@ namespace Battlestation_Antares.View.HUD {
 
 
         public override void Draw( SpriteBatch spritBatch ) {
-            Vector2 backgroundSize = ( this.background.Size - this.iconSize ) / 2;
+            //Vector2 backgroundSize = ( this.background.Size - this.iconSize ) / 2;
+            Vector2 backgroundSize = ( this.Size - this.iconSize ) / 2;
 
-            foreach ( HUD_Item element in this.allChilds ) {
+            foreach ( HUD_Item element in this.AllChilds ) {
                 if ( element is MiniMapIcon ) {
                     MiniMapIcon icon = ( (MiniMapIcon)element );
                     icon.Update( centeredObject );
@@ -93,7 +94,8 @@ namespace Battlestation_Antares.View.HUD {
 
 
         public void ZoomOnMouseWheelOver() {
-            if ( this.background.Intersects( Antares.inputProvider.getMousePos() ) ) {
+            //if ( this.background.Intersects( Antares.inputProvider.getMousePos() ) ) {
+            if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
                 this.foreground.color = MiniMap.BORDER_COLOR_HOVER;
 
                 int wheelChange = Antares.inputProvider.getMouseWheelChange();

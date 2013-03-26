@@ -35,11 +35,8 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         public void InsertAt( AI_Item item, float pos ) {
             if (hasFreePlace(item)) {
-                int index = (int)(0.5f + (this.allChilds.Count - 1.0f) * pos);
-                this.allChilds.Insert( index, item );
-
-                item.parent = this;
-                item.LayerDepth = this.LayerDepth - 0.01f;
+                int index = (int)(0.5f + (this.AllChilds.Count - 1.0f) * pos);
+                Insert( index, item );
                 arrangeItems();
             }
         }
@@ -56,7 +53,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
         public bool hasFreePlace(HUD_Item element) {
             bool freePlace = false;
             float freeWidth = this.AbstractSize.X * HUD_Item.game.RenderSize().X;
-            foreach ( HUD_Item item in this.allChilds ) {
+            foreach ( HUD_Item item in this.AllChilds ) {
                 if ( item is AI_Item ) {
                     freeWidth -= item.AbstractSize.X;
                 }
@@ -70,14 +67,14 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
 
         private void arrangeItems() {
             int itemCount = 0;
-            foreach ( HUD_Item item in this.allChilds ) {
+            foreach ( HUD_Item item in this.AllChilds ) {
                 if ( item is AI_Item ) {
                     itemCount++;
                 }
             }
             float itemOffset = this.AbstractSize.X / itemCount;
             float newPos = -this.AbstractSize.X / 2 + itemOffset / 2;
-            foreach ( HUD_Item item in this.allChilds ) {
+            foreach ( HUD_Item item in this.AllChilds ) {
                 if ( item is AI_Item ) {
                     item.AbstractPosition = new Vector2(newPos, 0);
                     newPos += itemOffset;
@@ -98,7 +95,7 @@ namespace Battlestation_Antaris.View.HUD.AIComposer {
                     }
                 }
             } else {
-                this.background.color = AI_Bank.NORMAL_COLOR;
+                SetBackground( AI_Bank.NORMAL_COLOR );
             }
         }
 

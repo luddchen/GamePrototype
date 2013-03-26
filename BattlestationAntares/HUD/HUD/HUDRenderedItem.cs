@@ -10,13 +10,13 @@ namespace HUD.HUD {
         HUD_Item item;
 
 
-        public HUDRenderedItem( HUD_Item item, Vector2? renderSize, Color? backgroundColor ) : base(renderSize, backgroundColor) {
+        public HUDRenderedItem( HUD_Item item, Point? renderSize, Color? backgroundColor ) : base(renderSize, backgroundColor) {
             this.item = item;
             batch = new SpriteBatch( HUD_Item.game.GraphicsDevice );
         }
 
 
-        protected override void  _RenderContent()
+        protected override void  DrawContent()
         {
             item.RenderSizeChanged();
 

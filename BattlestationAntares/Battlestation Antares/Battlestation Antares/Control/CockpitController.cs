@@ -49,7 +49,7 @@ namespace Battlestation_Antares.Control {
 
             mouseVisibleCounter = mouseTimeOut;
 
-            HUDArray buttons = new HUDArray( new Vector2( 0.8f, 0.95f ), HUDType.RELATIV, new Vector2(0.15f, 0.04f), HUDType.RELATIV );
+            HUDArray buttons = new HUDArray( new Vector2( 0.8f, 0.95f ),  new Vector2(0.15f, 0.04f) );
             buttons.direction = LayoutDirection.HORIZONTAL;
             buttons.borderSize = new Vector2( 0.01f, 0 );
 
@@ -95,7 +95,7 @@ namespace Battlestation_Antares.Control {
                 ( (CockpitView)this.view ).target = null;
                 this.compass.target = Antares.world.spaceStation.globalPosition;
             }
-            compass.Render();
+            compass.Update( gameTime );
 
             fpsDisplay.Update( gameTime );
 

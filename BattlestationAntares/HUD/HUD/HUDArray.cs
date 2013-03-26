@@ -9,9 +9,6 @@ namespace HUD.HUD {
 
 
     public class HUDArray : HUDContainer {
-        public static Color BACKGROUND_COLOR = new Color( 24, 32, 32, 128 );
-
-        public static Color BACKGROUND_COLOR_HOVER = new Color( 28, 36, 36, 192 );
 
         public static float ABSOLUT_BORDER = 2;
 
@@ -20,7 +17,7 @@ namespace HUD.HUD {
 
         public Vector2 borderSize;
 
-        public LayoutDirection direction;
+        public LayoutDirection direction = LayoutDirection.VERTICAL;
 
         public override HUDType SizeType {
             set {
@@ -47,23 +44,19 @@ namespace HUD.HUD {
         }
 
 
-        public HUDArray( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType) : base( abstractPosition ) {
-            this.SizeType = sizeType;
-            this.AbstractSize = abstractSize;
-            this.direction = LayoutDirection.VERTICAL;
-        }
+        public HUDArray( Vector2 position, Vector2 size ) : base( position, size ) { }
 
 
-        public override void Add( HUD_Item element ) {
-            element.SizeType = this.SizeType;
-            element.PositionType = this.SizeType;
-            base.Add( element );
+        public override void Add( HUD_Item item ) {
+            item.SizeType = this.SizeType;
+            item.PositionType = this.SizeType;
+            base.Add( item );
             Arrange();
         }
 
 
-        public override void Remove( HUD_Item element ) {
-            base.Remove( element );
+        public override void Remove( HUD_Item item ) {
+            base.Remove( item );
             Arrange();
         }
 
@@ -73,14 +66,14 @@ namespace HUD.HUD {
             Vector2 itemPosition = new Vector2();
 
             if ( this.direction == LayoutDirection.VERTICAL ) {
-                itemSize.Y = itemSize.Y / this.allChilds.Count;
+                itemSize.Y = itemSize.Y / this.AllChilds.Count;
                 itemPosition.Y = -( this.AbstractSize.Y / 2 ) + ( itemSize.Y / 2 );
             } else {
-                itemSize.X = itemSize.X / this.allChilds.Count;
+                itemSize.X = itemSize.X / this.AllChilds.Count;
                 itemPosition.X = -( this.AbstractSize.X / 2 ) + ( itemSize.X / 2 );
             }
 
-            foreach ( HUD_Item item in this.allChilds ) {
+            foreach ( HUD_Item item in this.AllChilds ) {
                 item.AbstractSize = itemSize - this.borderSize;
                 item.AbstractPosition = itemPosition;
 

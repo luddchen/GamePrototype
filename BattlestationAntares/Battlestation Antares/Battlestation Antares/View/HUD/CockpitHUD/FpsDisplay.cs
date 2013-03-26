@@ -11,8 +11,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
         private int frameCounter = 0;
 
 
-        public FpsDisplay( Vector2 position) : base( position, HUDType.RELATIV, new Vector2(0.06f, 0.02f), HUDType.RELATIV) {
-            //SetBackgroundColor( new Color( 32, 32, 32, 160 ) );
+        public FpsDisplay( Vector2 position) : base( position, new Vector2(0.06f, 0.02f) ) {
             this.borderSize = new Vector2( 0.003f, 0.003f );
             this.direction = LayoutDirection.HORIZONTAL;
 

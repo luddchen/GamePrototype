@@ -15,7 +15,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
 
         public TargetInfo( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
-            : base( abstractPosition, positionType, abstractSize, sizeType) 
+            : base( abstractPosition, abstractSize ) 
         {
             this.world = Antares.world;
 

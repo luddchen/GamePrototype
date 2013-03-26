@@ -10,13 +10,11 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
         private HUDValueBar negVel;
 
-        public Velocity( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
-            : base( abstractPosition ) {
-            this.AbstractSize = abstractSize;
-            this.SizeType = sizeType;
+        public Velocity( Vector2 abstractPosition, Vector2 abstractSize )
+            : base( abstractPosition, abstractSize ) {
 
-            this.posVel = new HUDValueBar( new Vector2( 0, -this.AbstractSize.Y / 4 ), this.SizeType,
-                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.SizeType, false);
+            this.posVel = new HUDValueBar( new Vector2( 0, -this.AbstractSize.Y / 4 ),
+                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), false);
             this.posVel.GetValue =
                 delegate() {
                     return Math.Max( 0, Antares.world.spaceShip.attributes.Engine.CurrentVelocity / Antares.world.spaceShip.attributes.Engine.MaxVelocity );
@@ -24,8 +22,8 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
             this.posVel.SetDiscreteBig();
             this.posVel.SetMaxColor( Color.Yellow );
 
-            this.negVel = new HUDValueBar( new Vector2( 0, this.AbstractSize.Y / 4 ), this.SizeType,
-                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), this.SizeType, true);
+            this.negVel = new HUDValueBar( new Vector2( 0, this.AbstractSize.Y / 4 ),
+                                            new Vector2( abstractSize.X, abstractSize.Y * 0.48f ), true);
             this.negVel.GetValue =
                 delegate() {
                     return -Math.Min( 0, Antares.world.spaceShip.attributes.Engine.CurrentVelocity / Antares.world.spaceShip.attributes.Engine.MaxVelocity );

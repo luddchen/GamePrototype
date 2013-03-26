@@ -5,9 +5,9 @@ namespace HUD.HUD {
     /// <summary>
     /// a class to pre-render content to a texture
     /// </summary>
-    public abstract class HUDRenderedTexture : HUDTexture {
+    public abstract class HUDRenderedTexture : HUDActionTexture {
 
-        Vector2 renderSize;
+        Point renderSize;
 
         Color backgroundColor;
 
@@ -18,10 +18,15 @@ namespace HUD.HUD {
         /// </summary>
         /// <param name="renderSize"></param>
         /// <param name="backgroundColor"></param>
-        public HUDRenderedTexture(Vector2? renderSize, Color? backgroundColor) {
-            this.renderSize = renderSize ?? new Vector2( 100, 100 );
+        public HUDRenderedTexture(Point? renderSize, Color? backgroundColor) : base( null, null) {
+            this.renderSize = renderSize ?? new Point( 100, 100 );
             this.backgroundColor = backgroundColor ?? Color.Transparent;
-            this.renderTarget = new RenderTarget2D( HUD_Item.game.GraphicsDevice, (int)this.renderSize.X, (int)this.renderSize.Y );
+            this.renderTarget = new RenderTarget2D( HUD_Item.game.GraphicsDevice, this.renderSize.X, this.renderSize.Y );
+
+            Action =
+                delegate() {
+                    Render();
+                };
         }
 
 
@@ -29,7 +34,7 @@ namespace HUD.HUD {
         /// render content to the elements texture
         /// dont override !
         /// </summary>
-        public void Render() {
+        private void Render() {
             RenderTarget2D oldTarget = null;
             if ( HUD_Item.game.GraphicsDevice.GetRenderTargets().Length > 0 ) {
                 oldTarget = (RenderTarget2D)HUD_Item.game.GraphicsDevice.GetRenderTargets()[0].RenderTarget;
@@ -37,7 +42,7 @@ namespace HUD.HUD {
             HUD_Item.game.GraphicsDevice.SetRenderTarget( renderTarget );
             HUD_Item.game.GraphicsDevice.Clear( this.backgroundColor );
 
-            _RenderContent();
+            DrawContent();
 
             HUD_Item.game.GraphicsDevice.SetRenderTarget( oldTarget );
 
@@ -49,7 +54,7 @@ namespace HUD.HUD {
         /// render the content
         /// override for own content
         /// </summary>
-        protected abstract void _RenderContent();
+        protected abstract void DrawContent();
 
     }
 }

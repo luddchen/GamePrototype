@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Collections.ObjectModel;
 
 namespace HUD.HUD {
 
     public class HUDContainer : HUD_Item {
 
-        protected HUDTexture background;
+        private HUDTexture background;
 
-        protected List<HUD_Item> allChilds;
+        private List<HUD_Item> allChilds;
+
+        protected ReadOnlyCollection<HUD_Item> AllChilds {
+            get {
+                return allChilds.AsReadOnly();
+            }
+        }
 
         public override float LayerDepth {
             set {
@@ -23,6 +30,9 @@ namespace HUD.HUD {
 
         public override HUDType SizeType {
             set {
+                if ( this.background == null ) {
+                    _initBackground();
+                }
                 this.background.SizeType = value;
                 base.SizeType = value;
             }
@@ -30,6 +40,9 @@ namespace HUD.HUD {
 
         public override Vector2 AbstractSize {
             set {
+                if ( this.background == null ) {
+                    _initBackground();
+                }
                 this.background.AbstractSize = value;
                 base.AbstractSize = value;
             }
@@ -38,10 +51,8 @@ namespace HUD.HUD {
 
         public HUDContainer( Vector2 position) {
             this.allChilds = new List<HUD_Item>();
-            this.background = new HUDTexture();
-            this.background.IsVisible = false;
-            this.background.parent = this;
             this.AbstractPosition = position;
+            _initBackground();
         }
 
 
@@ -50,16 +61,22 @@ namespace HUD.HUD {
         }
 
 
-        public virtual void Add( HUD_Item element ) {
-            element.parent = this;
-            element.LayerDepth = this.LayerDepth - 0.01f;
-            element.RenderSizeChanged();
-            this.allChilds.Add( element );
+        public virtual void Add( HUD_Item item ) {
+            item.parent = this;
+            item.LayerDepth = this.LayerDepth - 0.01f;
+            item.RenderSizeChanged();
+            this.allChilds.Add( item );
         }
 
+        public virtual void Insert( int index, HUD_Item item ) {
+            item.parent = this;
+            item.LayerDepth = this.LayerDepth - 0.01f;
+            item.RenderSizeChanged();
+            this.allChilds.Insert( index, item );
+        }
 
-        public virtual void Remove( HUD_Item element ) {
-            this.allChilds.Remove( element );
+        public virtual void Remove( HUD_Item item ) {
+            this.allChilds.Remove( item );
         }
 
 
@@ -81,6 +98,11 @@ namespace HUD.HUD {
             }
         }
 
+        /// <summary>
+        /// set a background property
+        /// Color, Texture or Texture-Name String makes background visible, NULL makes it invisible
+        /// </summary>
+        /// <param name="property"></param>
         public void SetBackground( Object property ) {
             bool visibility = true;
 
@@ -124,6 +146,15 @@ namespace HUD.HUD {
                     item.RenderSizeChanged();
                 }
             }
+        }
+
+
+        private void _initBackground() {
+            this.background = new HUDTexture();
+            this.background.parent = this;
+            this.background.IsVisible = false;
+            this.background.LayerDepth = this.LayerDepth;
+            this.background.AbstractSize = this.AbstractSize;
         }
 
     }

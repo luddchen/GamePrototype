@@ -6,8 +6,8 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
     public class LaserHeat : HUDValueBar {
 
-        public LaserHeat( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
-            : base( abstractPosition, positionType, abstractSize, sizeType, false) {
+        public LaserHeat( Vector2 abstractPosition, Vector2 abstractSize )
+            : base( abstractPosition, abstractSize, false) {
             this.SetDiscrete();
             this.GetValue =
                 delegate() {

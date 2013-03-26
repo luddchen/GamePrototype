@@ -144,7 +144,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
 
         private void _initButtons() {
-            HUDArray addButtonArray = new HUDArray( new Vector2( 0.9f, 0.35f ), HUDType.RELATIV, new Vector2( 0.15f, 0.25f ), HUDType.RELATIV );
+            HUDArray addButtonArray = new HUDArray( new Vector2( 0.9f, 0.35f ), new Vector2( 0.15f, 0.25f ) );
             addButtonArray.direction = LayoutDirection.VERTICAL;
             this.Add( addButtonArray );
 
@@ -319,7 +319,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             AI_ItemPort.PortType portType = AI_ItemPort.Inverse( port.portType );
             this.movePort = new AI_ItemPort( Antares.inputProvider.getMousePos(), HUDType.ABSOLUT, portType, this.controller );
-            this.movePort.action =
+            this.movePort.Action =
                 delegate() {
                     this.movePort.AbstractPosition = Antares.inputProvider.getMousePos();
                     this.movePort.RenderSizeChanged();
@@ -327,7 +327,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                         ClearMoveConnection();
                     }
                 };
-            this.movePort.action();
+            this.movePort.Update( null );
 
             if ( port.portType == AI_ItemPort.PortType.INPUT && port.connections.Count > 0) {
                 this.removeList.Add( port.connections[0] );
@@ -363,7 +363,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
                 // if all correct
                 if ( doIt ) {
-                    this.movePort.action = null;
+                    this.movePort.Action = null;
 
                     // if end port is an input with an existing connection, remove that connection
                     if ( port.portType == AI_ItemPort.PortType.INPUT && port.connections.Count > 0 ) {

@@ -4,7 +4,14 @@ using Microsoft.Xna.Framework;
 namespace HUD.HUD {
     public class HUDActionTexture : HUDTexture, IUpdatableItem {
 
-        public Action action;
+        private Action action;
+
+
+        public Action Action {
+            set {
+                this.action = value;
+            }
+        }
 
 
         public HUDActionTexture( Action action, IUpdateController controller ) {

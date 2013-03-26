@@ -9,6 +9,9 @@ namespace HUD.HUD {
 
         public override HUDType SizeType {
             set {
+                if ( this.mask == null ) {
+                    _initMask();
+                }
                 this.mask.SizeType = value;
                 base.SizeType = value;
             }
@@ -16,6 +19,9 @@ namespace HUD.HUD {
 
         public override Vector2 AbstractSize {
             set {
+                if ( this.mask == null ) {
+                    _initMask();
+                }
                 this.mask.AbstractSize = value;
                 base.AbstractSize = value;
             }
@@ -28,15 +34,7 @@ namespace HUD.HUD {
             }
         }
 
-        public HUDMaskedContainer( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType )
-            : base( abstractPosition ) {
-            this.mask = new HUDTexture();
-            this.mask.parent = this;
-            this.mask.LayerDepth = base.LayerDepth - 0.05f;
-
-            this.SizeType = sizeType;
-            this.AbstractSize = abstractSize;
-        }
+        public HUDMaskedContainer( Vector2 position, Vector2 size ) : base( position, size ) { }
 
 
         public void SetMask( Object texture, Color color ) {
@@ -71,6 +69,7 @@ namespace HUD.HUD {
             }
 
             this.mask.IsVisible = visibility;
+            RenderSizeChanged();
         }
 
 
@@ -87,6 +86,14 @@ namespace HUD.HUD {
             if ( this.mask != null ) {
                 this.mask.RenderSizeChanged();
             }
+        }
+
+
+        private void _initMask() {
+            this.mask = new HUDTexture();
+            this.mask.parent = this;
+            this.mask.LayerDepth = base.LayerDepth - 0.05f;
+            this.mask.AbstractSize = this.AbstractSize;
         }
     }
 }

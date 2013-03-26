@@ -7,7 +7,7 @@ namespace HUD.HUD {
 
         public ButtonStyle style = ButtonStyle.DefaultButtonStyle();
 
-        private float overallScale = 1.0f;
+        //private float overallScale = 1.0f;
 
         private Action pressedAction;
         private Action downAction;
@@ -29,19 +29,32 @@ namespace HUD.HUD {
         }
 
 
+        public String Text {
+            get {
+                return (this.buttonString != null) ? this.buttonString.Text : "";
+            }
+            set {
+                if ( this.buttonString != null ) {
+                    this.buttonString.Text = value;
+                }
+            }
+        }
+
+
         public HUDButton( String text, Vector2 position, Vector2 size, float scale, IUpdateController controller) : base(position, size) {
             Add( this.buttonString = new HUDString( text, Vector2.Zero, size, null, scale, null, null ) );
             this.AbstractSize = size;
-            _initialize( controller );
+            _register( controller );
         }
 
         public HUDButton( String text, Vector2 position, float scale, IUpdateController controller) : base(position) {
             Add( this.buttonString = new HUDString( text, scale ) );
             this.AbstractSize = Vector2.Multiply( this.buttonString.Size, new Vector2( 1.2f, 1.0f ) ); // if no size set adapt to string
-            _initialize( controller );
+            _register( controller );
         }
 
-        private void _initialize( IUpdateController controller ) {
+
+        private void _register( IUpdateController controller ) {
             SetBackground( this.style.backgroundColorNormal );
             if ( controller != null ) {
                 controller.Register( this );
@@ -70,7 +83,7 @@ namespace HUD.HUD {
                 if ( HUD_Item.inputProvider.isLeftMouseButtonPressed() ) {
                     this.buttonString.color = this.style.foregroundColorPressed;
                     SetBackground( this.style.backgroundTexturePressed, this.style.backgroundColorPressed );
-                    this.background.scale = this.style.scalePressed * this.overallScale;
+                    //this.background.scale = this.style.scalePressed * this.overallScale;
                     if ( this.pressedAction != null ) {
                         this.pressedAction();
                     }
@@ -80,13 +93,13 @@ namespace HUD.HUD {
                     }
                     this.buttonString.color = this.style.foregroundColorHover;
                     SetBackground( this.style.backgroundTextureHover, this.style.backgroundColorHover );
-                    this.background.scale = this.style.scaleHover * this.overallScale;
+                    //this.background.scale = this.style.scaleHover * this.overallScale;
                 }
 
             } else {
                 this.buttonString.color = this.style.foregroundColorNormal;
                 SetBackground( this.style.backgroundTextureNormal, this.style.backgroundColorNormal );
-                this.background.scale = this.style.scaleNormal * this.overallScale;
+                //this.background.scale = this.style.scaleNormal * this.overallScale;
             }
         }
 

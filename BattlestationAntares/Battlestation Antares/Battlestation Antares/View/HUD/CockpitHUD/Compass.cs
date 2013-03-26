@@ -39,7 +39,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         /// <summary>
         /// creates a new compass instance
         /// </summary>
-        public Compass() : base( new Vector2( 300, 300 ), null ) {
+        public Compass() : base( new Point( 300, 300 ), null ) {
             this.model3d = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models/compass3" );
             this.boneTransforms = new Matrix[model3d.Bones.Count];
 
@@ -60,7 +60,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         }
 
 
-        protected override void _RenderContent() {
+        protected override void DrawContent() {
             Antares.InitDepthBuffer();
 
             // if source is set

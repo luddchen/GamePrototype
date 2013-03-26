@@ -30,7 +30,7 @@ namespace Battlestation_Antares.Control {
             toMenuButton.AbstractSize = new Vector2( 0.03f, 0.055f );
             this.view.Add( toMenuButton );
 
-            HUDArray verifyArray = new HUDArray( new Vector2( 0.9f, 0.6f ), HUDType.RELATIV, new Vector2( 0.15f, 0.1f ), HUDType.RELATIV );
+            HUDArray verifyArray = new HUDArray( new Vector2( 0.9f, 0.6f ),  new Vector2( 0.15f, 0.1f ) );
             verifyArray.direction = LayoutDirection.HORIZONTAL;
             this.view.Add( verifyArray );
 
@@ -50,7 +50,7 @@ namespace Battlestation_Antares.Control {
             verifyButton.SetBackground( Antares.content.Load<Texture2D>( "Sprites//builder_button_round" ) );
             verifyArray.Add( verifyButton );
 
-            HUDArray statusArray = new HUDArray( new Vector2(), HUDType.RELATIV, new Vector2(), HUDType.RELATIV );
+            HUDArray statusArray = new HUDArray( new Vector2(), new Vector2()  );
             statusArray.direction = LayoutDirection.VERTICAL;
             verifyArray.Add( statusArray );
 
@@ -58,7 +58,7 @@ namespace Battlestation_Antares.Control {
             statusArray.Add( new HUDString( "unknown", Color.Yellow, 0.66f ) );
 
 
-            HUDArray aiButtonArray = new HUDArray( new Vector2( 0.9f, 0.8f ), HUDType.RELATIV, new Vector2( 0.1f, 0.15f ), HUDType.RELATIV );
+            HUDArray aiButtonArray = new HUDArray( new Vector2( 0.9f, 0.8f ), new Vector2( 0.1f, 0.15f ) );
             aiButtonArray.direction = LayoutDirection.VERTICAL;
             this.view.Add( aiButtonArray );
 
