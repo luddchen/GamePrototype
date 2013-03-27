@@ -21,7 +21,7 @@ namespace HUD.HUD {
         public HUDRenderedTexture(Point? renderSize, Color? backgroundColor) : base( null, null) {
             this.renderSize = renderSize ?? new Point( 100, 100 );
             this.backgroundColor = backgroundColor ?? Color.Transparent;
-            this.renderTarget = new RenderTarget2D( HUD_Item.game.GraphicsDevice, this.renderSize.X, this.renderSize.Y );
+            this.renderTarget = new RenderTarget2D( HUDService.Device, this.renderSize.X, this.renderSize.Y );
 
             Action =
                 delegate() {
@@ -36,15 +36,15 @@ namespace HUD.HUD {
         /// </summary>
         private void Render() {
             RenderTarget2D oldTarget = null;
-            if ( HUD_Item.game.GraphicsDevice.GetRenderTargets().Length > 0 ) {
-                oldTarget = (RenderTarget2D)HUD_Item.game.GraphicsDevice.GetRenderTargets()[0].RenderTarget;
+            if ( HUDService.Device.GetRenderTargets().Length > 0 ) {
+                oldTarget = (RenderTarget2D)HUDService.Device.GetRenderTargets()[0].RenderTarget;
             }
-            HUD_Item.game.GraphicsDevice.SetRenderTarget( renderTarget );
-            HUD_Item.game.GraphicsDevice.Clear( this.backgroundColor );
+            HUDService.Device.SetRenderTarget( renderTarget );
+            HUDService.Device.Clear( this.backgroundColor );
 
             DrawContent();
 
-            HUD_Item.game.GraphicsDevice.SetRenderTarget( oldTarget );
+            HUDService.Device.SetRenderTarget( oldTarget );
 
             this.Texture = (Texture2D)renderTarget;
         }

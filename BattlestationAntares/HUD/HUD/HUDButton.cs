@@ -87,8 +87,8 @@ namespace HUD.HUD {
 
 
         public void Update( GameTime gameTime ) {
-            if ( this.Intersects( HUD_Item.game.Input.getMousePos() ) ) {
-                if ( HUD_Item.game.Input.isLeftMouseButtonPressed() ) {
+            if ( this.Intersects( HUDService.Input.getMousePos() ) ) {
+                if ( HUDService.Input.isLeftMouseButtonPressed() ) {
                     this.buttonString.color = this.style.foregroundColorPressed;
                     SetBackground( this.style.backgroundTexturePressed, this.style.backgroundColorPressed );
                     //this.background.scale = this.style.scalePressed * this.overallScale;
@@ -96,7 +96,7 @@ namespace HUD.HUD {
                         this.pressedAction();
                     }
                 } else {
-                    if ( HUD_Item.game.Input.isLeftMouseButtonDown() && this.downAction != null ) {
+                    if ( HUDService.Input.isLeftMouseButtonDown() && this.downAction != null ) {
                         this.downAction();
                     }
                     this.buttonString.color = this.style.foregroundColorHover;

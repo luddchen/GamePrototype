@@ -104,7 +104,6 @@
     <Compile Include="HUD\HUDString.cs" />
     <Compile Include="HUD\HUDTexture.cs" />
     <Compile Include="HUD\HUD_Item.cs" />
-    <Compile Include="IHUDGame.cs" />
     <Compile Include="IInputProvider.cs" />
     <Compile Include="IUpdatableItem.cs" />
     <Compile Include="IUpdateController.cs" />

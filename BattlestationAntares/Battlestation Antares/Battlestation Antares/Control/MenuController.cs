@@ -193,7 +193,7 @@ namespace Battlestation_Antares.Control {
                     resolutionHigh.style.foregroundColorNormal = Color.Green;
                     resolutionMedium.style.foregroundColorNormal = Color.White;
                     resolutionLow.style.foregroundColorNormal = Color.White;
-                    HUD_Item.game.RenderSize = new Point( 1920, 1080 );
+                    HUDService.RenderSize = new Point( 1920, 1080 );
                 } );
 
             resolutionMedium.SetPressedAction(
@@ -201,7 +201,7 @@ namespace Battlestation_Antares.Control {
                     resolutionHigh.style.foregroundColorNormal = Color.White;
                     resolutionMedium.style.foregroundColorNormal = Color.Green;
                     resolutionLow.style.foregroundColorNormal = Color.White;
-                    HUD_Item.game.RenderSize = new Point( 1600, 900 );
+                    HUDService.RenderSize = new Point( 1600, 900 );
                 } );
 
             resolutionLow.SetPressedAction(
@@ -209,7 +209,7 @@ namespace Battlestation_Antares.Control {
                     resolutionHigh.style.foregroundColorNormal = Color.White;
                     resolutionMedium.style.foregroundColorNormal = Color.White;
                     resolutionLow.style.foregroundColorNormal = Color.Green;
-                    HUD_Item.game.RenderSize = new Point( 1280, 720 );
+                    HUDService.RenderSize = new Point( 1280, 720 );
                 } );
 
 
@@ -236,7 +236,7 @@ namespace Battlestation_Antares.Control {
                     samplingOff.style.foregroundColorNormal = Color.Green;
                     sampling2x.style.foregroundColorNormal = Color.White;
                     sampling4x.style.foregroundColorNormal = Color.White;
-                    HUD_Item.game.MultiSampleCount = 1;
+                    HUDService.MultiSampleCount = 1;
                 } );
 
             sampling2x.SetPressedAction(
@@ -244,7 +244,7 @@ namespace Battlestation_Antares.Control {
                     samplingOff.style.foregroundColorNormal = Color.White;
                     sampling2x.style.foregroundColorNormal = Color.Green;
                     sampling4x.style.foregroundColorNormal = Color.White;
-                    HUD_Item.game.MultiSampleCount = 2;
+                    HUDService.MultiSampleCount = 2;
                 } );
 
             sampling4x.SetPressedAction(
@@ -252,7 +252,7 @@ namespace Battlestation_Antares.Control {
                     samplingOff.style.foregroundColorNormal = Color.White;
                     sampling2x.style.foregroundColorNormal = Color.White;
                     sampling4x.style.foregroundColorNormal = Color.Green;
-                    HUD_Item.game.MultiSampleCount = 4;
+                    HUDService.MultiSampleCount = 4;
                 } );
 
             _addOptionPage( "Video", videoPage );

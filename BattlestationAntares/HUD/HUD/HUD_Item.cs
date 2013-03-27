@@ -51,8 +51,6 @@ namespace HUD.HUD {
     /// </summary>
     public abstract class HUD_Item {
 
-        public static IHUDGame game;
-
         # region position elements 
 
             private HUDType positionType = HUDType.RELATIV;
@@ -334,10 +332,10 @@ namespace HUD.HUD {
                     rotatedAbstractPosition.X =
                         (float)
                         ( Math.Cos( -this.Parent.Rotation ) * this.AbstractPosition.X
-                        - Math.Sin( -this.Parent.Rotation ) * this.AbstractPosition.Y * HUD_Item.game.RenderSize.Y / HUD_Item.game.RenderSize.X );
+                        - Math.Sin( -this.Parent.Rotation ) * this.AbstractPosition.Y * HUDService.RenderSize.Y / HUDService.RenderSize.X );
                     rotatedAbstractPosition.Y =
                         (float)
-                        ( Math.Sin( -this.Parent.Rotation ) * this.AbstractPosition.X * HUD_Item.game.RenderSize.X / HUD_Item.game.RenderSize.Y
+                        ( Math.Sin( -this.Parent.Rotation ) * this.AbstractPosition.X * HUDService.RenderSize.X / HUDService.RenderSize.Y
                         + Math.Cos( -this.Parent.Rotation ) * this.AbstractPosition.Y );
                 }
 
@@ -350,15 +348,15 @@ namespace HUD.HUD {
                     break;
 
                 case HUDType.RELATIV:
-                    this.position += Multiply( rotatedAbstractPosition, HUD_Item.game.RenderSize );
+                    this.position += Multiply( rotatedAbstractPosition, HUDService.RenderSize );
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:
-                    this.position += new Vector2( rotatedAbstractPosition.X, HUD_Item.game.RenderSize.Y * rotatedAbstractPosition.Y );
+                    this.position += new Vector2( rotatedAbstractPosition.X, HUDService.RenderSize.Y * rotatedAbstractPosition.Y );
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.position += new Vector2( HUD_Item.game.RenderSize.X * rotatedAbstractPosition.X, rotatedAbstractPosition.Y );
+                    this.position += new Vector2( HUDService.RenderSize.X * rotatedAbstractPosition.X, rotatedAbstractPosition.Y );
                     break;
             }
         }
@@ -370,16 +368,16 @@ namespace HUD.HUD {
                     break;
 
                 case HUDType.RELATIV:
-                    this.size = Multiply( this.abstractSize, HUD_Item.game.RenderSize );
+                    this.size = Multiply( this.abstractSize, HUDService.RenderSize );
                     break;
 
                 case HUDType.ABSOLUT_RELATIV:
                     this.size.X = this.abstractSize.X;
-                    this.size.Y = this.abstractSize.Y * HUD_Item.game.RenderSize.Y;
+                    this.size.Y = this.abstractSize.Y * HUDService.RenderSize.Y;
                     break;
 
                 case HUDType.RELATIV_ABSOLUT:
-                    this.size.X = this.abstractSize.X * HUD_Item.game.RenderSize.X;
+                    this.size.X = this.abstractSize.X * HUDService.RenderSize.X;
                     this.size.Y = this.abstractSize.Y;
                     break;
             }
@@ -420,7 +418,7 @@ namespace HUD.HUD {
         }
 
         public static Vector2 AbstractToConcrete( Vector2 abstractCoord ) {
-            return Multiply( abstractCoord, HUD_Item.game.RenderSize );
+            return Multiply( abstractCoord, HUDService.RenderSize );
         }
 
     }

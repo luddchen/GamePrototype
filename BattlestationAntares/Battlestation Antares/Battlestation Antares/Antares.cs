@@ -14,7 +14,7 @@ namespace Battlestation_Antares {
     /// <summary>
     /// the Antares main class
     /// </summary>
-    public class Antares : Game, IHUDGame {
+    public class Antares : Game {
         private const Boolean ACTIVATE_DEBUG = true;
 
         /// <summary>
@@ -61,24 +61,6 @@ namespace Battlestation_Antares {
         List<SituationController> allSituations;
 
 
-        private static Vector2 renderTextureOrigin;
-        private static Vector2 renderTexturePos;
-        private static float renderTextureScale;
-
-        private static int renderWidth = 1920;
-        private static int renderHeight = 1080;
-
-        private int multiSampleCount = 2;
-
-        public int MultiSampleCount {
-            get {
-                return this.multiSampleCount;
-            }
-            set {
-                this.multiSampleCount = value;
-            }
-        }
-
         private HUDView lastView;
         private int blendValue;
 
@@ -92,23 +74,12 @@ namespace Battlestation_Antares {
             Antares.graphics.PreferredBackBufferHeight = (int)( GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.9 );
             Antares.graphics.IsFullScreen = false;
             Antares.graphics.SynchronizeWithVerticalRetrace = true;
-            
+
             this.Content.RootDirectory = "Content";
             Antares.content = Content;
 
             this.IsFixedTimeStep = true;
             Window.AllowUserResizing = true;
-            Window.ClientSizeChanged += new EventHandler<EventArgs>( Window_ClientSizeChanged );
-        }
-
-
-        /// <summary>
-        /// called if client size change
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">event</param>
-        void Window_ClientSizeChanged( object sender, EventArgs e ) {
-            _calculateRenderTextureParameter();
         }
 
 
@@ -116,14 +87,13 @@ namespace Battlestation_Antares {
         /// initialize the game
         /// </summary>
         protected override void Initialize() {
+            // create Services
             Antares.inputProvider = new InputProvider();
-
-            HUD_Item.game = this;
-
+            HUDService.Initialize( this, Content.Load<Texture2D>( "Sprites//Square" ), Content.Load<SpriteFont>( "Fonts//Font" ), 2, Antares.inputProvider );
             Antares.debugViewer = new DebugViewer();
+            SpatialObjectFactory.initializeFactory( this.Content, Antares.world );
 
             this.spriteBatch = new SpriteBatch( Antares.graphics.GraphicsDevice );
-            _calculateRenderTextureParameter();
 
             // create and initialize world model
             Antares.world = new Model.WorldModel( this );
@@ -135,8 +105,6 @@ namespace Battlestation_Antares {
             this.allSituations.Add( new CommandController( this, new View.CommandView(null) ) );
             this.allSituations.Add( new MenuController( this, new View.MenuView(null) ) );
             this.allSituations.Add( new AIController( this, new View.AIView(null) ) );
-
-            SpatialObjectFactory.initializeFactory( this.Content, Antares.world );
 
             initializeDebug();
 
@@ -167,8 +135,7 @@ namespace Battlestation_Antares {
         /// <summary>
         /// unload the content
         /// </summary>
-        protected override void UnloadContent() {
-        }
+        protected override void UnloadContent() { }
 
 
         /// <summary>
@@ -214,13 +181,13 @@ namespace Battlestation_Antares {
             this.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
             if ( this.lastView != null ) {
-                this.spriteBatch.Draw( this.activeSituation.view.renderTarget, Antares.renderTexturePos, null, 
+                this.spriteBatch.Draw( this.activeSituation.view.renderTarget, HUDService.RenderTexturePosition, null, 
                             new Color(this.blendValue, this.blendValue, this.blendValue, this.blendValue), 0.0f,
-                            Antares.renderTextureOrigin, Antares.renderTextureScale, SpriteEffects.None, 0.5f );
+                            HUDService.RenderTextureOrigin, HUDService.RenderTextureScale, SpriteEffects.None, 0.5f );
 
-                this.spriteBatch.Draw( this.lastView.renderTarget, Antares.renderTexturePos, null, 
+                this.spriteBatch.Draw( this.lastView.renderTarget, HUDService.RenderTexturePosition, null, 
                             new Color( 255 - this.blendValue, 255 - this.blendValue, 255 - this.blendValue, 255 - this.blendValue ), 0.0f,
-                            Antares.renderTextureOrigin, Antares.renderTextureScale, SpriteEffects.None, 0.4f );
+                            HUDService.RenderTextureOrigin, HUDService.RenderTextureScale, SpriteEffects.None, 0.4f );
 
                 if ( this.blendValue < 248 ) {
                     this.blendValue += 8;
@@ -229,23 +196,11 @@ namespace Battlestation_Antares {
                 }
 
             } else {
-                this.spriteBatch.Draw( this.activeSituation.view.renderTarget, Antares.renderTexturePos, null, Color.White, 0.0f,
-                                            Antares.renderTextureOrigin, Antares.renderTextureScale, SpriteEffects.None, 0.5f );
+                this.spriteBatch.Draw( this.activeSituation.view.renderTarget, HUDService.RenderTexturePosition, null, Color.White, 0.0f,
+                                            HUDService.RenderTextureOrigin, HUDService.RenderTextureScale, SpriteEffects.None, 0.5f );
             }
 
             this.spriteBatch.End();
-        }
-
-
-        private static void _calculateRenderTextureParameter() {
-            Antares.renderTexturePos = new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width / 2.0f, Antares.graphics.GraphicsDevice.Viewport.Height / 2.0f );
-            Antares.renderTextureOrigin = new Vector2( Antares.renderWidth / 2.0f, Antares.renderHeight / 2.0f );
-
-            float xScale = (float)Antares.graphics.GraphicsDevice.Viewport.Width / (float)Antares.renderWidth;
-            float yScale = (float)Antares.graphics.GraphicsDevice.Viewport.Height / (float)Antares.renderHeight;
-
-            Antares.renderTextureScale = Math.Min( xScale, yScale );
-            Antares.inputProvider.setMouseTransform( Antares.renderTexturePos, Antares.renderTextureOrigin, Antares.renderTextureScale );
         }
 
 
@@ -255,40 +210,6 @@ namespace Battlestation_Antares {
                 DepthBufferWriteEnable = true
             };
             Antares.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
-        }
-
-        public Point RenderSize {
-            get {
-                Point renderSize = new Point( Antares.renderWidth, Antares.renderHeight );
-                if ( Antares.graphics.GraphicsDevice.GetRenderTargets().Length > 0 ) {
-                    renderSize.X = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Width;
-                    renderSize.Y = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Height;
-                }
-                return renderSize;
-            }
-            set {
-                Antares.renderWidth = value.X;
-                Antares.renderHeight = value.Y;
-                _calculateRenderTextureParameter();
-            }
-        }
-
-        public Texture2D DefaultTexture {
-            get {
-                return Content.Load<Texture2D>( "Sprites//Square" );
-            }
-        }
-
-        public SpriteFont DefaultFont {
-            get {
-                return Content.Load<SpriteFont>( "Fonts//Font" );
-            }
-        }
-
-        public IInputProvider Input {
-            get {
-                return Antares.inputProvider;
-            }
         }
 
     }

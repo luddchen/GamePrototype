@@ -66,7 +66,7 @@ namespace HUD.HUD {
 
         public HUDString( String text, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation, SpriteFont font) {
             if ( font == null ) {
-                this.font = HUD_Item.game.DefaultFont;
+                this.font = HUDService.DefaultFont;
             }
             if ( font != null ) {
                 this.font = font;

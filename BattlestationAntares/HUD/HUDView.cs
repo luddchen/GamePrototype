@@ -41,7 +41,7 @@ namespace HUD {
         public HUDView(Color? backgroundColor) {
             this.allItems = new List<HUD_Item>();
             this.backgroundColor = backgroundColor ?? Color.Transparent;
-            this.spriteBatch = new SpriteBatch( HUD_Item.game.GraphicsDevice );
+            this.spriteBatch = new SpriteBatch( HUDService.Device );
         }
 
 
@@ -56,8 +56,8 @@ namespace HUD {
         /// </summary>
         public void Draw() {
             this._initRenderTarget();
-            HUD_Item.game.GraphicsDevice.SetRenderTarget( this.renderTarget );
-            HUD_Item.game.GraphicsDevice.Clear( this.backgroundColor );
+            HUDService.Device.SetRenderTarget( this.renderTarget );
+            HUDService.Device.Clear( this.backgroundColor );
 
             DrawPreContent();
 
@@ -72,7 +72,7 @@ namespace HUD {
 
             DrawPostContent();
 
-            HUD_Item.game.GraphicsDevice.SetRenderTarget( null );
+            HUDService.Device.SetRenderTarget( null );
         }
 
 
@@ -119,18 +119,18 @@ namespace HUD {
 
         private void _initRenderTarget() {
             if ( this.renderTarget == null 
-                || this.renderTarget.Width != HUD_Item.game.RenderSize.X 
-                || this.renderTarget.Height != HUD_Item.game.RenderSize.Y 
-                || this.renderTarget.MultiSampleCount != HUD_Item.game.MultiSampleCount)
+                || this.renderTarget.Width != HUDService.RenderSize.X
+                || this.renderTarget.Height != HUDService.RenderSize.Y
+                || this.renderTarget.MultiSampleCount != HUDService.MultiSampleCount )
             {
                 if ( this.renderTarget != null ) {
                     this.renderTarget.Dispose();
                 }
                 this.renderTarget = 
-                    new RenderTarget2D( 
-                        HUD_Item.game.GraphicsDevice, HUD_Item.game.RenderSize.X, HUD_Item.game.RenderSize.Y, true,
-                        HUD_Item.game.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 ,
-                        HUD_Item.game.MultiSampleCount, RenderTargetUsage.PlatformContents);
+                    new RenderTarget2D(
+                        HUDService.Device, HUDService.RenderSize.X, HUDService.RenderSize.Y, true,
+                        HUDService.Device.DisplayMode.Format, DepthFormat.Depth24 ,
+                        HUDService.MultiSampleCount, RenderTargetUsage.PlatformContents );
 
                 this.Window_ClientSizeChanged();
             }

@@ -9,40 +9,51 @@ namespace HUD {
 
         public static void Initialize( Game game, Texture2D defaultTexture, SpriteFont defaultFont, int? multiSampleCount, IInputProvider input ) {
             HUDService.game = game;
+
+            if ( HUDService.game == null ) {
+                throw new ArgumentNullException( "HUDService.game" );
+            }
             HUDService.DefaultTexture = defaultTexture;
             HUDService.DefaultFont = defaultFont;
             HUDService.MultiSampleCount = multiSampleCount ?? 0;
             HUDService.Input = input;
+            HUDService.renderSize = new Point( 1920, 1080 );
 
             HUDService.game.Window.ClientSizeChanged += new EventHandler<EventArgs>( HUDService.Window_ClientSizeChanged );
+            HUDService.CalculateRenderTextureParameter();
         }
+
 
         public static GraphicsDevice Device {
             get {
-                if ( game == null ) {
+                if ( HUDService.game == null ) {
                     throw new ArgumentNullException( "HUDService.game" );
                 }
-                return game.GraphicsDevice;
+                return HUDService.game.GraphicsDevice;
             }
         }
+
 
         public static ContentManager Content {
             get {
-                if ( game == null ) {
+                if ( HUDService.game == null ) {
                     throw new ArgumentNullException( "HUDService.game" );
                 }
-                return game.Content;
+                return HUDService.game.Content;
             }
         }
 
+
         public static Texture2D DefaultTexture;
+
 
         public static SpriteFont DefaultFont;
 
+
         public static int MultiSampleCount;
 
-        public static IInputProvider Input;
 
+        public static IInputProvider Input;
 
 
         public static Point RenderSize {
@@ -61,17 +72,17 @@ namespace HUD {
             }
         }
 
+
         public static void CalculateRenderTextureParameter() {
-            HUDService.renderTexturePos = new Vector2( HUDService.Device.Viewport.Width / 2.0f, HUDService.Device.Viewport.Height / 2.0f );
-            HUDService.renderTextureOrigin = new Vector2( HUDService.renderSize.X / 2.0f, HUDService.renderSize.Y / 2.0f );
+            HUDService.RenderTexturePosition = new Vector2( HUDService.Device.Viewport.Width / 2.0f, HUDService.Device.Viewport.Height / 2.0f );
+            HUDService.RenderTextureOrigin = new Vector2( HUDService.renderSize.X / 2.0f, HUDService.renderSize.Y / 2.0f );
 
             float xScale = (float)HUDService.Device.Viewport.Width / (float)HUDService.renderSize.X;
             float yScale = (float)HUDService.Device.Viewport.Height / (float)HUDService.renderSize.Y;
 
-            HUDService.renderTextureScale = Math.Min( xScale, yScale );
-            HUDService.Input.setMouseTransform( HUDService.renderTexturePos, HUDService.renderTextureOrigin, HUDService.renderTextureScale );
+            HUDService.RenderTextureScale = Math.Min( xScale, yScale );
+            HUDService.Input.setMouseTransform( HUDService.RenderTexturePosition, HUDService.RenderTextureOrigin, HUDService.RenderTextureScale );
         }
-
 
 
         static void Window_ClientSizeChanged( object sender, EventArgs e ) {
@@ -81,13 +92,26 @@ namespace HUD {
 
         private static Game game;
 
-        private static Point renderSize = new Point(1920, 1080);
 
-        private static Vector2 renderTexturePos;
+        private static Point renderSize;
 
-        private static Vector2 renderTextureOrigin;
 
-        private static float renderTextureScale;
+        public static Vector2 RenderTexturePosition {
+            get;
+            private set;
+        }
+
+
+        public static Vector2 RenderTextureOrigin {
+            get;
+            private set;
+        }
+
+
+        public static float RenderTextureScale {
+            get;
+            private set;
+        }
 
     }
 

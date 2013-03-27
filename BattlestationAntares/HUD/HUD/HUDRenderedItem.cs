@@ -12,7 +12,7 @@ namespace HUD.HUD {
 
         public HUDRenderedItem( HUD_Item item, Point? renderSize, Color? backgroundColor ) : base(renderSize, backgroundColor) {
             this.item = item;
-            batch = new SpriteBatch( HUD_Item.game.GraphicsDevice );
+            batch = new SpriteBatch( HUDService.Device );
         }
 
 

@@ -119,7 +119,7 @@ namespace HUD.HUD {
                 if ( property is Texture2D ) {
                     this.background.Texture = (Texture2D)property;
                 } else if ( property is String ) {
-                    this.background.Texture = HUD_Item.game.Content.Load<Texture2D>( (String)property );
+                    this.background.Texture = HUDService.Content.Load<Texture2D>( (String)property );
                 } else if ( property is Color ) {
                     this.background.color = (Color)property;
                 } else {

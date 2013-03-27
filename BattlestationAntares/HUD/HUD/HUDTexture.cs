@@ -35,14 +35,14 @@ namespace HUD.HUD {
 
         public HUDTexture( Object texture, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation) {
             if ( texture == null ) {
-                this.Texture = HUD_Item.game.DefaultTexture;
+                this.Texture = HUDService.DefaultTexture;
             } else {
                 if ( texture is Texture2D ) {
                     this.Texture = (Texture2D)texture;
                 } else if ( texture is String ) {
-                    this.Texture = HUD_Item.game.Content.Load<Texture2D>( (String)texture );
+                    this.Texture = HUDService.Content.Load<Texture2D>( (String)texture );
                 } else {
-                    this.Texture = HUD_Item.game.DefaultTexture;
+                    this.Texture = HUDService.DefaultTexture;
                 }
             }
 

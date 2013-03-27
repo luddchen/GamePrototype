@@ -67,7 +67,7 @@ namespace HUD.HUD {
                 if ( property is Texture2D ) {
                     this.mask.Texture = (Texture2D)property;
                 } else if ( property is String ) {
-                    this.mask.Texture = HUD_Item.game.Content.Load<Texture2D>( (String)property );
+                    this.mask.Texture = HUDService.Content.Load<Texture2D>( (String)property );
                 } else if ( property is Color ) {
                     this.mask.color = (Color)property;
                 } else {

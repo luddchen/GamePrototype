@@ -47,7 +47,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             : base( new Vector2( 0, 0 ) ) {
 
             this.controller = controller;
-            this.primitiveBatch = new PrimitiveBatch( Antares.graphics.GraphicsDevice );
+            this.primitiveBatch = new PrimitiveBatch( HUDService.Device );
             this.state = BuilderState.NORMAL;
 
             this.removeList = new List<HUD_Item>();
@@ -413,7 +413,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private void _switchBank( AI_Item item, AI_Bank target ) {
             ( (AI_Bank)item.Parent ).Remove( item );
 
-            float targetXSize = target.AbstractSize.X * HUD_Item.game.RenderSize.X;
+            float targetXSize = target.AbstractSize.X * HUDService.RenderSize.X;
             float bankPos = ( Antares.inputProvider.getMousePos().X - ( target.Position.X - targetXSize / 2 ) ) / targetXSize;
             target.InsertAt( item, bankPos );
         }
