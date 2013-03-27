@@ -74,6 +74,8 @@ namespace Battlestation_Antares.Control {
             }
 
             //this.optionButtons.AbstractRotation = (float)this.animationValue;
+            this.mainMenuButtons.AbstractScale = 1.0f + (float)Math.Sin( this.animationValue ) * 0.05f;
+            this.mainMenuButtons.AbstractRotation = (float)( Math.Sin( this.animationValue ) ) * 0.05f;
         }
 
 

@@ -69,6 +69,18 @@ namespace HUD.HUD {
                 }
             }
 
+            private TransformationType positionScaleType = TransformationType.LOCAL;
+
+            public TransformationType PositionScaleType {
+                get {
+                    return this.positionScaleType;
+                }
+                set {
+                    this.positionScaleType = value;
+                    RenderSizeChanged();
+                }
+            }
+
             private Vector2 abstractPosition = Vector2.Zero;
 
             public virtual Vector2 AbstractPosition {
@@ -212,6 +224,8 @@ namespace HUD.HUD {
 
             protected Rectangle dest = new Rectangle();
 
+            protected Matrix intersectionTransform;
+
         #endregion
 
 
@@ -272,9 +286,7 @@ namespace HUD.HUD {
             if ( this.Rotation == 0 ) {
                 return ( Math.Abs( point.X - this.dest.X ) < ( this.dest.Width / 2 ) && Math.Abs( point.Y - this.dest.Y ) < ( this.dest.Height / 2 ) );
             } else {
-                Vector2 rotatedPoint = Vector2.Transform( point, Matrix.CreateTranslation( new Vector3( -this.Position, 0 ) ) );
-                rotatedPoint = Vector2.Transform( rotatedPoint, Matrix.CreateRotationZ( this.Rotation ) );
-                rotatedPoint = Vector2.Transform( rotatedPoint, Matrix.CreateTranslation( new Vector3( this.Position, 0 ) ) );
+                Vector2 rotatedPoint = Vector2.Transform( point, this.intersectionTransform );
                 return ( Math.Abs( rotatedPoint.X - this.dest.X ) < ( this.dest.Width / 2 ) && Math.Abs( rotatedPoint.Y - this.dest.Y ) < ( this.dest.Height / 2 ) );
             }
         }
@@ -287,33 +299,54 @@ namespace HUD.HUD {
 
             _rotationChanged();
             _scaleChanged();
+            _positionChanged();
+            _sizeChanged();
 
+            // calculate intersection rectangle
+            this.dest.X = (int)Position.X;
+            this.dest.Y = (int)Position.Y;
+            this.dest.Width = (int)Size.X;
+            this.dest.Height = (int)Size.Y;
+
+            this.intersectionTransform = 
+                Matrix.CreateTranslation( new Vector3( -this.Position, 0 ) ) 
+                * Matrix.CreateRotationZ( this.Rotation ) 
+                * Matrix.CreateTranslation( new Vector3( this.Position, 0 ) );
+
+        }
+
+        private void _positionChanged() {
             // root position
-            if ( this.parent != null ) {
-                this.position = this.parent.position;
+            if ( this.Parent != null ) {
+                this.position = this.Parent.Position;
             } else {
                 this.position = Vector2.Zero;
             }
 
             Vector2 rotatedAbstractPosition = this.AbstractPosition;
 
-            if ( this.parent != null ) {
-                //  without apect ratio
-                //rotatedAbstractPosition = Vector2.Transform( this.AbstractPosition, Matrix.CreateRotationZ( -this.parent.Rotation ) );
+            if ( this.Parent != null ) {
 
-                // with aspect ratio
-                rotatedAbstractPosition.X = 
-                    (float)
-                    ( Math.Cos( -this.parent.Rotation ) * this.AbstractPosition.X 
-                    - Math.Sin( -this.parent.Rotation ) * this.AbstractPosition.Y * HUD_Item.game.RenderSize().Y / HUD_Item.game.RenderSize().X);
-                rotatedAbstractPosition.Y = 
-                    (float)
-                    ( Math.Sin( -this.parent.Rotation ) * this.AbstractPosition.X * HUD_Item.game.RenderSize().X / HUD_Item.game.RenderSize().Y 
-                    + Math.Cos( -this.parent.Rotation ) * this.AbstractPosition.Y );
+                if ( this.PositionScaleType == TransformationType.LOCAL ) {
+                    rotatedAbstractPosition *= this.Parent.Scale;
+                }
+
+                if ( this.Parent.Rotation != 0 ) {
+                    // keep aspect ratio while rotating
+                    rotatedAbstractPosition.X =
+                        (float)
+                        ( Math.Cos( -this.Parent.Rotation ) * this.AbstractPosition.X
+                        - Math.Sin( -this.Parent.Rotation ) * this.AbstractPosition.Y * HUD_Item.game.RenderSize().Y / HUD_Item.game.RenderSize().X );
+                    rotatedAbstractPosition.Y =
+                        (float)
+                        ( Math.Sin( -this.Parent.Rotation ) * this.AbstractPosition.X * HUD_Item.game.RenderSize().X / HUD_Item.game.RenderSize().Y
+                        + Math.Cos( -this.Parent.Rotation ) * this.AbstractPosition.Y );
+                }
+
             }
 
             // calclate own position
-            switch ( this.positionType ) {
+            switch ( this.PositionType ) {
                 case HUDType.ABSOLUT:
                     this.position += rotatedAbstractPosition;
                     break;
@@ -330,9 +363,10 @@ namespace HUD.HUD {
                     this.position += new Vector2( HUD_Item.game.RenderSize().X * rotatedAbstractPosition.X, rotatedAbstractPosition.Y );
                     break;
             }
+        }
 
-            // calculate own size
-            switch ( this.sizeType ) {
+        private void _sizeChanged() {
+            switch ( this.SizeType ) {
                 case HUDType.ABSOLUT:
                     this.size = this.abstractSize;
                     break;
@@ -351,13 +385,6 @@ namespace HUD.HUD {
                     this.size.Y = this.abstractSize.Y;
                     break;
             }
-
-            // calculate intersection rectangle
-            this.dest.X = (int)Position.X;
-            this.dest.Y = (int)Position.Y;
-            this.dest.Width = (int)Size.X;
-            this.dest.Height = (int)Size.Y;
-
         }
 
         private void _rotationChanged() {
