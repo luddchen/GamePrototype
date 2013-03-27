@@ -16,17 +16,17 @@ namespace HUD.HUD {
 
         public override Vector2 AbstractSize {
             set {
-                if ( this.buttonString != null ) {
-                    this.buttonString.AbstractSize = value;
-                }
+                _initButtonString();
+                this.buttonString.AbstractSize = value;
                 base.AbstractSize = value;
             }
         }
 
         public override HUDType SizeType {
             set {
-                base.SizeType = value;
+                _initButtonString();
                 this.buttonString.SizeType = value;
+                base.SizeType = value;
             }
         }
 
@@ -36,21 +36,22 @@ namespace HUD.HUD {
                 return (this.buttonString != null) ? this.buttonString.Text : "";
             }
             set {
-                if ( this.buttonString != null ) {
-                    this.buttonString.Text = value;
-                }
+                _initButtonString();
+                this.buttonString.Text = value;
             }
         }
 
 
         public HUDButton( String text, Vector2 position, Vector2 size, float scale, IUpdateController controller) : base(position, size) {
-            Add( this.buttonString = new HUDString( text, Vector2.Zero, size, null, scale, null, null ) );
+            Text = text;
             _register( controller );
         }
 
         public HUDButton( String text, Vector2 position, float scale, IUpdateController controller) : base(position) {
-            _initButtonString( text, scale );
-            this.AbstractSize = Vector2.Multiply( this.buttonString.Size, new Vector2( 1.2f, 1.0f ) ); // if no size set adapt to string
+            _initButtonString();
+            Text = text;
+            this.buttonString.AbstractScale = scale;
+            this.AbstractSize = Vector2.Multiply( this.buttonString.Size, new Vector2( 1.2f, 1.0f ) ); // if no size set it in adaptation to th text
             _register( controller );
         }
 
@@ -62,9 +63,9 @@ namespace HUD.HUD {
             }
         }
 
-        private void _initButtonString(String text, float scale) {
+        private void _initButtonString() {
             if ( this.buttonString == null ) {
-                Add( this.buttonString = new HUDString( text, scale ) );
+                Add( this.buttonString = new HUDString( " " ) );
             }
         }
 

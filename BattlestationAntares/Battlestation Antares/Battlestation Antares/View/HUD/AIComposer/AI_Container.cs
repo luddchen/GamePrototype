@@ -253,23 +253,23 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public void BankMouseOver( AI_Bank bank ) {
             if ( this.state == BuilderState.ITEM ) {
-                if ( bank != (AI_Bank)this.moveItem.parent ) {
+                if ( bank != (AI_Bank)this.moveItem.Parent ) {
                     if ( bank.hasFreePlace( this.moveItem ) ) {
-                        if ( ( (AI_Bank)this.moveItem.parent ) == this.insertBank ) {
+                        if ( ( (AI_Bank)this.moveItem.Parent ) == this.insertBank ) {
                             this.insertItem = null;
                         }
                         bool insert = true;
                         int targetBankIndex = this.aiBanks.IndexOf( bank );
                         foreach ( AI_ItemPort itemPort in this.moveItem.inputs ) {
                             foreach ( AI_Connection con in itemPort.connections ) {
-                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getSource().item.parent ) >= targetBankIndex ) {
+                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getSource().item.Parent ) >= targetBankIndex ) {
                                     insert = false;
                                 }
                             }
                         }
                         foreach ( AI_ItemPort itemPort in this.moveItem.outputs ) {
                             foreach ( AI_Connection con in itemPort.connections ) {
-                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getTarget().item.parent ) <= targetBankIndex ) {
+                                if ( this.aiBanks.IndexOf( (AI_Bank)con.getTarget().item.Parent ) <= targetBankIndex ) {
                                     insert = false;
                                 }
                             }
@@ -347,15 +347,15 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
                 // check flow direction (only top to bottom)
                 bool doIt = true;
-                int portItemBank = this.aiBanks.IndexOf( (AI_Bank)port.item.parent );
+                int portItemBank = this.aiBanks.IndexOf( (AI_Bank)port.item.Parent );
                 int endPortItemBank;
                 if ( port.portType == AI_ItemPort.PortType.INPUT ) {
-                    endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getSource().item.parent );
+                    endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getSource().item.Parent );
                     if ( portItemBank <= endPortItemBank ) {
                         doIt = false;
                     }
                 } else {
-                    endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getTarget().item.parent );
+                    endPortItemBank = this.aiBanks.IndexOf( (AI_Bank)this.moveConnection.getTarget().item.Parent );
                     if ( portItemBank >= endPortItemBank ) {
                         doIt = false;
                     }
@@ -411,7 +411,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
 
         private void _switchBank( AI_Item item, AI_Bank target ) {
-            ( (AI_Bank)item.parent ).Remove( item );
+            ( (AI_Bank)item.Parent ).Remove( item );
 
             float targetXSize = target.AbstractSize.X * HUD_Item.game.RenderSize().X;
             float bankPos = ( Antares.inputProvider.getMousePos().X - ( target.Position.X - targetXSize / 2 ) ) / targetXSize;

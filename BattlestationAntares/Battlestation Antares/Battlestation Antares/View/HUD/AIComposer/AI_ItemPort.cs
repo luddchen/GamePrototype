@@ -38,11 +38,11 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 delegate() {
                     if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         if ( Antares.inputProvider.isLeftMouseButtonPressed() 
-                            && this.parent != null 
-                            && this.parent is AI_Item 
-                            && ((AI_Item)this.parent).container != null) 
+                            && this.Parent != null 
+                            && this.Parent is AI_Item 
+                            && ((AI_Item)this.Parent).container != null) 
                         {
-                            ( (AI_Item)this.parent ).container.PortPressed( this );
+                            ( (AI_Item)this.Parent ).container.PortPressed( this );
                         }
                         this.color = this.hoverColor;
                     } else {

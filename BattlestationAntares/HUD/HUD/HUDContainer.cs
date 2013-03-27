@@ -23,18 +23,15 @@ namespace HUD.HUD {
                 foreach ( HUD_Item item in this.allChilds ) {
                     item.LayerDepth = value - 0.01f;
                 }
-                if ( this.background == null ) {
-                    this.background.LayerDepth = value;
-                }
+                _initBackground();
+                this.background.LayerDepth = value;
                 base.LayerDepth = value;
             }
         }
 
         public override HUDType SizeType {
             set {
-                if ( this.background == null ) {
-                    _initBackground();
-                }
+                _initBackground();
                 this.background.SizeType = value;
                 base.SizeType = value;
             }
@@ -42,9 +39,7 @@ namespace HUD.HUD {
 
         public override Vector2 AbstractSize {
             set {
-                if ( this.background == null ) {
-                    _initBackground();
-                }
+                _initBackground();
                 this.background.AbstractSize = value;
                 base.AbstractSize = value;
             }
@@ -52,9 +47,7 @@ namespace HUD.HUD {
 
         public override float AbstractScale {
             set {
-                if ( this.background == null ) {
-                    _initBackground();
-                }
+                _initBackground();
                 this.background.AbstractScale = value;
                 base.AbstractScale = value;
             }
@@ -74,14 +67,14 @@ namespace HUD.HUD {
 
 
         public virtual void Add( HUD_Item item ) {
-            item.parent = this;
+            item.Parent = this;
             item.LayerDepth = this.LayerDepth - 0.01f;
             item.RenderSizeChanged();
             this.allChilds.Add( item );
         }
 
         public virtual void Insert( int index, HUD_Item item ) {
-            item.parent = this;
+            item.Parent = this;
             item.LayerDepth = this.LayerDepth - 0.01f;
             item.RenderSizeChanged();
             this.allChilds.Insert( index, item );
@@ -116,6 +109,8 @@ namespace HUD.HUD {
         /// </summary>
         /// <param name="property"></param>
         public void SetBackground( Object property ) {
+            _initBackground();
+
             bool visibility = true;
 
             if ( property == null ) {
@@ -162,11 +157,13 @@ namespace HUD.HUD {
 
 
         private void _initBackground() {
-            this.background = new HUDTexture();
-            this.background.parent = this;
-            this.background.IsVisible = false;
-            this.background.LayerDepth = this.LayerDepth;
-            this.background.AbstractSize = this.AbstractSize;
+            if ( this.background == null ) {
+                this.background = new HUDTexture();
+                this.background.Parent = this;
+                this.background.IsVisible = false;
+                this.background.LayerDepth = this.LayerDepth;
+                this.background.AbstractSize = this.AbstractSize;
+            }
         }
 
     }

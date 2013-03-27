@@ -9,9 +9,7 @@ namespace HUD.HUD {
 
         public override HUDType SizeType {
             set {
-                if ( this.mask == null ) {
-                    _initMask();
-                }
+                _initMask();
                 this.mask.SizeType = value;
                 base.SizeType = value;
             }
@@ -19,9 +17,7 @@ namespace HUD.HUD {
 
         public override Vector2 AbstractSize {
             set {
-                if ( this.mask == null ) {
-                    _initMask();
-                }
+                _initMask();
                 this.mask.AbstractSize = value;
                 base.AbstractSize = value;
             }
@@ -29,9 +25,7 @@ namespace HUD.HUD {
 
         public override float AbstractScale {
             set {
-                if ( this.mask == null ) {
-                    _initMask();
-                }
+                _initMask();
                 this.mask.AbstractScale = value;
                 base.AbstractScale = value;
             }
@@ -39,9 +33,7 @@ namespace HUD.HUD {
 
         public override float LayerDepth {
             set {
-                if ( this.mask == null ) {
-                    _initMask();
-                }
+                _initMask();
                 this.mask.LayerDepth = value - 0.05f;// maybe do here calculation of min layerDepth
                 base.LayerDepth = value;
             }
@@ -65,6 +57,8 @@ namespace HUD.HUD {
 
 
         public void SetMask( Object property ) {
+            _initMask();
+
             bool visibility = true;
 
             if ( property == null ) {
@@ -96,17 +90,19 @@ namespace HUD.HUD {
 
         public override void RenderSizeChanged() {
             base.RenderSizeChanged();
-            if ( this.mask != null ) {
-                this.mask.RenderSizeChanged();
-            }
+
+            _initMask();
+            this.mask.RenderSizeChanged();
         }
 
 
         private void _initMask() {
-            this.mask = new HUDTexture();
-            this.mask.parent = this;
-            this.mask.LayerDepth = base.LayerDepth - 0.05f;
-            this.mask.AbstractSize = this.AbstractSize;
+            if ( this.mask == null ) {
+                this.mask = new HUDTexture();
+                this.mask.Parent = this;
+                this.mask.LayerDepth = base.LayerDepth - 0.05f;
+                this.mask.AbstractSize = this.AbstractSize;
+            }
         }
     }
 }

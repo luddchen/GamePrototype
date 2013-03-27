@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace HUD.HUD {
 
+    /// <summary>
+    /// information about the type of coordinates
+    /// </summary>
     public enum HUDType {
         /// <summary>
         /// x and y absolut
@@ -24,6 +27,22 @@ namespace HUD.HUD {
         /// x relativ, y absolut
         /// </summary>
         RELATIV_ABSOLUT
+    }
+
+    /// <summary>
+    /// information about in which coordinate space transformations happens
+    /// </summary>
+    public enum TransformationType {
+
+        /// <summary>
+        /// transformations are in local space
+        /// </summary>
+        LOCAL,
+
+        /// <summary>
+        /// transformations are in global space
+        /// </summary>
+        GLOBAL
     }
 
 
@@ -127,6 +146,18 @@ namespace HUD.HUD {
                 }
             }
 
+            private TransformationType scaleType = TransformationType.LOCAL;
+
+            public TransformationType ScaleType {
+                get {
+                    return this.scaleType;
+                }
+                set {
+                    this.scaleType = value;
+                    RenderSizeChanged();
+                }
+            }
+
         # endregion
 
 
@@ -166,9 +197,20 @@ namespace HUD.HUD {
             }
 
 
-            protected Rectangle dest = new Rectangle();
+            private HUD_Item parent;
 
-            public HUD_Item parent;
+            public HUD_Item Parent {
+                get {
+                    return this.parent;
+                }
+                set {
+                    this.parent = value;
+                    RenderSizeChanged();
+                }
+            }
+
+
+            protected Rectangle dest = new Rectangle();
 
         #endregion
 
@@ -192,6 +234,18 @@ namespace HUD.HUD {
             public float Rotation {
                 get {
                     return this.rotation;
+                }
+            }
+
+            private TransformationType rotationType = TransformationType.LOCAL;
+
+            public TransformationType RotationType {
+                get {
+                    return this.rotationType;
+                }
+                set {
+                    this.rotationType = value;
+                    RenderSizeChanged();
                 }
             }
 
@@ -308,14 +362,14 @@ namespace HUD.HUD {
 
         private void _rotationChanged() {
             this.rotation = this.abstractRotation;
-            if ( this.parent != null ) {
+            if ( this.parent != null && this.RotationType == TransformationType.LOCAL ) {
                 this.rotation += this.parent.Rotation;
             }
         }
 
         private void _scaleChanged() {
             this.scale = this.abstractScale;
-            if ( this.parent != null ) {
+            if ( this.parent != null && this.ScaleType == TransformationType.LOCAL ) {
                 this.scale *= this.parent.Scale;
             }
         }

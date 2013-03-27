@@ -72,6 +72,8 @@ namespace Battlestation_Antares.Control {
                 item.AbstractScale = 1.0f + (float)Math.Cos( this.animationValue + index * MathHelper.TwoPi / this.mainMenuButtons.AllChilds.Count) / 96.0f;
                 index++;
             }
+
+            //this.optionButtons.AbstractRotation = (float)this.animationValue;
         }
 
 
@@ -151,6 +153,7 @@ namespace Battlestation_Antares.Control {
 
             HUDButton newButton = new HUDButton( name, Vector2.Zero, 0.9f, this );
             newButton.style = AntaresButtonStyles.Button();
+            //newButton.RotationType = TransformationType.GLOBAL;
             newButton.SetPressedAction( delegate() {
                 showPage( item );
             } );

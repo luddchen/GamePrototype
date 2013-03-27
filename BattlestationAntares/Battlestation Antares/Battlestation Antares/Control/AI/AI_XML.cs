@@ -31,7 +31,7 @@ namespace Battlestation_Antares.Control.AI {
                 writer.WriteEndElement();
 
                 writer.WriteStartElement( "Bank" );
-                writer.WriteAttributeString("nr", aiContainer.aiBanks.IndexOf( (AI_Bank)item.parent ).ToString() );
+                writer.WriteAttributeString("nr", aiContainer.aiBanks.IndexOf( (AI_Bank)item.Parent ).ToString() );
                 writer.WriteEndElement();
 
                 int paramCount = 0;
