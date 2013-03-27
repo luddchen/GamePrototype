@@ -75,11 +75,11 @@ namespace HUD {
 
             // projection uses CreateOrthographicOffCenter to create 2d projection
             // matrix with 0,0 in the upper left.
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, HUD_Item.game.RenderSize().X, HUD_Item.game.RenderSize().Y, 0, 0, 1 );
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, HUD_Item.game.RenderSize.X, HUD_Item.game.RenderSize.Y, 0, 0, 1 );
         }
 
         public void ClientSizeChanged( ) {
-            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, HUD_Item.game.RenderSize().X, HUD_Item.game.RenderSize().Y, 0, 0, 1 );
+            basicEffect.Projection = Matrix.CreateOrthographicOffCenter( 0, HUD_Item.game.RenderSize.X, HUD_Item.game.RenderSize.Y, 0, 0, 1 );
         }
 
         public void Dispose() {

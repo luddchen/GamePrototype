@@ -413,7 +413,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private void _switchBank( AI_Item item, AI_Bank target ) {
             ( (AI_Bank)item.Parent ).Remove( item );
 
-            float targetXSize = target.AbstractSize.X * HUD_Item.game.RenderSize().X;
+            float targetXSize = target.AbstractSize.X * HUD_Item.game.RenderSize.X;
             float bankPos = ( Antares.inputProvider.getMousePos().X - ( target.Position.X - targetXSize / 2 ) ) / targetXSize;
             target.InsertAt( item, bankPos );
         }

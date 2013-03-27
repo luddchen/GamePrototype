@@ -6,7 +6,10 @@ namespace HUD {
 
     public interface IHUDGame {
 
-        Point RenderSize ();
+        Point RenderSize {
+            get;
+            set;
+        }
 
         int MultiSampleCount {
             get;
@@ -26,6 +29,10 @@ namespace HUD {
         }
 
         SpriteFont DefaultFont {
+            get;
+        }
+
+        IInputProvider Input {
             get;
         }
 

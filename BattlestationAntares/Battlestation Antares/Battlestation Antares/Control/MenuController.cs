@@ -193,7 +193,7 @@ namespace Battlestation_Antares.Control {
                     resolutionHigh.style.foregroundColorNormal = Color.Green;
                     resolutionMedium.style.foregroundColorNormal = Color.White;
                     resolutionLow.style.foregroundColorNormal = Color.White;
-                    Antares.setRenderSize( 1920, 1080 );
+                    HUD_Item.game.RenderSize = new Point( 1920, 1080 );
                 } );
 
             resolutionMedium.SetPressedAction(
@@ -201,7 +201,7 @@ namespace Battlestation_Antares.Control {
                     resolutionHigh.style.foregroundColorNormal = Color.White;
                     resolutionMedium.style.foregroundColorNormal = Color.Green;
                     resolutionLow.style.foregroundColorNormal = Color.White;
-                    Antares.setRenderSize( 1600, 900 );
+                    HUD_Item.game.RenderSize = new Point( 1600, 900 );
                 } );
 
             resolutionLow.SetPressedAction(
@@ -209,7 +209,7 @@ namespace Battlestation_Antares.Control {
                     resolutionHigh.style.foregroundColorNormal = Color.White;
                     resolutionMedium.style.foregroundColorNormal = Color.White;
                     resolutionLow.style.foregroundColorNormal = Color.Green;
-                    Antares.setRenderSize( 1280, 720 );
+                    HUD_Item.game.RenderSize = new Point( 1280, 720 );
                 } );
 
 

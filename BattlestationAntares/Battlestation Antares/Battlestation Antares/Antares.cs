@@ -119,7 +119,6 @@ namespace Battlestation_Antares {
             Antares.inputProvider = new InputProvider();
 
             HUD_Item.game = this;
-            HUD_Item.inputProvider = Antares.inputProvider;
 
             Antares.debugViewer = new DebugViewer();
 
@@ -238,13 +237,6 @@ namespace Battlestation_Antares {
         }
 
 
-        public static void setRenderSize( int width, int height ) {
-            Antares.renderWidth = width;
-            Antares.renderHeight = height;
-            _calculateRenderTextureParameter();
-        }
-
-
         private static void _calculateRenderTextureParameter() {
             Antares.renderTexturePos = new Vector2( Antares.graphics.GraphicsDevice.Viewport.Width / 2.0f, Antares.graphics.GraphicsDevice.Viewport.Height / 2.0f );
             Antares.renderTextureOrigin = new Vector2( Antares.renderWidth / 2.0f, Antares.renderHeight / 2.0f );
@@ -265,13 +257,20 @@ namespace Battlestation_Antares {
             Antares.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }
 
-        public Point RenderSize() {
-            Point renderSize = new Point( Antares.renderWidth, Antares.renderHeight );
-            if ( Antares.graphics.GraphicsDevice.GetRenderTargets().Length > 0 ) {
-                renderSize.X = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Width;
-                renderSize.Y = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Height;
+        public Point RenderSize {
+            get {
+                Point renderSize = new Point( Antares.renderWidth, Antares.renderHeight );
+                if ( Antares.graphics.GraphicsDevice.GetRenderTargets().Length > 0 ) {
+                    renderSize.X = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Width;
+                    renderSize.Y = ( (Texture2D)Antares.graphics.GraphicsDevice.GetRenderTargets()[0].RenderTarget ).Height;
+                }
+                return renderSize;
             }
-            return renderSize;
+            set {
+                Antares.renderWidth = value.X;
+                Antares.renderHeight = value.Y;
+                _calculateRenderTextureParameter();
+            }
         }
 
         public Texture2D DefaultTexture {
@@ -283,6 +282,12 @@ namespace Battlestation_Antares {
         public SpriteFont DefaultFont {
             get {
                 return Content.Load<SpriteFont>( "Fonts//Font" );
+            }
+        }
+
+        public IInputProvider Input {
+            get {
+                return Antares.inputProvider;
             }
         }
 

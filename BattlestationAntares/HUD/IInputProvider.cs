@@ -16,6 +16,8 @@ namespace HUD {
 
         Vector2 getMousePos();
 
+        void setMouseTransform( Vector2 screenSizeHalf, Vector2 renderSizeHalf, float renderScale );
+
     }
 
 }

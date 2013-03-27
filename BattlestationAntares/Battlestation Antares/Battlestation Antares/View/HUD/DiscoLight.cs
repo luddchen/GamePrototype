@@ -35,7 +35,7 @@ namespace Battlestation_Antares.View.HUD {
                             new Vector2(
                                 ((float)RandomGen.random.NextDouble() * size.X - size.X / 2) * 0.7f, 
                                 ((float)RandomGen.random.NextDouble() * size.Y - size.Y / 2) * 0.7f),
-                            new Vector2( lightSize * HUD_Item.game.RenderSize().Y / HUD_Item.game.RenderSize().X, lightSize ));
+                            new Vector2( lightSize * HUD_Item.game.RenderSize.Y / HUD_Item.game.RenderSize.X, lightSize ));
                     tex.color =
                         new Color(
                             (float)( RandomGen.random.NextDouble() * 0.01 ),
