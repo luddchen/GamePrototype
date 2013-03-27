@@ -107,7 +107,25 @@ namespace HUD.HUD {
                 }
             }
 
-            public float scale = 1.0f;
+            private float abstractScale = 1.0f;
+
+            public virtual float AbstractScale {
+                get {
+                    return this.abstractScale;
+                }
+                set {
+                    this.abstractScale = value;
+                    RenderSizeChanged();
+                }
+            }
+
+            private float scale = 1.0f;
+
+            public virtual float Scale {
+                get {
+                    return this.scale;
+                }
+            }
 
         # endregion
 
@@ -214,6 +232,7 @@ namespace HUD.HUD {
         public virtual void RenderSizeChanged() {
 
             _rotationChanged();
+            _scaleChanged();
 
             // root position
             if ( this.parent != null ) {
@@ -285,13 +304,19 @@ namespace HUD.HUD {
             this.dest.Width = (int)Size.X;
             this.dest.Height = (int)Size.Y;
 
-            //_rotationChanged();
         }
 
         private void _rotationChanged() {
             this.rotation = this.abstractRotation;
             if ( this.parent != null ) {
                 this.rotation += this.parent.Rotation;
+            }
+        }
+
+        private void _scaleChanged() {
+            this.scale = this.abstractScale;
+            if ( this.parent != null ) {
+                this.scale *= this.parent.Scale;
             }
         }
 

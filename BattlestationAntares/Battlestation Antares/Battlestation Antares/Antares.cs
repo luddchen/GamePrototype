@@ -68,6 +68,17 @@ namespace Battlestation_Antares {
         private static int renderWidth = 1920;
         private static int renderHeight = 1080;
 
+        private int multiSampleCount = 2;
+
+        public int MultiSampleCount {
+            get {
+                return this.multiSampleCount;
+            }
+            set {
+                this.multiSampleCount = value;
+            }
+        }
+
         private HUDView lastView;
         private int blendValue;
 

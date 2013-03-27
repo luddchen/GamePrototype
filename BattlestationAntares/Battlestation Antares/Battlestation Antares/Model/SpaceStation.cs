@@ -46,7 +46,7 @@ namespace Battlestation_Antares.Model {
             this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>( "Attributes//SpaceStation" ) );
             this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//SpaceStation//station_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
-            this.miniMapIcon.scale = 2.0f;
+            this.miniMapIcon.AbstractScale = 2.0f;
         }
 
 

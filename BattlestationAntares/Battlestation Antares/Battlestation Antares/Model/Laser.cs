@@ -31,7 +31,7 @@ namespace Battlestation_Antares.Model {
 
             this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//Weapon//laser_2d" );
             this.miniMapIcon.color = MiniMap.WEAPON_COLOR;
-            this.miniMapIcon.scale = 0.4f;
+            this.miniMapIcon.AbstractScale = 0.4f;
         }
 
 

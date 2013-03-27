@@ -16,8 +16,10 @@ namespace HUD.HUD {
 
         public override Vector2 AbstractSize {
             set {
+                if ( this.buttonString != null ) {
+                    this.buttonString.AbstractSize = value;
+                }
                 base.AbstractSize = value;
-                this.buttonString.AbstractSize = value;
             }
         }
 
@@ -43,12 +45,11 @@ namespace HUD.HUD {
 
         public HUDButton( String text, Vector2 position, Vector2 size, float scale, IUpdateController controller) : base(position, size) {
             Add( this.buttonString = new HUDString( text, Vector2.Zero, size, null, scale, null, null ) );
-            this.AbstractSize = size;
             _register( controller );
         }
 
         public HUDButton( String text, Vector2 position, float scale, IUpdateController controller) : base(position) {
-            Add( this.buttonString = new HUDString( text, scale ) );
+            _initButtonString( text, scale );
             this.AbstractSize = Vector2.Multiply( this.buttonString.Size, new Vector2( 1.2f, 1.0f ) ); // if no size set adapt to string
             _register( controller );
         }
@@ -58,6 +59,12 @@ namespace HUD.HUD {
             SetBackground( this.style.backgroundColorNormal );
             if ( controller != null ) {
                 controller.Register( this );
+            }
+        }
+
+        private void _initButtonString(String text, float scale) {
+            if ( this.buttonString == null ) {
+                Add( this.buttonString = new HUDString( text, scale ) );
             }
         }
 

@@ -40,7 +40,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
                 };
 
             this.hullImage.Texture = hullTexture;
-            this.hullImage.scale = hullScale;
+            this.hullImage.AbstractScale = hullScale;
             this.hullImage.IsVisible = true;
             this.GetColor = 
                 delegate(SpatialObject o) {

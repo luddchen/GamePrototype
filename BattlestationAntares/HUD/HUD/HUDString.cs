@@ -44,7 +44,7 @@ namespace HUD.HUD {
         /// </summary>
         public override Vector2 Size {
             get {
-                return this.measureString * this.scale * this.fontSize;
+                return this.measureString * this.Scale * this.fontSize;
             }
         }
 
@@ -82,7 +82,7 @@ namespace HUD.HUD {
             this.AbstractPosition = position ?? Vector2.Zero;
             this.AbstractSize = size ?? this.measureString;
             this.color = color ?? Color.Beige;
-            this.scale = scale ?? 1.0f;
+            this.AbstractScale = scale ?? 1.0f;
             this.AbstractRotation = rotation ?? 0.0f;
         }
 
@@ -95,7 +95,7 @@ namespace HUD.HUD {
             if ( isVisible ) {
                 spriteBatch.DrawString( this.font, this.Text, this.Position,
                                         this.color, -this.Rotation, this.measureString / 2,
-                                        this.scale * this.fontSize, this.effect, this.LayerDepth );
+                                        this.Scale * this.fontSize, this.effect, this.LayerDepth );
             }
         }
 

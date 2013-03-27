@@ -23,7 +23,9 @@ namespace HUD.HUD {
                 foreach ( HUD_Item item in this.allChilds ) {
                     item.LayerDepth = value - 0.01f;
                 }
-                this.background.LayerDepth = value;
+                if ( this.background == null ) {
+                    this.background.LayerDepth = value;
+                }
                 base.LayerDepth = value;
             }
         }
@@ -45,6 +47,16 @@ namespace HUD.HUD {
                 }
                 this.background.AbstractSize = value;
                 base.AbstractSize = value;
+            }
+        }
+
+        public override float AbstractScale {
+            set {
+                if ( this.background == null ) {
+                    _initBackground();
+                }
+                this.background.AbstractScale = value;
+                base.AbstractScale = value;
             }
         }
 

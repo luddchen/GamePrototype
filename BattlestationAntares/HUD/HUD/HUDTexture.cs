@@ -49,7 +49,7 @@ namespace HUD.HUD {
             this.AbstractPosition = position ?? Vector2.Zero;
             this.AbstractSize = size ?? new Vector2();
             this.color = color ?? Color.White;
-            this.scale = scale ?? 1.0f;
+            this.AbstractScale = scale ?? 1.0f;
             this.AbstractRotation = rotation ?? 0.0f;
         }
 

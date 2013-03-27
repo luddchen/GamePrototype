@@ -15,14 +15,15 @@ namespace Battlestation_Antares.Control {
     /// </summary>
     class MenuController : SituationController {
 
-
-        HUDRenderedItem test;
+        private HUDContainer mainMenuButtons;
 
         private List<HUD_Item> contentPages;
 
         private HUDArray optionButtons;
 
         private List<DiscoLight> discoLights;
+
+        private double animationValue = 0.0;
 
         /// <summary>
         /// create a new menu controller
@@ -57,9 +58,19 @@ namespace Battlestation_Antares.Control {
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
 
-            //this.test.Update( gameTime );
             foreach ( DiscoLight light in this.discoLights ) {
                 light.Update( gameTime );
+            }
+
+            this.animationValue += Math.PI / 45.0;
+            if ( this.animationValue >= Math.PI * 2 ) {
+                this.animationValue = 0.0;
+            }
+
+            int index = 0;
+            foreach (HUD_Item item in this.mainMenuButtons.AllChilds) {
+                item.AbstractScale = 1.0f + (float)Math.Cos( this.animationValue + index * MathHelper.TwoPi / this.mainMenuButtons.AllChilds.Count) / 96.0f;
+                index++;
             }
         }
 
@@ -77,11 +88,9 @@ namespace Battlestation_Antares.Control {
 
 
         private void _createMainMenu() {
-            HUDArray buttonsGroup1 = new HUDArray( new Vector2( 0.5f, 0.9f ), new Vector2( 0.7f, 0.05f ) );
-            buttonsGroup1.borderSize = new Vector2( 0.02f, 0.0f );
-            buttonsGroup1.direction = LayoutDirection.HORIZONTAL;
+            this.mainMenuButtons = new HUDContainer( new Vector2( 0.5f, 0.9f ), new Vector2( 0.7f, 0.05f ) );
 
-            this.view.Add( buttonsGroup1 );
+            this.view.Add( this.mainMenuButtons );
 
             this.optionButtons = new HUDArray( new Vector2( 0.1f, 0.5f ), new Vector2( 0.1f, 0.01f ) );
             this.optionButtons.borderSize = new Vector2( 0.0f, 0.05f );
@@ -93,28 +102,31 @@ namespace Battlestation_Antares.Control {
             this.view.Add( this.optionButtons );
 
 
-            HUDButton toCommandButton = new HUDButton( "Command", Vector2.Zero, 0.9f, this );
+            HUDButton toCommandButton = new HUDButton( "Command", new Vector2( -0.3f, 0f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
+            toCommandButton.AbstractRotation = (float)( -Math.PI / 12.0 );
             toCommandButton.style = AntaresButtonStyles.Button();
             toCommandButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COMMAND );
             } );
-            buttonsGroup1.Add( toCommandButton );
+            this.mainMenuButtons.Add( toCommandButton );
 
-            HUDButton toCockpitButton = new HUDButton( "Cockpit", Vector2.Zero, 0.9f, this );
+            HUDButton toCockpitButton = new HUDButton( "Cockpit", new Vector2( -0.15f, 0.04f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
+            toCockpitButton.AbstractRotation = (float)(-Math.PI / 46.0);
             toCockpitButton.style = AntaresButtonStyles.Button();
             toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
-            buttonsGroup1.Add( toCockpitButton );
+            this.mainMenuButtons.Add( toCockpitButton );
 
-            HUDButton toAIButton = new HUDButton( "Editor", Vector2.Zero, 0.9f, this );
+            HUDButton toAIButton = new HUDButton( "Editor", new Vector2( 0f, 0.05f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
             toAIButton.style = AntaresButtonStyles.Button();
             toAIButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.AI_BUILDER );
             } );
-            buttonsGroup1.Add( toAIButton );
+            this.mainMenuButtons.Add( toAIButton );
 
-            HUDButton optionsButton = new HUDButton( "Options", Vector2.Zero, 0.9f, this );
+            HUDButton optionsButton = new HUDButton( "Options", new Vector2( 0.15f, 0.04f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
+            optionsButton.AbstractRotation = (float)( Math.PI / 46.0 );
             optionsButton.style = AntaresButtonStyles.Button();
             optionsButton.SetPressedAction(
                 delegate() {
@@ -122,14 +134,15 @@ namespace Battlestation_Antares.Control {
                     hidePages();
                     this.optionButtons.ToggleVisibility();
                 } );
-            buttonsGroup1.Add( optionsButton );
+            this.mainMenuButtons.Add( optionsButton );
 
-            HUDButton exitButton = new HUDButton( "Exit", Vector2.Zero, 0.9f, this );
+            HUDButton exitButton = new HUDButton( "Exit", new Vector2( 0.3f, 0f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
+            exitButton.AbstractRotation = (float)( Math.PI / 12.0 );
             exitButton.style = AntaresButtonStyles.Button();
             exitButton.SetPressedAction( delegate() {
                 this.game.Exit();
             } );
-            buttonsGroup1.Add( exitButton );
+            this.mainMenuButtons.Add( exitButton );
         }
 
 
@@ -195,19 +208,47 @@ namespace Battlestation_Antares.Control {
                 } );
 
 
-            HUDArray test1Array = new HUDArray( new Vector2( 0.15f, 0.0f ), new Vector2( 0.2f, 0.3f ) );
-            test1Array.borderSize = new Vector2( 0.025f, 0.02f );
-            videoPage.Add( test1Array );
+            HUDArray multiSampleArray = new HUDArray( new Vector2( 0.15f, 0.0f ), new Vector2( 0.2f, 0.3f ) );
+            multiSampleArray.borderSize = new Vector2( 0.025f, 0.02f );
+            videoPage.Add( multiSampleArray );
 
-            HUDString test1Title = new HUDString( "Placeholder", 0.7f );
-            HUDButton test1High = new HUDButton( "do nothing", new Vector2(), 0.7f, null );
-            HUDButton test1Medium = new HUDButton( "wait for something", new Vector2(), 0.7f, null );
-            HUDButton test1Low = new HUDButton( "do anything", new Vector2(), 0.7f, null );
+            HUDString multiSampleTitle = new HUDString( "Multi Sampling", 0.7f );
+            HUDButton samplingOff = new HUDButton( "off", new Vector2(), 0.7f, this );
+            HUDButton sampling2x = new HUDButton( "2x", new Vector2(), 0.7f, this );
+            HUDButton sampling4x = new HUDButton( "4x", new Vector2(), 0.7f, this );
 
-            test1Array.Add( test1Title );
-            test1Array.Add( test1High );
-            test1Array.Add( test1Medium );
-            test1Array.Add( test1Low );
+            samplingOff.style = AntaresButtonStyles.Button();
+            sampling2x.style = AntaresButtonStyles.Button();
+            sampling4x.style = AntaresButtonStyles.Button();
+
+            multiSampleArray.Add( multiSampleTitle );
+            multiSampleArray.Add( samplingOff );
+            multiSampleArray.Add( sampling2x );
+            multiSampleArray.Add( sampling4x );
+
+            samplingOff.SetPressedAction(
+                delegate() {
+                    samplingOff.style.foregroundColorNormal = Color.Green;
+                    sampling2x.style.foregroundColorNormal = Color.White;
+                    sampling4x.style.foregroundColorNormal = Color.White;
+                    HUD_Item.game.MultiSampleCount = 1;
+                } );
+
+            sampling2x.SetPressedAction(
+                delegate() {
+                    samplingOff.style.foregroundColorNormal = Color.White;
+                    sampling2x.style.foregroundColorNormal = Color.Green;
+                    sampling4x.style.foregroundColorNormal = Color.White;
+                    HUD_Item.game.MultiSampleCount = 2;
+                } );
+
+            sampling4x.SetPressedAction(
+                delegate() {
+                    samplingOff.style.foregroundColorNormal = Color.White;
+                    sampling2x.style.foregroundColorNormal = Color.White;
+                    sampling4x.style.foregroundColorNormal = Color.Green;
+                    HUD_Item.game.MultiSampleCount = 4;
+                } );
 
             _addOptionPage( "Video", videoPage );
         }

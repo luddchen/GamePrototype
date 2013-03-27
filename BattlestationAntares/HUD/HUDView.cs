@@ -118,12 +118,20 @@ namespace HUD {
 
 
         private void _initRenderTarget() {
-            if ( this.renderTarget == null || this.renderTarget.Width != HUD_Item.game.RenderSize().X || this.renderTarget.Height != HUD_Item.game.RenderSize().Y ) {
+            if ( this.renderTarget == null 
+                || this.renderTarget.Width != HUD_Item.game.RenderSize().X 
+                || this.renderTarget.Height != HUD_Item.game.RenderSize().Y 
+                || this.renderTarget.MultiSampleCount != HUD_Item.game.MultiSampleCount)
+            {
                 if ( this.renderTarget != null ) {
                     this.renderTarget.Dispose();
                 }
-                this.renderTarget = new RenderTarget2D( HUD_Item.game.GraphicsDevice, HUD_Item.game.RenderSize().X, HUD_Item.game.RenderSize().Y, true,
-                                                        HUD_Item.game.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 );
+                this.renderTarget = 
+                    new RenderTarget2D( 
+                        HUD_Item.game.GraphicsDevice, HUD_Item.game.RenderSize().X, HUD_Item.game.RenderSize().Y, true,
+                        HUD_Item.game.GraphicsDevice.DisplayMode.Format, DepthFormat.Depth24 ,
+                        HUD_Item.game.MultiSampleCount, RenderTargetUsage.PlatformContents);
+
                 this.Window_ClientSizeChanged();
             }
         }

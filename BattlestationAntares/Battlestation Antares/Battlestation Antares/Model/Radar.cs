@@ -45,7 +45,7 @@ namespace Battlestation_Antares.Model {
 
             this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//Radar//radar_2d" );
             this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
-            this.miniMapIcon.scale = 0.7f;
+            this.miniMapIcon.AbstractScale = 0.7f;
             this.miniMapIcon.updateRotation = false;
         }
 

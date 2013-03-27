@@ -64,7 +64,7 @@ namespace Battlestation_Antares.View.HUD {
             float value = this.GetValue();
             value = MathHelper.Clamp( value, 0.0f, 1.0f );
 
-            this.foreground.scale = ( value + 1.0f ) / 2;
+            this.foreground.AbstractScale = ( value + 1.0f ) / 2;
             this.foreground.RenderSizeChanged(); // until change scale attribute in HUD_Item
             this.foreground.color = Color.Lerp( zeroColor, oneColor, this.GetColorMixValue( value ) );
 

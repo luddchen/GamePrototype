@@ -8,6 +8,11 @@ namespace HUD {
 
         Point RenderSize ();
 
+        int MultiSampleCount {
+            get;
+            set;
+        }
+
         GraphicsDevice GraphicsDevice {
             get;
         }

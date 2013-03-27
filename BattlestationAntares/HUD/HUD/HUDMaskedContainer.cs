@@ -27,8 +27,21 @@ namespace HUD.HUD {
             }
         }
 
+        public override float AbstractScale {
+            set {
+                if ( this.mask == null ) {
+                    _initMask();
+                }
+                this.mask.AbstractScale = value;
+                base.AbstractScale = value;
+            }
+        }
+
         public override float LayerDepth {
             set {
+                if ( this.mask == null ) {
+                    _initMask();
+                }
                 this.mask.LayerDepth = value - 0.05f;// maybe do here calculation of min layerDepth
                 base.LayerDepth = value;
             }
