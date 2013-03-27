@@ -14,7 +14,7 @@ namespace Battlestation_Antares.View.HUD.CommandHUD {
 
         private Action action;
 
-        public BuildMenu( Vector2 abstractPosition, HUDType positionType, Action action, SituationController controller )
+        public BuildMenu( Vector2 abstractPosition, Action action, SituationController controller )
             : base( abstractPosition, new Vector2(0.1f, 0.1f) ) {
 
             this.action = action;

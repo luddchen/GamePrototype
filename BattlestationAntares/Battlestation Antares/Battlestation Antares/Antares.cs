@@ -77,7 +77,7 @@ namespace Battlestation_Antares {
 
             this.Content.RootDirectory = "Content";
             Antares.content = Content;
-
+            
             this.IsFixedTimeStep = true;
             Window.AllowUserResizing = true;
         }
@@ -178,7 +178,16 @@ namespace Battlestation_Antares {
 
             Antares.graphics.GraphicsDevice.Clear( Color.Black );
 
-            this.spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            Matrix tMatrix = Matrix.Identity;
+
+            this.spriteBatch.Begin(
+                SpriteSortMode.BackToFront, 
+                BlendState.AlphaBlend, 
+                SamplerState.LinearClamp, 
+                DepthStencilState.DepthRead, 
+                RasterizerState.CullNone, 
+                null,
+                tMatrix);
 
             if ( this.lastView != null ) {
                 this.spriteBatch.Draw( this.activeSituation.view.renderTarget, HUDService.RenderTexturePosition, null, 

@@ -46,7 +46,6 @@ namespace Battlestation_Antares.View {
         /// <param name="game">the game</param>
         public CockpitView(Color? backgroundColor) : base(backgroundColor) {
             this.camera = new Camera();
-;
             this.backgroundObjects = new List<BackgroundObject>();
         }
 
@@ -56,30 +55,19 @@ namespace Battlestation_Antares.View {
         /// </summary>
         public override void Initialize() {
 
-            HUDTexture compassBG = new HUDTexture();
-            compassBG.AbstractPosition = new Vector2( 0.5f, 0.15f );
-            compassBG.PositionType = HUDType.RELATIV;
-            compassBG.AbstractSize = new Vector2( 0.125f, 0.15f );
-            compassBG.SizeType = HUDType.RELATIV;
+            HUDTexture compassBG = new HUDTexture( "Sprites//Circle", new Vector2( 0.5f, 0.15f ), new Vector2( 0.125f, 0.15f ) );
             compassBG.LayerDepth = 0.11f;
             compassBG.color = new Color( 12, 16, 8, 16 );
-            compassBG.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
             this.Add( compassBG );
 
             // 2D HUD
-            cockpitTexture = new HUDTexture();
-            cockpitTexture.AbstractPosition = new Vector2( 0.5f, 0.5f );
-            cockpitTexture.PositionType = HUDType.RELATIV;
-            cockpitTexture.AbstractSize = new Vector2( 1, 1 );
-            cockpitTexture.SizeType = HUDType.RELATIV;
-            cockpitTexture.Texture = Antares.content.Load<Texture2D>( "Sprites//cockpit3" );
+            cockpitTexture = new HUDTexture( "Sprites//cockpit3", new Vector2( 0.5f, 0.5f ), new Vector2( 1, 1 ) );
             cockpitTexture.LayerDepth = 1.0f;
             this.Add( cockpitTexture );
 
             this.Add( Antares.world.miniMap );
 
-            HUDTexture cross = new HUDTexture( Antares.content.Load<Texture2D>( "Sprites//Cross" ), new Vector2( 0.5f, 0.5f ), new Vector2( 48, 48 ), null, 1.0f, 0 );
-            cross.PositionType = HUDType.RELATIV;
+            HUDTexture cross = new HUDTexture( "Sprites//Cross", new Vector2( 0.5f, 0.5f ), new Vector2( 0.02f, 0.03f ) );
             cross.LayerDepth = 0.8f;
             this.Add( cross );
 
@@ -96,12 +84,12 @@ namespace Battlestation_Antares.View {
             this.Add( heat2 );
 
             ObjectHealth shipHealth = new ObjectHealth( new Vector2( 0.045f, 0.8f ), HUDType.RELATIV );
-            shipHealth.setObject( Antares.world.spaceShip, Antares.content.Load<Texture2D>( "Sprites//HUD//Ship" ), 0.75f);
+            shipHealth.setObject( Antares.world.spaceShip, "Sprites//HUD//Ship", 0.75f);
             this.Add( shipHealth );
             shipHealth.LayerDepth = 0.3f;
 
             ObjectHealth stationHealth = new ObjectHealth( new Vector2( 0.11f, 0.92f ), HUDType.RELATIV );
-            stationHealth.setObject( Antares.world.spaceStation, Antares.content.Load<Texture2D>( "Sprites//HUD//Station" ), 0.75f );
+            stationHealth.setObject( Antares.world.spaceStation, "Sprites//HUD//Station", 0.75f );
             this.Add( stationHealth );
             stationHealth.LayerDepth = 0.3f;
 

@@ -104,7 +104,8 @@
     <Compile Include="HUD\HUDString.cs" />
     <Compile Include="HUD\HUDTexture.cs" />
     <Compile Include="HUD\HUD_Item.cs" />
-    <Compile Include="IInputProvider.cs" />
+    <Compile Include="IMouseProvider.cs" />
+    <Compile Include="MouseProvider.cs" />
     <Compile Include="IUpdatableItem.cs" />
     <Compile Include="IUpdateController.cs" />
     <Compile Include="PrimitiveBatch.cs" />

@@ -1,9 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.Model;
+using Battlestation_Antares.View;
 
-namespace Battlestation_Antares.View {
+namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// an object that can be drawn in background with respect to its spherical coordinates and a local (viewer) rotation

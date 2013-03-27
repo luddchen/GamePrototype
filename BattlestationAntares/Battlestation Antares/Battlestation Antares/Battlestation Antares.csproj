@@ -107,7 +107,7 @@
     <Compile Include="Tools\RayCastThreadPool.cs" />
     <Compile Include="Tools\Tools.cs" />
     <Compile Include="View\AIView.cs" />
-    <Compile Include="View\BackgroundObject.cs" />
+    <Compile Include="Model\BackgroundObject.cs" />
     <Compile Include="View\Camera.cs" />
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />

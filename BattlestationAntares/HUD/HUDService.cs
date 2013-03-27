@@ -7,7 +7,7 @@ namespace HUD {
 
     public sealed class HUDService {
 
-        public static void Initialize( Game game, Texture2D defaultTexture, SpriteFont defaultFont, int? multiSampleCount, IInputProvider input ) {
+        public static void Initialize( Game game, Texture2D defaultTexture, SpriteFont defaultFont, int? multiSampleCount, IMouseProvider input ) {
             HUDService.game = game;
 
             if ( HUDService.game == null ) {
@@ -53,7 +53,7 @@ namespace HUD {
         public static int MultiSampleCount;
 
 
-        public static IInputProvider Input;
+        public static IMouseProvider Input;
 
 
         public static Point RenderSize {

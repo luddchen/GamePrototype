@@ -4,7 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace HUD {
 
-    public interface IInputProvider {
+    public interface IMouseProvider {
+
+        void Update();
 
         bool isLeftMouseButtonPressed();
 
@@ -16,7 +18,13 @@ namespace HUD {
 
         Vector2 getMousePos();
 
+        bool isMouseMoved();
+
+        int getMouseWheelChange();
+
         void setMouseTransform( Vector2 screenSizeHalf, Vector2 renderSizeHalf, float renderScale );
+
+        void setMouseTransform( Matrix transform );
 
     }
 

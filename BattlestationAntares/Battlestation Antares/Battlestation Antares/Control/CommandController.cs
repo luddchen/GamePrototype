@@ -14,9 +14,6 @@ namespace Battlestation_Antares.Control {
     /// the command controller
     /// </summary>
     class CommandController : SituationController {
-        private const int MAX_CAMERA_ZOOM = 1000;
-
-        private const int MIN_CAMERA_ZOOM = 4000;
 
         private enum CommandMode {
             NORMAL,
@@ -24,10 +21,6 @@ namespace Battlestation_Antares.Control {
         }
 
         private CommandMode currentMode;
-
-        private HUDButton toMenuButton;
-
-        private HUDButton toCockpitButton;
 
         private MiniMap.Config mapConfig;
 
@@ -46,25 +39,19 @@ namespace Battlestation_Antares.Control {
             : base( game, view ) {
             this.currentMode = CommandMode.NORMAL;
 
-            this.toMenuButton = new HUDButton( "Menu", new Vector2( 0.1f, 0.9f ), 0.7f, this );
-            this.toMenuButton.SetPressedAction( delegate() {
+            HUDButton toMenuButton = new HUDButton( "Menu", new Vector2( 0.1f, 0.9f ), new Vector2( 0.1f, 0.05f ), 0.7f, this );
+            toMenuButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.MENU );
             } );
-            this.toMenuButton.PositionType = HUDType.RELATIV;
-            this.toMenuButton.SizeType = HUDType.RELATIV;
-            this.toMenuButton.AbstractSize = new Vector2( 0.1f, 0.05f );
             this.view.Add( toMenuButton );
 
-            this.toCockpitButton = new HUDButton( "Cockpit", new Vector2( 0.9f, 0.9f ), 0.7f, this );
-            this.toCockpitButton.SetPressedAction( delegate() {
+            HUDButton toCockpitButton = new HUDButton( "Cockpit", new Vector2( 0.9f, 0.9f ), new Vector2( 0.1f, 0.05f ), 0.7f, this );
+            toCockpitButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.COCKPIT );
             } );
-            this.toCockpitButton.PositionType = HUDType.RELATIV;
-            this.toCockpitButton.SizeType = HUDType.RELATIV;
-            this.toCockpitButton.AbstractSize = new Vector2( 0.1f, 0.05f );
             this.view.Add( toCockpitButton );
 
-            buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), HUDType.RELATIV, 
+            buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), 
                 delegate() {
                     if ( this.currentMouseTexture != null ) {
                         this.currentMouseTexture.IsVisible = false;
@@ -75,8 +62,8 @@ namespace Battlestation_Antares.Control {
             this.view.Add( buildMenu );
 
             mouseTextures = new Dictionary<Type, MouseTexture>();
-            mouseTextures.Add( typeof( Battlestation_Antares.Model.Turret ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Turret//turret_2d" ), this ) );
-            mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( game.Content.Load<Texture2D>( "Models//Radar//radar_2d" ), this ) );
+            mouseTextures.Add( typeof( Battlestation_Antares.Model.Turret ), new MouseTexture( "Models//Turret//turret_2d", this ) );
+            mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( "Models//Radar//radar_2d", this ) );
             this.view.AddRange( mouseTextures.Values );
 
             mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.5f ), new Vector2( 0.625f, 1f ), new Vector2( 0.625f, 1f ), Antares.world.spaceStation );

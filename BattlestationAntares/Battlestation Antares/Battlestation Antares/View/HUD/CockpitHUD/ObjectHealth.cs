@@ -1,8 +1,10 @@
-﻿using Battlestation_Antares.View.HUD;
-using Microsoft.Xna.Framework;
+﻿using System;
 using Battlestation_Antares.Model;
-using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antares.View.HUD;
+using HUD;
 using HUD.HUD;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.View.HUD.CockpitHUD {
     public class ObjectHealth : HUDContainer {
@@ -24,22 +26,20 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
             this.shield.SetMinColor( Color.DarkRed );
             this.Add( this.shield );
 
-            this.hullImage = new HUDTexture();
-            this.hullImage.AbstractSize = new Vector2( 0.05f, 0.09f );
-            this.hullImage.SizeType = HUDType.RELATIV;
+            this.hullImage = new HUDTexture( null, null, new Vector2( 0.05f, 0.09f ) );
             this.hullImage.IsVisible = false;
             this.Add( this.hullImage );
         }
 
 
-        public void setObject( SpatialObject obj, Texture2D hullTexture, float hullScale) {
+        public void setObject( SpatialObject obj, String hullTexture, float hullScale) {
             this.obj = obj;
             this.shield.GetValue =
                 delegate() {
                     return obj.attributes.Shield.CurrentHealthPoints / obj.attributes.Shield.MaxHealthPoints;
                 };
 
-            this.hullImage.Texture = hullTexture;
+            this.hullImage.Texture = HUDService.Content.Load<Texture2D>( hullTexture );
             this.hullImage.AbstractScale = hullScale;
             this.hullImage.IsVisible = true;
             this.GetColor = 

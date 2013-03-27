@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.Control;
 using HUD.HUD;
 using HUD;
+using System;
 
 namespace Battlestation_Antares.View.HUD.CommandHUD {
     class MouseTexture : HUDTexture, IUpdatableItem {
-        public MouseTexture( Texture2D texture, SituationController controller )
+        public MouseTexture( Object texture, SituationController controller )
             : base( texture, null, new Vector2( 15f, 15f ), Color.Blue, null, null ) {
             this.PositionType = HUDType.ABSOLUT;
             this.isVisible = false;
