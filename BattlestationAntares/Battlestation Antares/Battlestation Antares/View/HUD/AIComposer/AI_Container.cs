@@ -88,12 +88,14 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 delegate() {
                     if ( connection.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         connection.color = connection.colorHighlight;
+                        connection.color2 = connection.color2Highlight;
                         if ( Antares.inputProvider.isLeftMouseButtonPressed() ) {
                             connection.Delete();
                             this.removeList.Add( connection );
                         }
                     } else {
                         connection.color = connection.colorNormal;
+                        connection.color2 = connection.color2Normal;
                     }
                 };
             this.controller.Register( connection );
