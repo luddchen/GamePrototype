@@ -16,11 +16,8 @@ namespace Battlestation_Antares.Control {
         public AIController( Antares game, HUDView view )
             : base( game, view ) {
 
-            HUDContainer aiScaleContainer = new HUDContainer( Vector2.Zero );
-
             this.aiContainer = new AI_Container(this);
             this.view.Add( this.aiContainer );
-            this.aiContainer.Parent = aiScaleContainer;
 
             HUDTexture menuBG = new HUDTexture();
             menuBG.color = Color.Black;

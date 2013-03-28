@@ -48,7 +48,6 @@ namespace HUD.HUD {
         public override float AbstractScale {
             set {
                 _initBackground();
-                this.background.AbstractScale = value;
                 base.AbstractScale = value;
             }
         }

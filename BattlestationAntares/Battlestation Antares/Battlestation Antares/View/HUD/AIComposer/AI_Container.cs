@@ -5,6 +5,7 @@ using Battlestation_Antaris.View.HUD.AIComposer;
 using Battlestation_Antares.Control;
 using HUD.HUD;
 using HUD;
+using System;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
@@ -15,6 +16,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             ITEM,
             CONNECTION
         }
+
+        private static Vector2 basePosition = new Vector2( 0.41f, 0.5f );
 
         private PrimitiveBatch primitiveBatch;
 
@@ -44,7 +47,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private BuilderState state;
 
         public AI_Container(SituationController controller)
-            : base( new Vector2( 0.41f, 0.5f ), new Vector2( 0.82f, 1.0f ) ) {
+            : base( basePosition, basePosition * 2 ) {
 
             this.controller = controller;
             this.primitiveBatch = new PrimitiveBatch( HUDService.Device );
@@ -134,32 +137,28 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             int zoomValue = HUDService.Input.getMouseWheelChange();
             if ( zoomValue > 0 ) {
-                this.Parent.AbstractScale *= 1.05f;
-                if ( this.Parent.AbstractScale > 2.0f ) {
-                    this.Parent.AbstractScale = 2.0f;
+                this.AbstractScale *= 1.05f;
+                if ( this.AbstractScale > 2.0f ) {
+                    this.AbstractScale = 2.0f;
                 }
-                if ( this.Parent.AbstractScale <= 1.0f ) {
-                    this.Parent.AbstractPosition = ( this.AbstractSize - this.Parent.AbstractScale * this.AbstractSize ) * 0.5f;
-                } else {
-                    if ( this.Parent.AbstractScale < 2.0f ) {
-                        this.Parent.AbstractPosition += ( this.AbstractSize - this.Parent.AbstractScale * this.AbstractSize ) * 0.05f;
-                    }
-                }
-                this.RenderSizeChanged();
             }
             if ( zoomValue < 0 ) {
-                this.Parent.AbstractScale *= 0.95f;
-                if ( this.Parent.AbstractScale < 0.5f ) {
-                    this.Parent.AbstractScale = 0.5f;
+                this.AbstractScale *= 0.95f;
+                this.AbstractPosition -= ( this.AbstractPosition - AI_Container.basePosition ) * 0.05f;
+                if ( this.AbstractScale < 0.5f ) {
+                    this.AbstractScale = 0.5f;
                 }
-                if ( this.Parent.AbstractScale <= 1.0f ) {
-                    this.Parent.AbstractPosition = ( this.AbstractSize - this.Parent.AbstractScale * this.AbstractSize ) * 0.5f;
-                } else {
-                    if ( this.Parent.AbstractScale < 2.0f ) {
-                        this.Parent.AbstractPosition -= ( this.AbstractSize - this.Parent.AbstractScale * this.AbstractSize ) * 0.05f;
-                    }
+            }
+
+            if ( this.AbstractScale <= 1.0f ) {
+                this.AbstractPosition = AI_Container.basePosition;
+            } else {
+                Vector2 mousePos = AI_Container.basePosition - HUD_Item.ConcreteToAbstract( HUDService.Input.getMousePos() );
+                if ( Math.Abs( mousePos.X ) > AI_Container.basePosition.X * 0.75 && Math.Abs( mousePos.X ) < AI_Container.basePosition.X
+                    || Math.Abs( mousePos.Y ) > AI_Container.basePosition.Y * 0.75 && Math.Abs( mousePos.Y ) < AI_Container.basePosition.Y ) {
+                    // todo : stop scrolling at border
+                    this.AbstractPosition += mousePos * this.Scale * 0.01f * mousePos.Length();
                 }
-                this.RenderSizeChanged();
             }
         }
 
