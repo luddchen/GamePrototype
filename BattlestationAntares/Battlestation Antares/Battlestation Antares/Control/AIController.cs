@@ -19,6 +19,11 @@ namespace Battlestation_Antares.Control {
             this.aiContainer = new AI_Container(this);
             this.view.Add( this.aiContainer );
 
+            HUDTexture aiBorder = new HUDTexture( "Sprites//SquareBorder", AI_Container.basePosition, AI_Container.basePosition * 2.01f);
+            aiBorder.color = new Color( 32, 40, 24 );
+            aiBorder.LayerDepth = 0.1f;
+            this.view.Add( aiBorder );
+
             HUDTexture menuBG = new HUDTexture();
             menuBG.color = Color.Black;
             menuBG.AbstractSize = new Vector2( 0.18f, 1.0f );

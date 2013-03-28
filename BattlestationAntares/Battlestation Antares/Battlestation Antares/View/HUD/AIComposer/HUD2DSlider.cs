@@ -16,7 +16,6 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private float value;
 
         public HUD2DSlider( Vector2 abstractPosition, Vector2 abstractSize) : base( abstractPosition ) {
-            this.SizeType = HUDType.ABSOLUT;
             this.AbstractSize = abstractSize;
             this.valueString = new HUDString( "0.00" );
             this.valueString.AbstractPosition = new Vector2( 0, -this.AbstractSize.Y * 2.0f );
@@ -27,14 +26,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.sliderButton = new HUDButton( " ", new Vector2( this.sliderButtonZero, 0 ), 1, null );
             this.sliderButtonZero = - this.AbstractSize.X / 2;
             this.sliderButtonOne = this.AbstractSize.X / 2;
-            this.sliderButton.PositionType = HUDType.ABSOLUT;
             this.sliderButton.AbstractSize = new Vector2( this.AbstractSize.Y , this.AbstractSize.Y ) * 2;
 
             this.sliderButton.style = ButtonStyle.SliderButtonStyle();
             this.sliderButton.SetBackground( "Sprites//Slider" );
             this.sliderButton.SetDownAction(
                 delegate() {
-                    float newPos = Antares.inputProvider.getMousePos().X - this.Position.X;
+                    float newPos = HUD_Item.ConcreteToAbstract( Antares.inputProvider.getMousePos() - this.Position ).X / this.Scale;
                     if ( newPos >= this.sliderButtonZero && newPos <= this.sliderButtonOne ) {
                         SetValue( ( newPos - this.sliderButtonZero ) / this.AbstractSize.X );
                     }

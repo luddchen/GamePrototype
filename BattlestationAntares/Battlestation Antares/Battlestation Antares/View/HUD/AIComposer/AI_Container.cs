@@ -17,7 +17,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             CONNECTION
         }
 
-        private static Vector2 basePosition = new Vector2( 0.41f, 0.5f );
+        public static Vector2 basePosition = new Vector2( 0.41f, 0.5f );
 
         private PrimitiveBatch primitiveBatch;
 

@@ -16,6 +16,9 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public AI_Mixer() : base() {
             this.typeString.Text = "Mixer";
+            this.slider = new HUD2DSlider( new Vector2( 0, this.AbstractSize.Y / 4 ), new Vector2( this.AbstractSize.X * 0.9f, this.AbstractSize.Y / 10 ) );
+            this.slider.IsVisible = false;
+            this.Add( this.slider );
 
             AddPort( AI_ItemPort.PortType.INPUT );
             AddPort( AI_ItemPort.PortType.INPUT );
@@ -30,17 +33,11 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             if ( (MixerType)subType == MixerType.AVG ) {
                 this.parameters = new float[1];
-                if ( this.slider == null ) {
-                    this.slider = new HUD2DSlider( new Vector2( 0, this.AbstractSize.Y / 4 ), new Vector2( this.AbstractSize.X * 0.9f, this.AbstractSize.Y / 10 ));
-                    this.Add( this.slider );
-                }
                 this.slider.IsVisible = true;
 
             } else {
                 this.parameters = null;
-                if ( this.slider != null ) {
-                    this.slider.IsVisible = false;
-                }
+                this.slider.IsVisible = false;
             }
         }
 
