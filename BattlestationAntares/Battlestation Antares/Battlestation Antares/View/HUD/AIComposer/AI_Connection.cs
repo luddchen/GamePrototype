@@ -8,6 +8,14 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
     public class AI_Connection : HUD_Item, IUpdatableItem {
 
+        private Vector2 start;
+        private Vector2 end;
+        private Vector2 preStart;
+        private Vector2 postEnd;
+        private Vector2 center;
+        private Vector2 centerTangent;
+        private float dist;
+
         AI_ItemPort source;
 
         AI_ItemPort target;
@@ -77,15 +85,13 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public void Draw( PrimitiveBatch primitiveBatch ) {
             if ( this.source != null && this.target != null ) {
-                Vector2 start = this.source.Position;
-                Vector2 end = this.target.Position;
-
-                Vector2 preStart = Vector2.UnitY;
-                Vector2 postEnd = Vector2.UnitY;
-
-                float dist = Vector2.Distance( start, end );
-                Vector2 center = ( end + start ) * 0.5f;
-                Vector2 centerTangent = end - start;
+                start = this.source.Position;
+                end = this.target.Position;
+                preStart = Vector2.UnitY;
+                postEnd = Vector2.UnitY;
+                center = ( end + start ) * 0.5f;
+                centerTangent = end - start;
+                dist = Vector2.Distance( start, end );
 
                 if ( start.X == end.X ) {
                     center.X += dist * 0.5f;
@@ -98,6 +104,8 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                     preStart *= dist * 0.33f / f;
                     postEnd *= dist * 0.33f / f;
                 }
+
+
                 if ( this.width > 1 ) {
                     for ( Vector2 pos = new Vector2( -this.width / 2, 0 ); pos.X <= ( this.width / 2 ); pos.X += 1.0f ) {
                         DrawLinePart( primitiveBatch, preStart, start + pos, center + pos, centerTangent, dist, 0.0f, 1.0f, 0.5f, 0.0f );
@@ -125,25 +133,26 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             if ( this.source == null || this.target == null ) {
                 return false;
             }
-            Vector2 lineVec = this.target.Position - this.source.Position; // Vector source -> target
-            Vector2 pointVec = point - this.source.Position; // Vector source -> point
 
-            float xOff = pointVec.X / lineVec.X;
-            float yOff = pointVec.Y / lineVec.Y;
-
-            if ( Math.Abs( lineVec.X ) < 0.01f ) {
-                if ( Math.Abs( pointVec.X ) < 1f && yOff > 0.05f && yOff < 0.95f ) {
+            float step = (float)(this.width) / this.dist;
+            for ( float i = 0.1f; i <= 1.0f; i += step ) {
+                Vector2 p = Vector2.Hermite( start, preStart, center, centerTangent, i );
+                if ( Intersects( p, point ) ) {
                     return true;
                 }
             }
-
-            if ( xOff > 0.05f && xOff < 0.95f && yOff > 0.05f && yOff < 0.95f ) {
-                if ( Math.Abs( xOff - yOff ) < 0.2f ) {
+            for ( float i = 0.0f; i <= 0.9f; i += step ) {
+                Vector2 p = Vector2.Hermite( center, centerTangent, end, postEnd, i );
+                if ( Intersects( p, point ) ) {
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private bool Intersects( Vector2 pos1, Vector2 pos2 ) {
+            return ( Math.Abs( pos1.X - pos2.X ) < this.width && Math.Abs( pos1.Y - pos2.Y ) < this.width );
         }
 
 
