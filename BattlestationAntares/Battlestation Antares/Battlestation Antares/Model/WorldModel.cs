@@ -152,7 +152,7 @@ namespace Battlestation_Antares.Model {
             this.spaceShip.isVisible = false;
 
             // create the player space station
-            this.spaceStation = new SpaceStation( Vector3.Zero, "Models//SpaceStation/spacestation", content, this );
+            this.spaceStation = new SpaceStation( Vector3.Zero, "Models//SpaceStation/spacestation4", content, this );
 
             // add dust near the players ship
             for ( int i = 0; i < 200; i++ ) {

@@ -18,13 +18,19 @@ namespace Battlestation_Antares.Model {
         /// <summary>
         /// model bone of the rotating part of the station
         /// </summary>
-        private ModelBone StationAxis;
+        private ModelBone Barrier1;
+        private ModelBone Barrier2;
+        private ModelBone Barrier3;
+        private ModelBone Airlock;
 
 
         /// <summary>
         /// the transformation matrix of the rotating part of the station
         /// </summary>
-        Matrix StationAxisTransform;
+        Matrix Barrier1Transform;
+        Matrix Barrier2Transform;
+        Matrix Barrier3Transform;
+        Matrix AirlockTransform;
 
 
         /// <summary>
@@ -32,6 +38,9 @@ namespace Battlestation_Antares.Model {
         /// </summary>
         float AxisRot = 0.0f;
 
+        float dir = 0.1f;
+        float airlockMove = 0;
+        int airlockDelay = 0;
 
         /// <summary>
         /// create a new space station within the world
@@ -57,11 +66,18 @@ namespace Battlestation_Antares.Model {
             // test output of bounding sphere
             // Console.Out.WriteLine("Station Bounding Sphere : " + this.bounding + " (" + this.model3d.Meshes.Count + " meshes)");
 
-            StationAxis = model3d.Bones["StationAxis"];
-            StationAxisTransform = StationAxis.Transform;
+            Barrier1 = model3d.Bones["Barrier1"];
+            Barrier2 = model3d.Bones["Barrier2"];
+            Barrier3 = model3d.Bones["Barrier3"];
+            Airlock = model3d.Bones["Airlock"];
+
+            Barrier1Transform = Barrier1.Transform;
+            Barrier2Transform = Barrier2.Transform;
+            Barrier3Transform = Barrier3.Transform;
+            AirlockTransform = Airlock.Transform;
 
             // initial rotation of full station, dont know why this is necessary
-            this.rotation = Tools.Tools.Pitch( this.rotation, (float)( -Math.PI / 2 ) );
+            //this.rotation = Tools.Tools.Pitch( this.rotation, (float)( -Math.PI / 2 ) );
         }
 
 
@@ -76,7 +92,26 @@ namespace Battlestation_Antares.Model {
             // update rotation of the rotating part
             AxisRot += (float)( Math.PI / 1440 );
 
-            StationAxis.Transform = Matrix.CreateRotationZ( AxisRot ) * StationAxisTransform;
+            if ( airlockDelay <= 0 ) {
+                airlockMove += dir;
+                if ( airlockMove > 16 ) {
+                    airlockMove = 16;
+                    airlockDelay = 120;
+                    dir *= -1.0f;
+                }
+                if ( airlockMove < -0.5f ) {
+                    airlockMove = -0.5f;
+                    airlockDelay = 120;
+                    dir *= -1.0f;
+                }
+            } else {
+                airlockDelay--;
+            }
+
+            Barrier1.Transform = Matrix.CreateRotationY( AxisRot * 7.2f ) * Barrier1Transform;
+            Barrier2.Transform = Matrix.CreateRotationY( -AxisRot * 17.7f ) * Barrier2Transform;
+            Barrier3.Transform = Matrix.CreateRotationY( AxisRot * 3.4f) * Barrier3Transform;
+            Airlock.Transform = Matrix.CreateTranslation(new Vector3( 0, airlockMove, 0 ) ) * AirlockTransform;
         }
 
 
