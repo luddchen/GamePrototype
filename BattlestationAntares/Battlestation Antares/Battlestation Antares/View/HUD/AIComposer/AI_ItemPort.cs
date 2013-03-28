@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.Control;
 using HUD.HUD;
+using HUD;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
@@ -25,15 +27,15 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public List<AI_Connection> connections;
 
-        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType, SituationController controller) : base(null, controller) {
+        public AI_ItemPort( PortType portType, SituationController controller) : base(null, controller) {
             this.portType = portType;
             this.connections = new List<AI_Connection>();
+            this.AbstractSize = Vector2.Multiply( AI_Item.AI_ITEM_SIZE, new Vector2( 0.075f, 0.133f ) ) * 3f;
+            this.Texture = HUDService.Content.Load<Texture2D>( "Sprites//HUD//Lamp2" );
         }
 
-        public AI_ItemPort( Vector2 abstractPosition, HUDType positionType, PortType portType, AI_Item item, SituationController controller ) : base(null, controller) {
-            this.portType = portType;
+        public AI_ItemPort( PortType portType, AI_Item item, SituationController controller ) : this(portType, controller) {
             this.item = item;
-            this.connections = new List<AI_Connection>();
             this.Action =
                 delegate() {
                     if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {

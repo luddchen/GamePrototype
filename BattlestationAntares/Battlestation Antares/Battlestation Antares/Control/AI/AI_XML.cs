@@ -93,7 +93,7 @@ namespace Battlestation_Antares.Control.AI {
                             Object[] parameters = new Object[2];
                             parameters[0] = new Vector2( 0.5f, 0.5f );
                             parameters[1] = HUDType.RELATIV;
-                            item = (AI_Item)Activator.CreateInstance( type, parameters );
+                            item = (AI_Item)Activator.CreateInstance( type, null );
                             item.dragAction =
                                 delegate() {
                                     aiContainer.DragItem( item );

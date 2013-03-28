@@ -16,7 +16,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private HUD2DSlider slider;
 
-        public AI_Transformer( Vector2 abstractPosition, HUDType positionType) : base( abstractPosition, positionType) {
+        public AI_Transformer() : base() {
             this.typeString.Text = "Transformer";
 
             AddPort( AI_ItemPort.PortType.INPUT );

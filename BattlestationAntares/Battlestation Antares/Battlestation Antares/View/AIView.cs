@@ -15,9 +15,9 @@ namespace Battlestation_Antares.View {
 
 
         public override void Initialize() {
-            HUDTexture bg = new HUDTexture( "Sprites//builder_bg_temp", new Vector2( 0.41f, 0.5f ), new Vector2( 0.82f, 1f ), new Color( 60, 64, 56 ), null, null );
-            bg.LayerDepth = 1.0f;
-            this.Add( bg );
+            //HUDTexture bg = new HUDTexture( "Sprites//builder_bg_temp", new Vector2( 0.41f, 0.5f ), new Vector2( 0.82f, 1f ), new Color( 60, 64, 56 ), null, null );
+            //bg.LayerDepth = 1.0f;
+            //this.Add( bg );
         }
 
         public override void Add( HUD_Item item ) {

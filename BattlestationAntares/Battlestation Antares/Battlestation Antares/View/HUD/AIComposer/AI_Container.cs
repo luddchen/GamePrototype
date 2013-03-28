@@ -44,20 +44,23 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private BuilderState state;
 
         public AI_Container(SituationController controller)
-            : base( new Vector2( 0, 0 ) ) {
+            : base( new Vector2( 0.41f, 0.5f ), new Vector2( 0.82f, 1.0f ) ) {
 
             this.controller = controller;
             this.primitiveBatch = new PrimitiveBatch( HUDService.Device );
             this.state = BuilderState.NORMAL;
+
+            SetBackground( "Sprites//builder_bg_temp", new Color( 120, 128, 112 ) );
 
             this.removeList = new List<HUD_Item>();
             this.aiItems = new List<AI_Item>();
             this.aiConnections = new List<AI_Connection>();
             this.aiBanks = new List<AI_Bank>();
 
-            this.insertBank = new AI_Bank( new Vector2( 0.9f, 0.1f ), HUDType.RELATIV, new Vector2( 210, 110 ), HUDType.ABSOLUT );
+            this.insertBank = new AI_Bank( new Vector2( 0.9f, 0.1f ), AI_Item.AI_ITEM_SIZE * 1.2f );
             this.insertBank.SetBackground( "Sprites//builder_bg_temp", new Color( 120, 128, 112 ) );
-            this.Add( this.insertBank );
+            this.insertBank.LayerDepth = 0.3f;
+            this.controller.view.Add( this.insertBank );
 
             _addBanks(maxBanks);
             _initMouseTexture();
@@ -128,6 +131,36 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
                 }
             }
             this.removeList.Clear();
+
+            int zoomValue = HUDService.Input.getMouseWheelChange();
+            if ( zoomValue > 0 ) {
+                this.Parent.AbstractScale *= 1.05f;
+                if ( this.Parent.AbstractScale > 2.0f ) {
+                    this.Parent.AbstractScale = 2.0f;
+                }
+                if ( this.Parent.AbstractScale <= 1.0f ) {
+                    this.Parent.AbstractPosition = ( this.AbstractSize - this.Parent.AbstractScale * this.AbstractSize ) * 0.5f;
+                } else {
+                    if ( this.Parent.AbstractScale < 2.0f ) {
+                        this.Parent.AbstractPosition += ( this.AbstractSize - this.Parent.AbstractScale * this.AbstractSize ) * 0.05f;
+                    }
+                }
+                this.RenderSizeChanged();
+            }
+            if ( zoomValue < 0 ) {
+                this.Parent.AbstractScale *= 0.95f;
+                if ( this.Parent.AbstractScale < 0.5f ) {
+                    this.Parent.AbstractScale = 0.5f;
+                }
+                if ( this.Parent.AbstractScale <= 1.0f ) {
+                    this.Parent.AbstractPosition = ( this.AbstractSize - this.Parent.AbstractScale * this.AbstractSize ) * 0.5f;
+                } else {
+                    if ( this.Parent.AbstractScale < 2.0f ) {
+                        this.Parent.AbstractPosition -= ( this.AbstractSize - this.Parent.AbstractScale * this.AbstractSize ) * 0.05f;
+                    }
+                }
+                this.RenderSizeChanged();
+            }
         }
 
 
@@ -146,38 +179,44 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private void _initButtons() {
             HUDArray addButtonArray = new HUDArray( new Vector2( 0.9f, 0.35f ), new Vector2( 0.15f, 0.25f ) );
             addButtonArray.direction = LayoutDirection.VERTICAL;
-            this.Add( addButtonArray );
+            addButtonArray.borderSize = new Vector2( 0, 0.01f );
+            addButtonArray.LayerDepth = 0.3f;
+            this.controller.view.Add( addButtonArray );
 
 
             HUDButton addInputButton = new HUDButton( "Input", new Vector2(), 0.7f, this.controller );
             addInputButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Input( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
+                AddInsertItem( new AI_Input() );
             } );
             addInputButton.style = ButtonStyle.BuilderButtonStyle();
+            addInputButton.SetBackground( "Sprites//builder_button" );
             addButtonArray.Add( addInputButton );
 
 
             HUDButton addTransformerButton = new HUDButton( "Transformer", new Vector2(), 0.7f, this.controller );
             addTransformerButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Transformer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
+                AddInsertItem( new AI_Transformer() );
             } );
             addTransformerButton.style = ButtonStyle.BuilderButtonStyle();
+            addTransformerButton.SetBackground( "Sprites//builder_button" );
             addButtonArray.Add( addTransformerButton );
 
 
             HUDButton addMixerButton = new HUDButton( "Mixer", new Vector2(), 0.7f, this.controller );
             addMixerButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Mixer( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
+                AddInsertItem( new AI_Mixer() );
             } );
             addMixerButton.style = ButtonStyle.BuilderButtonStyle();
+            addMixerButton.SetBackground( "Sprites//builder_button" );
             addButtonArray.Add( addMixerButton );
 
 
             HUDButton addOutputButton = new HUDButton( "Output", new Vector2(), 0.7f, this.controller );
             addOutputButton.SetPressedAction( delegate() {
-                AddInsertItem( new AI_Output( new Vector2( 0.7f, 0.1f ), HUDType.RELATIV) );
+                AddInsertItem( new AI_Output() );
             } );
             addOutputButton.style = ButtonStyle.BuilderButtonStyle();
+            addOutputButton.SetBackground( "Sprites//builder_button" );
             addButtonArray.Add( addOutputButton );
         }
 
@@ -185,15 +224,14 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
         private void _initMouseTexture() {
             this.mouseItemTex = new HUDActionTexture(
                 delegate() {
-                    this.mouseItemTex.AbstractPosition = Antares.inputProvider.getMousePos();
+                    this.mouseItemTex.AbstractPosition = HUD_Item.ConcreteToAbstract( Antares.inputProvider.getMousePos() );
+                    this.mouseItemTex.AbstractScale = this.Scale;
                     this.mouseItemTex.RenderSizeChanged();
                 },
                 controller );
-            this.mouseItemTex.PositionType = HUDType.ABSOLUT;
-            this.mouseItemTex.AbstractSize = new Vector2( 200, 100 );
-            this.mouseItemTex.SizeType = HUDType.ABSOLUT;
+            this.mouseItemTex.AbstractSize = AI_Item.AI_ITEM_SIZE;
             this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
-            this.Add( this.mouseItemTex );
+            this.controller.view.Add( this.mouseItemTex );
             this.mouseItemTex.LayerDepth = 0;
             this.mouseItemTex.IsVisible = false;
         }
@@ -217,7 +255,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private void _addBanks(int count) {
             for ( int i = 0; i < count && i < maxBanks; i++ ) {
-                AI_Bank newBank = new AI_Bank( new Vector2( 0.41f, 0.5f), HUDType.RELATIV, new Vector2( 0.8f, 110 ), HUDType.RELATIV_ABSOLUT );
+                AI_Bank newBank = new AI_Bank( Vector2.Zero,  new Vector2( 0.8f, AI_Item.AI_ITEM_SIZE.Y * 1.2f ) );
                 if ( this.controller != null ) {
                     this.controller.Register( newBank );
                 }
@@ -236,7 +274,9 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
                 foreach ( AI_Bank bank in this.aiBanks ) {
                     bank.AbstractPosition = 
-                        new Vector2( bank.AbstractPosition.X, this.aiBanks.IndexOf( bank ) * ( 1.0f / this.aiBanks.Count ) + ( 0.5f / this.aiBanks.Count ) );
+                        new Vector2( 
+                            bank.AbstractPosition.X, 
+                            -this.AbstractSize.Y / 2.0f + this.aiBanks.IndexOf( bank ) * ( 1.0f / this.aiBanks.Count ) + ( 0.5f / this.aiBanks.Count ) );
                 }
             }
         }
@@ -318,10 +358,10 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.moveConnection = new AI_Connection();
 
             AI_ItemPort.PortType portType = AI_ItemPort.Inverse( port.portType );
-            this.movePort = new AI_ItemPort( Antares.inputProvider.getMousePos(), HUDType.ABSOLUT, portType, this.controller );
+            this.movePort = new AI_ItemPort( portType, this.controller );
             this.movePort.Action =
                 delegate() {
-                    this.movePort.AbstractPosition = Antares.inputProvider.getMousePos();
+                    this.movePort.AbstractPosition = HUD_Item.ConcreteToAbstract( Antares.inputProvider.getMousePos() );
                     this.movePort.RenderSizeChanged();
                     if ( Antares.inputProvider.isRightMouseButtonPressed() && this.movePort.Intersects( Antares.inputProvider.getMousePos() ) ) {
                         ClearMoveConnection();

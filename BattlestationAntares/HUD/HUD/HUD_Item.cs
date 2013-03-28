@@ -421,6 +421,11 @@ namespace HUD.HUD {
             return Multiply( abstractCoord, HUDService.RenderSize );
         }
 
+        public static Vector2 ConcreteToAbstract( Vector2 concreteCoord ) {
+            Point rSize = HUDService.RenderSize;
+            return Vector2.Multiply( concreteCoord, new Vector2(1.0f / rSize.X, 1.0f / rSize.Y));
+        }
+
     }
 
 }
