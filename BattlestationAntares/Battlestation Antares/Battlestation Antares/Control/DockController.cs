@@ -13,7 +13,7 @@ namespace Battlestation_Antaris.Control {
 
         private float rot = 0.0f;
 
-        private float rotSpeed = 0.015f;
+        private float rotSpeed = 0.025f;
 
         private float distance = 200.0f;
 
@@ -23,9 +23,9 @@ namespace Battlestation_Antaris.Control {
         public override void onEnter() {
             Antares.world.spaceShip.isVisible = true;
             if ( this.undock ) {
-                Antares.world.spaceStation.OpenDock( 180 );
+                Antares.world.spaceStation.OpenDock( 100 );
             } else {
-                Antares.world.spaceStation.CloseDock( 180 );
+                Antares.world.spaceStation.CloseDock( 100 );
             }
         }
 

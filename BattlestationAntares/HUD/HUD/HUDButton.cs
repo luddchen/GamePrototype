@@ -88,7 +88,7 @@ namespace HUD.HUD {
         }
 
 
-        public void Update( GameTime gameTime ) {
+        public virtual void Update( GameTime gameTime ) {
             if ( this.Intersects( HUDService.Input.getMousePos() ) ) {
                 if ( HUDService.Input.isLeftMouseButtonPressed() ) {
                     this.buttonString.color = this.style.foregroundColorPressed;

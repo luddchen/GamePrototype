@@ -165,12 +165,12 @@ namespace Battlestation_Antares.Model {
 
         public void OpenDock(int delay) {
             this.airLockDelay = delay;
-            dir = -0.1f;
+            dir = -0.2f;
         }
 
         public void CloseDock( int delay ) {
             this.airLockDelay = delay;
-            dir = 0.1f;
+            dir = 0.2f;
         }
 
 
