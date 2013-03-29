@@ -23,7 +23,12 @@
         /// <summary>
         /// the ai-builder/editor situation
         /// </summary>
-        AI_BUILDER = 3
+        AI_BUILDER = 3,
+
+        /// <summary>
+        /// the situation while dock / undock
+        /// </summary>
+        DOCK = 4
     }
 
 }

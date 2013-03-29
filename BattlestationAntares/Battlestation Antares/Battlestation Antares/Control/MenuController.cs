@@ -67,15 +67,7 @@ namespace Battlestation_Antares.Control {
                 this.animationValue = 0.0;
             }
 
-            int index = 0;
-            foreach (HUD_Item item in this.mainMenuButtons.AllChilds) {
-                item.AbstractScale = 1.0f + (float)Math.Cos( this.animationValue + index * MathHelper.TwoPi / this.mainMenuButtons.AllChilds.Count) / 96.0f;
-                index++;
-            }
-
-            //this.optionButtons.AbstractRotation = (float)this.animationValue;
-            this.mainMenuButtons.AbstractScale = 1.0f + (float)Math.Sin( this.animationValue ) * 0.05f;
-            this.mainMenuButtons.AbstractRotation = (float)( Math.Sin( this.animationValue ) ) * 0.05f;
+            this.mainMenuButtons.AbstractScale = 1.0f + (float)Math.Sin( this.animationValue ) * 0.01f;
         }
 
 
@@ -114,22 +106,15 @@ namespace Battlestation_Antares.Control {
             } );
             this.mainMenuButtons.Add( toCommandButton );
 
-            HUDButton toCockpitButton = new HUDButton( "Cockpit", new Vector2( -0.15f, 0.04f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
-            toCockpitButton.AbstractRotation = (float)(-Math.PI / 46.0);
-            toCockpitButton.style = AntaresButtonStyles.Button();
-            toCockpitButton.SetPressedAction( delegate() {
-                this.game.switchTo( Situation.COCKPIT );
-            } );
-            this.mainMenuButtons.Add( toCockpitButton );
-
-            HUDButton toAIButton = new HUDButton( "Editor", new Vector2( 0f, 0.05f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
+            HUDButton toAIButton = new HUDButton( "Editor", new Vector2( -0.1f, 0.04f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
+            toAIButton.AbstractRotation = (float)( -Math.PI / 46.0 );
             toAIButton.style = AntaresButtonStyles.Button();
             toAIButton.SetPressedAction( delegate() {
                 this.game.switchTo( Situation.AI_BUILDER );
             } );
             this.mainMenuButtons.Add( toAIButton );
 
-            HUDButton optionsButton = new HUDButton( "Options", new Vector2( 0.15f, 0.04f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
+            HUDButton optionsButton = new HUDButton( "Options", new Vector2( 0.1f, 0.04f ), new Vector2( 0.1f, 0.05f ), 0.9f, this );
             optionsButton.AbstractRotation = (float)( Math.PI / 46.0 );
             optionsButton.style = AntaresButtonStyles.Button();
             optionsButton.SetPressedAction(

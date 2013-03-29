@@ -24,6 +24,14 @@ namespace Battlestation_Antares.Model {
             DEFECT
         }
 
+        public static float DockPosition = -150f;
+
+        public Vector3 AirlockCurrentPosition {
+            get {
+                return this.globalPosition + (DockPosition + this.airlockMove) * this.rotation.Up;
+            }
+        }
+
         /// <summary>
         /// model bone of the rotating part of the station
         /// </summary>
@@ -70,7 +78,8 @@ namespace Battlestation_Antares.Model {
         float AxisRot = 0.0f;
 
         float dir = 0f;
-        float airlockMove = 0;
+        float airlockMove = 16;
+        int airLockDelay = 0;
 
         /// <summary>
         /// create a new space station within the world
@@ -107,6 +116,7 @@ namespace Battlestation_Antares.Model {
             Barrier3Transform = Barrier3.Transform;
             BarrierTopTransform = BarrierTop.Transform;
             AirlockTransform = Airlock.Transform;
+
         }
 
 
@@ -121,24 +131,19 @@ namespace Battlestation_Antares.Model {
             // update rotation of the rotating part
             AxisRot += (float)( Math.PI / 1440 );
 
-            if ( Vector3.Distance( this.globalPosition, Antares.world.spaceShip.globalPosition ) < 300 ) {
-                if ( Antares.world.spaceShip.attributes.Engine.CurrentVelocity > Antares.world.spaceShip.attributes.Engine.MaxVelocity * 0.1f) {
-                    Antares.world.spaceShip.attributes.Engine.Decelerate();
-                }
-                dir = -0.1f;
+            if ( airLockDelay > 0 ) {
+                airLockDelay--;
             } else {
-                dir = 0.1f;
-            }
-
-            if ( dir != 0 ) {
-                airlockMove += dir;
-                if ( airlockMove > 16 ) {
-                    airlockMove = 16;
-                    dir = 0f;
-                }
-                if ( airlockMove < -0.5f ) {
-                    airlockMove = -0.5f;
-                    dir = 0f;
+                if ( dir != 0 ) {
+                    airlockMove += dir;
+                    if ( airlockMove > 16 ) {
+                        airlockMove = 16;
+                        dir = 0f;
+                    }
+                    if ( airlockMove < -0.5f ) {
+                        airlockMove = -0.5f;
+                        dir = 0f;
+                    }
                 }
             }
 
@@ -155,6 +160,17 @@ namespace Battlestation_Antares.Model {
             if ( this.attributes.Shield.ApplyDamage( damage ) ) {
                 this.attributes.Hull.ApplyDamage( damage );
             }
+        }
+
+
+        public void OpenDock(int delay) {
+            this.airLockDelay = delay;
+            dir = -0.1f;
+        }
+
+        public void CloseDock( int delay ) {
+            this.airLockDelay = delay;
+            dir = 0.1f;
         }
 
 

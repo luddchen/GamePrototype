@@ -45,11 +45,11 @@ namespace Battlestation_Antares.Control {
             } );
             this.view.Add( toMenuButton );
 
-            HUDButton toCockpitButton = new HUDButton( "Cockpit", new Vector2( 0.9f, 0.9f ), new Vector2( 0.1f, 0.05f ), 0.7f, this );
-            toCockpitButton.SetPressedAction( delegate() {
-                this.game.switchTo( Situation.COCKPIT );
+            HUDButton undockButton = new HUDButton( "Undock", new Vector2( 0.9f, 0.9f ), new Vector2( 0.1f, 0.05f ), 0.7f, this );
+            undockButton.SetPressedAction( delegate() {
+                this.game.switchTo( Situation.DOCK );
             } );
-            this.view.Add( toCockpitButton );
+            this.view.Add( undockButton );
 
             buildMenu = new BuildMenu( new Vector2( 0.9f, 0.5f ), 
                 delegate() {

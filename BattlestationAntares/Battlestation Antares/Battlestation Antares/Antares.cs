@@ -1,13 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.Control;
 using System.Collections.Generic;
 using System;
+using Battlestation_Antaris.Control;
 using Battlestation_Antares.Model;
+using Battlestation_Antaris.View;
+using Battlestation_Antares.View;
 using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework.Content;
 using HUD;
-using HUD.HUD;
+using Battlestation_Antares.Control;
 
 namespace Battlestation_Antares {
 
@@ -101,10 +103,11 @@ namespace Battlestation_Antares {
 
             // create situations (control and views)
             this.allSituations = new List<SituationController>();
-            this.allSituations.Add( new CockpitController( this, new View.CockpitView(null) ) );
-            this.allSituations.Add( new CommandController( this, new View.CommandView(null) ) );
-            this.allSituations.Add( new MenuController( this, new View.MenuView(null) ) );
-            this.allSituations.Add( new AIController( this, new View.AIView(null) ) );
+            this.allSituations.Add( new CockpitController( this, new CockpitView(null) ) );
+            this.allSituations.Add( new CommandController( this, new CommandView(null) ) );
+            this.allSituations.Add( new MenuController( this, new MenuView(null) ) );
+            this.allSituations.Add( new AIController( this, new AIView(null) ) );
+            this.allSituations.Add( new DockController( this, new DockView( null ) ) );
 
             initializeDebug();
 

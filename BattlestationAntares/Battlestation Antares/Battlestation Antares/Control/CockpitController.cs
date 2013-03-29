@@ -49,23 +49,17 @@ namespace Battlestation_Antares.Control {
 
             mouseVisibleCounter = mouseTimeOut;
 
-            HUDArray buttons = new HUDArray( new Vector2( 0.8f, 0.95f ),  new Vector2(0.15f, 0.04f) );
+            HUDArray buttons = new HUDArray( new Vector2( 0.8f, 0.95f ),  new Vector2(0.1f, 0.04f) );
             buttons.direction = LayoutDirection.HORIZONTAL;
             buttons.borderSize = new Vector2( 0.01f, 0 );
 
-            toCommandButton = new HUDButton( "Command", new Vector2(), 0.9f, this );
+            HUDButton dockButton = new HUDButton( "Dock", new Vector2(), 0.9f, this );
 
-            this.toCommandButton.SetPressedAction( delegate() {
-                this.game.switchTo( Situation.COMMAND );
+            dockButton.SetPressedAction( delegate() {
+                this.game.switchTo( Situation.DOCK );
             } );
-            buttons.Add( toCommandButton );
+            buttons.Add( dockButton );
 
-            toMenuButton = new HUDButton( "Menu", new Vector2(), 0.9f, this );
-
-            this.toMenuButton.SetPressedAction( delegate() {
-                this.game.switchTo( Situation.MENU );
-            } );
-            buttons.Add( toMenuButton );
             this.view.Add( buttons );
 
             fpsDisplay = new FpsDisplay( new Vector2( 0.125f, 0.03f ) );
