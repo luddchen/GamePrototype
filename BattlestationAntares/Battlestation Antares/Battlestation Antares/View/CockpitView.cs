@@ -26,6 +26,12 @@ namespace Battlestation_Antares.View {
 
         HUDTexture cockpitTexture;
 
+        Vector3 t1;
+        Vector3 t2;
+        Vector3 t3;
+        Vector3 t4;
+        public bool drawBeam = false;
+
 
         /// <summary>
         /// a list of background images
@@ -38,6 +44,9 @@ namespace Battlestation_Antares.View {
 
         Microsoft.Xna.Framework.Graphics.Model targetCrossModel;
         Matrix[] targetCrossBoneTransforms;
+
+        Microsoft.Xna.Framework.Graphics.Model beamModel;
+        Matrix[] beamTransforms;
 
 
         /// <summary>
@@ -108,6 +117,9 @@ namespace Battlestation_Antares.View {
             this.targetCrossModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//TargetCross" );
             this.targetCrossBoneTransforms = new Matrix[this.targetCrossModel.Bones.Count];
 
+            this.beamModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//Beam" );
+            this.beamTransforms = new Matrix[this.beamModel.Bones.Count];
+
             // background
             for ( int i = 0; i < 4; i++ ) {
                 addBackgroundObject( "Models//BGTest//test2" );
@@ -157,6 +169,23 @@ namespace Battlestation_Antares.View {
             Tools.Draw3D.Draw( Antares.world.allDrawable, this.camera );
 
             drawTargetCross();
+
+            if ( this.drawBeam ) {
+                float off = 0.0025f;
+                for ( float f = 0.0f; f <= 0.7f - off; f += off ) {
+                    Vector3 start = Vector3.Hermite( t1, t2, t3, t4, f );
+                    Vector3 end = Vector3.Hermite( t1, t2, t3, t4, f + off );
+                    Vector3 center = ( start + end ) / 2;
+                    Vector3 fRot = Tools.Tools.GetRotation( end - start, Matrix.Identity );
+
+                    Tools.Draw3D.Draw( beamModel, beamTransforms, camera.view, camera.projection, center,
+                        Matrix.CreateRotationX( fRot.X ) * Matrix.CreateRotationY( fRot.Z ),
+                        new Vector3( 1, 1, Vector3.Distance( start, end ) * 0.95f ) );
+
+                    off *= 1.2f;
+                }
+            }
+
             this.grid.Draw( this.camera );
 
         }
@@ -170,6 +199,13 @@ namespace Battlestation_Antares.View {
                                     this.camera.view, this.camera.projection,
                                     this.target.globalPosition, crossRot, new Vector3( this.target.bounding.Radius ) );
             }
+        }
+
+        public void SetBeamParameter( Vector3 t1, Vector3 t2, Vector3 t3, Vector3 t4 ) {
+            this.t1 = t1;
+            this.t2 = t2;
+            this.t3 = t3;
+            this.t4 = t4;
         }
 
     }

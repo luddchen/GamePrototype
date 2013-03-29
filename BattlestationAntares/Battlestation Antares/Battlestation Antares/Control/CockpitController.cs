@@ -28,8 +28,6 @@ namespace Battlestation_Antares.Control {
 
         private MiniMap.Config mapConfig;
 
-        private float autoPilotLimit = 0;
-
         /// <summary>
         /// create a new cockpit controller
         /// </summary>
@@ -113,65 +111,17 @@ namespace Battlestation_Antares.Control {
             }
 
             if ( this.dockButton.isActivated() ) {
-                if ( Vector3.Distance( Antares.world.spaceStation.AirlockCurrentPosition, Antares.world.spaceShip.globalPosition ) < 20.0f ) {
-                    this.dockButton.Deactivate();
-                    this.game.switchTo( Situation.DOCK );
-                } else {
-                    this.autoPilotLimit--;
-                    if ( this.autoPilotLimit <= 0 ) {
-                        this.autoPilotLimit += 1.4f;
-                        // auto pilot test
-                        SpaceShip ship = Antares.world.spaceShip;
-
-                        float upAxisRot = Tools.Tools.GetUpAxisRotation( ship.rotation.Forward, Matrix.Identity );
-
-                        Vector3 direction =
-                            Vector3.Hermite(
+                SpaceShip ship = Antares.world.spaceShip;
+                float distance = Vector3.Distance( ship.globalPosition, Antares.world.spaceStation.AirlockCurrentPosition );
+                ( (CockpitView)this.view ).SetBeamParameter(
                                 ship.globalPosition,
-                                ship.rotation.Forward * ship.attributes.Engine.CurrentVelocity,
+                                ship.rotation.Forward * 500,
                                 Antares.world.spaceStation.AirlockCurrentPosition,
-                                Vector3.Transform( Vector3.Forward, Matrix.CreateRotationY(upAxisRot)) * 10, 0.05f )
-                            - ship.globalPosition;
-                        
-                        Vector3 rot = Tools.Tools.GetRotation( direction, ship.rotation );
+                                Antares.world.spaceStation.rotation.Forward * 1);
+                ( (CockpitView)this.view ).drawBeam = true;
 
-                        if ( rot.Length() > 0.2f ) {
-                            if ( ship.attributes.Engine.CurrentVelocity > 0 ) {
-                                ship.attributes.Engine.Decelerate();
-                            }
-                            if ( ship.attributes.Engine.CurrentVelocity < 0 ) {
-                                ship.attributes.Engine.Accelerate();
-                            }
-                        } else {
-                            float distance = (float)Math.Sqrt(Vector3.Distance( ship.globalPosition, Antares.world.spaceStation.AirlockCurrentPosition ));
-                            if ( distance * 0.2f > ship.attributes.Engine.CurrentVelocity ) {
-                                ship.attributes.Engine.Accelerate();
-                            } else {
-                                ship.attributes.Engine.Decelerate();
-                            }
-                        }
-
-                        if ( rot.Z < ship.attributes.EngineYaw.CurrentVelocity 
-                            && ship.attributes.EngineYaw.CurrentVelocity < ship.attributes.EngineYaw.MaxVelocity * 0.01f ) {
-                            ship.InjectControl( Control.YAW_RIGHT );
-                        }
-
-                        if ( rot.Z > ship.attributes.EngineYaw.CurrentVelocity
-                            && ship.attributes.EngineYaw.CurrentVelocity > -ship.attributes.EngineYaw.MaxVelocity * 0.01f ) {
-                            ship.InjectControl( Control.YAW_LEFT );
-                        }
-
-                        if ( rot.X < ship.attributes.EnginePitch.CurrentVelocity
-                            && ship.attributes.EnginePitch.CurrentVelocity < ship.attributes.EnginePitch.MaxVelocity * 0.1f ) {
-                            ship.InjectControl( Control.PITCH_DOWN );
-                        }
-
-                        if ( rot.X > ship.attributes.EnginePitch.CurrentVelocity
-                            && ship.attributes.EnginePitch.CurrentVelocity > -ship.attributes.EnginePitch.MaxVelocity * 0.1f ) {
-                            ship.InjectControl( Control.PITCH_UP );
-                        }
-                    }
-                }
+            } else {
+                ( (CockpitView)this.view ).drawBeam = false;
             }
 
             Antares.world.miniMap.ZoomOnMouseWheelOver();
