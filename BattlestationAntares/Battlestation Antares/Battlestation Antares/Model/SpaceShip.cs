@@ -115,9 +115,6 @@ namespace Battlestation_Antares.Model {
                 return String.Format( "{0:F0}", ( obj as SpaceShip ).globalPosition.Length() );
             } ) );
 
-            Antares.debugViewer.Add( new DebugElement( this, "Laser Heat", delegate( Object obj ) {
-                return String.Format( "{0:F1}", ( obj as SpaceShip ).attributes.Laser.CurrentHeat );
-            } ) );
         }
 
 

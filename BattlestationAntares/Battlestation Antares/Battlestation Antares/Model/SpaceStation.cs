@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
 using SpatialObjectAttributesLibrary;
+using Battlestation_Antares.Tools;
 
 namespace Battlestation_Antares.Model {
 
@@ -15,13 +16,42 @@ namespace Battlestation_Antares.Model {
     /// </summary>
     public class SpaceStation : SpatialObject {
 
+        public enum AirlockStatus {
+            OPEN,
+            CLOSED,
+            OPENING,
+            CLOSING,
+            DEFECT
+        }
+
         /// <summary>
         /// model bone of the rotating part of the station
         /// </summary>
         private ModelBone Barrier1;
         private ModelBone Barrier2;
         private ModelBone Barrier3;
+        private ModelBone BarrierTop;
         private ModelBone Airlock;
+
+        public AirlockStatus AirlockCurrentState {
+            get {
+                if ( dir == 0 ) {
+                    if ( airlockMove <= 0 ) {
+                        return AirlockStatus.OPEN;
+                    }
+                    if ( airlockMove >= 16 ) {
+                        return AirlockStatus.CLOSED;
+                    }
+                } else {
+                    if ( dir > 0 ) {
+                        return AirlockStatus.CLOSING;
+                    } else {
+                        return AirlockStatus.OPENING;
+                    }
+                }
+                return AirlockStatus.DEFECT;
+            }
+        }
 
 
         /// <summary>
@@ -30,6 +60,7 @@ namespace Battlestation_Antares.Model {
         Matrix Barrier1Transform;
         Matrix Barrier2Transform;
         Matrix Barrier3Transform;
+        Matrix BarrierTopTransform;
         Matrix AirlockTransform;
 
 
@@ -38,9 +69,8 @@ namespace Battlestation_Antares.Model {
         /// </summary>
         float AxisRot = 0.0f;
 
-        float dir = 0.1f;
+        float dir = 0f;
         float airlockMove = 0;
-        int airlockDelay = 0;
 
         /// <summary>
         /// create a new space station within the world
@@ -69,15 +99,14 @@ namespace Battlestation_Antares.Model {
             Barrier1 = model3d.Bones["Barrier1"];
             Barrier2 = model3d.Bones["Barrier2"];
             Barrier3 = model3d.Bones["Barrier3"];
+            BarrierTop = model3d.Bones["BarrierTop"];
             Airlock = model3d.Bones["Airlock"];
 
             Barrier1Transform = Barrier1.Transform;
             Barrier2Transform = Barrier2.Transform;
             Barrier3Transform = Barrier3.Transform;
+            BarrierTopTransform = BarrierTop.Transform;
             AirlockTransform = Airlock.Transform;
-
-            // initial rotation of full station, dont know why this is necessary
-            //this.rotation = Tools.Tools.Pitch( this.rotation, (float)( -Math.PI / 2 ) );
         }
 
 
@@ -92,25 +121,32 @@ namespace Battlestation_Antares.Model {
             // update rotation of the rotating part
             AxisRot += (float)( Math.PI / 1440 );
 
-            if ( airlockDelay <= 0 ) {
+            if ( Vector3.Distance( this.globalPosition, Antares.world.spaceShip.globalPosition ) < 300 ) {
+                if ( Antares.world.spaceShip.attributes.Engine.CurrentVelocity > Antares.world.spaceShip.attributes.Engine.MaxVelocity * 0.1f) {
+                    Antares.world.spaceShip.attributes.Engine.Decelerate();
+                }
+                dir = -0.1f;
+            } else {
+                dir = 0.1f;
+            }
+
+            if ( dir != 0 ) {
                 airlockMove += dir;
                 if ( airlockMove > 16 ) {
                     airlockMove = 16;
-                    airlockDelay = 120;
-                    dir *= -1.0f;
+                    dir = 0f;
                 }
                 if ( airlockMove < -0.5f ) {
                     airlockMove = -0.5f;
-                    airlockDelay = 120;
-                    dir *= -1.0f;
+                    dir = 0f;
                 }
-            } else {
-                airlockDelay--;
             }
 
-            Barrier1.Transform = Matrix.CreateRotationY( AxisRot * 7.2f ) * Barrier1Transform;
-            Barrier2.Transform = Matrix.CreateRotationY( -AxisRot * 17.7f ) * Barrier2Transform;
-            Barrier3.Transform = Matrix.CreateRotationY( AxisRot * 3.4f) * Barrier3Transform;
+
+            Barrier1.Transform = Matrix.CreateRotationY( AxisRot * 0.5f ) * Barrier1Transform;
+            Barrier2.Transform = Matrix.CreateRotationY( -AxisRot * 7.7f ) * Barrier2Transform;
+            Barrier3.Transform = Matrix.CreateRotationY( AxisRot * 11.4f ) * Barrier3Transform;
+            BarrierTop.Transform = Matrix.CreateScale( new Vector3( 1, 1.0f - 1.0f / 16.5f * (airlockMove + 0.5f), 1 ) );
             Airlock.Transform = Matrix.CreateTranslation(new Vector3( 0, airlockMove, 0 ) ) * AirlockTransform;
         }
 
@@ -119,6 +155,13 @@ namespace Battlestation_Antares.Model {
             if ( this.attributes.Shield.ApplyDamage( damage ) ) {
                 this.attributes.Hull.ApplyDamage( damage );
             }
+        }
+
+
+        public override void addDebugOutput() {
+            Antares.debugViewer.Add( new DebugElement( this, "Airlock", delegate( Object obj ) {
+                return String.Format( "{0}", ( obj as SpaceStation ).AirlockCurrentState );
+            } ) );
         }
 
 
