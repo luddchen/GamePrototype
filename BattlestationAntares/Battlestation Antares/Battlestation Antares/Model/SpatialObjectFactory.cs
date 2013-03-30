@@ -15,8 +15,8 @@ namespace Battlestation_Antares.Model {
             SpatialObjectFactory.world = world;
         }
 
-        public static SpatialObject buildSpatialObject( Type spatialObjectType ) {
-            SpatialObject newObj;
+        public static SpatialObjectOld buildSpatialObject( Type spatialObjectType ) {
+            SpatialObjectOld newObj;
 
             if ( spatialObjectType.Equals( typeof( Battlestation_Antares.Model.Radar ) ) ) {
                 newObj = new Radar( Vector3.Zero, content, world );

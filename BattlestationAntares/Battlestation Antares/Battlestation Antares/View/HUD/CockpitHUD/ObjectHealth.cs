@@ -13,11 +13,11 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
 
         private HUDTexture hullImage;
 
-        public delegate Color ColorProvider(SpatialObject o);
+        public delegate Color ColorProvider(SpatialObjectOld o);
 
         private ColorProvider GetColor;
 
-        private SpatialObject obj;
+        private SpatialObjectOld obj;
 
 
         public ObjectHealth( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition ) {
@@ -32,7 +32,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         }
 
 
-        public void setObject( SpatialObject obj, String hullTexture, float hullScale) {
+        public void setObject( SpatialObjectOld obj, String hullTexture, float hullScale) {
             this.obj = obj;
             this.shield.GetValue =
                 delegate() {
@@ -43,7 +43,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
             this.hullImage.AbstractScale = hullScale;
             this.hullImage.IsVisible = true;
             this.GetColor = 
-                delegate(SpatialObject o) {
+                delegate(SpatialObjectOld o) {
                     float v = o.attributes.Hull.CurrentHealthPoints / o.attributes.Hull.MaxHealthPoints;
                     return Color.Lerp( Color.Red, Color.Green, v );
                 };

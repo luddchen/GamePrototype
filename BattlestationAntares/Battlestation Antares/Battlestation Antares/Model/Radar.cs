@@ -10,9 +10,9 @@ namespace Battlestation_Antares.Model {
     /// <summary>
     /// a radar station
     /// </summary>
-    public class Radar : SpatialObject {
+    public class Radar : SpatialObjectOld {
 
-        public List<SpatialObject> objectsInRange;
+        public List<SpatialObjectOld> objectsInRange;
 
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Battlestation_Antares.Model {
 
             this.attributes.Radar.Range = 500.0f;
 
-            this.objectsInRange = new List<SpatialObject>();
+            this.objectsInRange = new List<SpatialObjectOld>();
 
             this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//Radar//radar_2d" );
             this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
@@ -62,7 +62,7 @@ namespace Battlestation_Antares.Model {
             float distance;
 
             // objects
-            foreach ( SpatialObject obj in this.world.allObjects ) {
+            foreach ( SpatialObjectOld obj in this.world.allObjects ) {
                 distance = Vector3.Distance( this.globalPosition, obj.globalPosition );
 
                 if ( distance <= this.attributes.Radar.Range ) {

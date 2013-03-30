@@ -60,7 +60,7 @@ namespace Battlestation_Antares.View {
         /// creates the camera view from the perspective of a spatial object
         /// </summary>
         /// <param name="obj">a spatial object</param>
-        public void ClampTo( SpatialObject obj ) {
+        public void ClampTo( SpatialObjectOld obj ) {
             Update( obj.globalPosition, obj.rotation.Forward, obj.rotation.Up );
         }
 

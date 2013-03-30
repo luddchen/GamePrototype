@@ -43,22 +43,22 @@ namespace Battlestation_Antares.Tools {
 
 
 
-        public static void Draw( SpatialObject obj, Camera camera ) {
+        public static void Draw( SpatialObjectOld obj, Camera camera ) {
             if ( obj.isVisible ) {
                 Draw( obj.model3d, obj.boneTransforms, camera.view, camera.projection, obj.globalPosition, obj.rotation, obj.scale );
             }
         }
 
 
-        public static void Draw( List<SpatialObject> allObjects, Camera camera ) {
-            foreach ( SpatialObject obj in allObjects ) {
+        public static void Draw( List<SpatialObjectOld> allObjects, Camera camera ) {
+            foreach ( SpatialObjectOld obj in allObjects ) {
                 Draw( obj, camera );
             }
         }
 
 
-        public static void Draw( List<List<SpatialObject>> allObjectLists, Camera camera ) {
-            foreach ( List<SpatialObject> allObjects in allObjectLists ) {
+        public static void Draw( List<List<SpatialObjectOld>> allObjectLists, Camera camera ) {
+            foreach ( List<SpatialObjectOld> allObjects in allObjectLists ) {
                 Draw( allObjects, camera );
             }
         }

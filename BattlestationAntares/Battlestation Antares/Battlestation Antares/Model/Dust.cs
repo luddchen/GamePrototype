@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 
 namespace Battlestation_Antares.Model {
-    public class Dust : SpatialObject {
+    public class Dust : SpatialObjectOld {
         const int MAX_PARENT_DIST = 1000;
 
-        SpatialObject parent;
+        SpatialObjectOld parent;
 
-        public Dust( SpatialObject parent, ContentManager content, WorldModel world )
+        public Dust( SpatialObjectOld parent, ContentManager content, WorldModel world )
             : base( parent.globalPosition, "Models//Dust//dust", content, world ) {
             this.parent = parent;
             this.scale.X = 0.5f;
@@ -20,9 +20,7 @@ namespace Battlestation_Antares.Model {
             setRandomPos();
         }
 
-        public override void Update( GameTime gameTime ) {
-
-            base.Update( gameTime );
+        public override void Update( GameTime gameTime ) { 
             float distToParent = Vector3.Distance( parent.globalPosition, this.globalPosition );
             if ( distToParent > ( MAX_PARENT_DIST ) ) {
                 setRandomPos();

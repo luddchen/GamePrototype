@@ -11,7 +11,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
         private WorldModel world;
 
-        public SpatialObject target;
+        public SpatialObjectOld target;
 
 
         public TargetInfo( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)

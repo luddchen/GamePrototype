@@ -7,7 +7,7 @@ namespace Battlestation_Antares.Control.AI {
 
     public class ValueProvider {
 
-        public static float Distance( SpatialObject source, SpatialObject target, float maxDistance ) {
+        public static float Distance( SpatialObjectOld source, SpatialObjectOld target, float maxDistance ) {
             float dist = ( target.globalPosition - source.globalPosition ).Length();
             dist = 1.0f - dist / maxDistance;
 
@@ -15,7 +15,7 @@ namespace Battlestation_Antares.Control.AI {
         }
 
 
-        public static float OrthogonalVelocity( SpatialObject source, SpatialObject target, float maxSpeed ) {
+        public static float OrthogonalVelocity( SpatialObjectOld source, SpatialObjectOld target, float maxSpeed ) {
             Vector3 direction = source.globalPosition - target.globalPosition;
             float ortho = Vector3.Dot( direction, target.rotation.Forward );
             ortho = ortho * target.attributes.Engine.CurrentVelocity;
@@ -31,7 +31,7 @@ namespace Battlestation_Antares.Control.AI {
         }
 
 
-        public static float Rotation( SpatialObject source, SpatialObject target ) {
+        public static float Rotation( SpatialObjectOld source, SpatialObjectOld target ) {
             Vector3 targetVector = target.globalPosition - source.globalPosition;
             Vector3 rot = Tools.Tools.GetRotation( targetVector, source.rotation );
 
@@ -42,12 +42,12 @@ namespace Battlestation_Antares.Control.AI {
         }
 
 
-        public static float ShieldStatus( SpatialObject target ) {
+        public static float ShieldStatus( SpatialObjectOld target ) {
             return target.attributes.Shield.CurrentHealthPoints / target.attributes.Shield.MaxHealthPoints;
         }
 
 
-        public static float HullStatus( SpatialObject target ) {
+        public static float HullStatus( SpatialObjectOld target ) {
             return target.attributes.Hull.CurrentHealthPoints / target.attributes.Hull.MaxHealthPoints;
         }
     }

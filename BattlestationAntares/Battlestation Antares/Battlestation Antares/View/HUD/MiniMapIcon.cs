@@ -7,12 +7,12 @@ namespace Battlestation_Antares.View.HUD {
 
     public class MiniMapIcon : HUDTexture {
 
-        public SpatialObject spatialObject;
+        public SpatialObjectOld spatialObject;
 
         public bool updateRotation;
 
 
-        public MiniMapIcon( Texture2D texture, SpatialObject spatialObject )
+        public MiniMapIcon( Texture2D texture, SpatialObjectOld spatialObject )
             : base( texture, null, null, null, null, null ) {
             this.spatialObject = spatialObject;
             this.updateRotation = true;
@@ -41,7 +41,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public void Update( SpatialObject centerObject ) {
+        public void Update( SpatialObjectOld centerObject ) {
             Vector3 center = Vector3.Zero;
             if ( centerObject != null ) {
                 center.X = centerObject.globalPosition.X;

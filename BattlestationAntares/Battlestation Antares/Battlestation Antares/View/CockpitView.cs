@@ -17,7 +17,7 @@ namespace Battlestation_Antares.View {
     /// </summary>
     class CockpitView : HUDView {
 
-        public SpatialObject target;
+        public SpatialObjectOld target;
 
         /// <summary>
         /// the game view camera
@@ -138,13 +138,9 @@ namespace Battlestation_Antares.View {
             float pitch = (float)( RandomGen.random.NextDouble() * Math.PI );
             float roll = (float)( RandomGen.random.NextDouble() * Math.PI * 2 );
             Matrix bgRot = Tools.Tools.YawPitchRoll( Matrix.Identity, yaw, pitch, roll );
-            int red = 128 + RandomGen.random.Next( 127 );
-            int green = 128 + RandomGen.random.Next( 127 );
-            int blue = 128 + RandomGen.random.Next( 127 );
-            Color bgColor = new Color( red, green, blue );
             float scale = 1.25f + (float)RandomGen.random.NextDouble() * 1.5f;
 
-            this.backgroundObjects.Add( new BackgroundObject( model, bgRot, scale, bgColor) );
+            this.backgroundObjects.Add( new BackgroundObject( model, bgRot, scale) );
         }
 
 

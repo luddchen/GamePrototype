@@ -12,9 +12,9 @@ namespace Battlestation_Antares.Model {
     /// <summary>
     /// the players space ship
     /// </summary>
-    public class SpaceShip : SpatialObject {
+    public class SpaceShip : SpatialObjectOld {
 
-        public SpatialObject target;
+        public SpatialObjectOld target;
 
         private float[] laserOffsets;
 

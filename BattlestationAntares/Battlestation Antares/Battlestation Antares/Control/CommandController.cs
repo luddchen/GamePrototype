@@ -110,7 +110,7 @@ namespace Battlestation_Antares.Control {
             Type structureType = buildMenu.getStructureType();
             Vector2 mousePos = Antares.inputProvider.getMousePos();
             if ( Antares.world.miniMapRenderer.Intersects( mousePos ) ) {
-                SpatialObject newStructure = SpatialObjectFactory.buildSpatialObject( structureType );
+                SpatialObjectOld newStructure = SpatialObjectFactory.buildSpatialObject( structureType );
                 //Vector2 miniMapCoord = Antares.world.miniMap.screenToMiniMapCoord( Antares.inputProvider.getMousePos() );
                 //newStructure.globalPosition = Antares.world.miniMap.miniMapToWorldCoord( miniMapCoord );
             }

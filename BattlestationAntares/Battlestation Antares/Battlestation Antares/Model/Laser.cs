@@ -6,9 +6,9 @@ using System;
 
 namespace Battlestation_Antares.Model {
 
-    public class Laser : SpatialObject {
+    public class Laser : SpatialObjectOld {
 
-        public SpatialObject parent;
+        public SpatialObjectOld parent;
 
         private float upOffset;
 
@@ -19,7 +19,7 @@ namespace Battlestation_Antares.Model {
         // only for test the visual illusion
         private static float FUN_FACTOR = 1.0f;
 
-        public Laser( SpatialObject parent, float upOffset, float rightOffset, ContentManager content, WorldModel world )
+        public Laser( SpatialObjectOld parent, float upOffset, float rightOffset, ContentManager content, WorldModel world )
             : base( parent.globalPosition, "Models//Weapon//laser", content, world ) {
 
             this.parent = parent;

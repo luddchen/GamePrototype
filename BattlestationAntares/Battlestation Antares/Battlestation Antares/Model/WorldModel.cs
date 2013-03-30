@@ -42,41 +42,41 @@ namespace Battlestation_Antares.Model {
         /// <summary>
         /// a list of all player radars
         /// </summary>
-        private List<SpatialObject> allRadars;
+        private List<SpatialObjectOld> allRadars;
 
 
         /// <summary>
         /// a list of all player turrets
         /// </summary>
-        public List<SpatialObject> allTurrets;
+        public List<SpatialObjectOld> allTurrets;
 
 
         /// <summary>
         /// a list of all spatial objects
         /// </summary>
-        public List<SpatialObject> allObjects;
+        public List<SpatialObjectOld> allObjects;
 
 
         /// <summary>
         /// a list of all Laser beams
         /// </summary>
-        private List<SpatialObject> allWeapons;
+        private List<SpatialObjectOld> allWeapons;
 
         /// <summary>
         /// a list of all space dust
         /// </summary>
-        private List<SpatialObject> allDust;
+        private List<SpatialObjectOld> allDust;
 
 
-        public List<List<SpatialObject>> allDrawable;
+        public List<List<SpatialObjectOld>> allDrawable;
 
-        public List<List<SpatialObject>> allUpdatable;
-
-
-        private List<SpatialObject> removeList;
+        public List<List<SpatialObjectOld>> allUpdatable;
 
 
-        public Tools.DynamicOctree<SpatialObject> octree;
+        private List<SpatialObjectOld> removeList;
+
+
+        public Tools.DynamicOctree<SpatialObjectOld> octree;
 
         private Tools.RayCastThreadPool RayCastPool;
 
@@ -87,27 +87,27 @@ namespace Battlestation_Antares.Model {
         /// <param name="game">the game</param>
         public WorldModel( Antares game ) {
             this.game = game;
-            this.allObjects = new List<SpatialObject>();
-            this.allRadars = new List<SpatialObject>();
-            this.allTurrets = new List<SpatialObject>();
-            this.allDust = new List<SpatialObject>();
-            this.allWeapons = new List<SpatialObject>();
+            this.allObjects = new List<SpatialObjectOld>();
+            this.allRadars = new List<SpatialObjectOld>();
+            this.allTurrets = new List<SpatialObjectOld>();
+            this.allDust = new List<SpatialObjectOld>();
+            this.allWeapons = new List<SpatialObjectOld>();
 
-            this.allDrawable = new List<List<SpatialObject>>();
+            this.allDrawable = new List<List<SpatialObjectOld>>();
             this.allDrawable.Add( this.allObjects );
             this.allDrawable.Add( this.allRadars );
             this.allDrawable.Add( this.allTurrets );
             this.allDrawable.Add( this.allDust );
             this.allDrawable.Add( this.allWeapons );
 
-            this.allUpdatable = new List<List<SpatialObject>>();
+            this.allUpdatable = new List<List<SpatialObjectOld>>();
             this.allUpdatable.Add( this.allObjects );
             this.allUpdatable.Add( this.allRadars );
             this.allUpdatable.Add( this.allTurrets );
             this.allUpdatable.Add( this.allDust );
             this.allUpdatable.Add( this.allWeapons );
 
-            this.removeList = new List<SpatialObject>();
+            this.removeList = new List<SpatialObjectOld>();
 
             this.miniMap = new MiniMap();
             this.miniMap.IsVisible = true;
@@ -115,7 +115,7 @@ namespace Battlestation_Antares.Model {
             this.miniMap.renderer = this.miniMapRenderer;
 
             // octree test
-            this.octree = new Tools.DynamicOctree<SpatialObject>( 3, 1, 10, new BoundingBox( new Vector3( -5000, -5000, -5000 ), new Vector3( 5000, 5000, 5000 ) ) );
+            this.octree = new Tools.DynamicOctree<SpatialObjectOld>( 3, 1, 10, new BoundingBox( new Vector3( -5000, -5000, -5000 ), new Vector3( 5000, 5000, 5000 ) ) );
 
             this.RayCastPool = new Tools.RayCastThreadPool( this );
         }
@@ -132,13 +132,13 @@ namespace Battlestation_Antares.Model {
 
             for ( int i = 0; i < 10; i++ ) {
                 if ( random.Next( 2 ) == 0 ) {
-                    SpatialObject obj =
-                        new SpatialObject( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ), "Models//TargetShip//targetship_2", content, this );
+                    SpatialObjectOld obj =
+                        new SpatialObjectOld( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ), "Models//TargetShip//targetship_2", content, this );
                     obj.isEnemy = true;
                     obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
                 } else {
-                    SpatialObject obj =
-                        new SpatialObject( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ), "Models//Cubus//Cubus_0", content, this );
+                    SpatialObjectOld obj =
+                        new SpatialObjectOld( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ), "Models//Cubus//Cubus_0", content, this );
                     obj.isEnemy = true;
                     obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
                 }
@@ -177,8 +177,8 @@ namespace Battlestation_Antares.Model {
             this.RemoveNow();
 
             // update all spatial objects
-            foreach ( List<SpatialObject> list in this.allUpdatable ) {
-                foreach ( SpatialObject obj in list ) {
+            foreach ( List<SpatialObjectOld> list in this.allUpdatable ) {
+                foreach ( SpatialObjectOld obj in list ) {
                     obj.Update( gameTime );
                 }
             }
@@ -192,7 +192,7 @@ namespace Battlestation_Antares.Model {
             bool shipVisible = this.spaceShip.isVisible;
             this.spaceShip.isVisible = true;
 
-            foreach ( SpatialObject obj in this.allObjects ) {
+            foreach ( SpatialObjectOld obj in this.allObjects ) {
                 if ( obj.isVisible ) {
                     BoundingSphere itemSphere = new BoundingSphere( obj.bounding.Center + obj.globalPosition, obj.bounding.Radius );
                     if ( !octree.Add( obj, itemSphere ) ) {
@@ -205,15 +205,15 @@ namespace Battlestation_Antares.Model {
 
             this.octree.BuildTree();
 
-            foreach ( SpatialObject o in this.allWeapons ) {
+            foreach ( SpatialObjectOld o in this.allWeapons ) {
                 if ( o is Laser ) {
-                    SpatialObject parent = ( (Laser)o ).parent;
+                    SpatialObjectOld parent = ( (Laser)o ).parent;
 
                     float size = ( Math.Abs( o.scale.Z ) + o.attributes.Engine.CurrentVelocity / 2.0f );
                     Vector3 minPos = o.globalPosition - size * o.rotation.Forward;
                     float dist = size * 2.0f;
 
-                    SpatialObject hit = octree.CastRay( new Ray( minPos, o.rotation.Forward ), 0, ref dist );
+                    SpatialObjectOld hit = octree.CastRay( new Ray( minPos, o.rotation.Forward ), 0, ref dist );
 
                     if ( hit != null && hit != parent ) {
                         hit.onHit( parent.attributes.Laser.Damage );
@@ -250,7 +250,7 @@ namespace Battlestation_Antares.Model {
         /// add a spatial object to this world
         /// </summary>
         /// <param name="obj">a spatial object</param>
-        public void addObject( SpatialObject obj ) {
+        public void addObject( SpatialObjectOld obj ) {
             if ( ( obj is Laser ) || ( obj is Missile ) ) {
                 this.allWeapons.Add( obj );
             } else if ( obj is Dust ) {
@@ -266,7 +266,7 @@ namespace Battlestation_Antares.Model {
 
 
         private void RemoveNow() {
-            foreach ( SpatialObject obj in this.removeList ) {
+            foreach ( SpatialObjectOld obj in this.removeList ) {
                 if ( ( obj is Laser ) || ( obj is Missile ) ) {
                     this.allWeapons.Remove( obj );
                 } else if ( obj is Dust ) {
@@ -292,7 +292,7 @@ namespace Battlestation_Antares.Model {
         /// trigger object remove
         /// </summary>
         /// <param name="laser">laser to remove</param>
-        public void Remove( SpatialObject obj ) {
+        public void Remove( SpatialObjectOld obj ) {
             this.removeList.Add( obj );
         }
 

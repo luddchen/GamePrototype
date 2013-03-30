@@ -10,18 +10,18 @@ namespace Battlestation_Antares.Tools {
 
     public class RayCaster {
 
-        public SpatialObject source;
+        public SpatialObjectOld source;
 
-        public SpatialObject target;
+        public SpatialObjectOld target;
 
         public float distance;
 
-        private DynamicOctree<SpatialObject> octree;
+        private DynamicOctree<SpatialObjectOld> octree;
 
         private RayCastThreadPool pool;
 
 
-        public RayCaster( SpatialObject source, DynamicOctree<SpatialObject> octree, RayCastThreadPool pool ) {
+        public RayCaster( SpatialObjectOld source, DynamicOctree<SpatialObjectOld> octree, RayCastThreadPool pool ) {
             this.source = source;
             this.octree = octree;
             this.pool = pool;
@@ -68,7 +68,7 @@ namespace Battlestation_Antares.Tools {
 
             int counter = 0;
 
-            foreach ( SpatialObject item in this.world.allTurrets ) {
+            foreach ( SpatialObjectOld item in this.world.allTurrets ) {
                 RayCaster rayCaster = new RayCaster( item, this.world.octree, this );
                 caster[counter] = rayCaster;
                 ThreadPool.QueueUserWorkItem( rayCaster.ThreadPoolCallback, null );

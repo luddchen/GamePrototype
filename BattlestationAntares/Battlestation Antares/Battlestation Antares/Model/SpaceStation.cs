@@ -14,7 +14,7 @@ namespace Battlestation_Antares.Model {
     /// <summary>
     /// the Antares space station
     /// </summary>
-    public class SpaceStation : SpatialObject {
+    public class SpaceStation : SpatialObjectOld {
 
         public enum AirlockStatus {
             OPEN,

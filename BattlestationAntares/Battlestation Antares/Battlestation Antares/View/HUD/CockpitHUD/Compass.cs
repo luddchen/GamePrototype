@@ -22,7 +22,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         /// <summary>
         /// the spatial object (e.g. spaceship) that contains the compass
         /// </summary>
-        private SpatialObject source;
+        private SpatialObjectOld source;
 
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         /// initialize the compass on the specified spatial object that contains this compass
         /// </summary>
         /// <param name="source"></param>
-        public void Initialize( SpatialObject source ) {
+        public void Initialize( SpatialObjectOld source ) {
             this.source = source;
         }
 

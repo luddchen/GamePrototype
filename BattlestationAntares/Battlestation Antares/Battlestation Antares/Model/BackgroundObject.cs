@@ -15,8 +15,6 @@ namespace Battlestation_Antares.Model {
 
         Matrix rotation;
 
-        Vector3 color;
-
         float scale;
 
 
@@ -24,12 +22,11 @@ namespace Battlestation_Antares.Model {
         /// creates a new background image
         /// </summary>
         /// <param name="game"></param>
-        public BackgroundObject( String name, Matrix rotation, float scale, Color color) {
+        public BackgroundObject( String name, Matrix rotation, float scale) {
             this.scale = scale;
             this.bgModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( name );
             this.rotation = rotation;
             boneTransforms = new Matrix[bgModel.Bones.Count];
-            this.color = new Vector3( color.R / 256.0f, color.G / 256.0f, color.B / 256.0f );
         }
 
 

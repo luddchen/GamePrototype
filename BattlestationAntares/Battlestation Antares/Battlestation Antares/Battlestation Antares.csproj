@@ -95,6 +95,7 @@
     <Compile Include="Model\SpaceShip.cs" />
     <Compile Include="Model\SpaceStation.cs" />
     <Compile Include="Model\SpatialObject.cs" />
+    <Compile Include="Model\SpatialObjectOld.cs" />
     <Compile Include="Model\SpatialObjectFactory.cs" />
     <Compile Include="Model\Turret.cs" />
     <Compile Include="Model\WorldModel.cs" />

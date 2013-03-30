@@ -15,9 +15,9 @@ namespace Battlestation_Antares.Control.AI {
 
         int maxIndice;
 
-        public SpatialObject source;
+        public SpatialObjectOld source;
 
-        public List<SpatialObject> targetObjects;
+        public List<SpatialObjectOld> targetObjects;
 
         public List<float> targetResults;
 
@@ -26,7 +26,7 @@ namespace Battlestation_Antares.Control.AI {
             this.inputs = new List<AI_Input.InputType>();
             this.items = new List<AI_Item>();
             this.portIndices = new List<Tuple<int[], int[]>>();
-            this.targetObjects = new List<SpatialObject>();
+            this.targetObjects = new List<SpatialObjectOld>();
             this.targetResults = new List<float>();
         }
 
@@ -35,7 +35,7 @@ namespace Battlestation_Antares.Control.AI {
             this.items = new List<AI_Item>( ai.items );
             this.portIndices = new List<Tuple<int[], int[]>>( ai.portIndices );
             this.maxIndice = ai.maxIndice;
-            this.targetObjects = new List<SpatialObject>();
+            this.targetObjects = new List<SpatialObjectOld>();
             this.targetResults = new List<float>();
         }
 
@@ -123,7 +123,7 @@ namespace Battlestation_Antares.Control.AI {
         public void ThreadPoolCallback( Object threadContext ) {
             this.targetResults.Clear();
 
-            foreach ( SpatialObject target in this.targetObjects ) {
+            foreach ( SpatialObjectOld target in this.targetObjects ) {
                 if ( target == this.source || target is Dust ) {
                     this.targetResults.Add( -1.0f );
                     continue;

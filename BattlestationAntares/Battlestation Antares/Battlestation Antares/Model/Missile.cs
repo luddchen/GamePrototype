@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Battlestation_Antares.Model {
 
-    public class Missile : SpatialObject {
+    public class Missile : SpatialObjectOld {
         private int timeout;
 
-        public Missile( SpatialObject parent, float offset, ContentManager content, WorldModel world )
+        public Missile( SpatialObjectOld parent, float offset, ContentManager content, WorldModel world )
             : base( parent.globalPosition, "Models//Weapon//missile", content, world ) {
             this.rotation = parent.rotation;
             this.attributes.Engine.CurrentVelocity = 10.0f;

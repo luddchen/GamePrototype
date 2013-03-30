@@ -12,7 +12,7 @@ namespace Battlestation_Antares.Model {
     /// <summary>
     /// a dangerous turret
     /// </summary>
-    public class Turret : SpatialObject {
+    public class Turret : SpatialObjectOld {
         public AI ai;
 
         private Random random;
@@ -60,7 +60,7 @@ namespace Battlestation_Antares.Model {
                 this.ai.ThreadPoolCallback( null );
 
                 float maxValue = 0;
-                SpatialObject target = null;
+                SpatialObjectOld target = null;
 
                 for ( int i = 0; i < this.ai.targetResults.Count; i++ ) {
                     if ( maxValue < this.ai.targetResults[i] ) {

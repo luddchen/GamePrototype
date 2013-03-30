@@ -10,10 +10,10 @@ namespace Battlestation_Antares.View.HUD {
 
     public class MiniMap : HUDMaskedContainer, IUpdatableItem {
         public class Config {
-            public SpatialObject centeredObject;
+            public SpatialObjectOld centeredObject;
             public float iconPositionScale;
 
-            public Config( float iconPositionScale, SpatialObject centeredObject ) {
+            public Config( float iconPositionScale, SpatialObjectOld centeredObject ) {
                 this.iconPositionScale = iconPositionScale;
                 this.centeredObject = centeredObject;
             }
@@ -38,7 +38,7 @@ namespace Battlestation_Antares.View.HUD {
         public static Color BORDER_COLOR_HOVER = new Color( 32, 32, 32, 32 );
 
 
-        public SpatialObject centeredObject;
+        public SpatialObjectOld centeredObject;
 
         public Vector2 iconSize = new Vector2( 0.025f, 0.025f );
 
