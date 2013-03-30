@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.View.HUD;
 using HUD.HUD;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antares.Model {
 
@@ -21,7 +22,9 @@ namespace Battlestation_Antares.Model {
         /// <summary>
         /// a minimap of this world
         /// </summary>
-        public MiniMap miniMap;
+        private MiniMap miniMap;
+
+        public MiniMapRenderer miniMapRenderer;
 
 
         /// <summary>
@@ -106,8 +109,10 @@ namespace Battlestation_Antares.Model {
 
             this.removeList = new List<SpatialObject>();
 
-            this.miniMap = new MiniMap( Vector2.Zero, HUDType.RELATIV);
-            this.miniMap.IsVisible = false;
+            this.miniMap = new MiniMap();
+            this.miniMap.IsVisible = true;
+            this.miniMapRenderer = new MiniMapRenderer( this.miniMap );
+            this.miniMap.renderer = this.miniMapRenderer;
 
             // octree test
             this.octree = new Tools.DynamicOctree<SpatialObject>( 3, 1, 10, new BoundingBox( new Vector3( -5000, -5000, -5000 ), new Vector3( 5000, 5000, 5000 ) ) );
@@ -178,6 +183,8 @@ namespace Battlestation_Antares.Model {
                 }
             }
 
+            // render minimap
+            this.miniMapRenderer.Update( gameTime );
 
             // octree test
             octree.Clear();

@@ -18,7 +18,7 @@ namespace Battlestation_Antares.View {
             // test content
             HUDString testString = new HUDString( "Antares Command", new Vector2( 0.5f, 0.1f ), null );
             this.Add( testString );
-            this.Add( Antares.world.miniMap );
+            this.Add( Antares.world.miniMapRenderer );
         }
 
     }

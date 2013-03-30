@@ -10,6 +10,7 @@ using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework.Content;
 using HUD;
 using Battlestation_Antares.Control;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antares {
 
@@ -115,9 +116,12 @@ namespace Battlestation_Antares {
         }
 
         private void initializeDebug() {
+            SituationSwitch situationSwitch = new SituationSwitch( this );
             if ( ACTIVATE_DEBUG ) {
                 foreach ( SituationController situationControl in allSituations ) {
                     situationControl.view.Add( Antares.debugViewer );
+                    situationControl.Register( situationSwitch );
+                    situationControl.view.Add( situationSwitch );
                 }
             }
         }

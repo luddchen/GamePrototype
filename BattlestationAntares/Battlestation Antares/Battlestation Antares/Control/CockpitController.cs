@@ -7,6 +7,7 @@ using HUD.HUD;
 using HUD;
 using Battlestation_Antares.Model;
 using System;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antares.Control {
 
@@ -26,7 +27,7 @@ namespace Battlestation_Antares.Control {
 
         private TargetInfo targetInfo;
 
-        private MiniMap.Config mapConfig;
+        private MiniMapRenderer.Config mapConfig;
 
         /// <summary>
         /// create a new cockpit controller
@@ -51,19 +52,6 @@ namespace Battlestation_Antares.Control {
 
             mouseVisibleCounter = mouseTimeOut;
 
-            HUDArray buttons = new HUDArray( new Vector2( 0.8f, 0.95f ),  new Vector2(0.1f, 0.04f) );
-            buttons.direction = LayoutDirection.HORIZONTAL;
-            buttons.borderSize = new Vector2( 0.01f, 0 );
-
-            HUDButton easyDockButton = new HUDButton( "Dock", new Vector2(), 0.9f, this );
-
-            easyDockButton.SetPressedAction( delegate() {
-                this.game.switchTo( Situation.DOCK );
-            } );
-            buttons.Add( easyDockButton );
-
-            this.view.Add( buttons );
-
             this.dockButton = new DockButton( new Vector2( 0.225f, 0.925f ) );
             this.view.Add( this.dockButton );
             Register( this.dockButton );
@@ -71,11 +59,16 @@ namespace Battlestation_Antares.Control {
             fpsDisplay = new FpsDisplay( new Vector2( 0.125f, 0.03f ) );
             this.view.Add( fpsDisplay );
 
-            mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.91f ), new Vector2( 0.25f, 0.18f ), new Vector2( 0.25f, 0.18f ), Antares.world.spaceShip );
+            mapConfig = new MiniMapRenderer.Config( new Vector2( 0.5f, 0.90f ), new Vector2( 0.16f, 0.20f ), new MiniMap.Config( 0.3f, Antares.world.spaceShip ) );
+            Register( Antares.world.miniMapRenderer.miniMap );
         }
 
         public override void onEnter() {
-            Antares.world.miniMap.changeConfig( this.mapConfig );
+            Antares.world.miniMapRenderer.changeConfig( this.mapConfig );
+        }
+
+        public override void onExit() {
+            this.dockButton.Deactivate();
         }
 
 
@@ -110,9 +103,18 @@ namespace Battlestation_Antares.Control {
                 }
             }
 
+            SpaceShip ship = Antares.world.spaceShip;
+            float distance = Vector3.Distance( ship.globalPosition, Antares.world.spaceStation.AirlockCurrentPosition );
+
             if ( this.dockButton.isActivated() ) {
-                SpaceShip ship = Antares.world.spaceShip;
-                float distance = Vector3.Distance( ship.globalPosition, Antares.world.spaceStation.AirlockCurrentPosition );
+                if ( Antares.world.spaceStation.AirlockCurrentState != SpaceStation.AirlockStatus.OPEN ) {
+                    Antares.world.spaceStation.OpenDock( 0 );
+                }
+
+                if ( distance < 10 && Math.Abs(ship.attributes.Engine.CurrentVelocity) < 0.5f) {
+                    this.game.switchTo( Situation.DOCK );
+                }
+
                 ( (CockpitView)this.view ).SetBeamParameter(
                                 ship.globalPosition,
                                 ship.rotation.Forward * 500,
@@ -122,9 +124,10 @@ namespace Battlestation_Antares.Control {
 
             } else {
                 ( (CockpitView)this.view ).drawBeam = false;
+                if ( Antares.world.spaceStation.AirlockCurrentState != SpaceStation.AirlockStatus.CLOSED && distance > 50) {
+                    Antares.world.spaceStation.CloseDock( 0 );
+                }
             }
-
-            Antares.world.miniMap.ZoomOnMouseWheelOver();
 
             // redirect input
             Antares.world.spaceShip.InjectControl( Antares.inputProvider.getInput() );

@@ -74,7 +74,7 @@ namespace Battlestation_Antares.View {
             cockpitTexture.LayerDepth = 1.0f;
             this.Add( cockpitTexture );
 
-            this.Add( Antares.world.miniMap );
+            this.Add( Antares.world.miniMapRenderer );
 
             HUDTexture cross = new HUDTexture( "Sprites//Cross", new Vector2( 0.5f, 0.5f ), new Vector2( 0.02f, 0.03f ) );
             cross.LayerDepth = 0.8f;
@@ -171,7 +171,7 @@ namespace Battlestation_Antares.View {
             drawTargetCross();
 
             if ( this.drawBeam ) {
-                float off = 0.0025f;
+                float off = 0.00125f;
                 for ( float f = 0.0f; f <= 0.7f - off; f += off ) {
                     Vector3 start = Vector3.Hermite( t1, t2, t3, t4, f );
                     Vector3 end = Vector3.Hermite( t1, t2, t3, t4, f + off );
@@ -187,7 +187,7 @@ namespace Battlestation_Antares.View {
             }
 
             this.grid.Draw( this.camera );
-
+            
         }
 
         private void drawTargetCross() {

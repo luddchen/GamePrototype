@@ -3,22 +3,18 @@ using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
 using Microsoft.Xna.Framework.Graphics;
 using HUD.HUD;
+using Battlestation_Antaris.View.HUD;
+using HUD;
 
 namespace Battlestation_Antares.View.HUD {
 
-    public class MiniMap : HUDContainer {
+    public class MiniMap : HUDMaskedContainer, IUpdatableItem {
         public class Config {
             public SpatialObject centeredObject;
-            public Vector2 abstractPosition;
-            public Vector2 bgAbstractSize;
-            public Vector2 fgAbstractSize;
             public float iconPositionScale;
 
-            public Config( Vector2 abstractPosition, Vector2 bgAbstractSize, Vector2 fgAbstractSize, SpatialObject centeredObject ) {
-                this.abstractPosition = abstractPosition;
-                this.bgAbstractSize = bgAbstractSize;
-                this.fgAbstractSize = fgAbstractSize;
-                iconPositionScale = 0.08f;
+            public Config( float iconPositionScale, SpatialObject centeredObject ) {
+                this.iconPositionScale = iconPositionScale;
                 this.centeredObject = centeredObject;
             }
         }
@@ -35,50 +31,37 @@ namespace Battlestation_Antares.View.HUD {
 
         public static float MAX_SCALE = 0.500f;
 
-        public static Color BACKGROUND_COLOR = new Color( 16, 24, 24, 255 );
+        public static Color BACKGROUND_COLOR = new Color( 16, 24, 24, 16 );
 
         public static Color BORDER_COLOR = new Color( 16, 16, 16, 8 );
 
         public static Color BORDER_COLOR_HOVER = new Color( 32, 32, 32, 32 );
 
-        private HUDTexture foreground;
 
-        private SpatialObject centeredObject;
+        public SpatialObject centeredObject;
 
-        public Vector2 iconSize = new Vector2( 15, 15 );
+        public Vector2 iconSize = new Vector2( 0.025f, 0.025f );
 
         public float iconPositionScale = 0.1f;
 
+        public MiniMapRenderer renderer;
+
         private MiniMap.Config oldConfig;
 
-        public MiniMap( Vector2 abstractPosition, HUDType positionType ) : base( abstractPosition ) {
-            SetBackground( "Sprites//Square_Cross", MiniMap.BACKGROUND_COLOR );
-            this.SizeType = HUDType.RELATIV;
-            this.AbstractSize = new Vector2( 0.25f, 0.4f );
-
-            this.foreground = new HUDTexture();
-            this.foreground.color = MiniMap.BORDER_COLOR;
-            this.foreground.AbstractSize = new Vector2( 0.25f, 0.4f );
-            this.foreground.SizeType = HUDType.RELATIV;
-            this.foreground.Texture = Antares.content.Load<Texture2D>( "Sprites//SquareBorder" );
-
-            Add( this.foreground );
-
-            this.foreground.LayerDepth = this.LayerDepth - 0.01f;
+        public MiniMap() : base( new Vector2( 0.5f, 0.5f ), new Vector2( 1f, 1f ) ) {
+            SetMask( "Sprites//Square_Cross", MiniMap.BORDER_COLOR );
         }
 
 
         public override void Draw( SpriteBatch spritBatch ) {
-            //Vector2 backgroundSize = ( this.background.Size - this.iconSize ) / 2;
-            Vector2 backgroundSize = ( this.Size - this.iconSize ) / 2;
 
             foreach ( HUD_Item element in this.AllChilds ) {
                 if ( element is MiniMapIcon ) {
                     MiniMapIcon icon = ( (MiniMapIcon)element );
                     icon.Update( centeredObject );
 
-                    if ( Math.Abs( icon.AbstractPosition.X ) < backgroundSize.X &&
-                        Math.Abs( icon.AbstractPosition.Y ) < backgroundSize.Y &&
+                    if ( Math.Abs( icon.AbstractPosition.X ) < this.AbstractSize.X / 2 &&
+                        Math.Abs( icon.AbstractPosition.Y ) < this.AbstractSize.Y / 2 &&
                         ( icon.spatialObject.isVisible || icon.spatialObject is SpaceShip ) ) {
                         icon.IsVisible = true;
                     } else {
@@ -87,34 +70,33 @@ namespace Battlestation_Antares.View.HUD {
                 }
             }
 
-            RenderSizeChanged();
-
             base.Draw( spritBatch );
         }
 
 
         public void ZoomOnMouseWheelOver() {
-            //if ( this.background.Intersects( Antares.inputProvider.getMousePos() ) ) {
-            if ( this.Intersects( Antares.inputProvider.getMousePos() ) ) {
-                this.foreground.color = MiniMap.BORDER_COLOR_HOVER;
+            if ( this.renderer != null ) {
+                if ( this.renderer.Intersects( HUDService.Input.getMousePos() ) ) {
+                    SetMask( MiniMap.BORDER_COLOR_HOVER );
 
-                int wheelChange = Antares.inputProvider.getMouseWheelChange();
+                    int wheelChange = HUDService.Input.getMouseWheelChange();
 
-                if ( wheelChange != 0 ) {
-                    if ( wheelChange > 0 ) {
-                        this.iconPositionScale *= 1.2f;
-                        if ( this.iconPositionScale > MiniMap.MAX_SCALE ) {
-                            this.iconPositionScale = MiniMap.MAX_SCALE;
-                        }
-                    } else {
-                        this.iconPositionScale /= 1.2f;
-                        if ( this.iconPositionScale < MiniMap.MIN_SCALE ) {
-                            this.iconPositionScale = MiniMap.MIN_SCALE;
+                    if ( wheelChange != 0 ) {
+                        if ( wheelChange > 0 ) {
+                            this.iconPositionScale *= 1.2f;
+                            if ( this.iconPositionScale > MiniMap.MAX_SCALE ) {
+                                this.iconPositionScale = MiniMap.MAX_SCALE;
+                            }
+                        } else {
+                            this.iconPositionScale /= 1.2f;
+                            if ( this.iconPositionScale < MiniMap.MIN_SCALE ) {
+                                this.iconPositionScale = MiniMap.MIN_SCALE;
+                            }
                         }
                     }
+                } else {
+                    SetMask( MiniMap.BORDER_COLOR );
                 }
-            } else {
-                this.foreground.color = MiniMap.BORDER_COLOR;
             }
         }
 
@@ -123,9 +105,6 @@ namespace Battlestation_Antares.View.HUD {
                 oldConfig.iconPositionScale = this.iconPositionScale;
             }
             oldConfig = config;
-            this.AbstractPosition = config.abstractPosition;
-            this.AbstractSize = config.bgAbstractSize;
-            this.foreground.AbstractSize = config.fgAbstractSize;
             this.iconPositionScale = config.iconPositionScale;
             this.centeredObject = config.centeredObject;
 
@@ -143,6 +122,16 @@ namespace Battlestation_Antares.View.HUD {
             return worldCoord;
         }
 
+
+        public void Update( GameTime gameTime ) {
+            ZoomOnMouseWheelOver();
+        }
+
+        public bool Enabled {
+            get {
+                return true;
+            }
+        }
     }
 
 }

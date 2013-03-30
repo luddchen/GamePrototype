@@ -36,7 +36,7 @@ namespace Battlestation_Antares.View.HUD {
 
         public MiniMap miniMap {
             get {
-                return Antares.world.miniMap;
+                return Antares.world.miniMapRenderer.miniMap;
             }
         }
 
@@ -50,7 +50,7 @@ namespace Battlestation_Antares.View.HUD {
             }
 
             this.AbstractPosition =
-                new Vector2( this.spatialObject.globalPosition.X - center.X, this.spatialObject.globalPosition.Z - center.Z ) * miniMap.iconPositionScale;
+                new Vector2( this.spatialObject.globalPosition.X - center.X, this.spatialObject.globalPosition.Z - center.Z ) * miniMap.iconPositionScale / 1000;
 
             if ( this.updateRotation ) {
                 this.AbstractRotation = Tools.Tools.GetUpAxisRotation( this.spatialObject.rotation.Forward, Matrix.Identity );

@@ -141,6 +141,8 @@
     <Compile Include="View\HUD\CommandHUD\BuildMenu.cs" />
     <Compile Include="View\HUD\CockpitHUD\FpsDisplay.cs" />
     <Compile Include="View\HUD\MiniMap.cs" />
+    <Compile Include="View\HUD\MiniMapRenderer.cs" />
+    <Compile Include="View\HUD\SituationSwitch.cs" />
     <Compile Include="View\MenuView.cs" />
     <Compile Include="View\Skybox.cs" />
   </ItemGroup>

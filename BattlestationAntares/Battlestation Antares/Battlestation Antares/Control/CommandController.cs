@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Battlestation_Antares.Model;
 using HUD.HUD;
 using HUD;
+using Battlestation_Antaris.View.HUD;
 
 namespace Battlestation_Antares.Control {
 
@@ -22,7 +23,7 @@ namespace Battlestation_Antares.Control {
 
         private CommandMode currentMode;
 
-        private MiniMap.Config mapConfig;
+        private MiniMapRenderer.Config mapConfig;
 
         private BuildMenu buildMenu;
 
@@ -66,13 +67,12 @@ namespace Battlestation_Antares.Control {
             mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( "Models//Radar//radar_2d", this ) );
             this.view.AddRange( mouseTextures.Values );
 
-            mapConfig = new MiniMap.Config( new Vector2( 0.5f, 0.5f ), new Vector2( 0.625f, 1f ), new Vector2( 0.625f, 1f ), Antares.world.spaceStation );
-            mapConfig.iconPositionScale = 0.25f;
-
+            mapConfig = new MiniMapRenderer.Config( new Vector2( 0.5f, 0.5f ), new Vector2( 0.625f, 1f ), new MiniMap.Config( 0.1f, Antares.world.spaceStation ) );
+            Register( Antares.world.miniMapRenderer.miniMap );
         }
 
         public override void onEnter() {
-            Antares.world.miniMap.changeConfig( this.mapConfig );
+            Antares.world.miniMapRenderer.changeConfig( this.mapConfig );
         }
 
         public override void onExit() {
@@ -104,19 +104,15 @@ namespace Battlestation_Antares.Control {
                 this.currentMode = CommandMode.NORMAL;
             }
 
-            if ( Antares.inputProvider.getMouseWheelChange() != 0 ) {
-                Antares.world.miniMap.ZoomOnMouseWheelOver();
-            }
-
         }
 
         private void createNewStructure() {
             Type structureType = buildMenu.getStructureType();
             Vector2 mousePos = Antares.inputProvider.getMousePos();
-            if ( Antares.world.miniMap.Intersects( mousePos ) ) {
+            if ( Antares.world.miniMapRenderer.Intersects( mousePos ) ) {
                 SpatialObject newStructure = SpatialObjectFactory.buildSpatialObject( structureType );
-                Vector2 miniMapCoord = Antares.world.miniMap.screenToMiniMapCoord( Antares.inputProvider.getMousePos() );
-                newStructure.globalPosition = Antares.world.miniMap.miniMapToWorldCoord( miniMapCoord );
+                //Vector2 miniMapCoord = Antares.world.miniMap.screenToMiniMapCoord( Antares.inputProvider.getMousePos() );
+                //newStructure.globalPosition = Antares.world.miniMap.miniMapToWorldCoord( miniMapCoord );
             }
         }
 
