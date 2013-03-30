@@ -1,46 +1,32 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Battlestation_Antares.View;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// an object that can be drawn in background with respect to its spherical coordinates and a local (viewer) rotation
     /// </summary>
-    public class BackgroundObject {
-
-        Microsoft.Xna.Framework.Graphics.Model bgModel;
-
-        Matrix[] boneTransforms;
-
-        Matrix rotation;
-
-        float scale;
-
+    class BackgroundObject : SpatialObject {
 
         /// <summary>
         /// creates a new background image
         /// </summary>
         /// <param name="game"></param>
-        public BackgroundObject( String name, Matrix rotation, float scale) {
-            this.scale = scale;
-            this.bgModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( name );
-            this.rotation = rotation;
-            boneTransforms = new Matrix[bgModel.Bones.Count];
+        public BackgroundObject( String modelName, Matrix rotation, float scale) : base(modelName, rotation: rotation ) {
+            this.scale = new Vector3( 1000 * scale );
         }
 
+        public override void Update( GameTime gameTime ) {
+            this.globalPosition = Vector3.Transform(
+                Vector3.Forward,
+                Matrix.CreateTranslation( Vector3.Forward * 9000f ) * rotation 
+                * Matrix.CreateTranslation( Antares.world.spaceShip.globalPosition ) );
+        }
 
-        /// <summary>
-        /// draw this element
-        /// </summary>
-        /// <param name="spriteBatch">the spritebatch</param>
-        public void Draw( Camera camera, int nr ) {
-            Matrix world = Matrix.CreateScale( camera.farClipping * scale / 10 )
-                            * Matrix.CreateTranslation( Vector3.Forward * ( camera.farClipping * 0.9f - nr ) )
-                            * rotation
-                            * Matrix.CreateTranslation( Antares.world.spaceShip.globalPosition );
-
-            Tools.Draw3D.Draw( this.bgModel, this.boneTransforms, camera.view, camera.projection, world );
+        public override void Draw( Camera camera ) {
+            base.Draw( camera );
         }
 
     }

@@ -97,6 +97,7 @@
     <Compile Include="Model\SpatialObject.cs" />
     <Compile Include="Model\SpatialObjectOld.cs" />
     <Compile Include="Model\SpatialObjectFactory.cs" />
+    <Compile Include="Model\TactileSpatialObject.cs" />
     <Compile Include="Model\Turret.cs" />
     <Compile Include="Model\WorldModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

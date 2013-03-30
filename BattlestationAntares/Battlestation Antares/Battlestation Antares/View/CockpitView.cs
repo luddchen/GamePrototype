@@ -9,6 +9,7 @@ using Battlestation_Antaris.View.HUD.CockpitHUD;
 using Battlestation_Antares.Model;
 using HUD.HUD;
 using HUD;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antares.View {
 
@@ -42,12 +43,8 @@ namespace Battlestation_Antares.View {
 
         Grid grid;
 
-        Microsoft.Xna.Framework.Graphics.Model targetCrossModel;
-        Matrix[] targetCrossBoneTransforms;
-
-        Microsoft.Xna.Framework.Graphics.Model beamModel;
-        Matrix[] beamTransforms;
-
+        SpatialObject targetCross;
+        SpatialObject beam;
 
         /// <summary>
         /// creates a new cockpit view
@@ -114,19 +111,16 @@ namespace Battlestation_Antares.View {
                 };
             this.Add( lamp );
 
-            this.targetCrossModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//TargetCross" );
-            this.targetCrossBoneTransforms = new Matrix[this.targetCrossModel.Bones.Count];
-
-            this.beamModel = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//Beam" );
-            this.beamTransforms = new Matrix[this.beamModel.Bones.Count];
+            this.targetCross = new SpatialObject( "TargetCross" );
+            this.beam = new SpatialObject( "Beam" );
 
             // background
             for ( int i = 0; i < 4; i++ ) {
-                addBackgroundObject( "Models//BGTest//test2" );
+                addBackgroundObject( "BGTest//test2" );
             }
 
             for ( int i = 0; i < 1; i++ ) {
-                addBackgroundObject( "Models//BGTest//test" );
+                addBackgroundObject( "BGTest//test" );
             }
 
             skybox = new Skybox( "Models//Skysphere//skysphere");
@@ -157,9 +151,9 @@ namespace Battlestation_Antares.View {
             this.skybox.Draw( this.camera );
 
             // draw background
-            int nr = 1;
             foreach ( BackgroundObject bg in this.backgroundObjects ) {
-                bg.Draw( this.camera, nr++ );
+                bg.Update( null ); // until bg is integrated into world model
+                bg.Draw( this.camera );
             }
 
             Tools.Draw3D.Draw( Antares.world.allDrawable, this.camera );
@@ -167,33 +161,31 @@ namespace Battlestation_Antares.View {
             drawTargetCross();
 
             if ( this.drawBeam ) {
+                Vector3 start = Vector3.Hermite( t1, t2, t3, t4, 0.0f );
+                Vector3 end;
                 float off = 0.00125f;
-                for ( float f = 0.0f; f <= 0.7f - off; f += off ) {
-                    Vector3 start = Vector3.Hermite( t1, t2, t3, t4, f );
-                    Vector3 end = Vector3.Hermite( t1, t2, t3, t4, f + off );
-                    Vector3 center = ( start + end ) / 2;
+                for ( float f = off; f <= 0.7f - off; f += off , off *= 1.2f ) {
+                    end = Vector3.Hermite( t1, t2, t3, t4, f );
                     Vector3 fRot = Tools.Tools.GetRotation( end - start, Matrix.Identity );
 
-                    Tools.Draw3D.Draw( beamModel, beamTransforms, camera.view, camera.projection, center,
-                        Matrix.CreateRotationX( fRot.X ) * Matrix.CreateRotationY( fRot.Z ),
-                        new Vector3( 1, 1, Vector3.Distance( start, end ) * 0.95f ) );
-
-                    off *= 1.2f;
+                    this.beam.globalPosition = ( start + end ) / 2;
+                    this.beam.rotation = Matrix.CreateRotationX( fRot.X ) * Matrix.CreateRotationY( fRot.Z );
+                    this.beam.scale = new Vector3( 1, 1, Vector3.Distance( start, end ) * 0.95f );
+                    this.beam.Draw( this.camera );
+                    start = end;
                 }
             }
 
             this.grid.Draw( this.camera );
-            
         }
 
         private void drawTargetCross() {
             if ( this.target != null ) {
                 Vector3 tRot = Tools.Tools.GetRotation( this.target.globalPosition - Antares.world.spaceShip.globalPosition, Antares.world.spaceShip.rotation );
-                Matrix crossRot = Tools.Tools.YawPitchRoll( Antares.world.spaceShip.rotation, tRot.Z, tRot.X, tRot.Y );
-
-                Tools.Draw3D.Draw( this.targetCrossModel, this.targetCrossBoneTransforms,
-                                    this.camera.view, this.camera.projection,
-                                    this.target.globalPosition, crossRot, new Vector3( this.target.bounding.Radius ) );
+                this.targetCross.rotation = Tools.Tools.YawPitchRoll( Antares.world.spaceShip.rotation, tRot.Z, tRot.X, tRot.Y );
+                this.targetCross.globalPosition = this.target.globalPosition;
+                this.targetCross.scale = new Vector3( this.target.bounding.Radius );
+                this.targetCross.Draw( this.camera );
             }
         }
 
