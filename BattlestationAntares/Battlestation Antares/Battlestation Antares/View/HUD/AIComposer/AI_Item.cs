@@ -6,7 +6,7 @@ using HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Item : HUDContainer, IUpdatableItem {
+    class AI_Item : HUDContainer, IUpdatableItem {
 
         public static Vector2 AI_ITEM_SIZE = new Vector2( 0.125f, 0.1f );
 

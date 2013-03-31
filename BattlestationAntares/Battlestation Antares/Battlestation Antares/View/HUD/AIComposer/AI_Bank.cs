@@ -6,7 +6,8 @@ using HUD.HUD;
 using HUD;
 
 namespace Battlestation_Antaris.View.HUD.AIComposer {
-    public class AI_Bank : HUDContainer, IUpdatableItem {
+
+    class AI_Bank : HUDContainer, IUpdatableItem {
 
         public static Color NORMAL_COLOR = new Color( 28, 32, 24, 16 );
 

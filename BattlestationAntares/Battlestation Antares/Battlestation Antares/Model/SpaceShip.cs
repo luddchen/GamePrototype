@@ -6,15 +6,16 @@ using SpatialObjectAttributesLibrary;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
 using Battlestation_Antares.Tools;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// the players space ship
     /// </summary>
-    public class SpaceShip : SpatialObjectOld {
+    class SpaceShip : SpatialObjectOld {
 
-        public SpatialObjectOld target;
+        public TactileSpatialObject target;
 
         private float[] laserOffsets;
 
@@ -27,10 +28,9 @@ namespace Battlestation_Antares.Model {
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public SpaceShip( Vector3 position, String modelName, ContentManager content, WorldModel world )
-            : base( position, modelName, content, world ) {
-            this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>( "Attributes//SpaceShip" ) );
-            this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//SpaceShip//spaceship_2d" );
+        public SpaceShip( Vector3 position ) : base( "SpaceShip//spaceship1_2", position ) {
+            this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//SpaceShip" ) );
+            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//SpaceShip//spaceship_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
             //this.miniMapIcon.scale = 2.0f;
             this.laserOffsets = new float[2] { -4.0f, 4.0f };
@@ -69,7 +69,7 @@ namespace Battlestation_Antares.Model {
                 && this.attributes.Laser.CurrentHeat < this.attributes.Laser.HeatUntilCooldown ) {
                 this.attributes.Laser.CurrentHeat += this.attributes.Laser.HeatProduction;
                 this.attributes.Laser.CurrentReloadTime = this.attributes.Laser.ReloadTime;
-                Laser laser = new Laser( this, -2.0f, this.laserOffsets[this.laserIndex], this.world.game.Content, this.world );
+                Laser laser = new Laser( this, -2.0f, this.laserOffsets[this.laserIndex]);
                 this.laserIndex++;
                 if ( this.laserIndex >= this.laserOffsets.Length ) {
                     this.laserIndex = 0;
@@ -78,7 +78,7 @@ namespace Battlestation_Antares.Model {
 
             if ( control == Control.Control.FIRE_MISSILE ) {
                 if ( this.attributes.Missile.CurrentReloadTime <= 0 ) {
-                    Missile missile = new Missile( this, -2.0f, this.world.game.Content, this.world );
+                    Missile missile = new Missile( this, -2.0f );
                     this.attributes.Missile.CurrentReloadTime = this.attributes.Missile.ReloadTime;
                 }
             }
@@ -86,7 +86,7 @@ namespace Battlestation_Antares.Model {
             if ( control == Control.Control.TARGET_NEXT_ENEMY ) {
                 //Console.WriteLine("Blubb!");
                 float testDist = float.MaxValue;
-                this.target = this.world.octree.CastRay( new Ray( this.globalPosition, this.rotation.Forward ), 1, ref testDist );
+                this.target = Antares.world.octree.CastRay( new Ray( this.globalPosition, this.rotation.Forward ), 1, ref testDist );
             }
 
         }
@@ -115,13 +115,6 @@ namespace Battlestation_Antares.Model {
                 return String.Format( "{0:F0}", ( obj as SpaceShip ).globalPosition.Length() );
             } ) );
 
-        }
-
-
-        public override void onHit( float damage ) {
-            if ( this.attributes.Shield.ApplyDamage( damage ) ) {
-                this.attributes.Hull.ApplyDamage( damage );
-            }
         }
 
         public override string ToString() {

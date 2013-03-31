@@ -9,7 +9,7 @@ using System;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Container : HUDContainer, IUpdatableItem {
+    class AI_Container : HUDContainer, IUpdatableItem {
 
         private enum BuilderState {
             NORMAL,

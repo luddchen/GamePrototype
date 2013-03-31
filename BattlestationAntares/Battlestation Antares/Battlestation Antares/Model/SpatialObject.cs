@@ -37,12 +37,12 @@ namespace Battlestation_Antaris.Model {
         /// <summary>
         /// the 3D model
         /// </summary>
-        private Microsoft.Xna.Framework.Graphics.Model model;
+        protected Microsoft.Xna.Framework.Graphics.Model model;
 
         /// <summary>
         /// the transform matrices for all model parts / bones
         /// </summary>
-        private Matrix[] boneTransforms;
+        protected Matrix[] boneTransforms;
 
         /// <summary>
         /// name of the loaded model
@@ -51,7 +51,7 @@ namespace Battlestation_Antaris.Model {
 
         #endregion
 
-        public SpatialObject( String modelName, Vector3 position = new Vector3(), Matrix? rotation = null, Vector3 scale = new Vector3(), bool isVisible = true ) {
+        public SpatialObject( String modelName, Vector3 position = new Vector3(), Matrix? rotation = null, Vector3? scale = null, bool isVisible = true ) {
             this.modelName = modelName;
             this.model = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//" + this.modelName );
             this.boneTransforms = new Matrix[this.model.Bones.Count];
@@ -60,7 +60,7 @@ namespace Battlestation_Antaris.Model {
 
             this.rotation = rotation ?? Matrix.Identity;
 
-            this.scale = scale;
+            this.scale = scale ?? Vector3.One;
 
             this.isVisible = isVisible;
         }

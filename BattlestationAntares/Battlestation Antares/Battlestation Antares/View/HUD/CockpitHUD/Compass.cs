@@ -7,7 +7,8 @@ using Battlestation_Antaris.Model;
 using Battlestation_Antares.View;
 
 namespace Battlestation_Antaris.View.HUD.CockpitHUD {
-    public class Compass : HUDRenderedTexture {
+
+    class Compass : HUDRenderedTexture {
 
         private SpatialObject compass;
 

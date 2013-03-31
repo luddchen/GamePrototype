@@ -5,7 +5,7 @@ using Battlestation_Antares.Model;
 
 namespace Battlestation_Antaris.View.HUD {
 
-    public class MiniMapRenderer : HUDRenderedItem {
+    class MiniMapRenderer : HUDRenderedItem {
 
         public class Config {
             public Vector2 abstractPosition;

@@ -2,7 +2,8 @@
 using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
-    public class AI_Output : AI_Item {
+
+    class AI_Output : AI_Item {
 
         public enum OutputType {
             RESULT,

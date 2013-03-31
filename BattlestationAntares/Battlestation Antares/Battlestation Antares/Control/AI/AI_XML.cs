@@ -7,7 +7,7 @@ using HUD.HUD;
 
 namespace Battlestation_Antares.Control.AI {
 
-    public class AI_XML {
+    class AI_XML {
 
         public static void WriteAIContainer( String fileName, AI_Container aiContainer ) {
             XmlTextWriter writer = new XmlTextWriter( fileName, null );

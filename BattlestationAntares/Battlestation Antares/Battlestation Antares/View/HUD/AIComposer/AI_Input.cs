@@ -3,7 +3,7 @@ using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Input : AI_Item {
+    class AI_Input : AI_Item {
 
         public enum InputType {
             DISTANCE,

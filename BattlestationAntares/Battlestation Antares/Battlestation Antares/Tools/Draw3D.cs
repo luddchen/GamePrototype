@@ -4,10 +4,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.Model;
 using Battlestation_Antares.View;
 using System;
+using Battlestation_Antaris.Model;
+using System.Collections.ObjectModel;
 
 namespace Battlestation_Antares.Tools {
 
-    public class Draw3D {
+    class Draw3D {
 
         public static void Draw( Microsoft.Xna.Framework.Graphics.Model model, Matrix[] boneTransforms,
                                 Matrix view, Matrix projection ) {
@@ -43,23 +45,14 @@ namespace Battlestation_Antares.Tools {
 
 
 
-        public static void Draw( SpatialObjectOld obj, Camera camera ) {
-            if ( obj.isVisible ) {
-                Draw( obj.model3d, obj.boneTransforms, camera.view, camera.projection, obj.globalPosition, obj.rotation, obj.scale );
-            }
+        public static void Draw( SpatialObject obj, Camera camera ) {
+            obj.Draw(camera);
         }
 
 
-        public static void Draw( List<SpatialObjectOld> allObjects, Camera camera ) {
-            foreach ( SpatialObjectOld obj in allObjects ) {
+        public static void Draw( ReadOnlyCollection<SpatialObject> allObjects, Camera camera ) {
+            foreach ( SpatialObject obj in allObjects ) {
                 Draw( obj, camera );
-            }
-        }
-
-
-        public static void Draw( List<List<SpatialObjectOld>> allObjectLists, Camera camera ) {
-            foreach ( List<SpatialObjectOld> allObjects in allObjectLists ) {
-                Draw( allObjects, camera );
             }
         }
 

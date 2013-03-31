@@ -5,7 +5,7 @@ namespace Battlestation_Antares.Control {
     /// <summary>
     /// abstract basis class for situation controller
     /// </summary>
-    public class SituationController : UpdateController {
+    class SituationController : UpdateController {
 
         /// <summary>
         /// the game

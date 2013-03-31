@@ -17,7 +17,7 @@ namespace Battlestation_Antares {
     /// <summary>
     /// the Antares main class
     /// </summary>
-    public class Antares : Game {
+    class Antares : Game {
         private const Boolean ACTIVATE_DEBUG = true;
 
         /// <summary>

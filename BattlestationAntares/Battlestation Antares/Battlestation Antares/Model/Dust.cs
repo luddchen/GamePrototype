@@ -1,19 +1,16 @@
 ﻿using Battlestation_Antares.Tools;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Battlestation_Antares.Model {
-    public class Dust : SpatialObjectOld {
+
+    class Dust : SpatialObjectOld {
         const int MAX_PARENT_DIST = 1000;
 
         SpatialObjectOld parent;
 
-        public Dust( SpatialObjectOld parent, ContentManager content, WorldModel world )
-            : base( parent.globalPosition, "Models//Dust//dust", content, world ) {
+        public Dust( SpatialObjectOld parent )
+            : base( "Dust//dust", parent.globalPosition ) {
             this.parent = parent;
             this.scale.X = 0.5f;
             this.scale.Y = 0.5f;

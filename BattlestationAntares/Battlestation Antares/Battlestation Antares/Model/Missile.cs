@@ -3,11 +3,10 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Battlestation_Antares.Model {
 
-    public class Missile : SpatialObjectOld {
+    class Missile : SpatialObjectOld {
         private int timeout;
 
-        public Missile( SpatialObjectOld parent, float offset, ContentManager content, WorldModel world )
-            : base( parent.globalPosition, "Models//Weapon//missile", content, world ) {
+        public Missile( SpatialObjectOld parent, float offset ) : base( "Weapon//missile", parent.globalPosition ) {
             this.rotation = parent.rotation;
             this.attributes.Engine.CurrentVelocity = 10.0f;
 
@@ -22,7 +21,7 @@ namespace Battlestation_Antares.Model {
             this.timeout--;
 
             if ( this.timeout == 0 ) {
-                this.world.Remove( this );
+                Antares.world.Remove( this );
             }
         }
 

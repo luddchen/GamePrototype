@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
 using HUD.HUD;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antares.View.HUD.CockpitHUD {
-    public class TargetInfo : HUDArray {
+
+    class TargetInfo : HUDArray {
 
         private HUDString targetObject;
 
@@ -11,7 +13,7 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
         private WorldModel world;
 
-        public SpatialObjectOld target;
+        public TactileSpatialObject target;
 
 
         public TargetInfo( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)

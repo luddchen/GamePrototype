@@ -3,7 +3,7 @@ using HUD.HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Mixer : AI_Item {
+    class AI_Mixer : AI_Item {
 
         public enum MixerType {
             AVG,

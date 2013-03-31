@@ -6,7 +6,7 @@ using System;
 
 namespace Battlestation_Antares.Model {
 
-    public class Laser : SpatialObjectOld {
+    class Laser : SpatialObjectOld {
 
         public SpatialObjectOld parent;
 
@@ -19,8 +19,7 @@ namespace Battlestation_Antares.Model {
         // only for test the visual illusion
         private static float FUN_FACTOR = 1.0f;
 
-        public Laser( SpatialObjectOld parent, float upOffset, float rightOffset, ContentManager content, WorldModel world )
-            : base( parent.globalPosition, "Models//Weapon//laser", content, world ) {
+        public Laser( SpatialObjectOld parent, float upOffset, float rightOffset ) : base( "Weapon//laser", parent.globalPosition ) {
 
             this.parent = parent;
             this.rotation = parent.rotation;
@@ -28,8 +27,7 @@ namespace Battlestation_Antares.Model {
             this.rightOffset = rightOffset;
             this.attributes.Engine.CurrentVelocity = this.parent.attributes.Laser.ProjectileVelocity;
 
-
-            this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//Weapon//laser_2d" );
+            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//Weapon//laser_2d" );
             this.miniMapIcon.color = MiniMap.WEAPON_COLOR;
             this.miniMapIcon.AbstractScale = 0.4f;
         }

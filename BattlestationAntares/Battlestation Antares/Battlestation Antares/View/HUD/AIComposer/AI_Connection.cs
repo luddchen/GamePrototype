@@ -6,7 +6,7 @@ using HUD;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_Connection : HUD_Item, IUpdatableItem {
+    class AI_Connection : HUD_Item, IUpdatableItem {
 
         private Vector2 start;
         private Vector2 end;

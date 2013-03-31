@@ -5,23 +5,24 @@ using System.Linq;
 using System.Text;
 using Battlestation_Antares.Model;
 using Microsoft.Xna.Framework;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antares.Tools {
 
-    public class RayCaster {
+    class RayCaster {
 
-        public SpatialObjectOld source;
+        public TactileSpatialObject source;
 
-        public SpatialObjectOld target;
+        public TactileSpatialObject target;
 
         public float distance;
 
-        private DynamicOctree<SpatialObjectOld> octree;
+        private DynamicOctree<TactileSpatialObject> octree;
 
         private RayCastThreadPool pool;
 
 
-        public RayCaster( SpatialObjectOld source, DynamicOctree<SpatialObjectOld> octree, RayCastThreadPool pool ) {
+        public RayCaster( TactileSpatialObject source, DynamicOctree<TactileSpatialObject> octree, RayCastThreadPool pool ) {
             this.source = source;
             this.octree = octree;
             this.pool = pool;
@@ -29,8 +30,12 @@ namespace Battlestation_Antares.Tools {
         }
 
         public void ThreadPoolCallback( Object threadContext ) {
-            this.target = this.octree.CastRay( new Ray( this.source.globalPosition, this.source.rotation.Forward ), this.source.bounding.Radius + 0.1f, ref this.distance );
-
+            //if ( this.source is SpatialObjectOld ) {
+                this.target = 
+                    this.octree.CastRay( 
+                        new Ray( this.source.globalPosition, this.source.rotation.Forward ), 
+                        this.source.bounding.Radius + 0.1f, ref this.distance );
+            //}
             if ( this.target != null || this.distance < 5000 ) {
                 Interlocked.Increment( ref this.pool.hits );
             }
@@ -43,7 +48,7 @@ namespace Battlestation_Antares.Tools {
     }
 
 
-    public class RayCastThreadPool {
+    class RayCastThreadPool {
 
         private WorldModel world;
 
@@ -68,7 +73,7 @@ namespace Battlestation_Antares.Tools {
 
             int counter = 0;
 
-            foreach ( SpatialObjectOld item in this.world.allTurrets ) {
+            foreach ( Turret item in this.world.allTurrets ) {
                 RayCaster rayCaster = new RayCaster( item, this.world.octree, this );
                 caster[counter] = rayCaster;
                 ThreadPool.QueueUserWorkItem( rayCaster.ThreadPoolCallback, null );

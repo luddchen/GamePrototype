@@ -10,7 +10,7 @@ namespace Battlestation_Antares.Model {
     /// <summary>
     /// a radar station
     /// </summary>
-    public class Radar : SpatialObjectOld {
+    class Radar : SpatialObjectOld {
 
         public List<SpatialObjectOld> objectsInRange;
 
@@ -22,8 +22,8 @@ namespace Battlestation_Antares.Model {
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public Radar( Vector3 position, ContentManager content, WorldModel world )
-            : base( position, "Models//Radar//radar_1", content, world ) {
+        public Radar( Vector3 position )
+            : base( "Radar//radar_1", position) {
             Random random = new Random( (int)position.X );
 
             int pitch = random.Next( 2 );
@@ -43,7 +43,7 @@ namespace Battlestation_Antares.Model {
 
             this.objectsInRange = new List<SpatialObjectOld>();
 
-            this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//Radar//radar_2d" );
+            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//Radar//radar_2d" );
             this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
             this.miniMapIcon.AbstractScale = 0.7f;
             this.miniMapIcon.updateRotation = false;
@@ -62,7 +62,7 @@ namespace Battlestation_Antares.Model {
             float distance;
 
             // objects
-            foreach ( SpatialObjectOld obj in this.world.allObjects ) {
+            foreach ( SpatialObjectOld obj in Antares.world.AllObjects ) {
                 distance = Vector3.Distance( this.globalPosition, obj.globalPosition );
 
                 if ( distance <= this.attributes.Radar.Range ) {

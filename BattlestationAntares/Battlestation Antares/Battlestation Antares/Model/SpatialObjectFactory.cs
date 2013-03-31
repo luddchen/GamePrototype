@@ -19,9 +19,9 @@ namespace Battlestation_Antares.Model {
             SpatialObjectOld newObj;
 
             if ( spatialObjectType.Equals( typeof( Battlestation_Antares.Model.Radar ) ) ) {
-                newObj = new Radar( Vector3.Zero, content, world );
+                newObj = new Radar( Vector3.Zero );
             } else if ( spatialObjectType.Equals( typeof( Battlestation_Antares.Model.Turret ) ) ) {
-                newObj = new Turret( Vector3.Zero, content, world );
+                newObj = new Turret( Vector3.Zero );
             } else {
                 throw new ArgumentException( "Factory: Unknown Type" );
             }

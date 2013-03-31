@@ -9,7 +9,7 @@ namespace Battlestation_Antares.View {
     /// <summary>
     /// a class that holds the necessary matrices for 3D projection
     /// </summary>
-    public class Camera {
+    class Camera {
 
         /// <summary>
         /// the projection matrix

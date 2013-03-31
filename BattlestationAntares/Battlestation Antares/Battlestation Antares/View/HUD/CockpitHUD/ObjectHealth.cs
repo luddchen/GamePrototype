@@ -7,7 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antaris.View.HUD.CockpitHUD {
-    public class ObjectHealth : HUDContainer {
+
+    class ObjectHealth : HUDContainer {
 
         private HUDValueCircle shield;
 

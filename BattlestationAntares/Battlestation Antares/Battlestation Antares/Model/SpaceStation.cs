@@ -14,7 +14,7 @@ namespace Battlestation_Antares.Model {
     /// <summary>
     /// the Antares space station
     /// </summary>
-    public class SpaceStation : SpatialObjectOld {
+    class SpaceStation : SpatialObjectOld {
 
         public enum AirlockStatus {
             OPEN,
@@ -85,14 +85,10 @@ namespace Battlestation_Antares.Model {
         /// create a new space station within the world
         /// </summary>
         /// <param name="position">world position</param>
-        /// <param name="modelName">3D model name</param>
-        /// <param name="content">game content manager</param>
-        /// <param name="world">the world model</param>
-        public SpaceStation( Vector3 position, String modelName, ContentManager content, WorldModel world )
-            : base( position, modelName, content, world ) {
+        public SpaceStation( Vector3 position) : base( "SpaceStation/spacestation4", position ) {
             init();
-            this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>( "Attributes//SpaceStation" ) );
-            this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//SpaceStation//station_2d" );
+            this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//SpaceStation" ) );
+            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//SpaceStation//station_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
             this.miniMapIcon.AbstractScale = 2.0f;
         }
@@ -105,11 +101,11 @@ namespace Battlestation_Antares.Model {
             // test output of bounding sphere
             // Console.Out.WriteLine("Station Bounding Sphere : " + this.bounding + " (" + this.model3d.Meshes.Count + " meshes)");
 
-            Barrier1 = model3d.Bones["Barrier1"];
-            Barrier2 = model3d.Bones["Barrier2"];
-            Barrier3 = model3d.Bones["Barrier3"];
-            BarrierTop = model3d.Bones["BarrierTop"];
-            Airlock = model3d.Bones["Airlock"];
+            Barrier1 = model.Bones["Barrier1"];
+            Barrier2 = model.Bones["Barrier2"];
+            Barrier3 = model.Bones["Barrier3"];
+            BarrierTop = model.Bones["BarrierTop"];
+            Airlock = model.Bones["Airlock"];
 
             Barrier1Transform = Barrier1.Transform;
             Barrier2Transform = Barrier2.Transform;
@@ -153,13 +149,6 @@ namespace Battlestation_Antares.Model {
             Barrier3.Transform = Matrix.CreateRotationY( AxisRot * 11.4f ) * Barrier3Transform;
             BarrierTop.Transform = Matrix.CreateScale( new Vector3( 1, 1.0f - 1.0f / 16.5f * (airlockMove + 0.5f), 1 ) );
             Airlock.Transform = Matrix.CreateTranslation(new Vector3( 0, airlockMove, 0 ) ) * AirlockTransform;
-        }
-
-
-        public override void onHit( float damage ) {
-            if ( this.attributes.Shield.ApplyDamage( damage ) ) {
-                this.attributes.Hull.ApplyDamage( damage );
-            }
         }
 
 

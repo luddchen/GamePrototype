@@ -5,79 +5,14 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpatialObjectAttributesLibrary;
 using Battlestation_Antares.View.HUD;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// the basis class for spatial objects
     /// </summary>
-    public class SpatialObjectOld {
-
-        /// <summary>
-        /// the number of rotations until the rotation matrix should be repaired
-        /// </summary>
-        public static int MAX_ROTATION_UNTIL_REPAIR = 14400;
-
-        /// <summary>
-        /// the 3D model
-        /// </summary>
-        public Microsoft.Xna.Framework.Graphics.Model model3d;
-
-
-        /// <summary>
-        /// the transform matrices for all 3D model parts
-        /// </summary>
-        public Matrix[] boneTransforms;
-
-
-        /// <summary>
-        /// the physical attributes of the spatial object
-        /// </summary>
-        public SpatialObjectAttributes attributes;
-
-
-        /// <summary>
-        /// the objects rotation matrix
-        /// rotation.Forward is the moving direction
-        /// </summary>
-        public Matrix rotation;
-
-        public Vector3 scale;
-
-
-        /// <summary>
-        /// the position within the world model
-        /// </summary>
-        public Vector3 globalPosition;
-
-
-        /// <summary>
-        /// the visibility of this spatial object
-        /// </summary>
-        public bool isVisible;
-
-
-        public MiniMapIcon miniMapIcon;
-
-        public bool isEnemy;
-
-
-        /// <summary>
-        /// a bounding sphere that contains the full (non translated) 3D model
-        /// </summary>
-        public BoundingSphere bounding;
-
-
-        /// <summary>
-        /// the containing world model
-        /// </summary>
-        protected WorldModel world;
-
-
-        /// <summary>
-        /// a counter to determine the need of rotation matrix repair
-        /// </summary>
-        protected int rotationRepairCountdown;
+    class SpatialObjectOld : TactileSpatialObject {
 
 
         /// <summary>
@@ -111,39 +46,16 @@ namespace Battlestation_Antares.Model {
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public SpatialObjectOld( Vector3 position, String modelName, ContentManager content, WorldModel world ) {
-            this.world = world;
-            this.isVisible = true;
-            this.globalPosition = position;
-            this.rotation = Matrix.Identity;
-            this.scale = Vector3.One;
-            this.model3d = content.Load<Microsoft.Xna.Framework.Graphics.Model>( modelName );
-            foreach ( ModelMesh mesh in model3d.Meshes ) {
-                foreach ( BasicEffect effect in mesh.Effects ) {
-                    Tools.Draw3D.Lighting1( effect );
-                }
-            }
-            this.boneTransforms = new Matrix[model3d.Bones.Count];
-            this.attributes = new SpatialObjectAttributes();
-            this.rotationRepairCountdown = SpatialObjectOld.MAX_ROTATION_UNTIL_REPAIR;
-            this.isEnemy = false;
+        public SpatialObjectOld( String modelName, Vector3 position ) : base(modelName, position: position ) {
 
             // dirty hack
             if ( !( this is Dust ) ) {
                 this.miniMapIcon = new MiniMapIcon( null, this);
-                this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//SpaceShip//spaceship_2d" );
+                this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//SpaceShip//spaceship_2d" );
                 this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
                 this.miniMapIcon.AddToWorld();
             }
 
-            // compute the bounding sphere of the whole 3D model
-            this.bounding = new BoundingSphere();
-            this.model3d.CopyAbsoluteBoneTransformsTo( this.boneTransforms );
-            foreach ( ModelMesh mesh in model3d.Meshes ) {
-                this.bounding = BoundingSphere.CreateMerged( mesh.BoundingSphere.Transform( this.boneTransforms[mesh.ParentBone.Index] ), this.bounding );
-            }
-
-            this.world.addObject( this );
             this.addDebugOutput();
         }
 
@@ -152,7 +64,7 @@ namespace Battlestation_Antares.Model {
         /// update the spatial object
         /// </summary>
         /// <param name="gameTime">the game time</param>
-        public virtual void Update( GameTime gameTime ) {
+        public override void Update( GameTime gameTime ) {
             ApplyMovement( gameTime );
             ApplyRotation( gameTime );
         }
@@ -226,7 +138,7 @@ namespace Battlestation_Antares.Model {
         /// inject multiple control requests to this object
         /// </summary>
         /// <param name="controlSequence"></param>
-        public virtual void InjectControl( List<Control.Control> controlSequence ) {
+        public override void InjectControl( List<Control.Control> controlSequence ) {
             foreach ( Control.Control control in controlSequence ) {
                 InjectControl( control );
             }
@@ -237,7 +149,7 @@ namespace Battlestation_Antares.Model {
         /// inject a single control request to this object
         /// </summary>
         /// <param name="control"></param>
-        public virtual void InjectControl( Control.Control control ) {
+        public override void InjectControl( Control.Control control ) {
             // experimental control stuff
 
             switch ( control ) {
@@ -289,11 +201,6 @@ namespace Battlestation_Antares.Model {
 
         }
 
-        public virtual void onHit( float damage ) {
-        }
-
-        public virtual void onCollision( SpatialObjectOld o ) {
-        }
 
         public virtual void addDebugOutput() {
         }

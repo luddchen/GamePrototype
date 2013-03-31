@@ -18,7 +18,7 @@ namespace Battlestation_Antares.View {
     /// </summary>
     class CockpitView : HUDView {
 
-        public SpatialObjectOld target;
+        public TactileSpatialObject target;
 
         /// <summary>
         /// the game view camera
@@ -155,7 +155,7 @@ namespace Battlestation_Antares.View {
                 bg.Draw( this.camera );
             }
 
-            Tools.Draw3D.Draw( Antares.world.allDrawable, this.camera );
+            Tools.Draw3D.Draw( Antares.world.AllObjects, this.camera );
 
             drawTargetCross();
 

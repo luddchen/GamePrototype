@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.Control {
 
-    public class AIController : SituationController {
+    class AIController : SituationController {
 
         public AI_Container aiContainer;
 

@@ -8,7 +8,7 @@ using HUD;
 
 namespace Battlestation_Antares.View.HUD {
 
-    public class MiniMap : HUDMaskedContainer, IUpdatableItem {
+    class MiniMap : HUDMaskedContainer, IUpdatableItem {
         public class Config {
             public SpatialObjectOld centeredObject;
             public float iconPositionScale;

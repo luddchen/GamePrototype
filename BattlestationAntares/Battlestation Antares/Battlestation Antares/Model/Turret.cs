@@ -6,13 +6,14 @@ using SpatialObjectAttributesLibrary;
 using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
 using Battlestation_Antares.Control.AI;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// a dangerous turret
     /// </summary>
-    public class Turret : SpatialObjectOld {
+    class Turret : SpatialObjectOld {
         public AI ai;
 
         private Random random;
@@ -28,15 +29,14 @@ namespace Battlestation_Antares.Model {
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public Turret( Vector3 position, ContentManager content, WorldModel world )
-            : base( position, "Models//Turret//turret", content, world ) {
+        public Turret( Vector3 position ) : base( "Turret//turret", position ) {
             this.random = new Random( (int)position.X );
             this.timeout = this.random.Next( 120 ) + 60;
             this.beamCooldown = 30;
 
-            this.attributes = new SpatialObjectAttributes( content.Load<SpatialObjectAttributes>( "Attributes//Turret" ) );
+            this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//Turret" ) );
 
-            this.miniMapIcon.Texture = content.Load<Texture2D>( "Models//Turret//turret_2d" );
+            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//Turret//turret_2d" );
             this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
             //this.miniMapIcon.scale = 2.0f;
 
@@ -55,12 +55,12 @@ namespace Battlestation_Antares.Model {
             this.attributes.EngineRoll.ApplyResetForce();
 
             if ( this.ai != null ) {
-                this.ai.targetObjects = this.world.allObjects;
+                this.ai.targetObjects = Antares.world.allTactileObjects;
 
                 this.ai.ThreadPoolCallback( null );
 
                 float maxValue = 0;
-                SpatialObjectOld target = null;
+                TactileSpatialObject target = null;
 
                 for ( int i = 0; i < this.ai.targetResults.Count; i++ ) {
                     if ( maxValue < this.ai.targetResults[i] ) {
@@ -92,7 +92,7 @@ namespace Battlestation_Antares.Model {
                         this.beamCooldown--;
                         if ( this.beamCooldown < 0 ) {
                             this.beamCooldown = 30;
-                            Laser laser = new Laser( this, 0.0f, 0.0f, this.world.game.Content, this.world );
+                            Laser laser = new Laser( this, 0.0f, 0.0f );
                         }
                     }
                 }

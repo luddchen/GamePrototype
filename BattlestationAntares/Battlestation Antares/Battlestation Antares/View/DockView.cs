@@ -39,7 +39,7 @@ namespace Battlestation_Antaris.View {
             Vector3 pos = Vector3.Transform( Vector3.Forward * Distance, Matrix.CreateRotationY( Rotation ) );
             this.camera.Update( pos - Vector3.Up * 115.0f, -pos, Vector3.Up );
 
-            Draw3D.Draw( Antares.world.allDrawable, this.camera );
+            Draw3D.Draw( Antares.world.AllObjects, this.camera );
         }
 
 }

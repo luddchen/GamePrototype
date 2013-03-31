@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using Battlestation_Antares.View.HUD.AIComposer;
 using Battlestation_Antares.Model;
+using Battlestation_Antaris.Model;
 
 namespace Battlestation_Antares.Control.AI {
 
-    public class AI {
+    class AI {
 
         List<AI_Input.InputType> inputs;
 
@@ -15,9 +16,9 @@ namespace Battlestation_Antares.Control.AI {
 
         int maxIndice;
 
-        public SpatialObjectOld source;
+        public TactileSpatialObject source;
 
-        public List<SpatialObjectOld> targetObjects;
+        public List<TactileSpatialObject> targetObjects;
 
         public List<float> targetResults;
 
@@ -26,7 +27,7 @@ namespace Battlestation_Antares.Control.AI {
             this.inputs = new List<AI_Input.InputType>();
             this.items = new List<AI_Item>();
             this.portIndices = new List<Tuple<int[], int[]>>();
-            this.targetObjects = new List<SpatialObjectOld>();
+            this.targetObjects = new List<TactileSpatialObject>();
             this.targetResults = new List<float>();
         }
 
@@ -35,7 +36,7 @@ namespace Battlestation_Antares.Control.AI {
             this.items = new List<AI_Item>( ai.items );
             this.portIndices = new List<Tuple<int[], int[]>>( ai.portIndices );
             this.maxIndice = ai.maxIndice;
-            this.targetObjects = new List<SpatialObjectOld>();
+            this.targetObjects = new List<TactileSpatialObject>();
             this.targetResults = new List<float>();
         }
 
@@ -123,7 +124,7 @@ namespace Battlestation_Antares.Control.AI {
         public void ThreadPoolCallback( Object threadContext ) {
             this.targetResults.Clear();
 
-            foreach ( SpatialObjectOld target in this.targetObjects ) {
+            foreach ( TactileSpatialObject target in this.targetObjects ) {
                 if ( target == this.source || target is Dust ) {
                     this.targetResults.Add( -1.0f );
                     continue;
@@ -209,7 +210,7 @@ namespace Battlestation_Antares.Control.AI {
                         continue;
                     }
                     if ( item is AI_Output ) {
-                        // assuming only one output, so last value in values is the result
+                        // assuming only one output, so last value in values is the result -> is not correct -> need improvement
                         continue;
                     }
                 }

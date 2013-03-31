@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.View.HUD.AIComposer {
 
-    public class AI_ItemPort : HUDActionTexture {
+    class AI_ItemPort : HUDActionTexture {
         public enum PortType {
             INPUT,
             OUTPUT
