@@ -42,28 +42,15 @@ namespace HUD.HUD {
         }
 
 
-        public HUDButton( String text, Vector2 position, Vector2 size, float scale, IUpdateController controller) : base(position, size) {
+        public HUDButton( String text = " ", Vector2 position = new Vector2(), Vector2 size = new Vector2(), float scale = 1.0f, IUpdateController controller = null) : base(position, size) {
             Text = text;
             this.buttonString.AbstractScale = scale;
-            _register( controller );
-        }
-
-        public HUDButton( String text, Vector2 position, float scale, IUpdateController controller) : base(position) {
-            _initButtonString();
-            Text = text;
-            this.buttonString.AbstractScale = scale;
-            this.buttonString.AbstractScale = scale;
-            this.AbstractSize = Vector2.Multiply( this.buttonString.Size, new Vector2( 1.2f, 1.0f ) ); // if no size set it in adaptation to th text
-            _register( controller );
-        }
-
-
-        private void _register( IUpdateController controller ) {
             SetBackground( this.style.backgroundColorNormal );
             if ( controller != null ) {
                 controller.Register( this );
             }
         }
+
 
         private void _initButtonString() {
             if ( this.buttonString == null ) {

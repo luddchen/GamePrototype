@@ -39,7 +39,7 @@ namespace HUD.HUD {
             }
         }
 
-        public HUDMaskedContainer( Vector2 position, Vector2 size ) : base( position, size ) { }
+        public HUDMaskedContainer( Vector2 position = new Vector2(), Vector2 size = new Vector2() ) : base( position: position, size: size ) { }
 
 
         public void SetMask( Object texture, Color color ) {

@@ -45,7 +45,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             Vector2 textSize = new Vector2( this.AbstractSize.X * 0.1f, this.AbstractSize.Y * 0.2f);
 
-            this.typeString = new HUDString( " ", new Vector2( 0, -( this.AbstractSize.Y - textSize.Y ) / 2 ), textSize );
+            this.typeString = new HUDString( " ", null, null, position: new Vector2( 0, -( this.AbstractSize.Y - textSize.Y ) / 2 ), size: textSize );
             Add( this.typeString );
 
             this.removeButton = new HUDButton( "X", new Vector2( this.AbstractSize.X / 2 * 0.9f, -( this.AbstractSize.Y - textSize.Y ) / 2 ), textSize * 1.1f, 1f, null );
@@ -56,7 +56,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             } );
             Add( this.removeButton );
 
-            this.subTypeString = new HUDString( " ", new Vector2( 0, -( this.AbstractSize.Y - textSize.Y * 3 ) / 2 ), textSize );
+            this.subTypeString = new HUDString( " ", null, null, position: new Vector2( 0, -( this.AbstractSize.Y - textSize.Y * 3 ) / 2 ), size: textSize );
             Add( this.subTypeString );
 
             this.nextSubType = new HUDButton( ">", Vector2.Zero, textSize * 1.5f, 1f, null);

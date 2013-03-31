@@ -21,7 +21,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
         public void Add( DebugElement debugElement ) {
-            HUDString newHUDStr = new HUDString( "", 0.9f );
+            HUDString newHUDStr = new HUDString( "", null, null, scale: 0.9f );
             newHUDStr.PositionType = HUDType.ABSOLUT_RELATIV;
             newHUDStr.SizeType = HUDType.ABSOLUT_RELATIV;
             newHUDStr.AbstractSize = new Vector2( 1, 0.02f );

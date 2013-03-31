@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace HUD.HUD {
     /// <summary>
@@ -18,7 +19,9 @@ namespace HUD.HUD {
         /// </summary>
         /// <param name="renderSize"></param>
         /// <param name="backgroundColor"></param>
-        public HUDRenderedTexture(Point? renderSize, Color? backgroundColor) : base( null, null) {
+        public HUDRenderedTexture( Point? renderSize, Color? backgroundColor, IUpdateController controller = null ) 
+            : base(controller: controller) 
+        {
             this.renderSize = renderSize ?? new Point( 100, 100 );
             this.backgroundColor = backgroundColor ?? Color.Transparent;
             this.renderTarget = new RenderTarget2D( HUDService.Device, this.renderSize.X, this.renderSize.Y );

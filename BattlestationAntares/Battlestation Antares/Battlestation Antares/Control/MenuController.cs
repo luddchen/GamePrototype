@@ -138,9 +138,8 @@ namespace Battlestation_Antares.Control {
         private void _addOptionPage( String name, HUD_Item item ) {
             this.optionButtons.AbstractSize += new Vector2( 0, 0.1f );
 
-            HUDButton newButton = new HUDButton( name, Vector2.Zero, 0.9f, this );
+            HUDButton newButton = new HUDButton( text: name, scale: 0.9f, controller: this );
             newButton.style = AntaresButtonStyles.Button();
-            //newButton.RotationType = TransformationType.GLOBAL;
             newButton.SetPressedAction( delegate() {
                 showPage( item );
             } );
@@ -159,10 +158,10 @@ namespace Battlestation_Antares.Control {
             renderResolutionArray.borderSize = new Vector2( 0.025f, 0.02f );
             videoPage.Add( renderResolutionArray );
 
-            HUDString resolutionTitle = new HUDString( "Render Resolution", 0.7f );
-            HUDButton resolutionHigh = new HUDButton( "1920 x 1080", new Vector2(), 0.7f, this );
-            HUDButton resolutionMedium = new HUDButton( "1600 x 900", new Vector2(), 0.7f, this );
-            HUDButton resolutionLow = new HUDButton( "1280 x 720", new Vector2(), 0.7f, this );
+            HUDString resolutionTitle = new HUDString( "Render Resolution", null, null, scale: 0.7f );
+            HUDButton resolutionHigh = new HUDButton( "1920 x 1080", scale: 0.7f, controller: this );
+            HUDButton resolutionMedium = new HUDButton( "1600 x 900", scale: 0.7f, controller: this );
+            HUDButton resolutionLow = new HUDButton( "1280 x 720", scale: 0.7f, controller: this );
 
             resolutionHigh.style = AntaresButtonStyles.Button();
             resolutionMedium.style = AntaresButtonStyles.Button();
@@ -202,10 +201,10 @@ namespace Battlestation_Antares.Control {
             multiSampleArray.borderSize = new Vector2( 0.025f, 0.02f );
             videoPage.Add( multiSampleArray );
 
-            HUDString multiSampleTitle = new HUDString( "Multi Sampling", 0.7f );
-            HUDButton samplingOff = new HUDButton( "off", new Vector2(), 0.7f, this );
-            HUDButton sampling2x = new HUDButton( "2x", new Vector2(), 0.7f, this );
-            HUDButton sampling4x = new HUDButton( "4x", new Vector2(), 0.7f, this );
+            HUDString multiSampleTitle = new HUDString( "Multi Sampling", null, null, scale: 0.7f );
+            HUDButton samplingOff = new HUDButton( "off", scale: 0.7f, controller: this );
+            HUDButton sampling2x = new HUDButton( "2x", scale: 0.7f, controller: this );
+            HUDButton sampling4x = new HUDButton( "4x", scale: 0.7f, controller: this );
 
             samplingOff.style = AntaresButtonStyles.Button();
             sampling2x.style = AntaresButtonStyles.Button();
@@ -246,20 +245,15 @@ namespace Battlestation_Antares.Control {
 
         private void _addSoundPage() {
             HUDArray soundPage = new HUDArray( new Vector2( 0.5f, 0.4f ), new Vector2( 0.7f, 0.5f ) );
-            soundPage.Add( new HUDString( "Sound", 0.5f ) );
+            soundPage.Add( new HUDString( "Sound", null, null, scale: 0.5f ) );
 
             _addOptionPage( "Sound", soundPage );
         }
 
 
         private void _createTestBackground() {
-            HUDTexture testTex = new HUDTexture();
-            testTex.AbstractPosition = new Vector2( 0.5f, 0.5f );
-            testTex.PositionType = HUDType.RELATIV;
-            testTex.AbstractSize = new Vector2( 0.8f, 0.8f );
-            testTex.SizeType = HUDType.RELATIV;
-            testTex.Texture = Antares.content.Load<Texture2D>( "Sprites//StationScreen" );
-            testTex.color = new Color( 128, 128, 128, 128 );
+            HUDTexture testTex = 
+                new HUDTexture( "Sprites//StationScreen", new Color( 128, 128, 128, 128 ), position: new Vector2( 0.5f, 0.5f ), size: new Vector2( 0.8f, 0.8f ) );
             testTex.LayerDepth = 0.6f;
             this.view.Add( testTex );
 

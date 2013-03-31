@@ -13,7 +13,7 @@ namespace Battlestation_Antares.View.HUD {
 
 
         public MiniMapIcon( Texture2D texture, SpatialObjectOld spatialObject )
-            : base( texture, null, null, null, null, null ) {
+            : base( texture ) {
             this.spatialObject = spatialObject;
             this.updateRotation = true;
         }

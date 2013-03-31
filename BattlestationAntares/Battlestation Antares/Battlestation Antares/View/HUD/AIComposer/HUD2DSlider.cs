@@ -23,7 +23,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
             SetBackground( "Sprites//SliderBG", new Color( 60, 64, 56, 64 ) );
 
-            this.sliderButton = new HUDButton( " ", new Vector2( this.sliderButtonZero, 0 ), 1, null );
+            this.sliderButton = new HUDButton();
             this.sliderButtonZero = - this.AbstractSize.X / 2;
             this.sliderButtonOne = this.AbstractSize.X / 2;
             this.sliderButton.AbstractSize = new Vector2( this.AbstractSize.Y , this.AbstractSize.Y ) * 2;

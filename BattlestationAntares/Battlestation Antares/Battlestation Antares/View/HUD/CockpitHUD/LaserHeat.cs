@@ -19,10 +19,9 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
             for ( int i = 0; i < 8; i++ ) {
                 HUDTexture tex = 
                     new HUDTexture( 
-                        "Sprites//HUD//Lamp2", 
+                        "Sprites//HUD//Lamp2", new Color( i * 32, 255 - i * 32, 0 ),
                         new Vector2( 0, abstractSize.Y / 2.0f - ( (float)i + 0.5f ) * abstractSize.Y / 8.0f ), 
                         new Vector2( abstractSize.X * 3.6f, abstractSize.Y * 3.6f / 8.0f) );
-                tex.color = new Color( i * 32, 255 - i * 32, 0 );
                 colors.Add( tex.color );
                 Add( tex );
             }

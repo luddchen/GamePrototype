@@ -185,7 +185,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             this.controller.view.Add( addButtonArray );
 
 
-            HUDButton addInputButton = new HUDButton( "Input", new Vector2(), 0.7f, this.controller );
+            HUDButton addInputButton = new HUDButton( "Input", scale: 0.7f, controller: this.controller );
             addInputButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Input() );
             } );
@@ -194,7 +194,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             addButtonArray.Add( addInputButton );
 
 
-            HUDButton addTransformerButton = new HUDButton( "Transformer", new Vector2(), 0.7f, this.controller );
+            HUDButton addTransformerButton = new HUDButton( "Transformer", scale: 0.7f, controller: this.controller );
             addTransformerButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Transformer() );
             } );
@@ -203,7 +203,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             addButtonArray.Add( addTransformerButton );
 
 
-            HUDButton addMixerButton = new HUDButton( "Mixer", new Vector2(), 0.7f, this.controller );
+            HUDButton addMixerButton = new HUDButton( "Mixer", scale: 0.7f, controller: this.controller );
             addMixerButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Mixer() );
             } );
@@ -212,7 +212,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
             addButtonArray.Add( addMixerButton );
 
 
-            HUDButton addOutputButton = new HUDButton( "Output", new Vector2(), 0.7f, this.controller );
+            HUDButton addOutputButton = new HUDButton( "Output", scale: 0.7f, controller: this.controller );
             addOutputButton.SetPressedAction( delegate() {
                 AddInsertItem( new AI_Output() );
             } );

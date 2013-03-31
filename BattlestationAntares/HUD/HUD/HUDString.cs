@@ -48,23 +48,7 @@ namespace HUD.HUD {
             }
         }
 
-
-        public HUDString() : this(null, null, null, null, null, null, null) { }
-
-
-        public HUDString(String text, float? scale) : this(text, null, null, null, scale, null, null) {}
-
-
-        public HUDString( String text, Color? color, float? scale ) : this( text, null, null, color, scale, null, null ) { }
-
-
-        public HUDString( String text, Vector2? position, Vector2? size ) : this(text, position, size, null, null, null, null) { }
-
-
-        public HUDString( String text) : this(text, null, null, null, null, null, null) { }
-
-
-        public HUDString( String text, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation, SpriteFont font) {
+        public HUDString( String text = " ", Color? color = null, SpriteFont font = null, Vector2 position = new Vector2(), Vector2 size = new Vector2(), float scale = 1.0f, float rotation = 0.0f ) {
             if ( font == null ) {
                 this.font = HUDService.DefaultFont;
             }
@@ -72,18 +56,15 @@ namespace HUD.HUD {
                 this.font = font;
             }
 
-            if ( text == null ) {
-                this.Text = "HUD String";
-            }
             if ( text != null ) {
                 this.Text = text;
             }
 
-            this.AbstractPosition = position ?? Vector2.Zero;
-            this.AbstractSize = size ?? this.measureString;
-            this.color = color ?? Color.Beige;
-            this.AbstractScale = scale ?? 1.0f;
-            this.AbstractRotation = rotation ?? 0.0f;
+            this.AbstractPosition = position;
+            this.AbstractSize = ( size.Y != 0 ) ? size : this.measureString;
+            this.color = color ?? Color.White;
+            this.AbstractScale = scale;
+            this.AbstractRotation = rotation;
         }
 
 

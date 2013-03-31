@@ -31,7 +31,7 @@ namespace Battlestation_Antares.View.HUD {
                     float lightSize = (float)RandomGen.random.NextDouble() * 0.3f + 0.6f;
                     HUDTexture tex =
                         new HUDTexture(
-                            "Sprites//HUD//LampLight",
+                            "Sprites//HUD//LampLight", null, 
                             new Vector2(
                                 ((float)RandomGen.random.NextDouble() * size.X - size.X / 2) * 0.7f, 
                                 ((float)RandomGen.random.NextDouble() * size.Y - size.Y / 2) * 0.7f),

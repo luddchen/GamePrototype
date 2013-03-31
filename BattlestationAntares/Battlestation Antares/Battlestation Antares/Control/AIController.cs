@@ -19,8 +19,7 @@ namespace Battlestation_Antares.Control {
             this.aiContainer = new AI_Container(this);
             this.view.Add( this.aiContainer );
 
-            HUDTexture aiBorder = new HUDTexture( "Sprites//SquareBorder", AI_Container.basePosition, AI_Container.basePosition * 2.01f);
-            aiBorder.color = new Color( 32, 40, 24 );
+            HUDTexture aiBorder = new HUDTexture( "Sprites//SquareBorder", new Color( 32, 40, 24 ), AI_Container.basePosition, AI_Container.basePosition * 2.01f);
             aiBorder.LayerDepth = 0.1f;
             this.view.Add( aiBorder );
 
@@ -45,7 +44,7 @@ namespace Battlestation_Antares.Control {
             verifyArray.LayerDepth = 0.3f;
             this.view.Add( verifyArray );
 
-            HUDButton verifyButton = new HUDButton( "Verify", new Vector2(), 0.36f, this );
+            HUDButton verifyButton = new HUDButton( "Verify", scale: 0.36f, controller: this );
             verifyButton.style = ButtonStyle.BuilderButtonStyle();
             verifyButton.SetBackground( "Sprites//builder_button_round" );
             verifyButton.SetPressedAction(
@@ -65,8 +64,8 @@ namespace Battlestation_Antares.Control {
             statusArray.direction = LayoutDirection.VERTICAL;
             verifyArray.Add( statusArray );
 
-            statusArray.Add( new HUDString( "Status", 0.66f ) );
-            statusArray.Add( new HUDString( "unknown", Color.Yellow, 0.66f ) );
+            statusArray.Add( new HUDString( "Status", null, null, scale: 0.66f ) );
+            statusArray.Add( new HUDString( "unknown", Color.Yellow, null, scale: 0.66f ) );
 
             HUDArray aiButtonArray = new HUDArray( new Vector2( 0.9f, 0.8f ), new Vector2( 0.07f, 0.15f ) );
             aiButtonArray.direction = LayoutDirection.VERTICAL;
@@ -74,7 +73,7 @@ namespace Battlestation_Antares.Control {
             aiButtonArray.borderSize = new Vector2( 0, 0.01f );
             this.view.Add( aiButtonArray );
 
-            HUDButton saveButton = new HUDButton( "Save", new Vector2(), 0.9f, this );
+            HUDButton saveButton = new HUDButton( "Save", scale: 0.9f, controller: this );
             saveButton.style = ButtonStyle.BuilderButtonStyle();
             saveButton.SetBackground( "Sprites//builder_button" );
             saveButton.SetPressedAction(
@@ -83,7 +82,7 @@ namespace Battlestation_Antares.Control {
                 } );
             aiButtonArray.Add( saveButton );
 
-            HUDButton loadButton = new HUDButton( "Load", new Vector2(), 0.9f, this );
+            HUDButton loadButton = new HUDButton( "Load", scale: 0.9f, controller: this );
             loadButton.style = ButtonStyle.BuilderButtonStyle();
             loadButton.SetBackground( "Sprites//builder_button" );
             loadButton.SetPressedAction(
@@ -92,7 +91,7 @@ namespace Battlestation_Antares.Control {
                 } );
             aiButtonArray.Add( loadButton );
 
-            HUDButton clearButton = new HUDButton( "Clear", new Vector2(), 0.9f, this );
+            HUDButton clearButton = new HUDButton( "Clear", scale: 0.9f, controller: this );
             clearButton.style = ButtonStyle.BuilderButtonStyle();
             clearButton.SetBackground( "Sprites//builder_button" );
             clearButton.SetPressedAction(

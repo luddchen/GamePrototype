@@ -14,7 +14,7 @@ namespace HUD.HUD {
         }
 
 
-        public HUDActionTexture( Action action, IUpdateController controller ) {
+        public HUDActionTexture( Action action = null, IUpdateController controller = null ) {
             this.action = action;
             if ( controller != null ) {
                 controller.Register( this );

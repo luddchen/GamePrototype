@@ -53,15 +53,11 @@ namespace HUD.HUD {
         }
 
 
-        public HUDContainer( Vector2 position) {
+        public HUDContainer( Vector2 position = new Vector2(), Vector2 size = new Vector2() ) {
             this.allChilds = new List<HUD_Item>();
             this.AbstractPosition = position;
-            _initBackground();
-        }
-
-
-        public HUDContainer( Vector2 position, Vector2 size ) : this(position) {
             this.AbstractSize = size;
+            _initBackground();
         }
 
 

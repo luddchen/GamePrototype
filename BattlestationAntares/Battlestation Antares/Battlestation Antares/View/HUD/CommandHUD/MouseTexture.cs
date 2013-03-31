@@ -8,7 +8,7 @@ using System;
 namespace Battlestation_Antares.View.HUD.CommandHUD {
     class MouseTexture : HUDTexture, IUpdatableItem {
         public MouseTexture( Object texture, SituationController controller )
-            : base( texture, null, new Vector2( 15f, 15f ), Color.Blue, null, null ) {
+            : base( texture, Color.Blue, size: new Vector2( 0.01f, 0.01f ) ) {
             this.PositionType = HUDType.ABSOLUT;
             this.isVisible = false;
 

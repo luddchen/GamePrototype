@@ -61,19 +61,18 @@ namespace Battlestation_Antares.View {
         /// </summary>
         public override void Initialize() {
 
-            HUDTexture compassBG = new HUDTexture( "Sprites//Circle", new Vector2( 0.5f, 0.15f ), new Vector2( 0.125f, 0.15f ) );
+            HUDTexture compassBG = new HUDTexture( "Sprites//Circle", new Color( 12, 16, 8, 16 ), new Vector2( 0.5f, 0.15f ), new Vector2( 0.125f, 0.15f ) );
             compassBG.LayerDepth = 0.11f;
-            compassBG.color = new Color( 12, 16, 8, 16 );
             this.Add( compassBG );
 
             // 2D HUD
-            cockpitTexture = new HUDTexture( "Sprites//cockpit3", new Vector2( 0.5f, 0.5f ), new Vector2( 1, 1 ) );
+            cockpitTexture = new HUDTexture( "Sprites//cockpit3", Color.White, new Vector2( 0.5f, 0.5f ), new Vector2( 1, 1 ) );
             cockpitTexture.LayerDepth = 1.0f;
             this.Add( cockpitTexture );
 
             this.Add( Antares.world.miniMapRenderer );
 
-            HUDTexture cross = new HUDTexture( "Sprites//Cross", new Vector2( 0.5f, 0.5f ), new Vector2( 0.02f, 0.03f ) );
+            HUDTexture cross = new HUDTexture( "Sprites//Cross", Color.White, new Vector2( 0.5f, 0.5f ), new Vector2( 0.02f, 0.03f ) );
             cross.LayerDepth = 0.8f;
             this.Add( cross );
 

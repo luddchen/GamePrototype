@@ -23,17 +23,7 @@ namespace HUD.HUD {
 
         private Vector2 origin;
 
-
-        public HUDTexture() : this(null, null, null, null, null, null) { }
-
-
-        public HUDTexture(Object texture) : this( texture, null, null, null, null, null ) { }
-
-
-        public HUDTexture( Object texture, Vector2? position, Vector2? size ) : this(texture, position, size, null, null, null) { }
-
-
-        public HUDTexture( Object texture, Vector2? position, Vector2? size, Color? color, float? scale, float? rotation) {
+        public HUDTexture( Object texture = null, Color? color = null, Vector2 position = new Vector2(), Vector2 size = new Vector2(), float scale = 1.0f, float rotation = 0.0f ) {
             if ( texture == null ) {
                 this.Texture = HUDService.DefaultTexture;
             } else {
@@ -46,11 +36,11 @@ namespace HUD.HUD {
                 }
             }
 
-            this.AbstractPosition = position ?? Vector2.Zero;
-            this.AbstractSize = size ?? new Vector2();
+            this.AbstractPosition = position;
+            this.AbstractSize = size;
             this.color = color ?? Color.White;
-            this.AbstractScale = scale ?? 1.0f;
-            this.AbstractRotation = rotation ?? 0.0f;
+            this.AbstractScale = scale;
+            this.AbstractRotation = rotation;
         }
 
         /// <summary>

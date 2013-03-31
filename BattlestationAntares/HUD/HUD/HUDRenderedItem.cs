@@ -10,7 +10,9 @@ namespace HUD.HUD {
         HUD_Item item;
 
 
-        public HUDRenderedItem( HUD_Item item, Point? renderSize, Color? backgroundColor ) : base(renderSize, backgroundColor) {
+        public HUDRenderedItem( HUD_Item item, Point? renderSize, Color? backgroundColor, IUpdateController controller = null )
+            : base( renderSize, backgroundColor, controller ) 
+        {
             this.item = item;
             batch = new SpriteBatch( HUDService.Device );
         }

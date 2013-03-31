@@ -15,10 +15,10 @@ namespace Battlestation_Antaris.View.HUD {
 
         public SituationSwitch(Antares game) : base(new Vector2(0.975f, 0.1f), new Vector2(0.05f, 0.1f) ) {
             
-            menu = new HUDButton( "Menu", Vector2.Zero, 0.8f, null );
-            command = new HUDButton( "Command", Vector2.Zero, 0.8f, null );
-            cockpit = new HUDButton( "Cockpit", Vector2.Zero, 0.8f, null );
-            builder = new HUDButton( "Editor", Vector2.Zero, 0.8f, null );
+            menu = new HUDButton( "Menu", scale: 0.8f);
+            command = new HUDButton( "Command", scale: 0.8f );
+            cockpit = new HUDButton( "Cockpit", scale: 0.8f );
+            builder = new HUDButton( "Editor", scale: 0.8f );
 
             Add( menu );
             Add( command );
