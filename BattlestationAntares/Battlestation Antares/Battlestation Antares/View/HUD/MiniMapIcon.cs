@@ -1,25 +1,22 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Battlestation_Antares.Model;
+﻿using Battlestation_Antaris.Model;
 using HUD.HUD;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.View.HUD {
 
     class MiniMapIcon : HUDTexture {
 
-        public SpatialObjectOld spatialObject;
+        public SpatialObject spatialObject;
 
         public bool updateRotation;
 
 
-        public MiniMapIcon( Texture2D texture, SpatialObjectOld spatialObject )
+        public MiniMapIcon( Texture2D texture, SpatialObject spatialObject )
             : base( texture ) {
             this.spatialObject = spatialObject;
             this.updateRotation = true;
-        }
 
-
-        public void AddToWorld() {
             if ( miniMap != null ) {
                 miniMap.Add( this );
                 this.AbstractSize = miniMap.iconSize;
@@ -41,7 +38,7 @@ namespace Battlestation_Antares.View.HUD {
         }
 
 
-        public void Update( SpatialObjectOld centerObject ) {
+        public void Update( TactileSpatialObject centerObject ) {
             Vector3 center = Vector3.Zero;
             if ( centerObject != null ) {
                 center.X = centerObject.globalPosition.X;

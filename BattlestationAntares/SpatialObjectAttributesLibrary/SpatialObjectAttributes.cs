@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace SpatialObjectAttributesLibrary {
 
@@ -13,14 +12,11 @@ namespace SpatialObjectAttributesLibrary {
         // Shield
         public Health Shield;
 
-
         // Hull
         public Health Hull;
 
-
         // Radar
         public Radar Radar;
-
 
         // Engine
         public Engine Engine;
@@ -31,10 +27,8 @@ namespace SpatialObjectAttributesLibrary {
 
         public Engine EngineRoll;
 
-
         // Laser
         public Laser Laser;
-
 
         // Missile
         public Missile Missile;
@@ -107,6 +101,16 @@ namespace SpatialObjectAttributesLibrary {
             this.EngineYaw.name += "(Yaw)";
             this.EnginePitch.name += "(Pitch)";
             this.EngineRoll.name += "(Roll)";
+        }
+
+        public void Update( GameTime gameTime ) {
+            this.Shield.Regenerate();
+            this.Hull.Regenerate();
+
+            this.Engine.ApplyResetForce();
+            this.EngineYaw.ApplyResetForce();
+            this.EnginePitch.ApplyResetForce();
+            this.EngineRoll.ApplyResetForce();
         }
 
     }

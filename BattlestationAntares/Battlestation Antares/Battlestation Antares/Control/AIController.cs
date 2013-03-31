@@ -53,7 +53,7 @@ namespace Battlestation_Antares.Control {
                     ai.Create( this.aiContainer );
                     Console.WriteLine( ai );
 
-                    foreach ( Turret turret in Antares.world.allTurrets ) {
+                    foreach ( Turret turret in Antares.world.AllTurrets ) {
                         turret.ai = new AI.AI( ai );
                         turret.ai.source = turret;
                     }

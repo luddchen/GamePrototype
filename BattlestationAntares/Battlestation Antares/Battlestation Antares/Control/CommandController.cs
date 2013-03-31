@@ -1,13 +1,13 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
-using Battlestation_Antares.View.HUD;
-using Battlestation_Antares.View.HUD.CommandHUD;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Battlestation_Antares.Model;
-using HUD.HUD;
-using HUD;
+using Battlestation_Antares.View.HUD;
+using Battlestation_Antares.View.HUD.CommandHUD;
+using Battlestation_Antaris.Model;
 using Battlestation_Antaris.View.HUD;
+using HUD;
+using HUD.HUD;
+using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antares.Control {
 
@@ -110,7 +110,7 @@ namespace Battlestation_Antares.Control {
             Type structureType = buildMenu.getStructureType();
             Vector2 mousePos = Antares.inputProvider.getMousePos();
             if ( Antares.world.miniMapRenderer.Intersects( mousePos ) ) {
-                SpatialObjectOld newStructure = SpatialObjectFactory.buildSpatialObject( structureType );
+                SpatialObject newStructure = SpatialObjectFactory.buildSpatialObject( structureType );
                 //Vector2 miniMapCoord = Antares.world.miniMap.screenToMiniMapCoord( Antares.inputProvider.getMousePos() );
                 //newStructure.globalPosition = Antares.world.miniMap.miniMapToWorldCoord( miniMapCoord );
             }

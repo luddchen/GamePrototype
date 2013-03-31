@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework;
-using Battlestation_Antares.View.HUD;
-using HUD.HUD;
-using Battlestation_Antaris.View.HUD;
-using Battlestation_Antaris.Model;
 using System.Collections.ObjectModel;
+using Battlestation_Antares.View.HUD;
+using Battlestation_Antaris.Model;
+using Battlestation_Antaris.View.HUD;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Battlestation_Antares.Tools;
 
 namespace Battlestation_Antares.Model {
 
@@ -28,6 +28,7 @@ namespace Battlestation_Antares.Model {
 
         public MiniMapRenderer miniMapRenderer;
 
+        public Grid grid;
 
         /// <summary>
         /// the players space ship
@@ -46,30 +47,58 @@ namespace Battlestation_Antares.Model {
         /// </summary>
         private List<SpatialObject> allObjects;
 
+        /// <summary>
+        /// a list of all objects
+        /// </summary>
         public ReadOnlyCollection<SpatialObject> AllObjects {
             get {
                 return this.allObjects.AsReadOnly();
             }
         }
-
-        public List<TactileSpatialObject> allTactileObjects;
-
-
-                /// <summary>
-        /// a list of all player radars
-        /// </summary>
-        private List<Radar> allRadars;
-
+        
+        private List<TactileSpatialObject> allTactileObjects;
 
         /// <summary>
-        /// a list of all player turrets
+        /// a list of all tactile objects
         /// </summary>
-        public List<Turret> allTurrets;
+        public ReadOnlyCollection<TactileSpatialObject> AllTactileObjects {
+            get {
+                return this.allTactileObjects.AsReadOnly();
+            }
+        }
+
+        private List<Radar> allRadars;
+
+        /// <summary>
+        /// a list of all radars
+        /// </summary>
+        public ReadOnlyCollection<Radar> AllRadars {
+            get {
+                return this.allRadars.AsReadOnly();
+            }
+        }
+
+        private List<Turret> allTurrets;
+
+        /// <summary>
+        /// a list of all turrets
+        /// </summary>
+        public ReadOnlyCollection<Turret> AllTurrets {
+            get {
+                return this.allTurrets.AsReadOnly();
+            }
+        }
+
+        private List<TactileSpatialObject> allWeapons;
 
         /// <summary>
         /// a list of all weapons
         /// </summary>
-        private List<TactileSpatialObject> allWeapons;
+        public ReadOnlyCollection<TactileSpatialObject> AllWeapons {
+            get {
+                return this.allWeapons.AsReadOnly();
+            }
+        }
 
         private List<SpatialObject> addList;
 
@@ -117,17 +146,29 @@ namespace Battlestation_Antares.Model {
         /// <param name="content">the game content manager</param>
         public void Initialize( ContentManager content ) {
 
-            // create 500 random objects to fill the space for testing
+            Add( new Skybox() );
+
+            // background
+            for ( int i = 0; i < 10; i++ ) {
+                addBackgroundObject( "BGTest//test2" );
+            }
+
+            for ( int i = 0; i < 10; i++ ) {
+                addBackgroundObject( "BGTest//test" );
+            }
+
+            Add( new Grid() );
+
             Random random = new Random();
 
             for ( int i = 0; i < 10; i++ ) {
                 if ( random.Next( 2 ) == 0 ) {
-                    SpatialObjectOld obj =
-                        new SpatialObjectOld( "TargetShip//targetship_2", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
+                    TactileSpatialObject obj =
+                        new TactileSpatialObject( "TargetShip//targetship_2", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
                     obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
                 } else {
-                    SpatialObjectOld obj =
-                        new SpatialObjectOld( "Cubus//Cubus_0", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
+                    TactileSpatialObject obj =
+                        new TactileSpatialObject( "Cubus//Cubus_0", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
                     obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
                 }
             }
@@ -149,8 +190,19 @@ namespace Battlestation_Antares.Model {
 
             // add dust near the players ship
             for ( int i = 0; i < 200; i++ ) {
-                Dust dust = new Dust( spaceShip );
+                Add( new Dust( spaceShip ) );
             }
+
+        }
+
+        private void addBackgroundObject( String model ) {
+            float yaw = (float)( RandomGen.random.NextDouble() * Math.PI * 2 );
+            float pitch = (float)( RandomGen.random.NextDouble() * Math.PI );
+            float roll = (float)( RandomGen.random.NextDouble() * Math.PI * 2 );
+            Matrix bgRot = Tools.Tools.YawPitchRoll( Matrix.Identity, yaw, pitch, roll );
+            float scale = 1.25f + (float)RandomGen.random.NextDouble() * 1.5f;
+
+            Add( new BackgroundObject( model, bgRot, scale) );
         }
 
         /// <summary>
@@ -184,6 +236,10 @@ namespace Battlestation_Antares.Model {
                     } else if ( obj is Turret ) {
                         this.allTurrets.Add( obj as Turret );
                     }
+                }
+
+                if ( obj is Grid ) {
+                    this.grid = obj as Grid;
                 }
             }
 
@@ -256,7 +312,7 @@ namespace Battlestation_Antares.Model {
 
             foreach ( TactileSpatialObject o in this.allWeapons ) {
                 if ( o is Laser ) {
-                    SpatialObjectOld parent = ( (Laser)o ).parent;
+                    TactileSpatialObject parent = ( (Laser)o ).parent;
 
                     float size = ( Math.Abs( o.scale.Z ) + o.attributes.Engine.CurrentVelocity / 2.0f );
                     Vector3 minPos = o.globalPosition - size * o.rotation.Forward;
@@ -264,8 +320,8 @@ namespace Battlestation_Antares.Model {
 
                     SpatialObject hit = octree.CastRay( new Ray( minPos, o.rotation.Forward ), 0, ref dist );
 
-                    if ( hit is SpatialObjectOld && hit != null && hit != parent ) {
-                        (hit as SpatialObjectOld).OnHit( parent.attributes.Laser.Damage );
+                    if ( hit is TactileSpatialObject && hit != null && hit != parent ) {
+                        (hit as TactileSpatialObject).OnHit( parent.attributes.Laser.Damage );
                         Remove( o );
                     }
                 } else {

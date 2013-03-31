@@ -1,19 +1,17 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework;
-
-using SpatialObjectAttributesLibrary;
-using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.View.HUD;
 using Battlestation_Antares.Control.AI;
+using Battlestation_Antares.View.HUD;
 using Battlestation_Antaris.Model;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SpatialObjectAttributesLibrary;
 
 namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// a dangerous turret
     /// </summary>
-    class Turret : SpatialObjectOld {
+    class Turret : TactileSpatialObject {
         public AI ai;
 
         private Random random;
@@ -26,20 +24,17 @@ namespace Battlestation_Antares.Model {
         /// create a new turret and insert into the world
         /// </summary>
         /// <param name="position">position</param>
-        /// <param name="modelName">3D model name</param>
-        /// <param name="content">game content manager</param>
-        /// <param name="world">the world model</param>
         public Turret( Vector3 position ) : base( "Turret//turret", position ) {
             this.random = new Random( (int)position.X );
             this.timeout = this.random.Next( 120 ) + 60;
             this.beamCooldown = 30;
 
             this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//Turret" ) );
+        }
 
+        protected override void _initMiniMapIcon() {
             this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//Turret//turret_2d" );
             this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
-            //this.miniMapIcon.scale = 2.0f;
-
         }
 
 
@@ -48,14 +43,10 @@ namespace Battlestation_Antares.Model {
         /// </summary>
         /// <param name="gameTime"></param>
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
-            ApplyRotation( gameTime );
-
-            this.attributes.EngineYaw.ApplyResetForce();
-            this.attributes.EnginePitch.ApplyResetForce();
-            this.attributes.EngineRoll.ApplyResetForce();
+            base.Update( gameTime );
 
             if ( this.ai != null ) {
-                this.ai.targetObjects = Antares.world.allTactileObjects;
+                this.ai.targetObjects = Antares.world.AllTactileObjects;
 
                 this.ai.ThreadPoolCallback( null );
 

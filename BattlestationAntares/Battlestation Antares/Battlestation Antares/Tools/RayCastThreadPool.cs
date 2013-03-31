@@ -66,14 +66,14 @@ namespace Battlestation_Antares.Tools {
 
         public void StartRayCasting() {
             //Console.Out.Write("start Raycasting .. ");
-            this.caster = new RayCaster[this.world.allTurrets.Count];
-            this.numberOfTasks = this.world.allTurrets.Count;
+            this.numberOfTasks = this.world.AllTurrets.Count;
+            this.caster = new RayCaster[this.numberOfTasks];
             this.doneEvent = new ManualResetEvent( false );
             this.hits = 0;
 
             int counter = 0;
 
-            foreach ( Turret item in this.world.allTurrets ) {
+            foreach ( Turret item in this.world.AllTurrets ) {
                 RayCaster rayCaster = new RayCaster( item, this.world.octree, this );
                 caster[counter] = rayCaster;
                 ThreadPool.QueueUserWorkItem( rayCaster.ThreadPoolCallback, null );

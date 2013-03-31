@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Battlestation_Antares.Model;
+using Battlestation_Antares.Tools;
 using Battlestation_Antares.View.HUD;
 using Battlestation_Antares.View.HUD.CockpitHUD;
-using Battlestation_Antares.Tools;
-using Battlestation_Antaris.View.HUD.CockpitHUD;
-using Battlestation_Antares.Model;
-using HUD.HUD;
-using HUD;
 using Battlestation_Antaris.Model;
+using Battlestation_Antaris.View.HUD.CockpitHUD;
+using HUD;
+using HUD.HUD;
+using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antares.View {
 
@@ -33,16 +31,6 @@ namespace Battlestation_Antares.View {
         Vector3 t4;
         public bool drawBeam = false;
 
-
-        /// <summary>
-        /// a list of background images
-        /// </summary>
-        List<BackgroundObject> backgroundObjects;
-
-        Skybox skybox;
-
-        Grid grid;
-
         SpatialObject targetCross;
         SpatialObject beam;
 
@@ -52,7 +40,6 @@ namespace Battlestation_Antares.View {
         /// <param name="game">the game</param>
         public CockpitView(Color? backgroundColor) : base(backgroundColor) {
             this.camera = new Camera();
-            this.backgroundObjects = new List<BackgroundObject>();
         }
 
 
@@ -113,27 +100,6 @@ namespace Battlestation_Antares.View {
             this.targetCross = new SpatialObject( "TargetCross" );
             this.beam = new SpatialObject( "Beam" );
 
-            // background
-            for ( int i = 0; i < 4; i++ ) {
-                addBackgroundObject( "BGTest//test2" );
-            }
-
-            for ( int i = 0; i < 1; i++ ) {
-                addBackgroundObject( "BGTest//test" );
-            }
-
-            skybox = new Skybox( "Models//Skysphere//skysphere");
-            grid = new Grid( "Models//Grid//grid");
-        }
-
-        private void addBackgroundObject( String model ) {
-            float yaw = (float)( RandomGen.random.NextDouble() * Math.PI * 2 );
-            float pitch = (float)( RandomGen.random.NextDouble() * Math.PI );
-            float roll = (float)( RandomGen.random.NextDouble() * Math.PI * 2 );
-            Matrix bgRot = Tools.Tools.YawPitchRoll( Matrix.Identity, yaw, pitch, roll );
-            float scale = 1.25f + (float)RandomGen.random.NextDouble() * 1.5f;
-
-            this.backgroundObjects.Add( new BackgroundObject( model, bgRot, scale) );
         }
 
 
@@ -146,14 +112,6 @@ namespace Battlestation_Antares.View {
 
             // init camera
             this.camera.ClampTo( Antares.world.spaceShip );
-
-            this.skybox.Draw( this.camera );
-
-            // draw background
-            foreach ( BackgroundObject bg in this.backgroundObjects ) {
-                bg.Update( null ); // until bg is integrated into world model
-                bg.Draw( this.camera );
-            }
 
             Tools.Draw3D.Draw( Antares.world.AllObjects, this.camera );
 
@@ -175,7 +133,6 @@ namespace Battlestation_Antares.View {
                 }
             }
 
-            this.grid.Draw( this.camera );
         }
 
         private void drawTargetCross() {

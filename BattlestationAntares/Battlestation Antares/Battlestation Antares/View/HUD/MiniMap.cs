@@ -1,19 +1,20 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Battlestation_Antares.Model;
-using Microsoft.Xna.Framework.Graphics;
-using HUD.HUD;
+using Battlestation_Antaris.Model;
 using Battlestation_Antaris.View.HUD;
 using HUD;
+using HUD.HUD;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.View.HUD {
 
     class MiniMap : HUDMaskedContainer, IUpdatableItem {
         public class Config {
-            public SpatialObjectOld centeredObject;
+            public TactileSpatialObject centeredObject;
             public float iconPositionScale;
 
-            public Config( float iconPositionScale, SpatialObjectOld centeredObject ) {
+            public Config( float iconPositionScale, TactileSpatialObject centeredObject ) {
                 this.iconPositionScale = iconPositionScale;
                 this.centeredObject = centeredObject;
             }
@@ -38,7 +39,7 @@ namespace Battlestation_Antares.View.HUD {
         public static Color BORDER_COLOR_HOVER = new Color( 32, 32, 32, 32 );
 
 
-        public SpatialObjectOld centeredObject;
+        public TactileSpatialObject centeredObject;
 
         public Vector2 iconSize = new Vector2( 0.025f, 0.025f );
 

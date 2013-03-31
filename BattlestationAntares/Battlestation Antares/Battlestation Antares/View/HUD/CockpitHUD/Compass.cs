@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Battlestation_Antares.Model;
-using Battlestation_Antares;
+﻿using Battlestation_Antares;
 using Battlestation_Antares.Tools;
-using HUD.HUD;
-using Battlestation_Antaris.Model;
 using Battlestation_Antares.View;
+using Battlestation_Antaris.Model;
+using HUD.HUD;
+using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antaris.View.HUD.CockpitHUD {
 
@@ -17,7 +16,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         /// <summary>
         /// the spatial object (e.g. spaceship) that contains the compass
         /// </summary>
-        private SpatialObjectOld source;
+        private SpatialObject source;
 
         /// <summary>
         /// the targeted 3d point
@@ -41,7 +40,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         /// initialize the compass on the specified spatial object that contains this compass
         /// </summary>
         /// <param name="source"></param>
-        public void Initialize( SpatialObjectOld source ) {
+        public void Initialize( SpatialObject source ) {
             this.source = source;
         }
 

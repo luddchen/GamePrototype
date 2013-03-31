@@ -1,6 +1,6 @@
-#Shield: #MaxHealth: 0.0 #RegenerationRate: 0.0 #RepairCost: 0.0
+#Shield: #MaxHealth: 500.0 #RegenerationRate: 1.0 #RepairCost: 0.0
 #
-#Hull: #MaxHealth: 0.0 #RegenerationRate: 0.0 #RepairCost: 0.0
+#Hull: #MaxHealth: 500.0 #RegenerationRate: 1.0 #RepairCost: 0.0
 #
 #Radar: #Range: 0.0
 #

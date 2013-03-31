@@ -1,7 +1,6 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
-using Battlestation_Antares.View;
 using Battlestation_Antaris.Model;
+using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antares.Model {
 
@@ -15,18 +14,14 @@ namespace Battlestation_Antares.Model {
         /// </summary>
         /// <param name="game"></param>
         public BackgroundObject( String modelName, Matrix rotation, float scale) : base(modelName, rotation: rotation ) {
-            this.scale = new Vector3( 1000 * scale );
+            this.scale = new Vector3( 800 * scale );
         }
 
         public override void Update( GameTime gameTime ) {
             this.globalPosition = Vector3.Transform(
                 Vector3.Forward,
-                Matrix.CreateTranslation( Vector3.Forward * 9000f ) * rotation 
-                * Matrix.CreateTranslation( Antares.world.spaceShip.globalPosition ) );
-        }
-
-        public override void Draw( Camera camera ) {
-            base.Draw( camera );
+                Matrix.CreateTranslation( -Vector3.Forward * 9000f ) * rotation 
+                * Matrix.CreateTranslation( Antares.world.spaceShip.globalPosition * 0.9f ) );
         }
 
     }

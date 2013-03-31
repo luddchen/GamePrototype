@@ -1,18 +1,18 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
 using Battlestation_Antares.View.HUD;
+using Battlestation_Antaris.Model;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// a radar station
     /// </summary>
-    class Radar : SpatialObjectOld {
+    class Radar : TactileSpatialObject {
 
-        public List<SpatialObjectOld> objectsInRange;
+        public List<TactileSpatialObject> objectsInRange;
 
 
         /// <summary>
@@ -22,8 +22,7 @@ namespace Battlestation_Antares.Model {
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public Radar( Vector3 position )
-            : base( "Radar//radar_1", position) {
+        public Radar( Vector3 position ) : base( "Radar//radar_1", position) {
             Random random = new Random( (int)position.X );
 
             int pitch = random.Next( 2 );
@@ -41,8 +40,10 @@ namespace Battlestation_Antares.Model {
 
             this.attributes.Radar.Range = 500.0f;
 
-            this.objectsInRange = new List<SpatialObjectOld>();
+            this.objectsInRange = new List<TactileSpatialObject>();
+        }
 
+        protected override void _initMiniMapIcon() {
             this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//Radar//radar_2d" );
             this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
             this.miniMapIcon.AbstractScale = 0.7f;
@@ -62,7 +63,7 @@ namespace Battlestation_Antares.Model {
             float distance;
 
             // objects
-            foreach ( SpatialObjectOld obj in Antares.world.AllObjects ) {
+            foreach ( TactileSpatialObject obj in Antares.world.AllTactileObjects ) {
                 distance = Vector3.Distance( this.globalPosition, obj.globalPosition );
 
                 if ( distance <= this.attributes.Radar.Range ) {

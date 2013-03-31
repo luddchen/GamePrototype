@@ -1,19 +1,17 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework;
-
-using SpatialObjectAttributesLibrary;
-using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.View.HUD;
 using Battlestation_Antares.Tools;
+using Battlestation_Antares.View.HUD;
 using Battlestation_Antaris.Model;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SpatialObjectAttributesLibrary;
 
 namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// the players space ship
     /// </summary>
-    class SpaceShip : SpatialObjectOld {
+    class SpaceShip : TactileSpatialObject {
 
         public TactileSpatialObject target;
 
@@ -30,12 +28,13 @@ namespace Battlestation_Antares.Model {
         /// <param name="world">the world model</param>
         public SpaceShip( Vector3 position ) : base( "SpaceShip//spaceship1_2", position ) {
             this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//SpaceShip" ) );
+            this.laserOffsets = new float[2] { -4.0f, 4.0f };
+            this.attributes.Engine.ZeroBarrier = true;
+        }
+
+        protected override void _initMiniMapIcon() {
             this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//SpaceShip//spaceship_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
-            //this.miniMapIcon.scale = 2.0f;
-            this.laserOffsets = new float[2] { -4.0f, 4.0f };
-
-            this.attributes.Engine.ZeroBarrier = true;
         }
 
 
@@ -45,7 +44,6 @@ namespace Battlestation_Antares.Model {
         /// <param name="gameTime"></param>
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
-            this.attributes.Shield.Regenerate();
 
             this.attributes.Laser.CurrentHeat -= this.attributes.Laser.HeatRegeneration;
             if ( this.attributes.Laser.CurrentHeat < 0 ) {

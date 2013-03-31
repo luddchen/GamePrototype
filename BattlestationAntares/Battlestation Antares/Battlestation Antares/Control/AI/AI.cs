@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Battlestation_Antares.View.HUD.AIComposer;
 using Battlestation_Antares.Model;
 using Battlestation_Antaris.Model;
+using System.Collections.ObjectModel;
 
 namespace Battlestation_Antares.Control.AI {
 
@@ -18,7 +19,7 @@ namespace Battlestation_Antares.Control.AI {
 
         public TactileSpatialObject source;
 
-        public List<TactileSpatialObject> targetObjects;
+        public ReadOnlyCollection<TactileSpatialObject> targetObjects;
 
         public List<float> targetResults;
 
@@ -27,7 +28,7 @@ namespace Battlestation_Antares.Control.AI {
             this.inputs = new List<AI_Input.InputType>();
             this.items = new List<AI_Item>();
             this.portIndices = new List<Tuple<int[], int[]>>();
-            this.targetObjects = new List<TactileSpatialObject>();
+            this.targetObjects = new ReadOnlyCollection<TactileSpatialObject>( new List<TactileSpatialObject>() );
             this.targetResults = new List<float>();
         }
 
@@ -36,7 +37,7 @@ namespace Battlestation_Antares.Control.AI {
             this.items = new List<AI_Item>( ai.items );
             this.portIndices = new List<Tuple<int[], int[]>>( ai.portIndices );
             this.maxIndice = ai.maxIndice;
-            this.targetObjects = new List<TactileSpatialObject>();
+            this.targetObjects = new ReadOnlyCollection<TactileSpatialObject>( new List<TactileSpatialObject>() );
             this.targetResults = new List<float>();
         }
 

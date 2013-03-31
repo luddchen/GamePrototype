@@ -21,8 +21,8 @@ namespace SpatialObjectAttributesLibrary {
 
         public Health() {
             this.name = "Health";
-            this.MaxHealthPoints = 0;
-            this.CurrentHealthPoints = 0;
+            this.MaxHealthPoints = 1;
+            this.CurrentHealthPoints = 1;
             this.RegenerationRate = 0;
             this.RepairCost = 0;
         }
@@ -93,13 +93,14 @@ namespace SpatialObjectAttributesLibrary {
         /// apply damage
         /// </summary>
         /// <param name="damage">the recieved damage</param>
-        /// <returns>true : if out of health</returns>
-        public bool ApplyDamage( float damage ) {
+        /// <returns>the amount of damage that could not be absorbed</returns>
+        public float ApplyDamage( float damage ) {
             this.CurrentHealthPoints -= damage;
+            float newHealth = this.CurrentHealthPoints;
             if ( this.CurrentHealthPoints < 0 ) {
                 this.CurrentHealthPoints = 0;
             }
-            return ( this.CurrentHealthPoints == 0 );
+            return ( newHealth >= 0 ) ? 0.0f : -newHealth ;
         }
 
         public override string ToString() {

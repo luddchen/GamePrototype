@@ -89,16 +89,15 @@
     <Compile Include="Control\Situation.cs" />
     <Compile Include="Control\SituationController.cs" />
     <Compile Include="Model\Dust.cs" />
-    <Compile Include="Model\Laser.cs" />
-    <Compile Include="Model\Missile.cs" />
-    <Compile Include="Model\Radar.cs" />
-    <Compile Include="Model\SpaceShip.cs" />
-    <Compile Include="Model\SpaceStation.cs" />
+    <Compile Include="Model\WorldObjects\Laser.cs" />
+    <Compile Include="Model\WorldObjects\Missile.cs" />
+    <Compile Include="Model\WorldObjects\Radar.cs" />
+    <Compile Include="Model\WorldObjects\SpaceShip.cs" />
+    <Compile Include="Model\WorldObjects\SpaceStation.cs" />
     <Compile Include="Model\SpatialObject.cs" />
-    <Compile Include="Model\SpatialObjectOld.cs" />
     <Compile Include="Model\SpatialObjectFactory.cs" />
     <Compile Include="Model\TactileSpatialObject.cs" />
-    <Compile Include="Model\Turret.cs" />
+    <Compile Include="Model\WorldObjects\Turret.cs" />
     <Compile Include="Model\WorldModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
@@ -115,7 +114,7 @@
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />
     <Compile Include="View\DockView.cs" />
-    <Compile Include="View\Grid.cs" />
+    <Compile Include="Model\WorldObjects\Grid.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Bank.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Connection.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Container.cs" />
@@ -146,7 +145,7 @@
     <Compile Include="View\HUD\MiniMapRenderer.cs" />
     <Compile Include="View\HUD\SituationSwitch.cs" />
     <Compile Include="View\MenuView.cs" />
-    <Compile Include="View\Skybox.cs" />
+    <Compile Include="Model\Skybox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Antares.ico" />

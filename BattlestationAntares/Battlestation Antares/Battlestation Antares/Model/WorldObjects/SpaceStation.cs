@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.View.HUD;
-using SpatialObjectAttributesLibrary;
 using Battlestation_Antares.Tools;
+using Battlestation_Antares.View.HUD;
+using Battlestation_Antaris.Model;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SpatialObjectAttributesLibrary;
 
 namespace Battlestation_Antares.Model {
 
     /// <summary>
     /// the Antares space station
     /// </summary>
-    class SpaceStation : SpatialObjectOld {
+    class SpaceStation : TactileSpatialObject {
 
         public enum AirlockStatus {
             OPEN,
@@ -88,6 +85,9 @@ namespace Battlestation_Antares.Model {
         public SpaceStation( Vector3 position) : base( "SpaceStation/spacestation4", position ) {
             init();
             this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//SpaceStation" ) );
+        }
+
+        protected override void _initMiniMapIcon() {
             this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//SpaceStation//station_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
             this.miniMapIcon.AbstractScale = 2.0f;
@@ -98,9 +98,6 @@ namespace Battlestation_Antares.Model {
         /// init the space station
         /// </summary>
         private void init() {
-            // test output of bounding sphere
-            // Console.Out.WriteLine("Station Bounding Sphere : " + this.bounding + " (" + this.model3d.Meshes.Count + " meshes)");
-
             Barrier1 = model.Bones["Barrier1"];
             Barrier2 = model.Bones["Barrier2"];
             Barrier3 = model.Bones["Barrier3"];
@@ -122,7 +119,6 @@ namespace Battlestation_Antares.Model {
         /// <param name="gameTime"></param>
         public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
             base.Update( gameTime );
-            this.attributes.Shield.Regenerate();
 
             // update rotation of the rotating part
             AxisRot += (float)( Math.PI / 1440 );

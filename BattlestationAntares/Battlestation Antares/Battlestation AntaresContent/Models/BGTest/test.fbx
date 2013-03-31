@@ -9,11 +9,11 @@ FBXHeaderExtension:  {
 	CreationTimeStamp:  {
 		Version: 1000
 		Year: 2013
-		Month: 02
-		Day: 26
-		Hour: 19
-		Minute: 58
-		Second: 44
+		Month: 03
+		Day: 31
+		Hour: 18
+		Minute: 55
+		Second: 30
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,7 +21,7 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2013-02-26 19:58:44:000"
+CreationTime: "2013-03-31 18:55:30:000"
 Creator: "Blender version 2.65 (sub 0)"
 
 ; Object definitions
@@ -137,7 +137,7 @@ Objects:  {
 		Shading: Y
 		Culling: "CullingOff"
 		Vertices: 1.000000,-1.000000,0.000000,-1.000000,-1.000000,0.000000,1.000000,1.000000,0.000000,-1.000000,1.000000,0.000000
-		PolygonVertexIndex: 1,0,2,-4
+		PolygonVertexIndex: 2,0,1,-4
 		Edges: 
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
@@ -145,15 +145,15 @@ Objects:  {
 			Name: ""
 			MappingInformationType: "ByVertice"
 			ReferenceInformationType: "Direct"
-			Normals: 0.000000000000000,0.000000000000000,1.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000
-			 ,0.000000000000000,0.000000000000000,1.000000000000000,0.000000000000000,0.000000000000000,1.000000000000000
+			Normals: 0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000
+			 ,0.000000000000000,0.000000000000000,-1.000000000000000,0.000000000000000,0.000000000000000,-1.000000000000000
 		}
 		LayerElementUV: 0 {
 			Version: 101
 			Name: "UVMap"
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
-			UV: 0.000000,0.000000,1.000000,0.000000,1.000000,1.000000,0.000000,1.000000
+			UV: 1.000000,1.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000
 			UVIndex: 0,1,2,3
 		}
 		LayerElementTexture: 0 {

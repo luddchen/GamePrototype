@@ -47,7 +47,7 @@ namespace Battlestation_Antares.Control {
             this.compass.color = new Color( 192, 192, 64 );
             this.view.Add( this.compass );
 
-            this.targetInfo = new TargetInfo( new Vector2( 0.4f, 0.03f ), HUDType.RELATIV, new Vector2( 0.125f, 0.025f ), HUDType.RELATIV );
+            this.targetInfo = new TargetInfo( new Vector2( 0.3f, 0.03f ), new Vector2( 0.25f, 0.025f ) );
             this.view.Add( this.targetInfo );
 
             mouseVisibleCounter = mouseTimeOut;

@@ -1,9 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Battlestation_Antaris.Model;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Battlestation_Antares.Model {
     class SpatialObjectFactory {
@@ -15,8 +13,8 @@ namespace Battlestation_Antares.Model {
             SpatialObjectFactory.world = world;
         }
 
-        public static SpatialObjectOld buildSpatialObject( Type spatialObjectType ) {
-            SpatialObjectOld newObj;
+        public static SpatialObject buildSpatialObject( Type spatialObjectType ) {
+            SpatialObject newObj;
 
             if ( spatialObjectType.Equals( typeof( Battlestation_Antares.Model.Radar ) ) ) {
                 newObj = new Radar( Vector3.Zero );

@@ -22,6 +22,8 @@ namespace SpatialObjectAttributesLibrary {
 
         private bool ZeroRelaxed = true;
 
+        private bool reset = true;
+
         public Engine() {
             this.name = "Engine";
             this.MaxVelocity = 0;
@@ -51,18 +53,23 @@ namespace SpatialObjectAttributesLibrary {
         /// apply the reset force
         /// </summary>
         public void ApplyResetForce() {
-            this.ZeroRelaxed = true;
+            if ( this.reset ) {
+                this.ZeroRelaxed = true;
 
-            if ( this.CurrentVelocity >= this.ResetForce ) {
-                this.CurrentVelocity -= this.ResetForce;
-            } else if ( this.CurrentVelocity <= -this.ResetForce ) {
-                this.CurrentVelocity += this.ResetForce;
+                if ( this.CurrentVelocity >= this.ResetForce ) {
+                    this.CurrentVelocity -= this.ResetForce;
+                } else if ( this.CurrentVelocity <= -this.ResetForce ) {
+                    this.CurrentVelocity += this.ResetForce;
+                } else {
+                    this.CurrentVelocity = 0;
+                }
             } else {
-                this.CurrentVelocity = 0;
+                this.reset = true;
             }
         }
 
         public void Accelerate() {
+            this.reset = false;
             if ( this.ZeroRelaxed ) {
                 if ( this.ZeroBarrier && this.CurrentVelocity < 0 && this.CurrentVelocity >= -this.Acceleration ) {
                     this.CurrentVelocity = 0;
@@ -75,6 +82,7 @@ namespace SpatialObjectAttributesLibrary {
         }
 
         public void Decelerate() {
+            this.reset = false;
             if ( this.ZeroRelaxed ) {
                 if ( this.ZeroBarrier && this.CurrentVelocity > 0 && this.CurrentVelocity <= this.Acceleration ) {
                     this.CurrentVelocity = 0;

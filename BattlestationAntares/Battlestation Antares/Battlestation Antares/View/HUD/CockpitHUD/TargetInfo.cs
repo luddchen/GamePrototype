@@ -2,6 +2,7 @@
 using Battlestation_Antares.Model;
 using HUD.HUD;
 using Battlestation_Antaris.Model;
+using System;
 
 namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
@@ -9,36 +10,29 @@ namespace Battlestation_Antares.View.HUD.CockpitHUD {
 
         private HUDString targetObject;
 
-        //private HUDString targetDistance;
-
-        private WorldModel world;
-
         public TactileSpatialObject target;
 
 
-        public TargetInfo( Vector2 abstractPosition, HUDType positionType, Vector2 abstractSize, HUDType sizeType)
+        public TargetInfo( Vector2 abstractPosition, Vector2 abstractSize )
             : base( abstractPosition, abstractSize ) 
         {
-            this.world = Antares.world;
-
             targetObject = new HUDString( " " );
-            //targetDistance = new HUDString( " " );
-            //targetDistance.scale = 0.8f;
-
             Add( targetObject );
-            //Add( targetDistance );
-
-            SetBackground( "Sprites//Circle", new Color(16, 16, 4, 64 ) );
-
             this.isVisible = false;
         }
 
         public override void Draw( Microsoft.Xna.Framework.Graphics.SpriteBatch spritBatch ) {
-            this.target = this.world.spaceShip.target;
+            this.target = Antares.world.spaceShip.target;
 
             if ( target != null ) {
-                this.targetObject.Text = target.ToString();
-                //this.targetDistance.String = String.Format("{0:F0} m", testDist);
+                if ( target.attributes.Hull.CurrentHealthPoints / target.attributes.Hull.MaxHealthPoints > 0 ) {
+                    this.targetObject.Text =
+                        target.ToString() + " : "
+                        + String.Format( " Shield {0:F0} %", 100.0f * target.attributes.Shield.CurrentHealthPoints / target.attributes.Shield.MaxHealthPoints )
+                        + String.Format( " Hull {0:F0} %", 100f * target.attributes.Hull.CurrentHealthPoints / target.attributes.Hull.MaxHealthPoints );
+                } else {
+                    this.targetObject.Text = target.ToString() + " is dead ";
+                }
                 this.isVisible = true;
             } else {
                 this.targetObject.Text = " ";

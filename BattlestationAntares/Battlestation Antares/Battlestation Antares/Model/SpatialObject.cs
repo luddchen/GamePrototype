@@ -1,8 +1,8 @@
 ﻿using System;
 using Battlestation_Antares;
 using Battlestation_Antares.Tools;
-using Microsoft.Xna.Framework;
 using Battlestation_Antares.View;
+using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antaris.Model {
 
@@ -57,12 +57,11 @@ namespace Battlestation_Antaris.Model {
             this.boneTransforms = new Matrix[this.model.Bones.Count];
 
             this.globalPosition = position;
-
             this.rotation = rotation ?? Matrix.Identity;
-
             this.scale = scale ?? Vector3.One;
-
             this.isVisible = isVisible;
+
+            this.addDebugOutput();
         }
 
         #region methods
@@ -76,8 +75,11 @@ namespace Battlestation_Antaris.Model {
         public virtual void Update( GameTime gameTime ) {
         }
 
+        public virtual void addDebugOutput() {
+        }
+
         public override string ToString() {
-            return this.GetType().Name + " : " + this.modelName;
+            return this.modelName;
         }
 
         #endregion

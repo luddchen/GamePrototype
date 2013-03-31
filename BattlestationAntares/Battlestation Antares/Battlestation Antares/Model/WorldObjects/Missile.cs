@@ -1,14 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Battlestation_Antaris.Model;
+using Microsoft.Xna.Framework;
 
 namespace Battlestation_Antares.Model {
 
-    class Missile : SpatialObjectOld {
+    class Missile : TactileSpatialObject {
         private int timeout;
 
-        public Missile( SpatialObjectOld parent, float offset ) : base( "Weapon//missile", parent.globalPosition ) {
+        public Missile( TactileSpatialObject parent, float offset ) : base( "Weapon//missile", parent.globalPosition ) {
             this.rotation = parent.rotation;
-            this.attributes.Engine.CurrentVelocity = 10.0f;
+            this.attributes.Engine.CurrentVelocity = parent.attributes.Missile.ProjectileVelocity;
 
             this.timeout = 240;
 

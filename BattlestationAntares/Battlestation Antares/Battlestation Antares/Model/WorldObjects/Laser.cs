@@ -1,14 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Battlestation_Antares.View.HUD;
+using Battlestation_Antaris.Model;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Battlestation_Antares.View.HUD;
-using System;
 
 namespace Battlestation_Antares.Model {
 
-    class Laser : SpatialObjectOld {
+    class Laser : TactileSpatialObject {
 
-        public SpatialObjectOld parent;
+        public TactileSpatialObject parent;
 
         private float upOffset;
 
@@ -19,14 +18,16 @@ namespace Battlestation_Antares.Model {
         // only for test the visual illusion
         private static float FUN_FACTOR = 1.0f;
 
-        public Laser( SpatialObjectOld parent, float upOffset, float rightOffset ) : base( "Weapon//laser", parent.globalPosition ) {
+        public Laser( TactileSpatialObject parent, float upOffset, float rightOffset ) : base( "Weapon//laser", parent.globalPosition ) {
 
             this.parent = parent;
             this.rotation = parent.rotation;
             this.upOffset = upOffset;
             this.rightOffset = rightOffset;
             this.attributes.Engine.CurrentVelocity = this.parent.attributes.Laser.ProjectileVelocity;
+        }
 
+        protected override void _initMiniMapIcon() {
             this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//Weapon//laser_2d" );
             this.miniMapIcon.color = MiniMap.WEAPON_COLOR;
             this.miniMapIcon.AbstractScale = 0.4f;

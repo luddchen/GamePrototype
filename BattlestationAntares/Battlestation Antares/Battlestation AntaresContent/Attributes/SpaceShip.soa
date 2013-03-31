@@ -12,6 +12,6 @@
 #
 #EngineRoll: #MaxVelocity: 0.035 #Acceleration: 0.002 #ResetForce: 0.001
 #
-#Laser: #Damage: 30.0 #Range: 5000.0 #Velocity: 60.0 #ReloadTime: 10.0 #HeatProduction: 5.0 #HeatUntilCooldown: 200.0 #HeatRegeneration 0.25
+#Laser: #Damage: 50.0 #Range: 5000.0 #Velocity: 60.0 #ReloadTime: 10.0 #HeatProduction: 5.0 #HeatUntilCooldown: 200.0 #HeatRegeneration 0.25
 #
 #Missile: #Damage: 20.0 #Range: 1000.0 #Velocity: 20.0 #ReloadTime: 60.0 #MaxAmount: 10.0

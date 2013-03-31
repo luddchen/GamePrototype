@@ -22,6 +22,7 @@ namespace Battlestation_Antaris.Control {
 
         public override void onEnter() {
             Antares.world.spaceShip.isVisible = true;
+            Antares.world.grid.isVisible = false;
             if ( this.undock ) {
                 Antares.world.spaceStation.OpenDock( 100 );
             } else {
@@ -31,6 +32,7 @@ namespace Battlestation_Antaris.Control {
 
         public override void onExit() {
             Antares.world.spaceShip.isVisible = false;
+            Antares.world.grid.isVisible = true;
             this.undock = !this.undock;
         }
 
