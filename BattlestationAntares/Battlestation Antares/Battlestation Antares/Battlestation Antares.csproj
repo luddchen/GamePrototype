@@ -88,6 +88,7 @@
     <Compile Include="Control\MenuController.cs" />
     <Compile Include="Control\Situation.cs" />
     <Compile Include="Control\SituationController.cs" />
+    <Compile Include="Model\DrawTree.cs" />
     <Compile Include="Model\Dust.cs" />
     <Compile Include="Model\WorldObjects\Laser.cs" />
     <Compile Include="Model\WorldObjects\Missile.cs" />
@@ -114,7 +115,7 @@
     <Compile Include="View\CockpitView.cs" />
     <Compile Include="View\CommandView.cs" />
     <Compile Include="View\DockView.cs" />
-    <Compile Include="Model\WorldObjects\Grid.cs" />
+    <Compile Include="Model\Grid.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Bank.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Connection.cs" />
     <Compile Include="View\HUD\AIComposer\AI_Container.cs" />

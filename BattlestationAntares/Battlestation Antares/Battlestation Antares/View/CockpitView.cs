@@ -113,7 +113,8 @@ namespace Battlestation_Antares.View {
             // init camera
             this.camera.ClampTo( Antares.world.spaceShip );
 
-            Tools.Draw3D.Draw( Antares.world.AllObjects, this.camera );
+            Antares.world.Draw( this.camera );
+            //Tools.Draw3D.Draw( Antares.world.AllObjects, this.camera );
 
             drawTargetCross();
 

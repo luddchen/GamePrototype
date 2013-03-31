@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Battlestation_Antares.Tools;
+using Battlestation_Antares.View;
 using Battlestation_Antares.View.HUD;
 using Battlestation_Antaris.Model;
 using Battlestation_Antaris.View.HUD;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Battlestation_Antares.Tools;
 
 namespace Battlestation_Antares.Model {
 
@@ -27,8 +28,6 @@ namespace Battlestation_Antares.Model {
         private MiniMap miniMap;
 
         public MiniMapRenderer miniMapRenderer;
-
-        public Grid grid;
 
         /// <summary>
         /// the players space ship
@@ -100,6 +99,10 @@ namespace Battlestation_Antares.Model {
             }
         }
 
+        private Grid grid;
+
+        private Skybox skybox;
+
         private List<SpatialObject> addList;
 
         private List<SpatialObject> removeList;
@@ -108,6 +111,8 @@ namespace Battlestation_Antares.Model {
         public Tools.DynamicOctree<TactileSpatialObject> octree;
 
         private Tools.RayCastThreadPool RayCastPool;
+
+        private DrawTree drawTree;
 
 
         /// <summary>
@@ -137,6 +142,8 @@ namespace Battlestation_Antares.Model {
                     ( 3, 1, 10, new BoundingBox( new Vector3( -5000, -5000, -5000 ), new Vector3( 5000, 5000, 5000 ) ) );
 
             this.RayCastPool = new Tools.RayCastThreadPool( this );
+
+            this.drawTree = new DrawTree();
         }
 
 
@@ -146,18 +153,14 @@ namespace Battlestation_Antares.Model {
         /// <param name="content">the game content manager</param>
         public void Initialize( ContentManager content ) {
 
-            Add( new Skybox() );
+            this.skybox = new Skybox();
+            this.grid = new Grid();
 
-            // background
-            for ( int i = 0; i < 10; i++ ) {
-                addBackgroundObject( "BGTest//test2" );
-            }
 
-            for ( int i = 0; i < 10; i++ ) {
-                addBackgroundObject( "BGTest//test" );
-            }
-
-            Add( new Grid() );
+            //"BGTest//test2"
+            //"BGTest//test"
+            Add( new BackgroundObject( "BGTest//test3", Tools.Tools.YawPitchRoll( Matrix.Identity, 0.3f + (float)Math.PI, 0.2f, 0.01f ), 2.2f, Matrix.CreateRotationX( 0.0002f ) ) );
+            Add( new BackgroundObject( "BGTest//SpatialRift", Tools.Tools.YawPitchRoll( Matrix.Identity, -0.3f + (float)Math.PI, 0.02f, 0.4f ), 1.2f, null ) );
 
             Random random = new Random();
 
@@ -193,16 +196,6 @@ namespace Battlestation_Antares.Model {
                 Add( new Dust( spaceShip ) );
             }
 
-        }
-
-        private void addBackgroundObject( String model ) {
-            float yaw = (float)( RandomGen.random.NextDouble() * Math.PI * 2 );
-            float pitch = (float)( RandomGen.random.NextDouble() * Math.PI );
-            float roll = (float)( RandomGen.random.NextDouble() * Math.PI * 2 );
-            Matrix bgRot = Tools.Tools.YawPitchRoll( Matrix.Identity, yaw, pitch, roll );
-            float scale = 1.25f + (float)RandomGen.random.NextDouble() * 1.5f;
-
-            Add( new BackgroundObject( model, bgRot, scale) );
         }
 
         /// <summary>
@@ -287,6 +280,7 @@ namespace Battlestation_Antares.Model {
             foreach ( SpatialObject obj in this.allObjects ) {
                 obj.Update( gameTime );
             }
+            this.skybox.Update( gameTime );
 
             // render minimap
             this.miniMapRenderer.Update( gameTime );
@@ -305,6 +299,8 @@ namespace Battlestation_Antares.Model {
                     }
                 }
             }
+
+            this.drawTree.init( this.allObjects, this.spaceShip );
 
             this.spaceShip.isVisible = shipVisible;
 
@@ -348,6 +344,16 @@ namespace Battlestation_Antares.Model {
             // test for threaded raycasting of all turrets
             //this.RayCastPool.StartRayCasting();
 
+        }
+
+        public void Draw( Camera camera ) {
+            this.skybox.Draw( camera );
+            this.drawTree.Draw( camera );
+            this.grid.Draw( camera );
+        }
+
+        public void SetGridVisible( bool visibility ) {
+            this.grid.isVisible = visibility;
         }
 
     }

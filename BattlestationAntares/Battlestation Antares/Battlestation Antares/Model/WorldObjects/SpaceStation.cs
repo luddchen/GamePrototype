@@ -139,10 +139,10 @@ namespace Battlestation_Antares.Model {
                 }
             }
 
-
-            Barrier1.Transform = Matrix.CreateRotationY( AxisRot * 0.5f ) * Barrier1Transform;
-            Barrier2.Transform = Matrix.CreateRotationY( -AxisRot * 7.7f ) * Barrier2Transform;
-            Barrier3.Transform = Matrix.CreateRotationY( AxisRot * 11.4f ) * Barrier3Transform;
+            
+            //Barrier1.Transform = Matrix.CreateRotationY( AxisRot * 9.0f ) * Barrier1Transform;
+            Barrier2.Transform = Matrix.CreateRotationY( -AxisRot * 18.2f ) * Barrier2Transform;
+            Barrier3.Transform = Matrix.CreateRotationY( AxisRot * 26.8f ) * Barrier3Transform;
             BarrierTop.Transform = Matrix.CreateScale( new Vector3( 1, 1.0f - 1.0f / 16.5f * (airlockMove + 0.5f), 1 ) );
             Airlock.Transform = Matrix.CreateTranslation(new Vector3( 0, airlockMove, 0 ) ) * AirlockTransform;
         }

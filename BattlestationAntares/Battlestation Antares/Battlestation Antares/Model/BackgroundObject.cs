@@ -9,19 +9,30 @@ namespace Battlestation_Antares.Model {
     /// </summary>
     class BackgroundObject : SpatialObject {
 
+        private Vector3 global;
+
+        private Matrix updateTransform;
+
+        private bool doTransform = false;
+
         /// <summary>
         /// creates a new background image
         /// </summary>
         /// <param name="game"></param>
-        public BackgroundObject( String modelName, Matrix rotation, float scale) : base(modelName, rotation: rotation ) {
-            this.scale = new Vector3( 800 * scale );
+        public BackgroundObject( String modelName, Matrix rotation, float scale, Matrix? updateTransform) : base(modelName, rotation: rotation ) {
+            if ( updateTransform.HasValue ) {
+                this.updateTransform = updateTransform.Value;
+                this.doTransform = true;
+            }
+            this.scale = new Vector3( 700 * scale );
+            this.global = Vector3.Transform( Vector3.Forward, Matrix.CreateTranslation( -Vector3.Forward * 5000f ) * rotation );
         }
 
         public override void Update( GameTime gameTime ) {
-            this.globalPosition = Vector3.Transform(
-                Vector3.Forward,
-                Matrix.CreateTranslation( -Vector3.Forward * 9000f ) * rotation 
-                * Matrix.CreateTranslation( Antares.world.spaceShip.globalPosition * 0.9f ) );
+            this.globalPosition = Vector3.Transform( this.global, Matrix.CreateTranslation( Antares.world.spaceShip.globalPosition * 0.9f ) );
+            if ( this.doTransform ) {
+                this.rotation *= this.updateTransform;
+            }
         }
 
     }
