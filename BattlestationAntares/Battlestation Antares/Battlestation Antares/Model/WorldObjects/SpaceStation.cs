@@ -13,7 +13,7 @@ namespace Battlestation_Antares.Model {
     /// </summary>
     class SpaceStation : TactileSpatialObject {
 
-        public enum AirlockStatus {
+        public enum DockState {
             OPEN,
             CLOSED,
             OPENING,
@@ -23,7 +23,7 @@ namespace Battlestation_Antares.Model {
 
         public static float DockPosition = -150f;
 
-        public Vector3 AirlockCurrentPosition {
+        public Vector3 CurrentDockPosition {
             get {
                 return this.globalPosition + (DockPosition + this.airlockMove) * this.rotation.Up;
             }
@@ -38,23 +38,23 @@ namespace Battlestation_Antares.Model {
         private ModelBone BarrierTop;
         private ModelBone Airlock;
 
-        public AirlockStatus AirlockCurrentState {
+        public DockState CurrentDockState {
             get {
                 if ( dir == 0 ) {
                     if ( airlockMove <= 0 ) {
-                        return AirlockStatus.OPEN;
+                        return DockState.OPEN;
                     }
                     if ( airlockMove >= 16 ) {
-                        return AirlockStatus.CLOSED;
+                        return DockState.CLOSED;
                     }
                 } else {
                     if ( dir > 0 ) {
-                        return AirlockStatus.CLOSING;
+                        return DockState.CLOSING;
                     } else {
-                        return AirlockStatus.OPENING;
+                        return DockState.OPENING;
                     }
                 }
-                return AirlockStatus.DEFECT;
+                return DockState.DEFECT;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Battlestation_Antares.Model {
 
         public override void addDebugOutput() {
             Antares.debugViewer.Add( new DebugElement( this, "Airlock", delegate( Object obj ) {
-                return String.Format( "{0}", ( obj as SpaceStation ).AirlockCurrentState );
+                return String.Format( "{0}", ( obj as SpaceStation ).CurrentDockState );
             } ) );
         }
 

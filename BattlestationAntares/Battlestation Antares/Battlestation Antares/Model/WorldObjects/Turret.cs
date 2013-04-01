@@ -30,6 +30,7 @@ namespace Battlestation_Antares.Model {
             this.beamCooldown = 30;
 
             this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//Turret" ) );
+            this.attributes.SetUpdatePreferences( engineUpdate: true, weaponUpdate: true );
         }
 
         protected override void _initMiniMapIcon() {

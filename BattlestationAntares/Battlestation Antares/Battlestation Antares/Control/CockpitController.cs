@@ -104,10 +104,10 @@ namespace Battlestation_Antares.Control {
             }
 
             SpaceShip ship = Antares.world.spaceShip;
-            float distance = Vector3.Distance( ship.globalPosition, Antares.world.spaceStation.AirlockCurrentPosition );
+            float distance = Vector3.Distance( ship.globalPosition, Antares.world.spaceStation.CurrentDockPosition );
 
             if ( this.dockButton.isActivated() ) {
-                if ( Antares.world.spaceStation.AirlockCurrentState != SpaceStation.AirlockStatus.OPEN ) {
+                if ( Antares.world.spaceStation.CurrentDockState != SpaceStation.DockState.OPEN ) {
                     Antares.world.spaceStation.OpenDock( 0 );
                 }
 
@@ -118,13 +118,13 @@ namespace Battlestation_Antares.Control {
                 ( (CockpitView)this.view ).SetBeamParameter(
                                 ship.globalPosition,
                                 ship.rotation.Forward * 500,
-                                Antares.world.spaceStation.AirlockCurrentPosition,
+                                Antares.world.spaceStation.CurrentDockPosition,
                                 Antares.world.spaceStation.rotation.Forward * 1);
                 ( (CockpitView)this.view ).drawBeam = true;
 
             } else {
                 ( (CockpitView)this.view ).drawBeam = false;
-                if ( Antares.world.spaceStation.AirlockCurrentState != SpaceStation.AirlockStatus.CLOSED && distance > 50) {
+                if ( Antares.world.spaceStation.CurrentDockState != SpaceStation.DockState.CLOSED && distance > 50) {
                     Antares.world.spaceStation.CloseDock( 0 );
                 }
             }

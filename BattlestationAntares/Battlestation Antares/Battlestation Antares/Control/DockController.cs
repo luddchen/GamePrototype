@@ -40,7 +40,7 @@ namespace Battlestation_Antaris.Control {
             base.Update( gameTime );
 
             Antares.world.Update( gameTime );
-            Antares.world.spaceShip.globalPosition = Antares.world.spaceStation.AirlockCurrentPosition;
+            Antares.world.spaceShip.globalPosition = Antares.world.spaceStation.CurrentDockPosition;
             Antares.world.spaceShip.rotation = Matrix.Identity;
 
             this.rot += this.rotSpeed;

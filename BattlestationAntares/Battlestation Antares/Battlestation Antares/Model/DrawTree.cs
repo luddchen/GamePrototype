@@ -14,20 +14,17 @@ namespace Battlestation_Antaris.Model {
             this.objects = new List<Tuple<SpatialObject, float>>();
         }
 
-        public void init( List<SpatialObject> collection, SpatialObject center ) {
+        public void init( List<SpatialObject> collection, Camera camera ) {
             this.objects.Clear();
             float dist;
             foreach ( SpatialObject obj in collection ) {
-                if ( obj is Skybox ) {
-                    dist = float.MaxValue;
-                } else if ( obj is Grid ) {
-                    dist = 0.1f;
-                } else {
-                    dist = Vector3.Distance( obj.globalPosition, center.globalPosition );
-                    float dot = Vector3.Dot( obj.globalPosition - center.globalPosition, center.rotation.Forward );
-                    if ( dot < 0 ) {
-                        dist *= -1;
-                    }
+                dist = Vector3.Distance( obj.globalPosition, camera.position );
+                float dot = Vector3.Dot( obj.globalPosition - camera.position, camera.forward );
+                if ( dot < 0 ) {
+                    dist *= -1;
+                }
+                if ( obj is SpaceShip ) { // dirty hack for Dock / Undock -> SpaceStation in front of SpaceShip
+                    dist += 100;
                 }
                 this.objects.Add( new Tuple<SpatialObject, float>( obj, dist ) );
             }
@@ -37,7 +34,7 @@ namespace Battlestation_Antaris.Model {
 
         public void Draw( Camera camera ) {
             foreach ( Tuple<SpatialObject, float> t in this.objects ) {
-                if ( t.Item2 > 0 ) {
+                if ( t.Item2 > -100 ) {
                     t.Item1.Draw( camera );
                 } else {
                     break;

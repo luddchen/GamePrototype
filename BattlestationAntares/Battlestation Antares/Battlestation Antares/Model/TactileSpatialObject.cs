@@ -58,13 +58,13 @@ namespace Battlestation_Antaris.Model {
             _initBounding();
 
             Antares.world.Add( this );
-            _initActionDictionary();
+            _initControlDictionary();
 
             this.miniMapIcon = new MiniMapIcon( null, this );
             _initMiniMapIcon();
         }
 
-        protected virtual void _initActionDictionary() {
+        protected virtual void _initControlDictionary() {
             this.controlDictionary[Battlestation_Antares.Control.Control.INCREASE_THROTTLE] = _increaseThrottle;
             this.controlDictionary[Battlestation_Antares.Control.Control.DECREASE_THROTTLE] = _decreaseThrottle;
             this.controlDictionary[Battlestation_Antares.Control.Control.ZERO_THROTTLE] = _zeroThrottle;

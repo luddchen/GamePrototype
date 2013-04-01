@@ -20,6 +20,12 @@ namespace Battlestation_Antares.View {
         public Matrix view;
 
 
+        public Vector3 position;
+
+
+        public Vector3 forward;
+
+
         /// <summary>
         /// near clipping value
         /// </summary>
@@ -45,11 +51,13 @@ namespace Battlestation_Antares.View {
         /// update the camera matrices to a new position and direction
         /// </summary>
         /// <param name="position">new position</param>
-        /// <param name="direction">new direction</param>
+        /// <param name="forward">new direction</param>
         /// <param name="up">new up vector</param>
-        public void Update( Vector3 position, Vector3 direction, Vector3 up ) {
+        public void Update( Vector3 position, Vector3 forward, Vector3 up ) {
             projection = Matrix.CreatePerspectiveFieldOfView( MathHelper.PiOver4, Antares.graphics.GraphicsDevice.Viewport.AspectRatio, this.nearClipping, this.farClipping );
-            view = Matrix.CreateLookAt( position, Vector3.Add( position, direction ), up );
+            view = Matrix.CreateLookAt( position, Vector3.Add( position, forward ), up );
+            this.position = position;
+            this.forward = forward;
         }
 
 

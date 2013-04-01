@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace SpatialObjectAttributesLibrary {
 
@@ -94,6 +92,22 @@ namespace SpatialObjectAttributesLibrary {
             return 4;
         }
 
+        public void UpdateReloadTime( GameTime gameTime ) {
+            if ( this.CurrentReloadTime > 0 ) {
+                this.CurrentReloadTime--;
+            } else {
+                this.CurrentReloadTime = 0;
+            }
+        }
+
+        public virtual bool Fire() {
+            bool success = false;
+            if ( this.CurrentReloadTime <= 0 ) {
+                this.CurrentReloadTime = this.ReloadTime;
+                success = true;
+            }
+            return success;
+        }
 
         public override string ToString() {
             String output = "";

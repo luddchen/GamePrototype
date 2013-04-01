@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace SpatialObjectAttributesLibrary {
 
@@ -81,6 +79,21 @@ namespace SpatialObjectAttributesLibrary {
             return base.getNumberOfValues() + 3;
         }
 
+        public void CoolDown( GameTime gameTime ) {
+            this.CurrentHeat -= this.HeatRegeneration;
+            if ( this.CurrentHeat < 0 ) {
+                this.CurrentHeat = 0;
+            }
+        }
+
+        public override bool Fire() {
+            bool success = false;
+            if ( this.CurrentHeat < this.HeatUntilCooldown && base.Fire() ) {
+                this.CurrentHeat += this.HeatProduction;
+                success = true;
+            }
+            return success;
+        }
 
         public override string ToString() {
             String output = base.ToString();

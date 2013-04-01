@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Battlestation_Antares.Tools;
 using Battlestation_Antares.View;
 using Battlestation_Antares.View.HUD;
 using Battlestation_Antaris.Model;
@@ -15,12 +14,6 @@ namespace Battlestation_Antares.Model {
     /// represents a model of the game world
     /// </summary>
     class WorldModel {
-
-        /// <summary>
-        /// the game
-        /// </summary>
-        public Antares game;
-
 
         /// <summary>
         /// a minimap of this world
@@ -119,8 +112,7 @@ namespace Battlestation_Antares.Model {
         /// creates the world
         /// </summary>
         /// <param name="game">the game</param>
-        public WorldModel( Antares game ) {
-            this.game = game;
+        public WorldModel() {
             this.allObjects = new List<SpatialObject>();
             this.allTactileObjects = new List<TactileSpatialObject>();
 
@@ -150,8 +142,7 @@ namespace Battlestation_Antares.Model {
         /// <summary>
         /// initialize the world content
         /// </summary>
-        /// <param name="content">the game content manager</param>
-        public void Initialize( ContentManager content ) {
+        public void Initialize() {
 
             this.skybox = new Skybox();
             this.grid = new Grid();
@@ -289,7 +280,7 @@ namespace Battlestation_Antares.Model {
             octree.Clear();
 
             bool shipVisible = this.spaceShip.isVisible;
-            this.spaceShip.isVisible = true;
+            this.spaceShip.isVisible = true;    // ship only visible for hit and collision check
 
             foreach ( TactileSpatialObject obj in this.allTactileObjects ) {
                 if ( obj.isVisible ) {
@@ -299,8 +290,6 @@ namespace Battlestation_Antares.Model {
                     }
                 }
             }
-
-            this.drawTree.init( this.allObjects, this.spaceShip );
 
             this.spaceShip.isVisible = shipVisible;
 
@@ -347,6 +336,7 @@ namespace Battlestation_Antares.Model {
         }
 
         public void Draw( Camera camera ) {
+            this.drawTree.init( this.allObjects, camera );
             this.skybox.Draw( camera );
             this.drawTree.Draw( camera );
             this.grid.Draw( camera );

@@ -30,6 +30,14 @@ namespace Battlestation_Antares.Model {
             this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//SpaceShip" ) );
             this.laserOffsets = new float[2] { -4.0f, 4.0f };
             this.attributes.Engine.ZeroBarrier = true;
+            this.attributes.SetUpdatePreferences( engineUpdate: true, weaponUpdate: true );
+        }
+
+        protected override void _initControlDictionary() {
+            base._initControlDictionary();
+            this.controlDictionary[Control.Control.TARGET_NEXT_ENEMY] = _targetNextEnemy;
+            this.controlDictionary[Control.Control.FIRE_LASER] = _fireLaser;
+            this.controlDictionary[Control.Control.FIRE_MISSILE] = _fireMissile;
         }
 
         protected override void _initMiniMapIcon() {
@@ -37,77 +45,10 @@ namespace Battlestation_Antares.Model {
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
         }
 
-
-        /// <summary>
-        /// update the space ship
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public override void Update( Microsoft.Xna.Framework.GameTime gameTime ) {
-            base.Update( gameTime );
-
-            this.attributes.Laser.CurrentHeat -= this.attributes.Laser.HeatRegeneration;
-            if ( this.attributes.Laser.CurrentHeat < 0 ) {
-                this.attributes.Laser.CurrentHeat = 0;
-            }
-
-            if ( this.attributes.Laser.CurrentReloadTime > 0 ) {
-                this.attributes.Laser.CurrentReloadTime--;
-            }
-
-            if ( this.attributes.Missile.CurrentReloadTime > 0 ) {
-                this.attributes.Missile.CurrentReloadTime--;
-            }
-        }
-
-
-        public override void InjectControl( Control.Control control ) {
-            base.InjectControl( control );
-
-            if ( control == Control.Control.FIRE_LASER && this.attributes.Laser.CurrentReloadTime <= 0
-                && this.attributes.Laser.CurrentHeat < this.attributes.Laser.HeatUntilCooldown ) {
-                this.attributes.Laser.CurrentHeat += this.attributes.Laser.HeatProduction;
-                this.attributes.Laser.CurrentReloadTime = this.attributes.Laser.ReloadTime;
-                Laser laser = new Laser( this, -2.0f, this.laserOffsets[this.laserIndex]);
-                this.laserIndex++;
-                if ( this.laserIndex >= this.laserOffsets.Length ) {
-                    this.laserIndex = 0;
-                }
-            }
-
-            if ( control == Control.Control.FIRE_MISSILE ) {
-                if ( this.attributes.Missile.CurrentReloadTime <= 0 ) {
-                    Missile missile = new Missile( this, -2.0f );
-                    this.attributes.Missile.CurrentReloadTime = this.attributes.Missile.ReloadTime;
-                }
-            }
-
-            if ( control == Control.Control.TARGET_NEXT_ENEMY ) {
-                //Console.WriteLine("Blubb!");
-                float testDist = float.MaxValue;
-                this.target = Antares.world.octree.CastRay( new Ray( this.globalPosition, this.rotation.Forward ), 1, ref testDist );
-            }
-
-        }
-
         public override void addDebugOutput() {
             Antares.debugViewer.Add( new DebugElement( this, "Speed", delegate( Object obj ) {
                 return String.Format( "{0:F2}", ( obj as SpaceShip ).attributes.Engine.CurrentVelocity );
             } ) );
-
-            //Game1.debugViewer.Add(new DebugElement(this, "Yaw", delegate(Object obj)
-            //{
-            //    return String.Format("{0:F2}", (obj as SpaceShip).attributes.EngineYaw.CurrentVelocity * 100);
-            //}));
-
-            //Game1.debugViewer.Add(new DebugElement(this, "Pitch", delegate(Object obj)
-            //{
-            //    return String.Format("{0:F2}", (obj as SpaceShip).attributes.EnginePitch.CurrentVelocity * 100);
-            //}));
-
-            //Game1.debugViewer.Add(new DebugElement(this, "Roll", delegate(Object obj)
-            //{
-            //    return String.Format("{0:F2}", (obj as SpaceShip).attributes.EngineRoll.CurrentVelocity * 100);
-            //}));
 
             Antares.debugViewer.Add( new DebugElement( this, "Distance", delegate( Object obj ) {
                 return String.Format( "{0:F0}", ( obj as SpaceShip ).globalPosition.Length() );
@@ -117,6 +58,28 @@ namespace Battlestation_Antares.Model {
 
         public override string ToString() {
             return "SpaceShip";
+        }
+
+        private void _fireLaser() {
+            if ( this.attributes.Laser.Fire() ) {
+                Laser laser = new Laser( this, -2.0f, this.laserOffsets[this.laserIndex] );
+                this.laserIndex++;
+                if ( this.laserIndex >= this.laserOffsets.Length ) {
+                    this.laserIndex = 0;
+                }
+            }
+        }
+
+        private void _fireMissile() {
+            if ( this.attributes.Missile.CurrentReloadTime <= 0 ) {
+                Missile missile = new Missile( this, -2.0f );
+                this.attributes.Missile.CurrentReloadTime = this.attributes.Missile.ReloadTime;
+            }
+        }
+
+        private void _targetNextEnemy() {
+            float testDist = float.MaxValue;
+            this.target = Antares.world.octree.CastRay( new Ray( this.globalPosition, this.rotation.Forward ), 1, ref testDist );
         }
 
     }

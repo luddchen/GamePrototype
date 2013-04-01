@@ -99,8 +99,8 @@ namespace Battlestation_Antares {
             this.spriteBatch = new SpriteBatch( Antares.graphics.GraphicsDevice );
 
             // create and initialize world model
-            Antares.world = new Model.WorldModel( this );
-            Antares.world.Initialize( this.Content );
+            Antares.world = new Model.WorldModel();
+            Antares.world.Initialize();
 
             // create situations (control and views)
             this.allSituations = new List<SituationController>();

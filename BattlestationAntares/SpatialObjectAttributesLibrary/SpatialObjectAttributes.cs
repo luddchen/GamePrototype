@@ -33,6 +33,10 @@ namespace SpatialObjectAttributesLibrary {
         // Missile
         public Missile Missile;
 
+        // enable / disable update
+        private bool engineUpdate = false;
+        private bool weaponUpdate = false;
+
 
         public SpatialObjectAttributes() {
             this.Shield = new Health();
@@ -103,14 +107,27 @@ namespace SpatialObjectAttributesLibrary {
             this.EngineRoll.name += "(Roll)";
         }
 
+        public void SetUpdatePreferences( bool engineUpdate = false , bool weaponUpdate = false ) {
+            this.engineUpdate = engineUpdate;
+            this.weaponUpdate = weaponUpdate;
+        }
+
         public void Update( GameTime gameTime ) {
             this.Shield.Regenerate();
             this.Hull.Regenerate();
 
-            this.Engine.ApplyResetForce();
-            this.EngineYaw.ApplyResetForce();
-            this.EnginePitch.ApplyResetForce();
-            this.EngineRoll.ApplyResetForce();
+            if ( this.engineUpdate ) {
+                this.Engine.ApplyResetForce();
+                this.EngineYaw.ApplyResetForce();
+                this.EnginePitch.ApplyResetForce();
+                this.EngineRoll.ApplyResetForce();
+            }
+
+            if ( this.weaponUpdate ) {
+                this.Laser.UpdateReloadTime( gameTime );
+                this.Laser.CoolDown( gameTime );
+                this.Missile.UpdateReloadTime( gameTime );
+            }
         }
 
     }
