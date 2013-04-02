@@ -53,7 +53,7 @@ namespace Battlestation_Antares.View {
             this.Add( compassBG );
 
             // 2D HUD
-            cockpitTexture = new HUDTexture( "Sprites//cockpit3", Color.White, new Vector2( 0.5f, 0.5f ), new Vector2( 1, 1 ) );
+            cockpitTexture = new HUDTexture( "Sprites//cockpit01", Color.White, new Vector2( 0.5f, 0.5f ), new Vector2( 1, 1 ) );
             cockpitTexture.LayerDepth = 1.0f;
             this.Add( cockpitTexture );
 
