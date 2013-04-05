@@ -59,7 +59,7 @@ namespace Battlestation_Antares.Control {
             fpsDisplay = new FpsDisplay( new Vector2( 0.125f, 0.03f ) );
             this.view.Add( fpsDisplay );
 
-            mapConfig = new MiniMapRenderer.Config( new Vector2( 0.5f, 0.90f ), new Vector2( 0.16f, 0.20f ), new MiniMap.Config( 0.3f, Antares.world.spaceShip ) );
+            mapConfig = new MiniMapRenderer.Config( new Vector2( 0.5f, 0.85f ), new Vector2( 0.20f, 0.30f ), new MiniMap.Config( 0.3f, Antares.world.spaceShip ) );
             Register( Antares.world.miniMapRenderer.miniMap );
         }
 

@@ -24,18 +24,12 @@ namespace Battlestation_Antares.Model {
         /// create a new turret and insert into the world
         /// </summary>
         /// <param name="position">position</param>
-        public Turret( Vector3 position ) : base( "Turret//turret", position ) {
+        public Turret( Vector3 position ) : base( "Turret", position ) {
             this.random = new Random( (int)position.X );
             this.timeout = this.random.Next( 120 ) + 60;
             this.beamCooldown = 30;
 
-            this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//Turret" ) );
             this.attributes.SetUpdatePreferences( engineUpdate: true, weaponUpdate: true );
-        }
-
-        protected override void _initMiniMapIcon() {
-            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//Turret//turret_2d" );
-            this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
         }
 
 
@@ -91,11 +85,6 @@ namespace Battlestation_Antares.Model {
 
             }
 
-        }
-
-
-        public override string ToString() {
-            return "Turret";
         }
 
     }

@@ -94,7 +94,6 @@ namespace Battlestation_Antares {
             Antares.inputProvider = new InputProvider();
             HUDService.Initialize( this, Content.Load<Texture2D>( "Sprites//Square" ), Content.Load<SpriteFont>( "Fonts//Font" ), 2, Antares.inputProvider );
             Antares.debugViewer = new DebugViewer();
-            SpatialObjectFactory.initializeFactory( this.Content, Antares.world );
 
             this.spriteBatch = new SpriteBatch( Antares.graphics.GraphicsDevice );
 
@@ -104,11 +103,11 @@ namespace Battlestation_Antares {
 
             // create situations (control and views)
             this.allSituations = new List<SituationController>();
-            this.allSituations.Add( new CockpitController( this, new CockpitView(null) ) );
-            this.allSituations.Add( new CommandController( this, new CommandView(null) ) );
-            this.allSituations.Add( new MenuController( this, new MenuView(null) ) );
-            this.allSituations.Add( new AIController( this, new AIView(null) ) );
-            this.allSituations.Add( new DockController( this, new DockView( null ) ) );
+            this.allSituations.Add( new CockpitController( this, new CockpitView() ) );
+            this.allSituations.Add( new CommandController( this, new CommandView() ) );
+            this.allSituations.Add( new MenuController( this, new MenuView() ) );
+            this.allSituations.Add( new AIController( this, new AIView() ) );
+            this.allSituations.Add( new DockController( this, new DockView() ) );
 
             initializeDebug();
 

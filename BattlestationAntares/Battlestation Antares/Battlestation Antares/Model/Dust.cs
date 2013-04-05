@@ -11,7 +11,7 @@ namespace Battlestation_Antares.Model {
         TactileSpatialObject parent;
 
         public Dust( TactileSpatialObject parent )
-            : base( "Dust//dust", position: parent.globalPosition ) {
+            : base( "Dust", position: parent.globalPosition ) {
             this.parent = parent;
             this.scale.X = 0.5f;
             this.scale.Y = 0.5f;

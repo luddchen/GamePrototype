@@ -10,7 +10,7 @@ namespace Battlestation_Antares.View {
 
         private AI_Container aiContainer;
 
-        public AIView( Color? backgroundColor ) : base( backgroundColor ) {
+        public AIView( Color? backgroundColor = null ) : base( backgroundColor ) {
         }
 
 

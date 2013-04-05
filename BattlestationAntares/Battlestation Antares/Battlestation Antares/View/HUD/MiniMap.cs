@@ -22,9 +22,9 @@ namespace Battlestation_Antares.View.HUD {
 
         public static Color ENEMY_COLOR = Color.Red;
 
-        public static Color FRIEND_COLOR = Color.Blue;
+        public static Color FRIEND_COLOR = Color.LightBlue;
 
-        public static Color SPECIAL_COLOR = Color.Green;
+        public static Color SPECIAL_COLOR = Color.LightGreen;
 
         public static Color WEAPON_COLOR = Color.Yellow;
 
@@ -32,16 +32,16 @@ namespace Battlestation_Antares.View.HUD {
 
         public static float MAX_SCALE = 0.500f;
 
-        public static Color BACKGROUND_COLOR = new Color( 16, 24, 24, 16 );
+        public static Color BACKGROUND_COLOR = new Color( 0, 0, 0, 192 );
 
-        public static Color BORDER_COLOR = new Color( 16, 16, 16, 8 );
+        public static Color BORDER_COLOR = new Color( 32, 32, 32, 32 );
 
-        public static Color BORDER_COLOR_HOVER = new Color( 32, 32, 32, 32 );
+        public static Color BORDER_COLOR_HOVER = new Color( 64, 64, 64, 64 );
 
 
         public TactileSpatialObject centeredObject;
 
-        public Vector2 iconSize = new Vector2( 0.025f, 0.025f );
+        public Vector2 iconSize = new Vector2( 0.05f, 0.05f );
 
         public float iconPositionScale = 0.1f;
 

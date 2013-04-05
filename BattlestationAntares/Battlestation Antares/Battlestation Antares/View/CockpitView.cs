@@ -38,7 +38,7 @@ namespace Battlestation_Antares.View {
         /// creates a new cockpit view
         /// </summary>
         /// <param name="game">the game</param>
-        public CockpitView(Color? backgroundColor) : base(backgroundColor) {
+        public CockpitView (Color? backgroundColor = null ) : base( backgroundColor ) {
             this.camera = new Camera();
         }
 

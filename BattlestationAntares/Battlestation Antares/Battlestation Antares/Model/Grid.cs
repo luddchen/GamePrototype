@@ -10,7 +10,7 @@ namespace Battlestation_Antares.Model {
         private const int NR_GRIDS = 8;
         private const int Y_POS = -1000;
 
-        public Grid() : base( "Grid//grid" ) {}
+        public Grid() : base( "Grid" ) {}
 
         /// <summary>
         /// draw this element

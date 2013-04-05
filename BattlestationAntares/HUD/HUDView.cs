@@ -38,7 +38,7 @@ namespace HUD {
         /// create a new view
         /// </summary>
         /// <param name="backgroundColor">background color of this view</param>
-        public HUDView(Color? backgroundColor) {
+        public HUDView(Color? backgroundColor = null) {
             this.allItems = new List<HUD_Item>();
             this.backgroundColor = backgroundColor ?? Color.Transparent;
             this.spriteBatch = new SpriteBatch( HUDService.Device );

@@ -82,13 +82,11 @@ namespace Battlestation_Antares.Model {
         /// create a new space station within the world
         /// </summary>
         /// <param name="position">world position</param>
-        public SpaceStation( Vector3 position) : base( "SpaceStation/spacestation4", position ) {
+        public SpaceStation( Vector3 position) : base( "SpaceStation", position ) {
             init();
-            this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//SpaceStation" ) );
         }
 
         protected override void _initMiniMapIcon() {
-            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//SpaceStation//station_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
             this.miniMapIcon.AbstractScale = 2.0f;
         }
@@ -163,11 +161,6 @@ namespace Battlestation_Antares.Model {
             Antares.debugViewer.Add( new DebugElement( this, "Airlock", delegate( Object obj ) {
                 return String.Format( "{0}", ( obj as SpaceStation ).CurrentDockState );
             } ) );
-        }
-
-
-        public override string ToString() {
-            return "SpaceStation";
         }
 
     }

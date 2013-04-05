@@ -6,7 +6,7 @@ namespace Battlestation_Antares.Model {
     class Missile : TactileSpatialObject {
         private int timeout;
 
-        public Missile( TactileSpatialObject parent, float offset ) : base( "Weapon//missile", parent.globalPosition ) {
+        public Missile( TactileSpatialObject parent, float offset ) : base( "Missile", parent.globalPosition ) {
             this.rotation = parent.rotation;
             this.attributes.Engine.CurrentVelocity = parent.attributes.Missile.ProjectileVelocity;
 
@@ -23,11 +23,6 @@ namespace Battlestation_Antares.Model {
             if ( this.timeout == 0 ) {
                 Antares.world.Remove( this );
             }
-        }
-
-
-        public override string ToString() {
-            return "Missile";
         }
 
     }

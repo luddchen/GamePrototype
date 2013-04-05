@@ -86,7 +86,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\SpaceShip.soa">
+    <Compile Include="Objects\SpaceShip\Attributes\SpaceShip.soa">
       <Name>SpaceShip</Name>
       <Importer>SOAImporter</Importer>
       <Processor>SOAProcessor</Processor>
@@ -94,199 +94,85 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Weapon\missile.fbx">
-      <Name>missile</Name>
+    <Compile Include="Objects\Missile\Model\Missile.fbx">
+      <Name>Missile</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Weapon\laser.fbx">
-      <Name>laser</Name>
+    <Compile Include="Objects\Laser\Model\Laser.fbx">
+      <Name>Laser</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Turret\turret.fbx">
-      <Name>turret</Name>
+    <Compile Include="Objects\Turret\Model\Turret.fbx">
+      <Name>Turret</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Turret\MetalBare0152_2_M.jpg">
+    <Compile Include="Objects\Turret\Model\MetalBare0152_2_M.jpg">
       <Name>MetalBare0152_2_M</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Models\Turret\MetalGalvanized0026_2_M.jpg">
+    <Compile Include="Objects\Turret\Model\MetalGalvanized0026_2_M.jpg">
       <Name>MetalGalvanized0026_2_M</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Models\Turret\MetalGalvanizedDark.jpg">
+    <Compile Include="Objects\Turret\Model\MetalGalvanizedDark.jpg">
       <Name>MetalGalvanizedDark</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\shield.fbx">
-      <Name>shield</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\BGTest\Erde2.png">
-      <Name>Erde2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\BGTest\test.fbx">
-      <Name>test</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\BGTest\Galaxy.png">
-      <Name>Galaxy</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\BGTest\test2.fbx">
-      <Name>test2</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\TargetShip\targetship.png">
-      <Name>targetship</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\TargetShip\targetship_0.fbx">
-      <Name>targetship_0</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\TargetShip\targetship_1.fbx">
-      <Name>targetship_1</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\TargetShip\targetship_2.fbx">
-      <Name>targetship_2</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\SpaceShip\spaceship.png">
-      <Name>spaceship</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\SpaceShip\spaceship_0.fbx">
-      <Name>spaceship_0</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\SpaceShip\spaceship_1.fbx">
-      <Name>spaceship_1</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-    <Compile Include="Models\SpaceShip\spaceship_2.fbx">
-      <Name>spaceship_2</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\Radar\radar.png">
-      <Name>radar</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\Radar\radar_1.fbx">
-      <Name>radar_1</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\SpaceShip\spaceship1.png">
+    <Compile Include="Objects\SpaceShip\Model\spaceship1.png">
       <Name>spaceship1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\SpaceShip\spaceship1_2.fbx">
-      <Name>spaceship1_2</Name>
+    <Compile Include="Objects\SpaceShip\Model\SpaceShip.fbx">
+      <Name>SpaceShip</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\SpaceShip\spaceship_2d.png">
-      <Name>spaceship_2d</Name>
+    <Compile Include="Objects\SpaceShip\MiniMap\SpaceShip.png">
+      <Name>SpaceShip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Radar\radar_2d.png">
-      <Name>radar_2d</Name>
+    <Compile Include="Objects\Radar\MiniMap\Radar.png">
+      <Name>Radar</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Turret\turret_2d.png">
-      <Name>turret_2d</Name>
+    <Compile Include="Objects\Turret\MiniMap\Turret.png">
+      <Name>Turret</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\SpaceStation\station_2d.png">
-      <Name>station_2d</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\Weapon\laser_2d.png">
-      <Name>laser_2d</Name>
+    <Compile Include="Objects\Laser\MiniMap\Laser.png">
+      <Name>Laser</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -320,21 +206,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Cubus\Cubus_0.fbx">
-      <Name>Cubus_0</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\Cubus\cubus.png">
-      <Name>cubus</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sprites\battlestation.png">
       <Name>battlestation</Name>
       <Importer>TextureImporter</Importer>
@@ -342,7 +213,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\TargetCross.fbx">
+    <Compile Include="Objects\TargetCross\Model\TargetCross.fbx">
       <Name>TargetCross</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
@@ -350,61 +221,46 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Skybox\skybox1.png">
-      <Name>skybox1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\Skybox\skybox.fbx">
-      <Name>skybox</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\Skysphere\skysphere1.png">
+    <Compile Include="Objects\SkySphere\Model\skysphere1.png">
       <Name>skysphere1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Skysphere\skysphere.fbx">
-      <Name>skysphere</Name>
+    <Compile Include="Objects\SkySphere\Model\SkySphere.fbx">
+      <Name>SkySphere</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Grid\grid.fbx">
-      <Name>grid</Name>
+    <Compile Include="Objects\Grid\Model\Grid.fbx">
+      <Name>Grid</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Grid\grid1.png">
+    <Compile Include="Objects\Grid\Model\grid1.png">
       <Name>grid1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Dust\dust.fbx">
-      <Name>dust</Name>
+    <Compile Include="Objects\Dust\Model\Dust.fbx">
+      <Name>Dust</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\compass3.fbx">
-      <Name>compass3</Name>
+    <Compile Include="Objects\Compass\Model\Compass.fbx">
+      <Name>Compass</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
@@ -492,7 +348,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\Template.soa">
+    <Compile Include="Objects\Template\Attributes\Template.soa">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>Template</Name>
       <Importer>SOAImporter</Importer>
@@ -500,15 +356,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\SpaceStation.soa">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Name>SpaceStation</Name>
-      <Importer>SOAImporter</Importer>
-      <Processor>SOAProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Attributes\Turret.soa">
+    <Compile Include="Objects\Turret\Attributes\Turret.soa">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>Turret</Name>
       <Importer>SOAImporter</Importer>
@@ -572,66 +420,38 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Beam.fbx">
+    <Compile Include="Objects\Beam\Model\Beam.fbx">
       <Name>Beam</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\SpaceStation\spacestation4.fbx">
-      <Name>spacestation4</Name>
+    <Compile Include="Objects\Planet\Model\Planet.fbx">
+      <Name>Planet</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\SpaceStation\spacestation4texture.png">
-      <Name>spacestation4texture</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\SpaceStation\spacestation4barrier.png">
-      <Name>spacestation4barrier</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\BGTest\test3.fbx">
-      <Name>test3</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\BGTest\moon.png">
+    <Compile Include="Objects\Planet\Model\moon.png">
       <Name>moon</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BGTest\rift.png">
+    <Compile Include="Objects\SpatialRift\Model\rift.png">
       <Name>rift</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BGTest\SpatialRift.fbx">
+    <Compile Include="Objects\SpatialRift\Model\SpatialRift.fbx">
       <Name>SpatialRift</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\SpaceStation\spacestation4_dock.png">
-      <Name>spacestation4_dock</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -639,6 +459,143 @@
       <Name>cockpit01</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Objects\Cubus\MiniMap\" />
+    <Folder Include="Objects\Laser\Attributes\" />
+    <Folder Include="Objects\Missile\MiniMap\" />
+    <Folder Include="Objects\TargetShip\MiniMap\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\SpaceStation\Model\SpaceStation.fbx">
+      <Name>SpaceStation</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\SpaceStation\Model\spacestation4_dock.png">
+      <Name>spacestation4_dock</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\SpaceStation\Model\spacestation4barrier.png">
+      <Name>spacestation4barrier</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\SpaceStation\Model\spacestation4texture.png">
+      <Name>spacestation4texture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\SpaceStation\MiniMap\SpaceStation.png">
+      <Name>SpaceStation</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\SpaceStation\Attributes\SpaceStation.soa">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>SpaceStation</Name>
+      <Importer>SOAImporter</Importer>
+      <Processor>SOAProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Radar\Attributes\Radar.soa">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>Radar</Name>
+      <Importer>SOAImporter</Importer>
+      <Processor>SOAProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Radar\Model\Radar.fbx">
+      <Name>Radar</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Radar\Model\radar_texture.png">
+      <Name>radar_texture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\TargetShip\Attributes\TargetShip.soa">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>TargetShip</Name>
+      <Importer>SOAImporter</Importer>
+      <Processor>SOAProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\TargetShip\Model\TargetShip.fbx">
+      <Name>TargetShip</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\TargetShip\Model\targetship_texture.png">
+      <Name>targetship_texture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Cubus\Attributes\Cubus.soa">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>Cubus</Name>
+      <Importer>SOAImporter</Importer>
+      <Processor>SOAProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Cubus\Model\Cubus.fbx">
+      <Name>Cubus</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Cubus\Model\cubus_texture.png">
+      <Name>cubus_texture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Template\Model\Template.fbx">
+      <Name>Template</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Template\MiniMap\Template.png">
+      <Name>Template</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Missile\Attributes\Missile.soa">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>Missile</Name>
+      <Importer>SOAImporter</Importer>
+      <Processor>SOAProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

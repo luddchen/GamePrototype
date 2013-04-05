@@ -22,7 +22,7 @@ namespace Battlestation_Antares.Model {
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public Radar( Vector3 position ) : base( "Radar//radar_1", position) {
+        public Radar( Vector3 position ) : base( "Radar", position) {
             Random random = new Random( (int)position.X );
 
             int pitch = random.Next( 2 );
@@ -44,8 +44,6 @@ namespace Battlestation_Antares.Model {
         }
 
         protected override void _initMiniMapIcon() {
-            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//Radar//radar_2d" );
-            this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
             this.miniMapIcon.AbstractScale = 0.7f;
             this.miniMapIcon.updateRotation = false;
         }
@@ -83,10 +81,6 @@ namespace Battlestation_Antares.Model {
             //}
         }
 
-
-        public override string ToString() {
-            return "Radar";
-        }
 
     }
 

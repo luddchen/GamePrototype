@@ -94,7 +94,7 @@ namespace Battlestation_Antares.Model {
 
         private Grid grid;
 
-        private Skybox skybox;
+        private SkySphere skybox;
 
         private List<SpatialObject> addList;
 
@@ -144,25 +144,25 @@ namespace Battlestation_Antares.Model {
         /// </summary>
         public void Initialize() {
 
-            this.skybox = new Skybox();
+            this.skybox = new SkySphere();
             this.grid = new Grid();
 
 
             //"BGTest//test2"
             //"BGTest//test"
-            Add( new BackgroundObject( "BGTest//test3", Tools.Tools.YawPitchRoll( Matrix.Identity, 0.3f + (float)Math.PI, 0.2f, 0.01f ), 2.2f, Matrix.CreateRotationX( 0.0002f ) ) );
-            Add( new BackgroundObject( "BGTest//SpatialRift", Tools.Tools.YawPitchRoll( Matrix.Identity, -0.3f + (float)Math.PI, 0.02f, 0.4f ), 1.2f, null ) );
+            Add( new BackgroundObject( "Planet", Tools.Tools.YawPitchRoll( Matrix.Identity, 0.3f + (float)Math.PI, 0.2f, 0.01f ), 2.2f, Matrix.CreateRotationX( 0.0002f ) ) );
+            Add( new BackgroundObject( "SpatialRift", Tools.Tools.YawPitchRoll( Matrix.Identity, -0.3f + (float)Math.PI, 0.02f, 0.4f ), 1.2f, null ) );
 
             Random random = new Random();
 
             for ( int i = 0; i < 10; i++ ) {
                 if ( random.Next( 2 ) == 0 ) {
                     TactileSpatialObject obj =
-                        new TactileSpatialObject( "TargetShip//targetship_2", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
+                        new TactileSpatialObject( "TargetShip", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
                     obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
                 } else {
                     TactileSpatialObject obj =
-                        new TactileSpatialObject( "Cubus//Cubus_0", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
+                        new TactileSpatialObject( "Cubus", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
                     obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
                 }
             }

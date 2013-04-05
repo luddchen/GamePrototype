@@ -24,7 +24,7 @@ namespace Battlestation_Antaris.View {
         }
 
 
-        public DockView( Color? backgroundColor ) : base( backgroundColor ) {
+        public DockView( Color? backgroundColor = null ) : base( backgroundColor ) {
 
             this.camera = new Camera();
         }

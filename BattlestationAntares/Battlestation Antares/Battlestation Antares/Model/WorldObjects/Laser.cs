@@ -18,8 +18,7 @@ namespace Battlestation_Antares.Model {
         // only for test the visual illusion
         private static float FUN_FACTOR = 1.0f;
 
-        public Laser( TactileSpatialObject parent, float upOffset, float rightOffset ) : base( "Weapon//laser", parent.globalPosition ) {
-
+        public Laser( TactileSpatialObject parent, float upOffset, float rightOffset ) : base( "Laser", parent.globalPosition ) {
             this.parent = parent;
             this.rotation = parent.rotation;
             this.upOffset = upOffset;
@@ -28,7 +27,6 @@ namespace Battlestation_Antares.Model {
         }
 
         protected override void _initMiniMapIcon() {
-            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//Weapon//laser_2d" );
             this.miniMapIcon.color = MiniMap.WEAPON_COLOR;
             this.miniMapIcon.AbstractScale = 0.4f;
         }
@@ -55,11 +53,6 @@ namespace Battlestation_Antares.Model {
                     Antares.world.Remove( this );
                 }
             }
-        }
-
-
-        public override string ToString() {
-            return "Laser";
         }
 
     }

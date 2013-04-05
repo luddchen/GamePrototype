@@ -28,7 +28,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
         /// creates a new compass instance
         /// </summary>
         public Compass() : base( new Point( 300, 300 ), null ) {
-            this.compass = new SpatialObject( "compass3", position: Vector3.Forward * 2.0f, scale: new Vector3( 0.8f ) );
+            this.compass = new SpatialObject( "Compass", position: Vector3.Forward * 2.0f, scale: new Vector3( 0.8f ) );
             this.camera = new Camera();
             this.camera.Update( Vector3.Zero, Vector3.Forward, Vector3.Up );
 

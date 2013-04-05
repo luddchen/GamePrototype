@@ -63,8 +63,8 @@ namespace Battlestation_Antares.Control {
             this.view.Add( buildMenu );
 
             mouseTextures = new Dictionary<Type, MouseTexture>();
-            mouseTextures.Add( typeof( Battlestation_Antares.Model.Turret ), new MouseTexture( "Models//Turret//turret_2d", this ) );
-            mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( "Models//Radar//radar_2d", this ) );
+            mouseTextures.Add( typeof( Battlestation_Antares.Model.Turret ), new MouseTexture( "Objects//Turret//MiniMap//Turret", this ) );
+            mouseTextures.Add( typeof( Battlestation_Antares.Model.Radar ), new MouseTexture( "Objects//Radar//MiniMap//Radar", this ) );
             this.view.AddRange( mouseTextures.Values );
 
             mapConfig = new MiniMapRenderer.Config( new Vector2( 0.5f, 0.5f ), new Vector2( 0.625f, 1f ), new MiniMap.Config( 0.1f, Antares.world.spaceStation ) );

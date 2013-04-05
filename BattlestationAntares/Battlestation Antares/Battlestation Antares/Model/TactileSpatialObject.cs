@@ -51,7 +51,14 @@ namespace Battlestation_Antaris.Model {
             : base( modelName, position: position, rotation: rotation, scale: scale, isVisible: isVisible ) 
         {
             this.controlDictionary = new Dictionary<Battlestation_Antares.Control.Control, Action>();
-            this.attributes = new SpatialObjectAttributes();
+            try {
+                this.attributes = 
+                    new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Objects//" + this.modelName + "//Attributes//" + this.modelName ) );
+            } catch ( Exception e ) {
+                Console.WriteLine( "Attributes of " + this.modelName + " not found - load template" );
+                this.attributes =
+                    new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Objects//Template//Attributes//Template" ) );
+            }
             this.objectType = ObjectType.FRIEND;
             this.rotationRepairCountdown = TactileSpatialObject.MAX_ROTATION_UNTIL_REPAIR;
 
@@ -61,6 +68,14 @@ namespace Battlestation_Antaris.Model {
             _initControlDictionary();
 
             this.miniMapIcon = new MiniMapIcon( null, this );
+            try {
+                this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Objects//" + this.modelName + "//MiniMap//" + this.modelName );
+            } catch ( Exception e ) {
+                Console.WriteLine( "MiniMap Icon of " + this.modelName + " not found - load template" );
+                this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Objects//Template//MiniMap//Template" );
+                this.miniMapIcon.AbstractScale = 0.4f;
+            }
+            this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
             _initMiniMapIcon();
         }
 
@@ -77,8 +92,6 @@ namespace Battlestation_Antaris.Model {
         }
 
         protected virtual void _initMiniMapIcon() {
-            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Sprites//Circle" );
-            this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
         }
 
         protected virtual void _initBounding() {

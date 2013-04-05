@@ -4,14 +4,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
 namespace Battlestation_Antares.Model {
-    class SpatialObjectFactory {
-        private static ContentManager content;
-        private static WorldModel world;
 
-        public static void initializeFactory( ContentManager content, WorldModel world ) {
-            SpatialObjectFactory.content = content;
-            SpatialObjectFactory.world = world;
-        }
+    class SpatialObjectFactory {
 
         public static SpatialObject buildSpatialObject( Type spatialObjectType ) {
             SpatialObject newObj;
@@ -26,4 +20,5 @@ namespace Battlestation_Antares.Model {
             return newObj;
         }
     }
+
 }

@@ -47,13 +47,18 @@ namespace Battlestation_Antaris.Model {
         /// <summary>
         /// name of the loaded model
         /// </summary>
-        private String modelName;
+        protected String modelName;
 
         #endregion
 
         public SpatialObject( String modelName, Vector3 position = new Vector3(), Matrix? rotation = null, Vector3? scale = null, bool isVisible = true ) {
             this.modelName = modelName;
-            this.model = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Models//" + this.modelName );
+            try {
+                this.model = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Objects//" + this.modelName + "//Model//" + this.modelName );
+            } catch ( Exception e ) {
+                Console.WriteLine( "Model of " + this.modelName + " not found - load template" );
+                this.model = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Objects//Template//Model//Template" );
+            }
             this.boneTransforms = new Matrix[this.model.Bones.Count];
 
             this.globalPosition = position;

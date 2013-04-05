@@ -26,8 +26,7 @@ namespace Battlestation_Antares.Model {
         /// <param name="modelName">3D model name</param>
         /// <param name="content">game content manager</param>
         /// <param name="world">the world model</param>
-        public SpaceShip( Vector3 position ) : base( "SpaceShip//spaceship1_2", position ) {
-            this.attributes = new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Attributes//SpaceShip" ) );
+        public SpaceShip( Vector3 position ) : base( "SpaceShip", position ) {
             this.laserOffsets = new float[2] { -4.0f, 4.0f };
             this.attributes.Engine.ZeroBarrier = true;
             this.attributes.SetUpdatePreferences( engineUpdate: true, weaponUpdate: true );
@@ -41,7 +40,6 @@ namespace Battlestation_Antares.Model {
         }
 
         protected override void _initMiniMapIcon() {
-            this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Models//SpaceShip//spaceship_2d" );
             this.miniMapIcon.color = MiniMap.SPECIAL_COLOR;
         }
 
@@ -54,10 +52,6 @@ namespace Battlestation_Antares.Model {
                 return String.Format( "{0:F0}", ( obj as SpaceShip ).globalPosition.Length() );
             } ) );
 
-        }
-
-        public override string ToString() {
-            return "SpaceShip";
         }
 
         private void _fireLaser() {

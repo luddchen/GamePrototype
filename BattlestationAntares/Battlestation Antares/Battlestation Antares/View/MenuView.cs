@@ -9,7 +9,7 @@ namespace Battlestation_Antares.View {
     /// </summary>
     class MenuView : HUDView {
 
-        public MenuView( Color? backgroundColor ) : base( backgroundColor ) { }
+        public MenuView( Color? backgroundColor  = null ) : base( backgroundColor ) { }
 
         /// <summary>
         /// initialize menu view HUD and content
