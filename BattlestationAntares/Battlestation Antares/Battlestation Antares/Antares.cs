@@ -93,6 +93,7 @@ namespace Battlestation_Antares {
             // create Services
             Antares.inputProvider = new InputProvider();
             HUDService.Initialize( this, Content.Load<Texture2D>( "Sprites//Square" ), Content.Load<SpriteFont>( "Fonts//Font" ), 2, Antares.inputProvider );
+            SpatialObjectFactory.Initialize();
             Antares.debugViewer = new DebugViewer();
 
             this.spriteBatch = new SpriteBatch( Antares.graphics.GraphicsDevice );

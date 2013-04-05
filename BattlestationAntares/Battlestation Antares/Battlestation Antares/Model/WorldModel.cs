@@ -7,6 +7,7 @@ using Battlestation_Antaris.Model;
 using Battlestation_Antaris.View.HUD;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Battlestation_Antaris.Control.AI;
 
 namespace Battlestation_Antares.Model {
 
@@ -107,6 +108,7 @@ namespace Battlestation_Antares.Model {
 
         private DrawTree drawTree;
 
+        private EnemyAI enemyAI;
 
         /// <summary>
         /// creates the world
@@ -147,25 +149,12 @@ namespace Battlestation_Antares.Model {
             this.skybox = new SkySphere();
             this.grid = new Grid();
 
-
-            //"BGTest//test2"
-            //"BGTest//test"
             Add( new BackgroundObject( "Planet", Tools.Tools.YawPitchRoll( Matrix.Identity, 0.3f + (float)Math.PI, 0.2f, 0.01f ), 2.2f, Matrix.CreateRotationX( 0.0002f ) ) );
-            Add( new BackgroundObject( "SpatialRift", Tools.Tools.YawPitchRoll( Matrix.Identity, -0.3f + (float)Math.PI, 0.02f, 0.4f ), 1.2f, null ) );
+            BackgroundObject rift = new BackgroundObject( "SpatialRift", Tools.Tools.YawPitchRoll( Matrix.Identity, -0.3f + (float)Math.PI, 0.02f, 0.4f ), 1.2f, null );
+            Add( rift );
+            this.enemyAI = new EnemyAI( rift );
 
             Random random = new Random();
-
-            for ( int i = 0; i < 10; i++ ) {
-                if ( random.Next( 2 ) == 0 ) {
-                    TactileSpatialObject obj =
-                        new TactileSpatialObject( "TargetShip", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
-                    obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
-                } else {
-                    TactileSpatialObject obj =
-                        new TactileSpatialObject( "Cubus", new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
-                    obj.miniMapIcon.color = MiniMap.ENEMY_COLOR;
-                }
-            }
 
             for ( int i = 0; i < 1; i++ ) {
                 Turret turret = new Turret( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
@@ -272,6 +261,8 @@ namespace Battlestation_Antares.Model {
                 obj.Update( gameTime );
             }
             this.skybox.Update( gameTime );
+
+            this.enemyAI.Update( gameTime );
 
             // render minimap
             this.miniMapRenderer.Update( gameTime );

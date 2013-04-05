@@ -461,12 +461,7 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Objects\Cubus\MiniMap\" />
-    <Folder Include="Objects\Laser\Attributes\" />
-    <Folder Include="Objects\Missile\MiniMap\" />
-    <Folder Include="Objects\TargetShip\MiniMap\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Objects\SpaceStation\Model\SpaceStation.fbx">
       <Name>SpaceStation</Name>
@@ -596,6 +591,35 @@
       <Name>Missile</Name>
       <Importer>SOAImporter</Importer>
       <Processor>SOAProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\TargetShip\MiniMap\TargetShip.png">
+      <Name>TargetShip</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Cubus\MiniMap\Cubus.png">
+      <Name>Cubus</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Laser\Attributes\Laser.soa">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Name>Laser</Name>
+      <Importer>SOAImporter</Importer>
+      <Processor>SOAProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Objects\Missile\MiniMap\Missile.png">
+      <Name>Missile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

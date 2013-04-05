@@ -78,6 +78,7 @@
     <Compile Include="Control\AIController.cs" />
     <Compile Include="Control\AI\AI.cs" />
     <Compile Include="Control\AI\AI_XML.cs" />
+    <Compile Include="Control\AI\EnemyAI.cs" />
     <Compile Include="Control\AI\ValueProvider.cs" />
     <Compile Include="Control\CockpitController.cs" />
     <Compile Include="Control\CommandController.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Control\SituationController.cs" />
     <Compile Include="Model\DrawTree.cs" />
     <Compile Include="Model\Dust.cs" />
+    <Compile Include="Model\WorldObjects\EnemyShip.cs" />
     <Compile Include="Model\WorldObjects\Laser.cs" />
     <Compile Include="Model\WorldObjects\Missile.cs" />
     <Compile Include="Model\WorldObjects\Radar.cs" />

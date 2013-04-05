@@ -3,6 +3,7 @@ using Battlestation_Antares;
 using Battlestation_Antares.Tools;
 using Battlestation_Antares.View;
 using Microsoft.Xna.Framework;
+using Battlestation_Antares.Model;
 
 namespace Battlestation_Antaris.Model {
 
@@ -53,12 +54,7 @@ namespace Battlestation_Antaris.Model {
 
         public SpatialObject( String modelName, Vector3 position = new Vector3(), Matrix? rotation = null, Vector3? scale = null, bool isVisible = true ) {
             this.modelName = modelName;
-            try {
-                this.model = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Objects//" + this.modelName + "//Model//" + this.modelName );
-            } catch ( Exception e ) {
-                Console.WriteLine( "Model of " + this.modelName + " not found - load template" );
-                this.model = Antares.content.Load<Microsoft.Xna.Framework.Graphics.Model>( "Objects//Template//Model//Template" );
-            }
+            this.model = SpatialObjectFactory.GetModel( modelName );
             this.boneTransforms = new Matrix[this.model.Bones.Count];
 
             this.globalPosition = position;

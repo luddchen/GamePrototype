@@ -6,6 +6,7 @@ using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpatialObjectAttributesLibrary;
+using Battlestation_Antares.Model;
 
 namespace Battlestation_Antaris.Model {
 
@@ -51,30 +52,16 @@ namespace Battlestation_Antaris.Model {
             : base( modelName, position: position, rotation: rotation, scale: scale, isVisible: isVisible ) 
         {
             this.controlDictionary = new Dictionary<Battlestation_Antares.Control.Control, Action>();
-            try {
-                this.attributes = 
-                    new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Objects//" + this.modelName + "//Attributes//" + this.modelName ) );
-            } catch ( Exception e ) {
-                Console.WriteLine( "Attributes of " + this.modelName + " not found - load template" );
-                this.attributes =
-                    new SpatialObjectAttributes( Antares.content.Load<SpatialObjectAttributes>( "Objects//Template//Attributes//Template" ) );
-            }
+            this.attributes = new SpatialObjectAttributes( SpatialObjectFactory.GetAttributes( modelName ) );
             this.objectType = ObjectType.FRIEND;
             this.rotationRepairCountdown = TactileSpatialObject.MAX_ROTATION_UNTIL_REPAIR;
 
-            _initBounding();
+            this.bounding = SpatialObjectFactory.GetBounding( modelName );
 
             Antares.world.Add( this );
             _initControlDictionary();
 
-            this.miniMapIcon = new MiniMapIcon( null, this );
-            try {
-                this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Objects//" + this.modelName + "//MiniMap//" + this.modelName );
-            } catch ( Exception e ) {
-                Console.WriteLine( "MiniMap Icon of " + this.modelName + " not found - load template" );
-                this.miniMapIcon.Texture = Antares.content.Load<Texture2D>( "Objects//Template//MiniMap//Template" );
-                this.miniMapIcon.AbstractScale = 0.4f;
-            }
+            this.miniMapIcon = new MiniMapIcon( SpatialObjectFactory.GetMapIcon( modelName ), this );
             this.miniMapIcon.color = MiniMap.FRIEND_COLOR;
             _initMiniMapIcon();
         }
@@ -91,20 +78,8 @@ namespace Battlestation_Antaris.Model {
             this.controlDictionary[Battlestation_Antares.Control.Control.ROLL_ANTICLOCKWISE] = _rollAnticlockwise;
         }
 
-        protected virtual void _initMiniMapIcon() {
-        }
 
-        protected virtual void _initBounding() {
-            this.bounding = new BoundingSphere();
-            this.model.CopyAbsoluteBoneTransformsTo( this.boneTransforms );
-            foreach ( ModelMesh mesh in model.Meshes ) {
-                this.bounding = BoundingSphere.CreateMerged( mesh.BoundingSphere.Transform( this.boneTransforms[mesh.ParentBone.Index] ), this.bounding );
-                foreach ( BasicEffect effect in mesh.Effects ) {
-                    Draw3D.Lighting1( effect );
-                }
-            }
-        }
-
+        protected virtual void _initMiniMapIcon() {}
 
         #region methods
 
