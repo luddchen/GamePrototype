@@ -17,7 +17,7 @@ namespace Battlestation_Antares.Tools {
         /// <returns>the rotated matrix</returns>
         public static Matrix Pitch( Matrix input, float angle ) {
             // get local right-axis
-            Matrix axisRotation = Matrix.CreateFromAxisAngle( input.Right, angle );
+            Matrix axisRotation = Matrix.CreateFromAxisAngle( Vector3.Normalize( input.Right ), angle );
 
             // compute rotation
             return input * axisRotation;
@@ -32,7 +32,7 @@ namespace Battlestation_Antares.Tools {
         /// <returns>the rotated matrix</returns>
         public static Matrix Roll( Matrix input, float angle ) {
             // get local forward-axis
-            Matrix axisRotation = Matrix.CreateFromAxisAngle( input.Forward, angle );
+            Matrix axisRotation = Matrix.CreateFromAxisAngle( Vector3.Normalize( input.Forward ), angle );
 
             // compute rotation
             return input * axisRotation;
@@ -47,7 +47,7 @@ namespace Battlestation_Antares.Tools {
         /// <returns>the rotated matrix</returns>
         public static Matrix Yaw( Matrix input, float angle ) {
             // get local up-axis
-            Matrix axisRotation = Matrix.CreateFromAxisAngle( input.Up, angle );
+            Matrix axisRotation = Matrix.CreateFromAxisAngle( Vector3.Normalize( input.Up ), angle );
 
             // compute rotation
             return input * axisRotation;
@@ -145,18 +145,34 @@ namespace Battlestation_Antares.Tools {
         }
 
 
-        public static void Repair( ref Matrix matrix ) {
-            Vector3 fwd = matrix.Forward;
-            Vector3 up = matrix.Up;
-            Vector3 right = matrix.Right;
+        //public static void Repair( ref Matrix matrix ) {
+        //    Vector3 fwd = matrix.Forward;
+        //    Vector3 up = matrix.Up;
+        //    Vector3 right = matrix.Right;
+        //    fwd.Normalize();
+        //    up.Normalize();
+        //    right.Normalize();
+
+        //    matrix = Matrix.Identity;
+        //    matrix.Forward = fwd;
+        //    matrix.Up = up;
+        //    matrix.Right = right;
+        //}
+
+        public static Matrix Repair( Matrix input ) {
+            Vector3 fwd = input.Forward;
+            Vector3 up = input.Up;
+            Vector3 right = input.Right;
             fwd.Normalize();
             up.Normalize();
             right.Normalize();
 
-            matrix = Matrix.Identity;
-            matrix.Forward = fwd;
-            matrix.Up = up;
-            matrix.Right = right;
+            Matrix output = Matrix.Identity;
+            output.Forward = fwd;
+            output.Up = up;
+            output.Right = right;
+            Console.WriteLine( output );
+            return output;
         }
 
     }

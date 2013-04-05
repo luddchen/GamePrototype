@@ -126,7 +126,7 @@ namespace Battlestation_Antares.Control.AI {
             this.targetResults.Clear();
 
             foreach ( TactileSpatialObject target in this.targetObjects ) {
-                if ( target == this.source || target is Dust ) {
+                if ( target == this.source || target.objectType != TactileSpatialObject.ObjectType.ENEMY ) {
                     this.targetResults.Add( -1.0f );
                     continue;
                 }

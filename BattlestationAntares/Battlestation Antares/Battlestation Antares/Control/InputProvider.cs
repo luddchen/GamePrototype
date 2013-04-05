@@ -31,18 +31,18 @@ namespace Battlestation_Antares.Control {
             keyAssignments = new List<KeyAssignment>();
 
             // create some key assignments
-            keyAssignments.Add( new KeyAssignment( Control.PITCH_UP, Keys.Up ) );
-            keyAssignments.Add( new KeyAssignment( Control.PITCH_DOWN, Keys.Down ) );
-            keyAssignments.Add( new KeyAssignment( Control.ROLL_ANTICLOCKWISE, Keys.A ) );
-            keyAssignments.Add( new KeyAssignment( Control.ROLL_CLOCKWISE, Keys.D ) );
-            keyAssignments.Add( new KeyAssignment( Control.YAW_LEFT, Keys.Left ) );
-            keyAssignments.Add( new KeyAssignment( Control.YAW_RIGHT, Keys.Right ) );
-            keyAssignments.Add( new KeyAssignment( Control.INCREASE_THROTTLE, Keys.W ) );
-            keyAssignments.Add( new KeyAssignment( Control.DECREASE_THROTTLE, Keys.S ) );
+            keyAssignments.Add( new KeyAssignment( Command.PITCH_UP, Keys.Up ) );
+            keyAssignments.Add( new KeyAssignment( Command.PITCH_DOWN, Keys.Down ) );
+            keyAssignments.Add( new KeyAssignment( Command.ROLL_ANTICLOCKWISE, Keys.A ) );
+            keyAssignments.Add( new KeyAssignment( Command.ROLL_CLOCKWISE, Keys.D ) );
+            keyAssignments.Add( new KeyAssignment( Command.YAW_LEFT, Keys.Left ) );
+            keyAssignments.Add( new KeyAssignment( Command.YAW_RIGHT, Keys.Right ) );
+            keyAssignments.Add( new KeyAssignment( Command.INCREASE_THROTTLE, Keys.W ) );
+            keyAssignments.Add( new KeyAssignment( Command.DECREASE_THROTTLE, Keys.S ) );
 
-            keyAssignments.Add( new KeyAssignment( Control.FIRE_LASER, Keys.Space ) );
-            keyAssignments.Add( new KeyAssignment( Control.FIRE_MISSILE, Keys.LeftControl ) );
-            keyAssignments.Add( new KeyAssignment( Control.TARGET_NEXT_ENEMY, Keys.Tab ) );
+            keyAssignments.Add( new KeyAssignment( Command.FIRE_LASER, Keys.Space ) );
+            keyAssignments.Add( new KeyAssignment( Command.FIRE_MISSILE, Keys.LeftControl ) );
+            keyAssignments.Add( new KeyAssignment( Command.TARGET_NEXT_ENEMY, Keys.Tab ) );
         }
 
 
@@ -60,8 +60,8 @@ namespace Battlestation_Antares.Control {
         /// get a list of control requests, depending on the configured key assignments
         /// </summary>
         /// <returns>a list of control requests</returns>
-        public List<Control> getInput() {
-            List<Control> controlSequence = new List<Control>();
+        public List<Command> getInput() {
+            List<Command> controlSequence = new List<Command>();
 
             foreach ( KeyAssignment assignment in this.keyAssignments ) {
                 if ( this.newKeyboardState.IsKeyDown( assignment.key ) ) {

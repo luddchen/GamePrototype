@@ -34,9 +34,9 @@ namespace Battlestation_Antares.Model {
 
         protected override void _initControlDictionary() {
             base._initControlDictionary();
-            this.controlDictionary[Control.Control.TARGET_NEXT_ENEMY] = _targetNextEnemy;
-            this.controlDictionary[Control.Control.FIRE_LASER] = _fireLaser;
-            this.controlDictionary[Control.Control.FIRE_MISSILE] = _fireMissile;
+            this.controlDictionary[Control.Command.TARGET_NEXT_ENEMY] = _targetNextEnemy;
+            this.controlDictionary[Control.Command.FIRE_LASER] = _fireLaser;
+            this.controlDictionary[Control.Command.FIRE_MISSILE] = _fireMissile;
         }
 
         protected override void _initMiniMapIcon() {

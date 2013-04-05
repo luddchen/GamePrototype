@@ -39,11 +39,14 @@ namespace Battlestation_Antaris.Control.AI {
                 if ( this.attackers.Count < 10 ) {
                     EnemyShip obj;
 
-                    if ( RandomGen.random.Next( 2 ) == 0 ) {
+                    //if ( RandomGen.random.Next( 2 ) == 0 ) {
                         obj = new EnemyShip( "TargetShip", new Vector3( RandomGen.random.Next( 2400 ) - 1200, 0, RandomGen.random.Next( 2400 ) - 1200 ), this );
-                    } else {
-                        obj = new EnemyShip( "Cubus", new Vector3( RandomGen.random.Next( 2400 ) - 1200, 0, RandomGen.random.Next( 2400 ) - 1200 ), this );
-                    }
+                        obj.attributes.Engine.CurrentVelocity = obj.attributes.Engine.MaxVelocity;
+                        obj.globalPosition = this.root.globalPosition;
+                        obj.rotation = this.root.rotation;
+                    //} else {
+                    //    obj = new EnemyShip( "Cubus", new Vector3( RandomGen.random.Next( 2400 ) - 1200, 0, RandomGen.random.Next( 2400 ) - 1200 ), this );
+                    //}
                     this.attackers.Add( obj );
                 }
 

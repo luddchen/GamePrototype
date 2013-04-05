@@ -2,7 +2,7 @@
     /// <summary>
     /// enumeration of control requests
     /// </summary>
-    public enum Control {
+    public enum Command {
 
         /// <summary>
         /// control request : pitch down

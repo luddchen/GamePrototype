@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Battlestation_Antares;
+using Battlestation_Antares.Control;
+using Battlestation_Antares.Model;
 using Battlestation_Antares.Tools;
 using Battlestation_Antares.View.HUD;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SpatialObjectAttributesLibrary;
-using Battlestation_Antares.Model;
 
 namespace Battlestation_Antaris.Model {
 
@@ -33,12 +33,12 @@ namespace Battlestation_Antaris.Model {
 
             public SpatialObjectAttributes attributes;
 
-            protected Dictionary<Battlestation_Antares.Control.Control, Action> controlDictionary;
+            protected Dictionary<Command, Action> controlDictionary;
 
             /// <summary>
             /// the number of rotations until the rotation matrix should be repaired
             /// </summary>
-            public static int MAX_ROTATION_UNTIL_REPAIR = 14400;
+            public static int MAX_ROTATION_UNTIL_REPAIR = 3600;
 
             /// <summary>
             /// a counter to determine the need of rotation matrix repair
@@ -51,7 +51,7 @@ namespace Battlestation_Antaris.Model {
         public TactileSpatialObject( String modelName, Vector3 position = new Vector3(), Matrix? rotation = null, Vector3? scale = null, bool isVisible = true )
             : base( modelName, position: position, rotation: rotation, scale: scale, isVisible: isVisible ) 
         {
-            this.controlDictionary = new Dictionary<Battlestation_Antares.Control.Control, Action>();
+            this.controlDictionary = new Dictionary<Command, Action>();
             this.attributes = new SpatialObjectAttributes( SpatialObjectFactory.GetAttributes( modelName ) );
             this.objectType = ObjectType.FRIEND;
             this.rotationRepairCountdown = TactileSpatialObject.MAX_ROTATION_UNTIL_REPAIR;
@@ -67,15 +67,15 @@ namespace Battlestation_Antaris.Model {
         }
 
         protected virtual void _initControlDictionary() {
-            this.controlDictionary[Battlestation_Antares.Control.Control.INCREASE_THROTTLE] = _increaseThrottle;
-            this.controlDictionary[Battlestation_Antares.Control.Control.DECREASE_THROTTLE] = _decreaseThrottle;
-            this.controlDictionary[Battlestation_Antares.Control.Control.ZERO_THROTTLE] = _zeroThrottle;
-            this.controlDictionary[Battlestation_Antares.Control.Control.YAW_LEFT] = _yawLeft;
-            this.controlDictionary[Battlestation_Antares.Control.Control.YAW_RIGHT] = _yawRight;
-            this.controlDictionary[Battlestation_Antares.Control.Control.PITCH_DOWN] = _pitchDown;
-            this.controlDictionary[Battlestation_Antares.Control.Control.PITCH_UP] = _pitchUp;
-            this.controlDictionary[Battlestation_Antares.Control.Control.ROLL_CLOCKWISE] = _rollClockwise;
-            this.controlDictionary[Battlestation_Antares.Control.Control.ROLL_ANTICLOCKWISE] = _rollAnticlockwise;
+            this.controlDictionary[Command.INCREASE_THROTTLE] = _increaseThrottle;
+            this.controlDictionary[Command.DECREASE_THROTTLE] = _decreaseThrottle;
+            this.controlDictionary[Command.ZERO_THROTTLE] = _zeroThrottle;
+            this.controlDictionary[Command.YAW_LEFT] = _yawLeft;
+            this.controlDictionary[Command.YAW_RIGHT] = _yawRight;
+            this.controlDictionary[Command.PITCH_DOWN] = _pitchDown;
+            this.controlDictionary[Command.PITCH_UP] = _pitchUp;
+            this.controlDictionary[Command.ROLL_CLOCKWISE] = _rollClockwise;
+            this.controlDictionary[Command.ROLL_ANTICLOCKWISE] = _rollAnticlockwise;
         }
 
 
@@ -88,25 +88,25 @@ namespace Battlestation_Antaris.Model {
         /// </summary>
         /// <param name="gameTime">the game time</param>
         public override void Update( GameTime gameTime ) {
-            if ( this.attributes.Engine.CurrentVelocity != 0 ) {
+            if ( Math.Abs(this.attributes.Engine.CurrentVelocity) > this.attributes.Engine.ResetForce ) {
                 this.globalPosition += Vector3.Multiply( rotation.Forward, this.attributes.Engine.CurrentVelocity );
             }
-            if ( this.attributes.EngineYaw.CurrentVelocity != 0 ) {
+            if ( Math.Abs( this.attributes.EngineYaw.CurrentVelocity ) > this.attributes.EngineYaw.ResetForce ) {
                 this.rotation = Tools.Yaw( this.rotation, this.attributes.EngineYaw.CurrentVelocity );
                 this.rotationRepairCountdown--;
             }
-            if ( this.attributes.EnginePitch.CurrentVelocity != 0 ) {
+            if ( Math.Abs( this.attributes.EnginePitch.CurrentVelocity ) > this.attributes.EnginePitch.ResetForce ) {
                 this.rotation = Tools.Pitch( this.rotation, this.attributes.EnginePitch.CurrentVelocity );
                 this.rotationRepairCountdown--;
             }
-            if ( this.attributes.EngineRoll.CurrentVelocity != 0 ) {
+            if ( Math.Abs( this.attributes.EngineRoll.CurrentVelocity ) > this.attributes.EngineRoll.ResetForce ) {
                 this.rotation = Tools.Roll( this.rotation, this.attributes.EngineRoll.CurrentVelocity );
                 this.rotationRepairCountdown--;
             }
 
             // repair rotation matrix if necessary
             if ( this.rotationRepairCountdown < 0 ) {
-                Tools.Repair( ref this.rotation );
+                this.rotation = Tools.Repair( this.rotation );
                 this.rotationRepairCountdown = MAX_ROTATION_UNTIL_REPAIR;
             }
 
@@ -128,18 +128,18 @@ namespace Battlestation_Antaris.Model {
         public virtual void OnDeath() {
         }
 
-        public virtual void InjectControl( Battlestation_Antares.Control.Control control ) {
+        public virtual void InjectControl( Command command ) {
             Action action;
-            if ( controlDictionary.TryGetValue( control, out action ) ) {
+            if ( controlDictionary.TryGetValue( command, out action ) ) {
                 if ( action != null ) {
                     action();
                 }
             }
         }
 
-        public virtual void InjectControl( List<Battlestation_Antares.Control.Control> controlSequence ) {
-            foreach ( Battlestation_Antares.Control.Control control in controlSequence ) {
-                InjectControl( control );
+        public virtual void InjectControl( List<Command> commandSequence ) {
+            foreach ( Command command in commandSequence ) {
+                InjectControl( command );
             }
         }
 

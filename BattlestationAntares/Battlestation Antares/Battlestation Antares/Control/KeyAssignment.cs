@@ -10,7 +10,7 @@ namespace Battlestation_Antares.Control {
         /// <summary>
         /// the control request
         /// </summary>
-        public Control control;
+        public Command control;
 
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Battlestation_Antares.Control {
         /// </summary>
         /// <param name="control">the control request</param>
         /// <param name="key">the assigned key</param>
-        public KeyAssignment( Control control, Keys key ) {
+        public KeyAssignment( Command control, Keys key ) {
             this.control = control;
             this.key = key;
         }

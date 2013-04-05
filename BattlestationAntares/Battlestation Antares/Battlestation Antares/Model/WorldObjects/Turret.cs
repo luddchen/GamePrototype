@@ -1,10 +1,9 @@
 ﻿using System;
+using Battlestation_Antares.Control;
 using Battlestation_Antares.Control.AI;
-using Battlestation_Antares.View.HUD;
 using Battlestation_Antaris.Model;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SpatialObjectAttributesLibrary;
+using Battlestation_Antares.Tools;
 
 namespace Battlestation_Antares.Model {
 
@@ -59,19 +58,19 @@ namespace Battlestation_Antares.Model {
                     Vector3 rot = Tools.Tools.GetRotation( target.globalPosition - this.globalPosition, this.rotation );
 
                     if ( rot.Z < this.attributes.EngineYaw.CurrentVelocity ) {
-                        InjectControl( Control.Control.YAW_RIGHT );
+                        InjectControl( Command.YAW_RIGHT );
                     }
 
                     if ( rot.Z > this.attributes.EngineYaw.CurrentVelocity ) {
-                        InjectControl( Control.Control.YAW_LEFT );
+                        InjectControl( Command.YAW_LEFT );
                     }
 
                     if ( rot.X < this.attributes.EnginePitch.CurrentVelocity ) {
-                        InjectControl( Control.Control.PITCH_DOWN );
+                        InjectControl( Command.PITCH_DOWN );
                     }
 
                     if ( rot.X > this.attributes.EnginePitch.CurrentVelocity ) {
-                        InjectControl( Control.Control.PITCH_UP );
+                        InjectControl( Command.PITCH_UP );
                     }
 
                     if ( ( Math.Abs( rot.X ) < Math.PI / 90 && Math.Abs( rot.Z ) < Math.PI / 90 ) ) {
@@ -85,6 +84,12 @@ namespace Battlestation_Antares.Model {
 
             }
 
+        }
+
+        public override void addDebugOutput() {
+            Antares.debugViewer.Add( new DebugElement( this, "Repair", delegate( Object obj ) {
+                return String.Format( "{0}", ( obj as Turret ).rotationRepairCountdown );
+            } ) );
         }
 
     }
