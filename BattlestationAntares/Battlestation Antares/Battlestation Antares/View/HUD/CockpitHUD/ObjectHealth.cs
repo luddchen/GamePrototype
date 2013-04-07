@@ -27,7 +27,7 @@ namespace Battlestation_Antaris.View.HUD.CockpitHUD {
             this.shield.SetMinColor( Color.DarkRed );
             this.Add( this.shield );
 
-            this.hullImage = new HUDTexture( null, null, new Vector2( 0.05f, 0.09f ) );
+            this.hullImage = new HUDTexture( size: new Vector2( 0.05f, 0.09f ) );
             this.hullImage.IsVisible = false;
             this.Add( this.hullImage );
         }

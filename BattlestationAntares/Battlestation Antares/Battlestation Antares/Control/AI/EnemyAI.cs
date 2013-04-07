@@ -34,7 +34,7 @@ namespace Battlestation_Antaris.Control.AI {
             }
 
             if ( this.checkCountdown == 0 ) {
-                this.checkCountdown = 1200;
+                this.checkCountdown = 600;
 
                 if ( this.attackers.Count < 10 ) {
                     EnemyShip obj;

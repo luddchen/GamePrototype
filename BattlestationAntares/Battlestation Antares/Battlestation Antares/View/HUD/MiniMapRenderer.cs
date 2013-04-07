@@ -27,7 +27,7 @@ namespace Battlestation_Antaris.View.HUD {
             private set;
         }
 
-        public MiniMapRenderer( MiniMap item ) : base( item, new Point( 512, 512 ), MiniMap.BACKGROUND_COLOR ) {
+        public MiniMapRenderer( MiniMap item ) : base( item, new Point( 512, 512 ), null ) {
             this.miniMap = item;
         }
 

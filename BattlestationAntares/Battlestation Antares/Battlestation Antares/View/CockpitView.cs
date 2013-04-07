@@ -63,24 +63,19 @@ namespace Battlestation_Antares.View {
             cross.LayerDepth = 0.8f;
             this.Add( cross );
 
-            Velocity velocity = new Velocity( new Vector2( 0.3f, 0.925f ), new Vector2( 0.01f, 0.15f ) );
+            Velocity velocity = new Velocity( new Vector2( 0.37f, 0.835f ), new Vector2( 0.015f, 0.24f ) );
             velocity.LayerDepth = 0.3f;
             this.Add( velocity );
-            LaserHeat heat = new LaserHeat( new Vector2( 0.38f, 0.895f ), new Vector2( 0.0125f, 0.21f ) );
+            LaserHeat heat = new LaserHeat( new Vector2( 0.385f, 0.835f ), new Vector2( 0.015f, 0.24f ) );
             heat.LayerDepth = 0.3f;
-            heat.AbstractRotation = (float)( -Math.PI / 18.0 );
             this.Add( heat );
-            LaserHeat heat2 = new LaserHeat( new Vector2( 0.62f, 0.895f ), new Vector2( 0.0125f, 0.21f ) );
-            heat2.LayerDepth = 0.3f;
-            heat2.AbstractRotation = (float)( Math.PI / 18.0 );
-            this.Add( heat2 );
 
-            ObjectHealth shipHealth = new ObjectHealth( new Vector2( 0.045f, 0.8f ), HUDType.RELATIV );
+            ObjectHealth shipHealth = new ObjectHealth( new Vector2( 0.05f, 0.92f ), HUDType.RELATIV );
             shipHealth.setObject( Antares.world.spaceShip, "Sprites//HUD//Ship", 0.75f);
             this.Add( shipHealth );
             shipHealth.LayerDepth = 0.3f;
 
-            ObjectHealth stationHealth = new ObjectHealth( new Vector2( 0.11f, 0.92f ), HUDType.RELATIV );
+            ObjectHealth stationHealth = new ObjectHealth( new Vector2( 0.14f, 0.92f ), HUDType.RELATIV );
             stationHealth.setObject( Antares.world.spaceStation, "Sprites//HUD//Station", 0.75f );
             this.Add( stationHealth );
             stationHealth.LayerDepth = 0.3f;

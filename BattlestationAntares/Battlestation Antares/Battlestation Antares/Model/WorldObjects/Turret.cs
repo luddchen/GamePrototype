@@ -86,12 +86,6 @@ namespace Battlestation_Antares.Model {
 
         }
 
-        public override void addDebugOutput() {
-            Antares.debugViewer.Add( new DebugElement( this, "Repair", delegate( Object obj ) {
-                return String.Format( "{0}", ( obj as Turret ).rotationRepairCountdown );
-            } ) );
-        }
-
     }
 
 }

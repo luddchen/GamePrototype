@@ -82,7 +82,7 @@ namespace Battlestation_Antares.View.HUD {
 
 
         public void SetNormal() {
-            this.overlay.Texture = Antares.content.Load<Texture2D>( "Sprites//HUD//ValueCircle" );
+            this.overlay.Texture = Antares.content.Load<Texture2D>( "Sprites//HUD//ValueCircle_2" );
         }
 
     }

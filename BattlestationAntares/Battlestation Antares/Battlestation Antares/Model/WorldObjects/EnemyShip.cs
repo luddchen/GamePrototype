@@ -49,6 +49,7 @@ namespace Battlestation_Antaris.Model.WorldObjects {
                 this.parent = null;
             }
             Antares.world.Remove( this );
+            Antares.world.credits += 1;
         }
 
     }

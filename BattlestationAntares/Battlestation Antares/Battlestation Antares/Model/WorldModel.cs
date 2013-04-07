@@ -8,6 +8,7 @@ using Battlestation_Antaris.View.HUD;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Battlestation_Antaris.Control.AI;
+using Battlestation_Antares.Tools;
 
 namespace Battlestation_Antares.Model {
 
@@ -15,6 +16,8 @@ namespace Battlestation_Antares.Model {
     /// represents a model of the game world
     /// </summary>
     class WorldModel {
+
+        public int credits = 0;
 
         /// <summary>
         /// a minimap of this world
@@ -156,8 +159,8 @@ namespace Battlestation_Antares.Model {
 
             Random random = new Random();
 
-            for ( int i = 0; i < 1; i++ ) {
-                Turret turret = new Turret( new Vector3( random.Next( 2400 ) - 1200, 0, random.Next( 2400 ) - 1200 ) );
+            for ( int i = 0; i < 4; i++ ) {
+                Turret turret = new Turret( new Vector3( random.Next( 1200 ) - 600, 0, random.Next( 1200 ) - 600 ) );
             }
 
             for ( int i = 0; i < 6; i++ ) {
@@ -175,6 +178,10 @@ namespace Battlestation_Antares.Model {
             for ( int i = 0; i < 200; i++ ) {
                 Add( new Dust( spaceShip ) );
             }
+
+            Antares.debugViewer.Add( new DebugElement( this, "Credits", delegate( Object obj ) {
+                return String.Format( "{0}", ( obj as WorldModel ).credits );
+            } ) );
 
         }
 
