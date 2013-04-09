@@ -15,7 +15,7 @@ namespace Battlestation_Antares.View {
         /// initialize menu view HUD and content
         /// </summary>
         public override void Initialize() {
-            this.Add( new HUDString( "Antares Menu", null, null, position: new Vector2( 0.5f, 0.1f ), size: new Vector2( 0.2f, 0.075f ) ) );
+            this.Add( new HUDTexture( "Sprites//Title01", position: new Vector2(0.5f, 0.12f), size: new Vector2(0.8f, 0.2f) ) );
         }
 
     }
