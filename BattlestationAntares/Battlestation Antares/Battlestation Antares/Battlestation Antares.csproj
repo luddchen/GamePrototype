@@ -131,6 +131,7 @@
     <Compile Include="View\HUD\AntaresButtonStyles.cs" />
     <Compile Include="View\HUD\CockpitHUD\Compass.cs" />
     <Compile Include="View\HUD\CockpitHUD\DockButton.cs" />
+    <Compile Include="View\HUD\CockpitHUD\EngineControllVisualizer.cs" />
     <Compile Include="View\HUD\CockpitHUD\LaserHeat.cs" />
     <Compile Include="View\HUD\CockpitHUD\ObjectHealth.cs" />
     <Compile Include="View\HUD\CockpitHUD\TargetInfo.cs" />

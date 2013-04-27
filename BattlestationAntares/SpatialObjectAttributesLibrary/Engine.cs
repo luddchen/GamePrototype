@@ -68,29 +68,40 @@ namespace SpatialObjectAttributesLibrary {
             }
         }
 
-        public void Accelerate() {
+        public void Accelerate(float power = 1.0f) {
             this.reset = false;
             if ( this.ZeroRelaxed ) {
-                if ( this.ZeroBarrier && this.CurrentVelocity < 0 && this.CurrentVelocity >= -this.Acceleration ) {
+                if ( this.ZeroBarrier && this.CurrentVelocity < 0 && this.CurrentVelocity >= -this.Acceleration * power ) {
                     this.CurrentVelocity = 0;
                     this.ZeroRelaxed = false;
                 } else {
-                    this.CurrentVelocity += this.Acceleration;
+                    this.CurrentVelocity += this.Acceleration * power;
                     this.CurrentVelocity = Math.Min( this.CurrentVelocity, this.MaxVelocity );
                 }
             }
         }
 
-        public void Decelerate() {
+        public void Decelerate(float power = 1.0f) {
             this.reset = false;
             if ( this.ZeroRelaxed ) {
-                if ( this.ZeroBarrier && this.CurrentVelocity > 0 && this.CurrentVelocity <= this.Acceleration ) {
+                if ( this.ZeroBarrier && this.CurrentVelocity > 0 && this.CurrentVelocity <= this.Acceleration * power ) {
                     this.CurrentVelocity = 0;
                     this.ZeroRelaxed = false;
                 } else {
-                    this.CurrentVelocity -= this.Acceleration;
+                    this.CurrentVelocity -= this.Acceleration * power;
                     this.CurrentVelocity = Math.Max( this.CurrentVelocity, -this.MaxVelocity );
                 }
+            }
+        }
+
+        
+        public void TargetVelocity( float power ) {
+            float targetV = power * this.MaxVelocity;
+            float diff = (targetV - this.CurrentVelocity) / this.MaxVelocity;
+            if ( diff > 0 ) {
+                Accelerate( diff );
+            } else if ( diff < 0 ) {
+                Decelerate( -diff );
             }
         }
 

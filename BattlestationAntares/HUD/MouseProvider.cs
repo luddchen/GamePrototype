@@ -16,6 +16,7 @@ namespace HUD {
         private MouseState newMouseState = Mouse.GetState();
 
         private Matrix mouseTransform = Matrix.Identity;
+        private Matrix mouseTransformInv = Matrix.Identity;
 
 
         /// <summary>
@@ -47,6 +48,11 @@ namespace HUD {
             return Vector2.Transform( new Vector2( newMouseState.X, newMouseState.Y ), this.mouseTransform );
         }
 
+        public void setMousePos( Vector2 position ) {
+            Vector2 newPos = Vector2.Transform( position, this.mouseTransformInv );
+            Mouse.SetPosition( (int)newPos.X, (int)newPos.Y );
+        }
+
         public bool isMouseMoved() {
             return ( oldMouseState.X == newMouseState.X && oldMouseState.Y == newMouseState.Y ) ? false : true;
         }
@@ -60,10 +66,12 @@ namespace HUD {
                 Matrix.CreateTranslation( new Vector3( -screenSizeHalf, 0 ) )
                 * Matrix.CreateScale( 1.0f / renderScale )
                 * Matrix.CreateTranslation( new Vector3( renderSizeHalf, 0 ) );
+            this.mouseTransformInv = Matrix.Invert( this.mouseTransform );
         }
 
         public void setMouseTransform( Matrix transform ) {
             this.mouseTransform = transform;
+            this.mouseTransformInv = Matrix.Invert( this.mouseTransform );
         }
 
     }

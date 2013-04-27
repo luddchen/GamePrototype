@@ -8,6 +8,7 @@ using HUD;
 using Battlestation_Antares.Model;
 using System;
 using Battlestation_Antaris.View.HUD;
+using Microsoft.Xna.Framework.Input;
 
 namespace Battlestation_Antares.Control {
 
@@ -28,6 +29,8 @@ namespace Battlestation_Antares.Control {
         private TargetInfo targetInfo;
 
         private MiniMapRenderer.Config mapConfig;
+
+        private EngineControllVisualizer engineVisualizer;
 
         /// <summary>
         /// create a new cockpit controller
@@ -61,6 +64,9 @@ namespace Battlestation_Antares.Control {
 
             mapConfig = new MiniMapRenderer.Config( new Vector2( 0.5f, 0.83f ), new Vector2( 0.2f, 0.3125f ), new MiniMap.Config( 0.3f, Antares.world.spaceShip ) );
             Register( Antares.world.miniMapRenderer.miniMap );
+
+            this.engineVisualizer = new EngineControllVisualizer( new Vector2( 0.7125f, 0.825f ), new Vector2( 0.2f, 0.325f ), this );
+            this.view.Add( this.engineVisualizer );
         }
 
         public override void onEnter() {
@@ -92,14 +98,18 @@ namespace Battlestation_Antares.Control {
 
             fpsDisplay.Update( gameTime );
 
-            if ( Antares.inputProvider.isMouseMoved() ) {
-                mouseVisibleCounter = mouseTimeOut;
-                this.game.IsMouseVisible = true;
+            if ( this.engineVisualizer.isActive() ) {
+                this.engineVisualizer.use();
             } else {
-                if ( mouseVisibleCounter > 0 ) {
-                    mouseVisibleCounter--;
+                if ( Antares.inputProvider.isMouseMoved() ) {
+                    mouseVisibleCounter = mouseTimeOut;
+                    this.game.IsMouseVisible = true;
                 } else {
-                    this.game.IsMouseVisible = false;
+                    if ( mouseVisibleCounter > 0 ) {
+                        mouseVisibleCounter--;
+                    } else {
+                        this.game.IsMouseVisible = false;
+                    }
                 }
             }
 

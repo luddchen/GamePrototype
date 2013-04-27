@@ -42,6 +42,10 @@ namespace Battlestation_Antares.Control {
         public virtual void onExit() {
         }
 
+        public void SetMouseVisibility( bool visibility ) {
+            this.game.IsMouseVisible = visibility;
+        }
+
     }
 
 }

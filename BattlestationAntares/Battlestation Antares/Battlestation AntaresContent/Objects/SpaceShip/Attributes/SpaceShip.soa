@@ -6,6 +6,25 @@
 #
 #Engine: #MaxVelocity: 10.0 #Acceleration: 0.1 #ResetForce: 0.001
 #
+#EngineYaw: #MaxVelocity: 0.035 #Acceleration: 0.0015 #ResetForce: 0.0005
+#
+#EnginePitch: #MaxVelocity: 0.035 #Acceleration: 0.0015 #ResetForce: 0.0005
+#
+#EngineRoll: #MaxVelocity: 0.015 #Acceleration: 0.002 #ResetForce: 0.001
+#
+#Laser: #Damage: 50.0 #Range: 5000.0 #Velocity: 60.0 #ReloadTime: 10.0 #HeatProduction: 5.0 #HeatUntilCooldown: 200.0 #HeatRegeneration 0.25
+#
+#Missile: #Damage: 20.0 #Range: 1000.0 #Velocity: 20.0 #ReloadTime: 60.0 #MaxAmount: 10.0
+#
+#OLD
+#Shield: #MaxHealth: 500.0 #RegenerationRate: 5.0 #RepairCost: 0.0
+#
+#Hull: #MaxHealth: 5000.0 #RegenerationRate: 0.0 #RepairCost: 0.0
+#
+#Radar: #Range: 0.0
+#
+#Engine: #MaxVelocity: 10.0 #Acceleration: 0.1 #ResetForce: 0.001
+#
 #EngineYaw: #MaxVelocity: 0.035 #Acceleration: 0.0005 #ResetForce: 0.0005
 #
 #EnginePitch: #MaxVelocity: 0.035 #Acceleration: 0.0005 #ResetForce: 0.0005
