@@ -61,7 +61,7 @@ namespace HUD.HUD {
         }
 
 
-        private void Arrange() {
+        public void Arrange() {
             Vector2 itemSize = this.AbstractSize;
             Vector2 itemPosition = new Vector2();
 
@@ -83,6 +83,16 @@ namespace HUD.HUD {
                     itemPosition.X += itemSize.X;
                 }
             }
+        }
+
+
+        public void Resize( Vector2 newItemSize ) {
+            if ( this.direction == LayoutDirection.VERTICAL ) {
+                this.AbstractSize = new Vector2( newItemSize.X, newItemSize.Y * this.AllChilds.Count );
+            } else {
+                this.AbstractSize = new Vector2( newItemSize.X * this.AllChilds.Count, newItemSize.Y );
+            }
+            Arrange();
         }
 
     }

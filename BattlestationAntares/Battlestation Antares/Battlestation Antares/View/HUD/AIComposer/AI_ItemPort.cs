@@ -27,7 +27,7 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         public List<AI_Connection> connections;
 
-        public AI_ItemPort( PortType portType, SituationController controller) : base(null, controller) {
+        public AI_ItemPort( PortType portType, SituationController controller) : base(controller: controller) {
             this.portType = portType;
             this.connections = new List<AI_Connection>();
             this.AbstractSize = Vector2.Multiply( AI_Item.AI_ITEM_SIZE, new Vector2( 0.075f, 0.133f ) ) * 3f;

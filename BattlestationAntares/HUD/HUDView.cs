@@ -62,7 +62,14 @@ namespace HUD {
             DrawPreContent();
 
             // draw HUD elements
-            this.spriteBatch.Begin( SpriteSortMode.BackToFront, BlendState.AlphaBlend );// SamplerState.AnisotropicClamp, DepthStencilState.DepthRead, null);
+            this.spriteBatch.Begin(
+                SpriteSortMode.BackToFront,
+                BlendState.AlphaBlend,
+                SamplerState.LinearClamp,
+                DepthStencilState.DepthRead,
+                RasterizerState.CullNone,
+                null,
+                Matrix.Identity);
 
             foreach ( HUD_Item element in this.allItems ) {
                 element.Draw( this.spriteBatch );

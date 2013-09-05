@@ -161,6 +161,10 @@ namespace HUD.HUD {
             }
         }
 
+        public int ItemCount() {
+            return this.allChilds.Count;
+        }
+
     }
 
 }

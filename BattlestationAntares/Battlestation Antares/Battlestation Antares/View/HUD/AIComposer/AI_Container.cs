@@ -224,12 +224,12 @@ namespace Battlestation_Antares.View.HUD.AIComposer {
 
         private void _initMouseTexture() {
             this.mouseItemTex = new HUDActionTexture(
-                delegate() {
+                action: delegate() {
                     this.mouseItemTex.AbstractPosition = HUD_Item.ConcreteToAbstract( Antares.inputProvider.getMousePos() );
                     this.mouseItemTex.AbstractScale = this.Scale;
                     this.mouseItemTex.RenderSizeChanged();
                 },
-                controller );
+                controller: controller );
             this.mouseItemTex.AbstractSize = AI_Item.AI_ITEM_SIZE;
             this.mouseItemTex.color = AI_Bank.NORMAL_COLOR;
             this.controller.view.Add( this.mouseItemTex );

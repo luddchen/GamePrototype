@@ -14,7 +14,9 @@ namespace HUD.HUD {
         }
 
 
-        public HUDActionTexture( Action action = null, IUpdateController controller = null ) {
+        public HUDActionTexture( Object texture = null, Color? color = null, Vector2 position = new Vector2(), Vector2 size = new Vector2(), float scale = 1.0f, float rotation = 0.0f, Action action = null, IUpdateController controller = null )
+            : base(texture, color, position, size, scale, rotation)
+        {
             this.action = action;
             if ( controller != null ) {
                 controller.Register( this );

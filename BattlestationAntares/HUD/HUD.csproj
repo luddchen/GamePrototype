@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="ButtonStyle.cs" />
     <Compile Include="HUDService.cs" />
+    <Compile Include="HUDUpdateView.cs" />
     <Compile Include="HUD\HUDActionTexture.cs" />
     <Compile Include="HUD\HUDArray.cs" />
     <Compile Include="HUD\HUDButton.cs" />
