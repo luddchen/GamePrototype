@@ -17,7 +17,7 @@ namespace HUD {
             HUDService.DefaultFont = defaultFont;
             HUDService.MultiSampleCount = multiSampleCount ?? 0;
             HUDService.Input = input;
-            HUDService.renderSize = new Point( 1920, 1080 );
+            HUDService.renderSize = new Point( 2048, 1024 );
 
             HUDService.game.Window.ClientSizeChanged += new EventHandler<EventArgs>( HUDService.Window_ClientSizeChanged );
             HUDService.CalculateRenderTextureParameter();
